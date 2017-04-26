@@ -1,0 +1,3 @@
+rootProject.name = 'kit'
+
+include ':app'
