@@ -20,24 +20,27 @@ let initialState = {
       name: 'Bill',
       frequency: 'Daily',
       lastContact: '04/26/17',
+      color: 'purple',
     }, {
       name: 'Margaret',
       frequency: 'Bi-weekly',
       lastContact: '04/20/17',
+      color: '#73d4e3',
     }, {
       name: 'Jack',
       frequency: 'Weekly',
       lastContact: '04/29/17',
+      color: 'forestgreen',
     }, {
       name: 'Jane',
       frequency: 'Monthly',
       lastContact: '04/28/17',
+      color: 'darkgreen',
     },
  ]
 };
 
 const store = function(state = initialState, action) {
-  console.log(state.contacts)
   switch (action.type) {
     case POPULATE_CONTACTS:
       return Object.assign({}, state, {contacts: action.contacts});

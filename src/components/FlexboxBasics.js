@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, Animated, TouchableOpacity, Dimensions, Slider, ScrollView } from 'react-native';
+import { StyleSheet, View, Image, Text, Animated, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import Interactable from 'react-native-interactable';
-import Box from './Box';
 
 const Screen = Dimensions.get('window');
 
 class List extends Component {
 
   render() {
-    const damping = 1 - 0.7;
-    const tension = 300;
-    return (
+    const physics = {
+      damping: 1 - 0.7,
+      tension: 300
+    }
 
+    return (
       <ScrollView showsVerticalScrollIndicator={false} bounces={true} style={styles.container}>
 
         <View style={styles.logo}>
@@ -23,12 +24,13 @@ class List extends Component {
           {
             this.props.store.contacts.map((contact) => {
               return (
-                <Row key={contact.name} damping={damping} tension={tension} contact={contact}>
+                <Row key={contact.name} physics={physics} contact={contact}>
                   <View style={styles.rowContent}>
-                    <View style={styles.rowIcon} />
+                    <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
                     <View>
                       <Text style={styles.rowTitle}>{contact.name}</Text>
                       <Text style={styles.rowSubtitle}>Frequency of contact: {contact.frequency}</Text>
+                      <Text style={styles.rowSubtitle}>Last contact: {contact.lastContact}</Text>
 
                     </View>
                   </View>
@@ -50,10 +52,8 @@ class RowComponent extends Component {
     this._deltaX = new Animated.Value(0);
   }
   render() {
-    {console.log(this.props)}
     return (
       <View style={{backgroundColor: '#ceced2'}}>
-
         <View style={{position: 'absolute', left: 0, right: 0, height: 75}} pointerEvents='box-none'>
           <Animated.View style={
             [styles.removeHolder, {
@@ -107,9 +107,9 @@ class RowComponent extends Component {
         <Interactable.View
           horizontalOnly={true}
           snapPoints={[
-            {x: 78, damping: 1-this.props.damping, tension: this.props.tension},
-            {x: 0, damping: 1-this.props.damping, tension: this.props.tension},
-            {x: -155, damping: 1-this.props.damping, tension: this.props.tension}
+            {x: 78, damping: 1-this.props.physics.damping, tension: this.props.physics.tension},
+            {x: 0, damping: 1-this.props.physics.damping, tension: this.props.physics.tension},
+            {x: -155, damping: 1-this.props.physics.damping, tension: this.props.physics.tension}
           ]}
           animatedValueX={this._deltaX}>
           <View style={{left: 0, right: 0, height: 75, backgroundColor: 'white'}}>

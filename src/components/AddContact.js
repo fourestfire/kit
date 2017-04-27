@@ -26,8 +26,8 @@ class AddContact extends Component {
     super(props);
     this.state = {
       name: '',
+      frequency: 'Weekly',
       values: ['Daily', 'Every 3 days', 'Weekly', 'Every 2 weeks', 'Monthly'],
-      frequency: '',
     }
   }
 
@@ -78,11 +78,12 @@ class AddContact extends Component {
             tintColor='darkgrey'
             onValueChange={this._onValueChange} />
 
-          <Button title="Submit" onPress={this.addContact.bind(this, {[this.state.name]: {
+          <Button title="Submit" onPress={this.addContact.bind(this, {
+            name: this.state.name,
             frequency: this.state.frequency,
             lastContact: 'N/A'
           }
-          })}/>
+          )}/>
         </View>
 
       </View>
