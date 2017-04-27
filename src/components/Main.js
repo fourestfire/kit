@@ -6,17 +6,17 @@ import {
   View,
   Image,
   Button,
-  Modal
+  Modal,
+  TouchableOpacity,
 } from 'react-native';
 
 import { StackNavigator } from 'react-navigation';
 
-import FlexboxBasics from './FlexboxBasics'
-import FlexboxStyling from './FlexboxStyling'
+import AllContacts from './AllContacts'
+import MoreContacts from './MoreContacts'
 import AddContact from './AddContact'
 import AsyncStorage from './AsyncStorage'
-
-// need to use... listview? need to use a view that allows for groupings (can close group)
+import Test from './Test'
 
 /* -------------------<   COMPONENT   >-------------------- */
 
@@ -32,6 +32,14 @@ class HomeScreen extends React.Component {
     }
   }
 
+  componentDidMount() {
+    const today = this.props.store.contacts.filter(el => el.nextContact === 'today')
+    const tomorrow = this.props.store.contacts.filter(el => el.nextContact === 'tomorrow')
+    // console.log('today', today, 'tomorrow', tomorrow)
+    this.props.getTodaySync(today);
+    this.props.getTomorrowSync(tomorrow);
+  }
+
   toggleModal = () => {
     this.setState({ showModal: !this.state.showModal })
   }
@@ -40,13 +48,8 @@ class HomeScreen extends React.Component {
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-
-        {/*<Button
-          onPress={() => navigate('AddContact')}
-          title="+ Add a Kit"
-        />*/}
          <View>
-          <Button title="+ Add a Kit" onPress={this.toggleModal} />
+          <Button title="+ Add a Kit" style={styles.addButton} onPress={this.toggleModal} />
           <Modal
             visible={this.state.showModal}
             onRequestClose={this.toggleModal}
@@ -70,18 +73,21 @@ class HomeScreen extends React.Component {
           }
         </View>
 
-
         <Button
-          onPress={() => navigate('FlexboxBasics')}
-          title="Test"
+          onPress={() => navigate('AllContacts')}
+          title="All Contacts"
         />
         <Button
-          onPress={() => navigate('FlexboxStyling')}
-          title="Settings"
+          onPress={() => navigate('MoreContacts')}
+          title="More Contacts"
         />
         <Button
           onPress={() => navigate('AsyncStorage')}
           title="Async Storage Test"
+        />
+        <Button
+          onPress={() => navigate('Test')}
+          title="Other Cool Tests"
         />
       </View>
     );
@@ -123,16 +129,20 @@ const styles = StyleSheet.create({
 
   contactValue: {
     paddingVertical: 7,
+  },
+
+  addButton: {
+    backgroundColor: 'black'
   }
 });
 
 /* -------------------<   CONTAINER   >-------------------- */
 
 import { connect } from 'react-redux';
-// import { populateContactsSync } from '../redux/index';
+import { getTodaySync, getTomorrowSync } from '../redux/reducer';
 
 const mapState = ({ store }) => ({ store });
-const mapDispatch = null;
+const mapDispatch = ({ getTodaySync, getTomorrowSync });
 
 const connectedHome = connect(mapState, mapDispatch)(HomeScreen);
 
@@ -140,8 +150,9 @@ export default kit = StackNavigator({
   Home: { screen: connectedHome },
   AddContact: { screen: AddContact },
   AsyncStorage: { screen: AsyncStorage },
-  FlexboxBasics: { screen: FlexboxBasics },
-  FlexboxStyling: { screen: FlexboxStyling },
+  AllContacts: { screen: AllContacts },
+  MoreContacts: { screen: MoreContacts },
+  Test: { screen: Test },
 });
 
 

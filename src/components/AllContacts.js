@@ -4,13 +4,14 @@ import Interactable from 'react-native-interactable';
 
 const Screen = Dimensions.get('window');
 
-class List extends Component {
+class AllContacts extends Component {
 
   render() {
     const physics = {
       damping: 1 - 0.7,
       tension: 300
     }
+
 
     return (
       <ScrollView showsVerticalScrollIndicator={false} bounces={true} style={styles.container}>
@@ -80,7 +81,7 @@ class RowComponent extends Component {
               }]
             }
             ]}>
-            <TouchableOpacity onPress={this.onButtonPress.bind(this, 'snooze')} style={styles.button}>
+            <TouchableOpacity onPress={this.getToday.bind(this, 'snooze')} style={styles.button}>
               <View style={styles.button} />
             </TouchableOpacity>
           </Animated.View>
@@ -126,7 +127,13 @@ class RowComponent extends Component {
   removeContact() {
     this.props.removeContactSync(this.props.contact)
   }
+  getToday() {
+    const contacts = this.props.store.contacts.filter(el => el.nextContact === 'today')
+    console.log(contacts)
+    this.props.getTodaySync(contacts);
+  }
 }
+
 
 /* -------------------<   CONTAINER   >-------------------- */
 
@@ -135,14 +142,14 @@ import { connect } from 'react-redux';
 const mapState = ({ store }) => ({ store });
 const mapDispatch = null;
 
-export default connect(mapState, mapDispatch)(List);
+export default connect(mapState, mapDispatch)(AllContacts);
 
 /* -------------------<   CONTAINER   >-------------------- */
 
-import { addContactSync, removeContactSync } from '../redux/reducer';
+import { addContactSync, removeContactSync, getTodaySync } from '../redux/reducer';
 
 const mapStateRow = ({ store }) => ({ store });
-const mapDispatchRow = ({ addContactSync, removeContactSync });
+const mapDispatchRow = ({ addContactSync, removeContactSync, getTodaySync });
 
 const Row = connect(mapStateRow, mapDispatchRow)(RowComponent);
 
