@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import { StackNavigator } from 'react-navigation';
+import { TabNavigator } from "react-navigation";
 
 import AllContacts from './AllContacts'
 import MoreContacts from './MoreContacts'
@@ -146,13 +147,13 @@ const mapDispatch = ({ getTodaySync, getTomorrowSync });
 
 const connectedHome = connect(mapState, mapDispatch)(HomeScreen);
 
-export default kit = StackNavigator({
+export default kit = TabNavigator({
   Home: { screen: connectedHome },
-  AddContact: { screen: AddContact },
+  // AddContact: { screen: AddContact },
   AsyncStorage: { screen: AsyncStorage },
   AllContacts: { screen: AllContacts },
   MoreContacts: { screen: MoreContacts },
-  Test: { screen: Test },
+  // Test: { screen: Test },
 });
 
 

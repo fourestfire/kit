@@ -58,19 +58,19 @@ let initialState = {
       color: 'darkgreen',
     },
  ],
- today: [],
- tomorrow: [],
+  today: [],
+  tomorrow: [],
 };
 
 const store = function(state = initialState, action) {
   console.log('action', action)
   switch (action.type) {
     case GET_ALL_CONTACTS:
-      return Object.assign({}, state, {contacts: [action.contacts]});
+      return Object.assign({}, state, {contacts: action.contacts});
     case GET_TODAY:
       return Object.assign({}, state, {today: action.contacts});
     case GET_TOMORROW:
-      return Object.assign({}, state, {tomorrow: [action.contacts]});
+      return Object.assign({}, state, {tomorrow: action.contacts});
     case ADD_CONTACT:
       return Object.assign({}, state, {contacts: state.contacts.concat(action.contact)});
     case EDIT_CONTACT:
