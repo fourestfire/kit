@@ -14,8 +14,8 @@ export default class Box extends Component {
 
 const styles = StyleSheet.create({
   box: {
-    height: 75,
-    width: 75,
+    height: 30,
+    width: 30,
     margin: 5,
     backgroundColor: 'lightgrey',
     borderColor: 'black',

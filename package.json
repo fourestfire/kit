@@ -10,6 +10,7 @@
     "@shoutem/animation": "^0.10.2",
     "react": "16.0.0-alpha.6",
     "react-native": "0.43.3",
+    "react-native-communications": "^2.2.1",
     "react-native-interactable": "0.0.8",
     "react-navigation": "git+https://github.com/react-community/react-navigation.git#7edd9a7",
     "react-redux": "^5.0.4",

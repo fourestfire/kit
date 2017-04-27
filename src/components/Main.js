@@ -5,12 +5,13 @@ import {
   Text,
   View,
   Image,
-  Button
+  Button,
+  Modal
 } from 'react-native';
 
 import { StackNavigator } from 'react-navigation';
 
-// import FlexboxBasics from './FlexboxBasics'
+import FlexboxBasics from './FlexboxBasics'
 import FlexboxStyling from './FlexboxStyling'
 import AddContact from './AddContact'
 import AsyncStorage from './AsyncStorage'
@@ -23,15 +24,37 @@ class HomeScreen extends React.Component {
   static navigationOptions = {
     title: 'kit: keep in touch :)',
   };
+
+  constructor (props) {
+    super(props)
+    this.state = {
+      showModal: false
+    }
+  }
+
+  toggleModal = () => {
+    this.setState({ showModal: !this.state.showModal })
+  }
+
   render() {
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
 
-        <Button
+        {/*<Button
           onPress={() => navigate('AddContact')}
           title="+ Add a Kit"
-        />
+        />*/}
+         <View>
+          <Button title="+ Add a Kit" onPress={this.toggleModal} />
+          <Modal
+            visible={this.state.showModal}
+            onRequestClose={this.toggleModal}
+            animationType='slide'
+          >
+            <AddContact screenProps={{ toggle: this.toggleModal }} />
+          </Modal>
+        </View>
 
         <View style={styles.contactContainer}>
           <View style={styles.divider} />
@@ -39,8 +62,8 @@ class HomeScreen extends React.Component {
             this.props.store.contacts.map((contact, idx) => {
               return (
                 <View key={idx} style={styles.contactRowContainer}>
-                  <Text style={[styles.text, styles.contactKey]}> {Object.keys(contact)[0]} </Text>
-                  <Text style={[styles.text, styles.contactValue]}> {contact[Object.keys(contact)[0]]} </Text>
+                  <Text style={[styles.text, styles.contactKey]}> {contact.name} </Text>
+                  <Text style={[styles.text, styles.contactValue]}> {contact.frequency} </Text>
                 </View>
               );
             })
@@ -48,10 +71,10 @@ class HomeScreen extends React.Component {
         </View>
 
 
-        {/*<Button
+        <Button
           onPress={() => navigate('FlexboxBasics')}
-          title="Add New Person"
-        />*/}
+          title="Test"
+        />
         <Button
           onPress={() => navigate('FlexboxStyling')}
           title="Settings"
@@ -117,7 +140,7 @@ export default kit = StackNavigator({
   Home: { screen: connectedHome },
   AddContact: { screen: AddContact },
   AsyncStorage: { screen: AsyncStorage },
-  // FlexboxBasics: { screen: FlexboxBasics },
+  FlexboxBasics: { screen: FlexboxBasics },
   FlexboxStyling: { screen: FlexboxStyling },
 });
 
