@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 /* -------------------<   ACTIONS   >--------------------- */
 
 const ADD_CONTACT = 'ADD_CONTACT';
-const EDIT_CONTACT = 'EDIT_CONTACT';
+const UPDATE_CONTACT = 'UPDATE_CONTACT';
 const REMOVE_CONTACT = 'REMOVE_CONTACT';
 
 const GET_ALL_CONTACTS = 'GET_ALL_CONTACTS';
@@ -13,7 +13,7 @@ const GET_TOMORROW = 'GET_TOMORROW';
 /* ---------------<   ACTION CREATORS   >------------------- */
 
 export const addContactSync = contact => ({ type: ADD_CONTACT, contact });
-export const editContactSync = contact => ({ type: EDIT_CONTACT, contact });
+export const updateContactSync = contact => ({ type: UPDATE_CONTACT, contact });
 export const removeContactSync = contact => ({ type: REMOVE_CONTACT, contact });
 
 export const getTodaySync = contacts => ({ type: GET_TODAY, contacts });
@@ -65,18 +65,21 @@ let initialState = {
 const store = function(state = initialState, action) {
   console.log('action', action)
   switch (action.type) {
+
+    case ADD_CONTACT:
+      return Object.assign({}, state, {contacts: state.contacts.concat(action.contact)});
+    case UPDATE_CONTACT:
+      return Object.assign({}, state, {contacts: state.contacts.concat(action.contact)});
+    case REMOVE_CONTACT:
+      return Object.assign({}, state, {contacts: state.contacts.filter(el => el !== action.contact)});
+
     case GET_ALL_CONTACTS:
       return Object.assign({}, state, {contacts: action.contacts});
     case GET_TODAY:
       return Object.assign({}, state, {today: action.contacts});
     case GET_TOMORROW:
       return Object.assign({}, state, {tomorrow: action.contacts});
-    case ADD_CONTACT:
-      return Object.assign({}, state, {contacts: state.contacts.concat(action.contact)});
-    case EDIT_CONTACT:
-      return Object.assign({}, state, {contacts: state.contacts.concat(action.contact)});
-    case REMOVE_CONTACT:
-      return Object.assign({}, state, {contacts: state.contacts.filter(el => el !== action.contact)});
+
     default:
       return state;
   }

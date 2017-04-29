@@ -8,20 +8,9 @@ import {
   SegmentedControlIOS,
   TouchableOpacity
 } from 'react-native';
-import Contacts from 'react-native-contacts'
-
-Contacts.getAll((err, contacts) => {
-  if(err === 'denied'){
-  } else {
-    console.log(contacts)
-  }
-})
+import Icon from 'react-native-vector-icons/SimpleLineIcons';
 
 class AddContact extends Component {
-  static navigationOptions = {
-    title: 'add a kit',
-  };
-
   constructor(props) {
     super(props);
     this.state = {
@@ -45,18 +34,6 @@ class AddContact extends Component {
   render() {
     return (
       <View style={styles.container}>
-
-        <TouchableOpacity onPress={this.props.screenProps.toggle} style={{
-            position: 'absolute',
-            paddingTop: 30,
-            paddingHorizontal: 10,
-            zIndex: 10
-          }}>
-          <View style={styles.closeButton}>
-            <Text> Close Modal </Text>
-          </View>
-        </TouchableOpacity>
-
         <View style={styles.secondContainer}>
           <TextInput
             style={styles.input}
@@ -85,6 +62,15 @@ class AddContact extends Component {
           }
           )}/>
         </View>
+
+        <TouchableOpacity onPress={this.props.screenProps.toggle} style={{
+            position: 'absolute',
+            paddingTop: 30,
+            paddingHorizontal: 10,
+            zIndex: 10
+          }}>
+          <Icon name="close" size={35} color="darkgrey" />
+        </TouchableOpacity>
 
       </View>
     );
@@ -118,9 +104,4 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     margin: 20
   },
-  closeButton: {
-    height: 30,
-    width: 'auto',
-    backgroundColor: 'white'
-  }
 });

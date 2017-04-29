@@ -2,10 +2,17 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, Animated, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import Interactable from 'react-native-interactable';
 import Row from './SingleContactRow';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const Screen = Dimensions.get('window');
 
 class AllContacts extends Component {
+  static navigationOptions = {
+    tabBar: {
+      label: 'All Contacts',
+      icon: ({ tintColor }) => <Icon size={30} name='md-contacts' color={ tintColor }/>
+    }
+  }
 
   render() {
     const physics = {

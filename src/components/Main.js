@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import { StackNavigator } from 'react-navigation';
+// import { StackNavigator } from 'react-navigation';
 import { TabNavigator } from "react-navigation";
 
 import AllContacts from './AllContacts'
@@ -18,12 +18,24 @@ import MoreContacts from './MoreContacts'
 import AddContact from './AddContact'
 import AsyncStorage from './AsyncStorage'
 import Test from './Test'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Contacts from 'react-native-contacts'
+
+Contacts.getAllWithoutPhotos((err, contacts) => {
+  if(err === 'denied'){
+  } else {
+    console.log(contacts)
+  }
+})
 
 /* -------------------<   COMPONENT   >-------------------- */
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: 'kit: keep in touch :)',
+    tabBar: {
+      label: 'Today',
+      icon: ({ tintColor }) => <Icon size={30} name='calendar-check' color={ tintColor }/>
+    }
   };
 
   constructor (props) {
@@ -50,6 +62,7 @@ class HomeScreen extends React.Component {
     return (
       <View style={styles.container}>
          <View>
+
           <Button title="+ Add a Kit" style={styles.addButton} onPress={this.toggleModal} />
           <Modal
             visible={this.state.showModal}
@@ -74,22 +87,6 @@ class HomeScreen extends React.Component {
           }
         </View>
 
-        <Button
-          onPress={() => navigate('AllContacts')}
-          title="All Contacts"
-        />
-        <Button
-          onPress={() => navigate('MoreContacts')}
-          title="More Contacts"
-        />
-        <Button
-          onPress={() => navigate('AsyncStorage')}
-          title="Async Storage Test"
-        />
-        <Button
-          onPress={() => navigate('Test')}
-          title="Other Cool Tests"
-        />
       </View>
     );
   }
@@ -134,7 +131,13 @@ const styles = StyleSheet.create({
 
   addButton: {
     backgroundColor: 'black'
-  }
+  },
+
+  icon: {
+    width: 26,
+    height: 26,
+  },
+
 });
 
 /* -------------------<   CONTAINER   >-------------------- */
@@ -149,11 +152,27 @@ const connectedHome = connect(mapState, mapDispatch)(HomeScreen);
 
 export default kit = TabNavigator({
   Home: { screen: connectedHome },
-  // AddContact: { screen: AddContact },
-  AsyncStorage: { screen: AsyncStorage },
   AllContacts: { screen: AllContacts },
-  MoreContacts: { screen: MoreContacts },
-  // Test: { screen: Test },
+  // MoreContacts: { screen: MoreContacts },
+  Test: { screen: Test },
+  // AsyncStorage: { screen: AsyncStorage },
+}, {
+  swipeEnabled: true,
+  animationEnabled: true,
+  style: {
+    backgroundColor: 'darkgreen'
+  },
+  // lazy: true,
+  tabBarOptions: {
+    activeTintColor: 'darkgreen',
+    style: {
+      backgroundColor: 'lavender',
+      height: 70
+    }
+    // labelStyle: {
+    //   fontSize: 12,
+    // },
+  },
 });
 
 
