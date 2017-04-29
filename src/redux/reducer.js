@@ -63,13 +63,12 @@ let initialState = {
 };
 
 const store = function(state = initialState, action) {
-  console.log('action', action)
   switch (action.type) {
 
     case ADD_CONTACT:
-      return Object.assign({}, state, {contacts: state.contacts.concat(action.contact)});
+      return Object.assign({}, state, {contacts: [...state.contacts, action.contact]});
     case UPDATE_CONTACT:
-      return Object.assign({}, state, {contacts: state.contacts.concat(action.contact)});
+      return Object.assign({}, state, {contacts: action.contacts});
     case REMOVE_CONTACT:
       return Object.assign({}, state, {contacts: state.contacts.filter(el => el !== action.contact)});
 

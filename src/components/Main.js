@@ -16,6 +16,7 @@ import { TabNavigator } from "react-navigation";
 import AllContacts from './AllContacts'
 import MoreContacts from './MoreContacts'
 import AddContact from './AddContact'
+import UpdateContact from './UpdateContact'
 import AsyncStorage from './AsyncStorage'
 import Test from './Test'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -62,7 +63,6 @@ class HomeScreen extends React.Component {
     return (
       <View style={styles.container}>
          <View>
-
           <Button title="+ Add a Kit" style={styles.addButton} onPress={this.toggleModal} />
           <Modal
             visible={this.state.showModal}
@@ -70,6 +70,17 @@ class HomeScreen extends React.Component {
             animationType='slide'
           >
             <AddContact screenProps={{ toggle: this.toggleModal }} />
+          </Modal>
+        </View>
+
+         <View>
+          <Button title="Update a Kit" style={styles.addButton} onPress={this.toggleModal} />
+          <Modal
+            visible={this.state.showModal}
+            onRequestClose={this.toggleModal}
+            animationType='slide'
+          >
+            <UpdateContact screenProps={{ toggle: this.toggleModal }} />
           </Modal>
         </View>
 
@@ -151,8 +162,8 @@ const mapDispatch = ({ getTodaySync, getTomorrowSync });
 const connectedHome = connect(mapState, mapDispatch)(HomeScreen);
 
 export default kit = TabNavigator({
-  Home: { screen: connectedHome },
   AllContacts: { screen: AllContacts },
+  Home: { screen: connectedHome },
   // MoreContacts: { screen: MoreContacts },
   Test: { screen: Test },
   // AsyncStorage: { screen: AsyncStorage },

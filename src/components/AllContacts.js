@@ -3,8 +3,7 @@ import { StyleSheet, View, Image, Text, Animated, TouchableOpacity, Dimensions, 
 import Interactable from 'react-native-interactable';
 import Row from './SingleContactRow';
 import Icon from 'react-native-vector-icons/Ionicons';
-
-const Screen = Dimensions.get('window');
+import Header from './Header'
 
 class AllContacts extends Component {
   static navigationOptions = {
@@ -20,12 +19,34 @@ class AllContacts extends Component {
       tension: 300
     }
 
+    const leftItem = {
+      title: "you are",
+      layout: null,
+      onPress: null,
+      icon: null,
+    }
+
+    const rightItem = {
+      title: "  cute",
+      layout: null,
+      onPress: null,
+      icon: null,
+    }
+
     return (
       <ScrollView showsVerticalScrollIndicator={false} bounces={true} style={styles.container}>
 
-        <View style={styles.logo}>
+       <View style={styles.logo}>
           <Text> (Hello it's me!) </Text>
         </View>
+
+      <Header
+       leftItem={leftItem}
+       title="Today"
+       rightItem={rightItem}
+       content="testcontentnotshowing??"
+       style={{backgroundColor: 'pink'}}
+      />
 
         <View style={styles.container}>
 
@@ -64,6 +85,7 @@ const mapDispatch = null;
 export default connect(mapState, mapDispatch)(AllContacts);
 
 /* -------------------<   STYLES   >-------------------- */
+
 
 const styles = StyleSheet.create({
   container: {
