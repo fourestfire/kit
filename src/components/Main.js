@@ -168,7 +168,7 @@ const connectedHome = connect(mapState, mapDispatch)(HomeScreen);
 export default kit = TabNavigator({
   Today: { screen: Today },
   Home: { screen: connectedHome },
-  Test: { screen: Test },
+  // Test: { screen: Test },
   MoreContacts: { screen: MoreContacts },
   // AsyncStorage: { screen: AsyncStorage },
 }, {

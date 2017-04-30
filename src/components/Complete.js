@@ -10,11 +10,11 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 
-class UpdateContact extends Component {
+class Complete extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: 'Test',
+      name: 'Name',
       frequency: 'Weekly',
       values: ['Daily', 'Every 3 days', 'Weekly', 'Every 2 weeks', 'Monthly'],
     }
@@ -35,27 +35,17 @@ class UpdateContact extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.secondContainer}>
+          <Text style={styles.text}>
+            (Optional) In 30 characters or less, what did you talk with {this.props.contact.name} about today?
+          </Text>
+
           <TextInput
             style={styles.input}
-            placeholder='Test'
+            placeholder='Notes'
             onChangeText={name=>this.setState({name})}
           />
-          <TextInput
-            style={styles.input}
-            onChangeText={frequency=>this.setState({frequency})}
-            placeholder='Frequency'
-          />
 
-          <Text style={styles.text} >
-            Value: {this.state.frequency}
-          </Text>
-          <SegmentedControlIOS
-            selectedIndex={2}
-            values={this.state.values}
-            tintColor='darkgrey'
-            onValueChange={this._onValueChange} />
-
-          <Button title="Submit" onPress={this.updateContact.bind(this, {
+          <Button title="Complete" onPress={this.updateContact.bind(this, {
             name: this.state.name,
             frequency: this.state.frequency,
             lastContact: 'N/A'
@@ -85,7 +75,7 @@ import { updateContactSync } from '../redux/reducer';
 const mapState = ({ store }) => ({ store });
 const mapDispatch = ({ updateContactSync });
 
-export default connect(mapState, mapDispatch)(UpdateContact);
+export default connect(mapState, mapDispatch)(Complete);
 
 /* -------------------<   STYLING   >-------------------- */
 
@@ -93,14 +83,24 @@ const styles = StyleSheet.create({
   container: {
     height: 500,
     marginTop: 30,
+    backgroundColor: 'transparent'
   },
   secondContainer: {
-    marginTop: 60
+    marginTop: 80,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+  },
+  text: {
+    margin: 20,
+    fontSize: 20,
+    fontWeight: '300'
   },
   input: {
     backgroundColor: 'ghostwhite',
     height: 40,
-    borderColor: 'gray',
+    borderColor: 'lightgray',
+    borderRadius: 10,
     borderWidth: 1,
     margin: 20
   },

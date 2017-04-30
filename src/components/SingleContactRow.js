@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, Animated, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
+import { StyleSheet, View, Image, Text, Animated, TouchableOpacity, Dimensions, ScrollView, Modal } from 'react-native';
 import Interactable from 'react-native-interactable';
+import Complete from './Complete';
 
 const Screen = Dimensions.get('window');
 
@@ -8,9 +9,33 @@ class SingleContactRow extends Component {
   constructor(props) {
     super(props);
     this._deltaX = new Animated.Value(0);
+    this.state = {
+      showCompleteModal: false,
+    }
   }
+
+  toggleCompleteModal = () => {
+    this.setState({ showCompleteModal: !this.state.showCompleteModal })
+  }
+
+  onButtonPress(name) {
+    alert(`Button ${name} pressed`);
+  }
+  removeContact() {
+    this.props.removeContactSync(this.props.contact)
+  }
+
   render() {
     return (
+      <View>
+        <Modal
+          visible={this.state.showCompleteModal}
+          onRequestClose={this.toggleCompleteModal}
+          animationType='fade'
+        >
+          <Completed contact={this.props.contact} screenProps={{ toggle: this.toggleCompleteModal }} />
+        </Modal>
+
       <View style={{backgroundColor: '#ceced2'}}>
         <View style={{position: 'absolute', left: 0, right: 0, height: 75}} pointerEvents='box-none'>
           <Animated.View style={
@@ -56,7 +81,7 @@ class SingleContactRow extends Component {
               }]
             }
             ]}>
-            <TouchableOpacity onPress={this.onButtonPress.bind(this, 'done')} style={styles.button}>
+            <TouchableOpacity onPress={this.toggleCompleteModal.bind(this, 'done')} style={styles.button}>
               <View style={styles.button} />
             </TouchableOpacity>
           </Animated.View>
@@ -75,14 +100,9 @@ class SingleContactRow extends Component {
           </View>
         </Interactable.View>
 
+       </View>
       </View>
     );
-  }
-  onButtonPress(name) {
-    alert(`Button ${name} pressed`);
-  }
-  removeContact() {
-    this.props.removeContactSync(this.props.contact)
   }
 }
 

@@ -58,6 +58,7 @@ class ItemWrapperIOS extends React.Component {
         <Text style={[styles.itemText, {color}]}>
           {title.toUpperCase()}
         </Text>
+
       );
     } else if (icon) {
       content = <Image source={icon} />;
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     color: 'white',
-    fontWeight: 'bold',
+    fontWeight: '300',
     fontSize: 20,
   },
   leftItem: {

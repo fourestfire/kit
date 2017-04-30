@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, Animated, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
+import { StyleSheet, View, Image, Text, Animated, TouchableOpacity, Dimensions, ScrollView, Modal } from 'react-native';
 import Interactable from 'react-native-interactable';
 import Row from './SingleContactRow';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Header from './Header'
+import Header from './Header';
 import Collapsible from 'react-native-collapsible';
+import { BlurView } from 'react-native-blur';
 
 class Today extends Component {
   static navigationOptions = {
     tabBar: {
-      label: 'Today',
+      label: 'Top of Mind',
       icon: ({ tintColor }) => <Icon size={25} name='calendar-check' color={ tintColor }/>
     }
   }
@@ -17,8 +18,13 @@ class Today extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isCollapsed: false
+      isCollapsed: false,
+      viewRef: null,
     }
+  }
+
+  toggleUpdateModal = () => {
+    this.setState({ showUpdateModal: !this.state.showUpdateModal })
   }
 
   render() {
@@ -74,8 +80,8 @@ class Today extends Component {
                     <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
                     <View>
                       <Text style={styles.rowTitle}>{contact.name}</Text>
-                      <Text style={styles.rowSubtitle}>Frequency of contact: {contact.frequency}</Text>
-                      <Text style={styles.rowSubtitle}>Last contact: {contact.lastContact}</Text>
+                      <Text style={styles.rowSubtitle}>{contact.frequency} (Last contact {contact.lastContact})</Text>
+                      <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
 
                     </View>
                   </View>
@@ -98,8 +104,8 @@ class Today extends Component {
                     <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
                     <View>
                       <Text style={styles.rowTitle}>{contact.name}</Text>
-                      <Text style={styles.rowSubtitle}>Frequency of contact: {contact.frequency}</Text>
-                      <Text style={styles.rowSubtitle}>Last contact: {contact.lastContact}</Text>
+                      <Text style={styles.rowSubtitle}>{contact.frequency} (Last contact {contact.lastContact})</Text>
+                      <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
 
                     </View>
                   </View>
@@ -141,6 +147,10 @@ const styles = StyleSheet.create({
   heavyDivider: {
     // borderBottomWidth: 2,
     // borderColor: 'black'
+  },
+  absolute: {
+    position: "absolute",
+    top: 0, left: 0, bottom: 0, right: 0,
   },
   rowHeader: {
     flex: 1,
