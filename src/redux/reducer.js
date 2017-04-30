@@ -60,6 +60,8 @@ let initialState = {
  ],
   today: [],
   tomorrow: [],
+  searchTerm: 'placeholder',
+  results: ['hello']
 };
 
 const store = function(state = initialState, action) {
@@ -68,7 +70,7 @@ const store = function(state = initialState, action) {
     case ADD_CONTACT:
       return Object.assign({}, state, {contacts: [...state.contacts, action.contact]});
     case UPDATE_CONTACT:
-      return Object.assign({}, state, {contacts: action.contacts});
+      return Object.assign({}, state, {contacts: state.contacts.filter(el => el.name !== action.contact.name).concat(action.contact)});
     case REMOVE_CONTACT:
       return Object.assign({}, state, {contacts: state.contacts.filter(el => el !== action.contact)});
 

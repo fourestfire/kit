@@ -33,13 +33,10 @@ var {
   Text,
   View,
 } = ReactNative;
+import Header from './Header'
 
 
 var ListViewSimpleExample = React.createClass({
-  statics: {
-    title: '<ListView>',
-    description: 'Performant, scrollable list of data.'
-  },
 
   getInitialState: function() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -56,11 +53,30 @@ var ListViewSimpleExample = React.createClass({
 
   render: function() {
     return (
+      <View>
+        <Header
+          leftItem={{
+            title: "  ",
+            layout: null,
+            onPress: null,
+            icon: null,
+          }}
+          title="All Contacts"
+          rightItem={{
+            title: "add",
+            layout: null,
+            onPress: null,
+            icon: null,
+          }}
+          content="testcontentnotshowing??"
+          style={{backgroundColor: 'pink'}}
+        />
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this._renderRow}
           renderSeparator={this._renderSeparator}
         />
+      </View>
     );
   },
 
@@ -98,17 +114,17 @@ var ListViewSimpleExample = React.createClass({
     )});
   },
 
-  _renderSeparator: function(sectionID: number, rowID: number, adjacentRowHighlighted: bool) {
-    return (
-      <View
-        key={`${sectionID}-${rowID}`}
-        style={{
-          height: adjacentRowHighlighted ? 4 : 1,
-          backgroundColor: adjacentRowHighlighted ? '#3B5998' : '#CCCCCC',
-        }}
-      />
-    );
-  }
+  // _renderSeparator: function(sectionID: number, rowID: number, adjacentRowHighlighted: bool) {
+  //   return (
+  //     <View
+  //       key={`${sectionID}-${rowID}`}
+  //       style={{
+  //         height: adjacentRowHighlighted ? 4 : 1,
+  //         backgroundColor: adjacentRowHighlighted ? '#3B5998' : '#CCCCCC',
+  //       }}
+  //     />
+  //   );
+  // }
 });
 
 
@@ -129,6 +145,8 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 10,
     backgroundColor: '#F6F6F6',
+    borderBottomWidth: 1,
+    borderColor: 'lightgrey'
   },
   thumb: {
     width: 64,

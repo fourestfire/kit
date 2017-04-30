@@ -14,8 +14,8 @@ class UpdateContact extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      frequency: 'Weekly',
+      name: 'Test',
+      frequency: 'Weeklyyyy',
       values: ['Daily', 'Every 3 days', 'Weekly', 'Every 2 weeks', 'Monthly'],
     }
   }
@@ -27,14 +27,7 @@ class UpdateContact extends Component {
   };
 
   updateContact(contact) {
-    for (let i = 0; i < this.props.store.contacts.length; i++) {
-      if (this.props.store.contacts[i].name === contact.name) {
-        this.props.store.contacts[i] = contact
-        break;
-      }
-    }
-    console.log(contact)
-    this.props.updateContactSync(this.props.store.contacts)
+    this.props.updateContactSync(contact)
     this.props.screenProps.toggle()
   }
 
@@ -44,7 +37,7 @@ class UpdateContact extends Component {
         <View style={styles.secondContainer}>
           <TextInput
             style={styles.input}
-            placeholder='Name'
+            placeholder='Test'
             onChangeText={name=>this.setState({name})}
           />
           <TextInput

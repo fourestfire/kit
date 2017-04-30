@@ -51,13 +51,9 @@ class ItemWrapperIOS extends React.Component {
     if (!item) {
       return null;
     }
-    console.log(item.title, item.item)
     let content;
     const {title, icon, layout, onPress} = item;
-    console.log(item.title, icon, layout, onPress)
-    console.log(title, layout !== 'icon')
     if (layout !== 'icon' && title) {
-              console.log('oh yeah')
       content = (
         <Text style={[styles.itemText, {color}]}>
           {title.toUpperCase()}

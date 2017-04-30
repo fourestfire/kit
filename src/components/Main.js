@@ -12,14 +12,13 @@ import {
 
 // import { StackNavigator } from 'react-navigation';
 import { TabNavigator } from "react-navigation";
-
-import AllContacts from './AllContacts'
+import Today from './Today'
 import MoreContacts from './MoreContacts'
 import AddContact from './AddContact'
 import UpdateContact from './UpdateContact'
 import AsyncStorage from './AsyncStorage'
 import Test from './Test'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import Contacts from 'react-native-contacts'
 
 Contacts.getAllWithoutPhotos((err, contacts) => {
@@ -34,15 +33,16 @@ Contacts.getAllWithoutPhotos((err, contacts) => {
 class HomeScreen extends React.Component {
   static navigationOptions = {
     tabBar: {
-      label: 'Today',
-      icon: ({ tintColor }) => <Icon size={30} name='calendar-check' color={ tintColor }/>
+      label: 'Home',
+      icon: ({ tintColor }) => <Icon size={25} name='md-contacts' color={ tintColor }/>
     }
   };
 
   constructor (props) {
     super(props)
     this.state = {
-      showModal: false
+      showAddModal: false,
+      showUpdateModal: false
     }
   }
 
@@ -54,8 +54,12 @@ class HomeScreen extends React.Component {
     this.props.getTomorrowSync(tomorrow);
   }
 
-  toggleModal = () => {
-    this.setState({ showModal: !this.state.showModal })
+  toggleAddModal = () => {
+    this.setState({ showAddModal: !this.state.showAddModal })
+  }
+
+  toggleUpdateModal = () => {
+    this.setState({ showUpdateModal: !this.state.showUpdateModal })
   }
 
   render() {
@@ -63,27 +67,28 @@ class HomeScreen extends React.Component {
     return (
       <View style={styles.container}>
          <View>
-          <Button title="+ Add a Kit" style={styles.addButton} onPress={this.toggleModal} />
+          <Button title="+ Add a Kit" style={styles.addButton} onPress={this.toggleAddModal} />
+
+        </View>
+
           <Modal
-            visible={this.state.showModal}
-            onRequestClose={this.toggleModal}
+            visible={this.state.showAddModal}
+            onRequestClose={this.toggleAddModal}
             animationType='slide'
           >
-            <AddContact screenProps={{ toggle: this.toggleModal }} />
+            <AddContact screenProps={{ toggle: this.toggleAddModal }} />
           </Modal>
-        </View>
 
          <View>
-          <Button title="Update a Kit" style={styles.addButton} onPress={this.toggleModal} />
+          <Button title="Update a Kit" style={styles.addButton} onPress={this.toggleUpdateModal} />
           <Modal
-            visible={this.state.showModal}
-            onRequestClose={this.toggleModal}
+            visible={this.state.showUpdateModal}
+            onRequestClose={this.toggleUpdateModal}
             animationType='slide'
           >
-            <UpdateContact screenProps={{ toggle: this.toggleModal }} />
+            <UpdateContact screenProps={{ toggle: this.toggleUpdateModal }} />
           </Modal>
         </View>
-
         <View style={styles.contactContainer}>
           <View style={styles.divider} />
           {
@@ -97,7 +102,6 @@ class HomeScreen extends React.Component {
             })
           }
         </View>
-
       </View>
     );
   }
@@ -162,10 +166,10 @@ const mapDispatch = ({ getTodaySync, getTomorrowSync });
 const connectedHome = connect(mapState, mapDispatch)(HomeScreen);
 
 export default kit = TabNavigator({
-  AllContacts: { screen: AllContacts },
+  Today: { screen: Today },
   Home: { screen: connectedHome },
-  // MoreContacts: { screen: MoreContacts },
   Test: { screen: Test },
+  MoreContacts: { screen: MoreContacts },
   // AsyncStorage: { screen: AsyncStorage },
 }, {
   swipeEnabled: true,
@@ -173,18 +177,17 @@ export default kit = TabNavigator({
   style: {
     backgroundColor: 'darkgreen'
   },
+  // tabBarPosition: 'top',
   // lazy: true,
   tabBarOptions: {
     activeTintColor: 'darkgreen',
     style: {
       backgroundColor: 'lavender',
-      height: 70
-    }
-    // labelStyle: {
-    //   fontSize: 12,
-    // },
+      height: 60,
+      // marginTop: 70
+    },
+    labelStyle: {
+      fontSize: 12,
+    },
   },
 });
-
-
-
