@@ -14,20 +14,19 @@ class Complete extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: 'Name',
-      frequency: 'Weekly',
+      msg: 'N/A',
       values: ['Daily', 'Every 3 days', 'Weekly', 'Every 2 weeks', 'Monthly'],
     }
   }
 
-  _onValueChange = (frequency) => {
-    this.setState({
-      frequency: frequency,
-    });
-  };
-
   updateContact(contact) {
     this.props.updateContactSync(contact)
+
+    const today = this.props.store.contacts.filter(el => el.nextContact === 'today')
+    const tomorrow = this.props.store.contacts.filter(el => el.nextContact === 'tomorrow')
+    this.props.getTodaySync(today);
+    this.props.getTomorrowSync(tomorrow);
+
     this.props.screenProps.toggle()
   }
 
@@ -42,14 +41,15 @@ class Complete extends Component {
           <TextInput
             style={styles.input}
             placeholder='Notes'
-            onChangeText={name=>this.setState({name})}
+            onChangeText={msg=>this.setState({msg})}
           />
 
-          <Button title="Complete" onPress={this.updateContact.bind(this, {
-            name: this.state.name,
-            frequency: this.state.frequency,
-            lastContact: 'N/A'
-          }
+          <Button title="Complete" onPress={this.updateContact.bind(this,
+            Object.assign({}, this.props.contact, {
+            lastMsg: this.state.msg,
+            nextContact: 'later',
+            // lastContact: 'N/A'
+            })
           )}/>
         </View>
 
@@ -70,10 +70,10 @@ class Complete extends Component {
 /* -------------------<   CONTAINER   >-------------------- */
 
 import { connect } from 'react-redux';
-import { updateContactSync } from '../redux/reducer';
+import { updateContactSync, getTodaySync, getTomorrowSync } from '../redux/reducer';
 
 const mapState = ({ store }) => ({ store });
-const mapDispatch = ({ updateContactSync });
+const mapDispatch = ({ updateContactSync, getTodaySync, getTomorrowSync });
 
 export default connect(mapState, mapDispatch)(Complete);
 

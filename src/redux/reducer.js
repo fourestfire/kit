@@ -65,8 +65,8 @@ let initialState = {
 };
 
 const store = function(state = initialState, action) {
+  console.log(action)
   switch (action.type) {
-
     case ADD_CONTACT:
       return Object.assign({}, state, {contacts: [...state.contacts, action.contact]});
     case UPDATE_CONTACT:
@@ -88,10 +88,10 @@ const store = function(state = initialState, action) {
 
 /* ---------------<   THUNK DISPATCHERS   >---------------- */
 
-// export const getToday = () => dispatch => {
-//   const contacts = this.props.store.contacts.filter(el => el.nextContact === 'today')
-//   console.log(contacts)
-//   dispatch(getTodaySync(contacts));
-// };
+export const getToday = () => dispatch => {
+  const contacts = state.contacts.filter(el => el.nextContact === 'today')
+  console.log(contacts)
+  dispatch(getTodaySync(contacts));
+};
 
 export default combineReducers({ store });

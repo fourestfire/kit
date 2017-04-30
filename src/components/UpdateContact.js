@@ -55,12 +55,14 @@ class UpdateContact extends Component {
             tintColor='darkgrey'
             onValueChange={this._onValueChange} />
 
-          <Button title="Submit" onPress={this.updateContact.bind(this, {
+          <Button title="Submit" onPress=
+          {this.updateContact.bind(this,
+            Object.assign({}, this.props.contact, {
             name: this.state.name,
             frequency: this.state.frequency,
-            lastContact: 'N/A'
-          }
-          )}/>
+            lastContact: 'N/A'})
+          )}
+          />
         </View>
 
         <TouchableOpacity onPress={this.props.screenProps.toggle} style={{

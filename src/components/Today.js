@@ -23,6 +23,16 @@ class Today extends Component {
     }
   }
 
+  componentWillMount() {
+    const today = this.props.store.contacts.filter(el => el.nextContact === 'today')
+    const tomorrow = this.props.store.contacts.filter(el => el.nextContact === 'tomorrow')
+
+    console.log("mounted today")
+    // console.log('today', today, 'tomorrow', tomorrow)
+    this.props.getTodaySync(today);
+    this.props.getTomorrowSync(tomorrow);
+  }
+
   toggleUpdateModal = () => {
     this.setState({ showUpdateModal: !this.state.showUpdateModal })
   }
@@ -81,7 +91,7 @@ class Today extends Component {
                     <View>
                       <Text style={styles.rowTitle}>{contact.name}</Text>
                       <Text style={styles.rowSubtitle}>{contact.frequency} (Last contact {contact.lastContact})</Text>
-                      <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
+                      <Text style={styles.rowSubtitle}>Prev. note: {contact.lastMsg} </Text>
 
                     </View>
                   </View>
@@ -105,7 +115,7 @@ class Today extends Component {
                     <View>
                       <Text style={styles.rowTitle}>{contact.name}</Text>
                       <Text style={styles.rowSubtitle}>{contact.frequency} (Last contact {contact.lastContact})</Text>
-                      <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
+                      <Text style={styles.rowSubtitle}>Prev. note: {contact.lastMsg} </Text>
 
                     </View>
                   </View>
@@ -123,16 +133,16 @@ class Today extends Component {
 
   onButtonPress() {
     this.setState({ isCollapsed: !this.state.isCollapsed });
-    console.log(this.state.isCollapsed)
   }
 }
 
 /* -------------------<   CONTAINER   >-------------------- */
 
 import { connect } from 'react-redux';
+import { getTodaySync, getTomorrowSync } from '../redux/reducer';
 
 const mapState = ({ store }) => ({ store });
-const mapDispatch = null;
+const mapDispatch = ({ getTodaySync, getTomorrowSync });
 
 export default connect(mapState, mapDispatch)(Today);
 

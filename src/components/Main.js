@@ -46,12 +46,8 @@ class HomeScreen extends React.Component {
     }
   }
 
-  componentDidMount() {
-    const today = this.props.store.contacts.filter(el => el.nextContact === 'today')
-    const tomorrow = this.props.store.contacts.filter(el => el.nextContact === 'tomorrow')
-    // console.log('today', today, 'tomorrow', tomorrow)
-    this.props.getTodaySync(today);
-    this.props.getTomorrowSync(tomorrow);
+  componentDidMount(){
+    console.log("mounted main")
   }
 
   toggleAddModal = () => {
@@ -158,16 +154,15 @@ const styles = StyleSheet.create({
 /* -------------------<   CONTAINER   >-------------------- */
 
 import { connect } from 'react-redux';
-import { getTodaySync, getTomorrowSync } from '../redux/reducer';
 
 const mapState = ({ store }) => ({ store });
-const mapDispatch = ({ getTodaySync, getTomorrowSync });
+const mapDispatch = null;
 
 const connectedHome = connect(mapState, mapDispatch)(HomeScreen);
 
 export default kit = TabNavigator({
-  Today: { screen: Today },
   Home: { screen: connectedHome },
+  Today: { screen: Today },
   // Test: { screen: Test },
   MoreContacts: { screen: MoreContacts },
   // AsyncStorage: { screen: AsyncStorage },

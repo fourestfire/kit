@@ -33,7 +33,7 @@ class SingleContactRow extends Component {
           onRequestClose={this.toggleCompleteModal}
           animationType='fade'
         >
-          <Completed contact={this.props.contact} screenProps={{ toggle: this.toggleCompleteModal }} />
+          <Complete contact={this.props.contact} screenProps={{ toggle: this.toggleCompleteModal }} />
         </Modal>
 
       <View style={{backgroundColor: '#ceced2'}}>
