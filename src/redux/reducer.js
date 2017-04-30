@@ -7,8 +7,6 @@ const UPDATE_CONTACT = 'UPDATE_CONTACT';
 const REMOVE_CONTACT = 'REMOVE_CONTACT';
 
 const GET_ALL_CONTACTS = 'GET_ALL_CONTACTS';
-const GET_TODAY = 'GET_TODAY';
-const GET_TOMORROW = 'GET_TOMORROW';
 
 /* ---------------<   ACTION CREATORS   >------------------- */
 
@@ -16,8 +14,6 @@ export const addContactSync = contact => ({ type: ADD_CONTACT, contact });
 export const updateContactSync = contact => ({ type: UPDATE_CONTACT, contact });
 export const removeContactSync = contact => ({ type: REMOVE_CONTACT, contact });
 
-export const getTodaySync = contacts => ({ type: GET_TODAY, contacts });
-export const getTomorrowSync = contacts => ({ type: GET_TOMORROW, contacts });
 export const getAllContactsSync = contacts => ({ type: GET_ALL_CONTACTS, contacts });
 
 /* -------------------<   REDUCERS   >--------------------- */
@@ -58,8 +54,6 @@ let initialState = {
       color: 'darkgreen',
     },
  ],
-  today: [],
-  tomorrow: [],
   searchTerm: 'placeholder',
   results: ['hello']
 };
@@ -76,10 +70,6 @@ const store = function(state = initialState, action) {
 
     case GET_ALL_CONTACTS:
       return Object.assign({}, state, {contacts: action.contacts});
-    case GET_TODAY:
-      return Object.assign({}, state, {today: action.contacts});
-    case GET_TOMORROW:
-      return Object.assign({}, state, {tomorrow: action.contacts});
 
     default:
       return state;
@@ -88,10 +78,10 @@ const store = function(state = initialState, action) {
 
 /* ---------------<   THUNK DISPATCHERS   >---------------- */
 
-export const getToday = () => dispatch => {
-  const contacts = state.contacts.filter(el => el.nextContact === 'today')
-  console.log(contacts)
-  dispatch(getTodaySync(contacts));
-};
+// export const getToday = () => dispatch => {
+//   const contacts = state.contacts.filter(el => el.nextContact === 'today')
+//   console.log(contacts)
+//   dispatch(getTodaySync(contacts));
+// };
 
 export default combineReducers({ store });

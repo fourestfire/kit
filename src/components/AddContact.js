@@ -58,6 +58,7 @@ class AddContact extends Component {
           <Button title="Submit" onPress={this.addContact.bind(this, {
             name: this.state.name,
             frequency: this.state.frequency,
+            nextContact: 'today',
             lastContact: 'N/A'
           }
           )}/>

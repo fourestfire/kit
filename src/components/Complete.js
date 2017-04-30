@@ -5,7 +5,6 @@ import {
   TextInput,
   StyleSheet,
   Button,
-  SegmentedControlIOS,
   TouchableOpacity
 } from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -21,12 +20,6 @@ class Complete extends Component {
 
   updateContact(contact) {
     this.props.updateContactSync(contact)
-
-    const today = this.props.store.contacts.filter(el => el.nextContact === 'today')
-    const tomorrow = this.props.store.contacts.filter(el => el.nextContact === 'tomorrow')
-    this.props.getTodaySync(today);
-    this.props.getTomorrowSync(tomorrow);
-
     this.props.screenProps.toggle()
   }
 
@@ -70,10 +63,10 @@ class Complete extends Component {
 /* -------------------<   CONTAINER   >-------------------- */
 
 import { connect } from 'react-redux';
-import { updateContactSync, getTodaySync, getTomorrowSync } from '../redux/reducer';
+import { updateContactSync } from '../redux/reducer';
 
 const mapState = ({ store }) => ({ store });
-const mapDispatch = ({ updateContactSync, getTodaySync, getTomorrowSync });
+const mapDispatch = ({ updateContactSync });
 
 export default connect(mapState, mapDispatch)(Complete);
 

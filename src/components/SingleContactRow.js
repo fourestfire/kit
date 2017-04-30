@@ -21,6 +21,7 @@ class SingleContactRow extends Component {
   onButtonPress(name) {
     alert(`Button ${name} pressed`);
   }
+
   removeContact() {
     this.props.removeContactSync(this.props.contact)
   }
@@ -108,12 +109,12 @@ class SingleContactRow extends Component {
 
 /* -------------------<   CONTAINER   >-------------------- */
 
-import { addContactSync, removeContactSync, getTodaySync } from '../redux/reducer';
+import { addContactSync, removeContactSync } from '../redux/reducer';
 
 import { connect } from 'react-redux';
 
 const mapStateRow = ({ store }) => ({ store });
-const mapDispatchRow = ({ addContactSync, removeContactSync, getTodaySync });
+const mapDispatchRow = ({ addContactSync, removeContactSync });
 
 export default connect(mapStateRow, mapDispatchRow)(SingleContactRow);
 

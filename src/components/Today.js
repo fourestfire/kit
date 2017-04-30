@@ -23,16 +23,6 @@ class Today extends Component {
     }
   }
 
-  componentWillMount() {
-    const today = this.props.store.contacts.filter(el => el.nextContact === 'today')
-    const tomorrow = this.props.store.contacts.filter(el => el.nextContact === 'tomorrow')
-
-    console.log("mounted today")
-    // console.log('today', today, 'tomorrow', tomorrow)
-    this.props.getTodaySync(today);
-    this.props.getTomorrowSync(tomorrow);
-  }
-
   toggleUpdateModal = () => {
     this.setState({ showUpdateModal: !this.state.showUpdateModal })
   }
@@ -83,20 +73,22 @@ class Today extends Component {
 
           <Collapsible collapsed={this.state.isCollapsed}>
           {
-            this.props.store.today.map((contact) => {
-              return (
-                <Row key={contact.name} physics={physics} contact={contact}>
-                  <View style={styles.rowContent}>
-                    <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
-                    <View>
-                      <Text style={styles.rowTitle}>{contact.name}</Text>
-                      <Text style={styles.rowSubtitle}>{contact.frequency} (Last contact {contact.lastContact})</Text>
-                      <Text style={styles.rowSubtitle}>Prev. note: {contact.lastMsg} </Text>
+            this.props.store.contacts
+              .filter(el => el.nextContact === 'today')
+              .map((contact) => {
+                return (
+                  <Row key={contact.name} physics={physics} contact={contact}>
+                    <View style={styles.rowContent}>
+                      <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
+                      <View>
+                        <Text style={styles.rowTitle}>{contact.name}</Text>
+                        <Text style={styles.rowSubtitle}>{contact.frequency} (Last contact {contact.lastContact})</Text>
+                        <Text style={styles.rowSubtitle}>Prev. note: {contact.lastMsg} </Text>
 
+                      </View>
                     </View>
-                  </View>
-                </Row>
-              );
+                  </Row>
+                );
             })
           }
         </Collapsible>
@@ -107,20 +99,22 @@ class Today extends Component {
 
           <Collapsible collapsed={this.state.isCollapsed}>
           {
-            this.props.store.tomorrow.map((contact) => {
-              return (
-                <Row key={contact.name} physics={physics} contact={contact}>
-                  <View style={styles.rowContent}>
-                    <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
-                    <View>
-                      <Text style={styles.rowTitle}>{contact.name}</Text>
-                      <Text style={styles.rowSubtitle}>{contact.frequency} (Last contact {contact.lastContact})</Text>
-                      <Text style={styles.rowSubtitle}>Prev. note: {contact.lastMsg} </Text>
+            this.props.store.contacts
+              .filter(el => el.nextContact === 'tomorrow')
+              .map((contact) => {
+                return (
+                  <Row key={contact.name} physics={physics} contact={contact}>
+                    <View style={styles.rowContent}>
+                      <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
+                      <View>
+                        <Text style={styles.rowTitle}>{contact.name}</Text>
+                        <Text style={styles.rowSubtitle}>{contact.frequency} (Last contact {contact.lastContact})</Text>
+                        <Text style={styles.rowSubtitle}>Prev. note: {contact.lastMsg} </Text>
 
+                      </View>
                     </View>
-                  </View>
-                </Row>
-              );
+                  </Row>
+                );
             })
           }
         </Collapsible>
@@ -139,10 +133,10 @@ class Today extends Component {
 /* -------------------<   CONTAINER   >-------------------- */
 
 import { connect } from 'react-redux';
-import { getTodaySync, getTomorrowSync } from '../redux/reducer';
+import { } from '../redux/reducer';
 
 const mapState = ({ store }) => ({ store });
-const mapDispatch = ({ getTodaySync, getTomorrowSync });
+const mapDispatch = null;
 
 export default connect(mapState, mapDispatch)(Today);
 
