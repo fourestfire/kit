@@ -33,6 +33,14 @@ class Today extends Component {
     }
   }
 
+  convertFrequency = (frequency) => {
+    if (frequency === 1) return 'Daily'
+    if (frequency === 7) return 'Weekly'
+    if (frequency === 30 || frequency === 31) return 'Monthly'
+    if (frequency === 14) return 'Bi-Weekly'
+    else return `Every ${frequency} Days`
+  }
+
   toggleAddModal = () => {
     this.setState({ showAddModal: !this.state.showAddModal })
   }
@@ -110,9 +118,9 @@ class Today extends Component {
           <View style={styles.heavyDivider} />
 
           {/* Populate Today column if person's date is same as today's or before it */}
-          <TouchableOpacity onPress={this.toggleTodayCollapse.bind(this)} >
+          <TouchableOpacity activeOpacity={0.8} onPress={this.toggleTodayCollapse.bind(this)} >
             <View style={styles.rowHeader}>
-              <Text style={styles.rowHeaderText}> {this.state.isTodayCollapsed ? <Icon size={30} name='ios-arrow-dropup' /> : <Icon size={30} name='ios-arrow-dropdown' />}   Today
+              <Text style={styles.rowHeaderText}> {this.state.isTodayCollapsed ? <Icon size={30} name='ios-arrow-up' /> : <Icon size={30} name='ios-arrow-down' />}   Today
               </Text>
             </View>
           </TouchableOpacity>
@@ -129,7 +137,7 @@ class Today extends Component {
                           <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
                           <View>
                             <Text style={styles.rowTitle}>{contact.firstName} {contact.lastName}</Text>
-                            <Text style={styles.rowSubtitle}>{contact.frequency} (Last contact {moment(contact.lastContact).format('L')})</Text>
+                            <Text style={styles.rowSubtitle}>{this.convertFrequency(contact.frequency)} (Last contact {moment(contact.lastContact).format('L')})</Text>
                             <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
 
                           </View>
@@ -143,9 +151,9 @@ class Today extends Component {
 
 
         {/* Populate Tomorrow column */}
-        <TouchableOpacity onPress={this.toggleTomorrowCollapse.bind(this)} >
+        <TouchableOpacity activeOpacity={0.8} onPress={this.toggleTomorrowCollapse.bind(this)} >
           <View style={styles.rowHeader}>
-            <Text style={styles.rowHeaderText}> {this.state.isTomorrowCollapsed ? <Icon size={30} name='ios-arrow-dropup' /> : <Icon size={30} name='ios-arrow-dropdown' />}   Tomorrow
+            <Text style={styles.rowHeaderText}> {this.state.isTomorrowCollapsed ? <Icon size={30} name='ios-arrow-up' /> : <Icon size={30} name='ios-arrow-down' />}   Tomorrow
             </Text>
           </View>
         </TouchableOpacity>
@@ -162,7 +170,7 @@ class Today extends Component {
                       <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
                       <View>
                         <Text style={styles.rowTitle}>{contact.firstName} {contact.lastName}</Text>
-                        <Text style={styles.rowSubtitle}>{contact.frequency} (Last contact {moment(contact.lastContact).format('L')})</Text>
+                        <Text style={styles.rowSubtitle}>{this.convertFrequency(contact.frequency)} (Last contact {moment(contact.lastContact).format('L')})</Text>
                         <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
                       </View>
                     </View>
@@ -174,9 +182,9 @@ class Today extends Component {
       </Collapsible>
 
        {/* Populate This Week column */}
-        <TouchableOpacity onPress={this.toggleWeekCollapse.bind(this)} >
+        <TouchableOpacity activeOpacity={0.8} onPress={this.toggleWeekCollapse.bind(this)} >
           <View style={styles.rowHeader}>
-            <Text style={styles.rowHeaderText}> {this.state.isWeekCollapsed ? <Icon size={30} name='ios-arrow-dropup' /> : <Icon size={30} name='ios-arrow-dropdown' />}   Rest of Week
+            <Text style={styles.rowHeaderText}> {this.state.isWeekCollapsed ? <Icon size={30} name='ios-arrow-up' /> : <Icon size={30} name='ios-arrow-down' />}   Rest of Week
             </Text>
           </View>
         </TouchableOpacity>
@@ -193,7 +201,7 @@ class Today extends Component {
                       <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
                       <View>
                         <Text style={styles.rowTitle}>{contact.firstName} {contact.lastName}</Text>
-                        <Text style={styles.rowSubtitle}>{contact.frequency} (Last contact {moment(contact.lastContact).format('L')})</Text>
+                        <Text style={styles.rowSubtitle}>{this.convertFrequency(contact.frequency)} (Last contact {moment(contact.lastContact).format('L')})</Text>
                         <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
                       </View>
                     </View>
@@ -205,9 +213,9 @@ class Today extends Component {
       </Collapsible>
 
       {/* Populate Later column */}
-        <TouchableOpacity onPress={this.toggleLaterCollapse.bind(this)} >
+        <TouchableOpacity activeOpacity={0.8} onPress={this.toggleLaterCollapse.bind(this)} >
           <View style={styles.rowHeader}>
-            <Text style={styles.rowHeaderText}> {this.state.isLaterCollapsed ? <Icon size={30} name='ios-arrow-dropup' /> : <Icon size={30} name='ios-arrow-dropdown' />}   Later
+            <Text style={styles.rowHeaderText}> {this.state.isLaterCollapsed ? <Icon size={30} name='ios-arrow-up' /> : <Icon size={30} name='ios-arrow-down' />}   Later
             </Text>
           </View>
         </TouchableOpacity>
@@ -224,7 +232,7 @@ class Today extends Component {
                       <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
                       <View>
                         <Text style={styles.rowTitle}>{contact.firstName} {contact.lastName}</Text>
-                        <Text style={styles.rowSubtitle}>{contact.frequency} (Last contact {moment(contact.lastContact).format('L')})</Text>
+                        <Text style={styles.rowSubtitle}>{this.convertFrequency(contact.frequency)} (Last contact {moment(contact.lastContact).format('L')})</Text>
                         <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
                       </View>
                     </View>

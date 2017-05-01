@@ -33,11 +33,12 @@ class Complete extends Component {
       <View style={styles.container}>
         <View style={styles.secondContainer}>
           <Text style={styles.text}>
-            (Optional) In 30 characters or less, what did you talk with {this.props.contact.firstName} about today?
+            Briefly, what did you talk with {this.props.contact.firstName} about today?
           </Text>
 
           <TextInput
             style={styles.input}
+            autoFocus={true}
             placeholder='Notes'
             onChangeText={msg=>this.setState({msg})}
           />
