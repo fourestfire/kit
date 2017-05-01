@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, Animated, TouchableOpacity, Dimensions, ScrollView, Modal } from 'react-native';
 import Interactable from 'react-native-interactable';
 import Row from './SingleContactRow';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import Header from './Header';
 import Collapsible from 'react-native-collapsible';
 import { BlurView } from 'react-native-blur';
@@ -14,7 +15,7 @@ class Today extends Component {
   static navigationOptions = {
     tabBar: {
       label: 'Today',
-      icon: ({ tintColor }) => <Icon size={25} name='calendar-check' color={ tintColor }/>
+      icon: ({ tintColor }) => <MIcon size={25} name='calendar-check' color={ tintColor }/>
     }
   }
 
@@ -49,11 +50,11 @@ class Today extends Component {
   }
 
   toggleWeekCollapse() {
-    this.setState({ isTomorrowCollapsed: !this.state.isTomorrowCollapsed });
+    this.setState({ isWeekCollapsed: !this.state.isWeekCollapsed });
   }
 
   toggleLaterCollapse() {
-    this.setState({ isTomorrowCollapsed: !this.state.isTomorrowCollapsed });
+    this.setState({ isLaterCollapsed: !this.state.isLaterCollapsed });
   }
 
   render() {
@@ -66,7 +67,7 @@ class Today extends Component {
       <ScrollView showsVerticalScrollIndicator={false} bounces={true} style={styles.container}>
 
       <View style={styles.logo}>
-       <Text> (Hello it's me!) </Text>
+        <Icon size={80} name='logo-nodejs' />
       </View>
 
       <Header
@@ -111,7 +112,8 @@ class Today extends Component {
           {/* Populate Today column if person's date is same as today's or before it */}
           <TouchableOpacity onPress={this.toggleTodayCollapse.bind(this)} >
             <View style={styles.rowHeader}>
-              <Text style={styles.rowHeaderText}> Today </Text>
+              <Text style={styles.rowHeaderText}> {this.state.isTodayCollapsed ? <Icon size={30} name='ios-arrow-dropup' /> : <Icon size={30} name='ios-arrow-dropdown' />}   Today
+              </Text>
             </View>
           </TouchableOpacity>
 
@@ -121,8 +123,8 @@ class Today extends Component {
                 .filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day'))
                 .map((contact) => {
                   return (
-                    <TouchableOpacity activeOpacity={0.9} onPress={this.toggleUpdateModal.bind(this, contact)} >
-                      <Row key={contact.firstName} physics={physics} contact={contact}>
+                    <TouchableOpacity activeOpacity={0.9} onPress={this.toggleUpdateModal.bind(this, contact)} key={contact.firstName}>
+                      <Row physics={physics} contact={contact}>
                         <View style={styles.rowContent}>
                           <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
                           <View>
@@ -143,18 +145,81 @@ class Today extends Component {
         {/* Populate Tomorrow column */}
         <TouchableOpacity onPress={this.toggleTomorrowCollapse.bind(this)} >
           <View style={styles.rowHeader}>
-            <Text style={styles.rowHeaderText}> Tomorrow </Text>
+            <Text style={styles.rowHeaderText}> {this.state.isTomorrowCollapsed ? <Icon size={30} name='ios-arrow-dropup' /> : <Icon size={30} name='ios-arrow-dropdown' />}   Tomorrow
+            </Text>
           </View>
         </TouchableOpacity>
 
         <Collapsible collapsed={this.state.isTomorrowCollapsed}>
         {
           this.props.store.contacts
-            .filter(el => moment(el.nextContact).subtract(1, 'day').isSame(moment(), 'day'))
+            .filter(el => moment(el.nextContact).isSame(moment().add(1, 'day'), 'day'))
             .map((contact) => {
               return (
-                <TouchableOpacity activeOpacity={0.9} onPress={this.toggleUpdateModal.bind(this, contact)} >
-                  <Row key={contact.firstName} physics={physics} contact={contact}>
+                <TouchableOpacity activeOpacity={0.9} onPress={this.toggleUpdateModal.bind(this, contact)} key={contact.firstName} >
+                  <Row physics={physics} contact={contact}>
+                    <View style={styles.rowContent}>
+                      <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
+                      <View>
+                        <Text style={styles.rowTitle}>{contact.firstName} {contact.lastName}</Text>
+                        <Text style={styles.rowSubtitle}>{contact.frequency} (Last contact {moment(contact.lastContact).format('L')})</Text>
+                        <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
+                      </View>
+                    </View>
+                  </Row>
+                </TouchableOpacity>
+              );
+          })
+        }
+      </Collapsible>
+
+       {/* Populate This Week column */}
+        <TouchableOpacity onPress={this.toggleWeekCollapse.bind(this)} >
+          <View style={styles.rowHeader}>
+            <Text style={styles.rowHeaderText}> {this.state.isWeekCollapsed ? <Icon size={30} name='ios-arrow-dropup' /> : <Icon size={30} name='ios-arrow-dropdown' />}   Rest of Week
+            </Text>
+          </View>
+        </TouchableOpacity>
+
+        <Collapsible collapsed={this.state.isWeekCollapsed}>
+        {
+          this.props.store.contacts
+            .filter(el => moment(el.nextContact).isBetween(moment().add(2, 'day'), moment().add(7, 'day'), 'day'))
+            .map((contact) => {
+              return (
+                <TouchableOpacity activeOpacity={0.9} onPress={this.toggleUpdateModal.bind(this, contact)} key={contact.firstName} >
+                  <Row physics={physics} contact={contact}>
+                    <View style={styles.rowContent}>
+                      <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
+                      <View>
+                        <Text style={styles.rowTitle}>{contact.firstName} {contact.lastName}</Text>
+                        <Text style={styles.rowSubtitle}>{contact.frequency} (Last contact {moment(contact.lastContact).format('L')})</Text>
+                        <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
+                      </View>
+                    </View>
+                  </Row>
+                </TouchableOpacity>
+              );
+          })
+        }
+      </Collapsible>
+
+      {/* Populate Later column */}
+        <TouchableOpacity onPress={this.toggleLaterCollapse.bind(this)} >
+          <View style={styles.rowHeader}>
+            <Text style={styles.rowHeaderText}> {this.state.isLaterCollapsed ? <Icon size={30} name='ios-arrow-dropup' /> : <Icon size={30} name='ios-arrow-dropdown' />}   Later
+            </Text>
+          </View>
+        </TouchableOpacity>
+
+        <Collapsible collapsed={this.state.isLaterCollapsed}>
+        {
+          this.props.store.contacts
+            .filter(el => moment(el.nextContact).isAfter(moment().add(7, 'day'), 'day'))
+            .map((contact) => {
+              return (
+                <TouchableOpacity activeOpacity={0.9} onPress={this.toggleUpdateModal.bind(this, contact)} key={contact.firstName}>
+                  <Row physics={physics} contact={contact}>
                     <View style={styles.rowContent}>
                       <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
                       <View>
@@ -207,7 +272,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'lightgrey',
     height: 50,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    borderColor: 'darkgray',
+    borderBottomWidth: 1,
   },
   rowHeaderText: {
     fontSize: 30,

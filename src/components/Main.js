@@ -51,7 +51,7 @@ class HomeScreen extends React.Component {
     console.log("mounted main")
     let m = moment()
     console.log(moment().format('x'))
-    m.add(1, 'd');
+    m.add(20, 'd');
     console.log("newdate", m.format('x'))
 
   }
