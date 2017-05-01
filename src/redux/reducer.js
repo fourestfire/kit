@@ -25,7 +25,7 @@ let initialState = {
       lastName: 'Smith',
       frequency: 7,
       lastContact: 1493190000000,
-      nextContact: 1493597308000, // need to fix
+      nextContact: 1493597308000,
       lastMsg: 'We talked about dinosaurs',
       phoneNum: '1-324-351-2504',
       color: 'purple',
@@ -68,7 +68,7 @@ const store = function(state = initialState, action) {
     case ADD_CONTACT:
       return Object.assign({}, state, {contacts: [...state.contacts, action.contact]});
     case UPDATE_CONTACT:
-      return Object.assign({}, state, {contacts: state.contacts.filter(el => el.name !== action.contact.name).concat(action.contact)});
+      return Object.assign({}, state, {contacts: state.contacts.filter(el => el.firstName !== action.contact.firstName).concat(action.contact)});
     case REMOVE_CONTACT:
       return Object.assign({}, state, {contacts: state.contacts.filter(el => el !== action.contact)});
 

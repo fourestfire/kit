@@ -8,7 +8,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import moment from 'moment';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 class Complete extends Component {
   constructor(props) {
@@ -24,13 +24,15 @@ class Complete extends Component {
   }
 
   render() {
-    const nextContactDate = moment(this.props.contact.lastContact).add(this.props.contact.frequency, 'days')
+    const lastContactDate = parseInt(moment().format('x'), 10)
+    const nextContactDate = parseInt(moment(this.props.contact.lastContact).add(this.props.contact.frequency + 1, 'days').format('x'), 10)
+    console.log(lastContactDate, this.props.contact.frequency, this.props.contact.frequency + 1, typeof(this.props.contact.frequency))
 
     return (
       <View style={styles.container}>
         <View style={styles.secondContainer}>
           <Text style={styles.text}>
-            (Optional) In 30 characters or less, what did you talk with {this.props.contact.name} about today?
+            (Optional) In 30 characters or less, what did you talk with {this.props.contact.firstName} about today?
           </Text>
 
           <TextInput
@@ -43,7 +45,7 @@ class Complete extends Component {
             Object.assign({}, this.props.contact, {
             lastMsg: this.state.msg,
             nextContact: nextContactDate,
-            lastContact: moment().format('x')
+            lastContact: lastContactDate,
             })
           )}/>
         </View>
@@ -54,7 +56,7 @@ class Complete extends Component {
             paddingHorizontal: 10,
             zIndex: 10
           }}>
-          <Icon name="close" size={35} color="darkgrey" />
+          <Icon name="ios-close-circle-outline" size={35} color="darkgrey" />
         </TouchableOpacity>
 
       </View>

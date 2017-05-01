@@ -32,6 +32,7 @@ class UpdateContact extends Component {
   }
 
   render() {
+    console.log(this.props.contact)
     return (
       <View style={styles.container}>
         <View style={styles.secondContainer}>

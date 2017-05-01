@@ -3,6 +3,8 @@ import { StyleSheet, View, Image, Text, Animated, TouchableOpacity, Dimensions, 
 import Interactable from 'react-native-interactable';
 import Complete from './Complete';
 import Communications from 'react-native-communications';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Screen = Dimensions.get('window');
 
@@ -51,8 +53,8 @@ class SingleContactRow extends Component {
             }
           ]}>
             {/*<TouchableOpacity onPress={this.removeContact.bind(this, 'remove')} style={styles.button}>*/}
-            <TouchableOpacity onPress={() => Communications.phonecall('0123456789', true)}>
-              <View style={styles.button} />
+            <TouchableOpacity onPress={() => Communications.phonecall(this.props.contact.phoneNum, true)} style={styles.button}>
+              <Icon name="phone" size={35} color="white" />
             </TouchableOpacity>
           </Animated.View>
 
@@ -66,8 +68,8 @@ class SingleContactRow extends Component {
               }]
             }
             ]}>
-            <TouchableOpacity onPress={() => Communications.text('8885555512', "Hey! Haven't talked to you in a while. What's up?")}>
-              <View style={styles.button} />
+            <TouchableOpacity style={styles.button} onPress={() => Communications.text('8885555512', "Hey! Haven't talked to you in a while. What's up?")}>
+              <MIcon name="message-text" size={35} color="white" />
             </TouchableOpacity>
           </Animated.View>
         </View>
@@ -85,7 +87,7 @@ class SingleContactRow extends Component {
             }
             ]}>
             <TouchableOpacity onPress={this.toggleCompleteModal.bind(this, 'done')} style={styles.button}>
-              <View style={styles.button} />
+              <Icon name="check" size={35} color="white" />
             </TouchableOpacity>
           </Animated.View>
         </View>
@@ -130,7 +132,9 @@ const styles = StyleSheet.create({
   button: {
     width: 40,
     height: 40,
-    backgroundColor: 'salmon',
+    alignItems: 'center',
+    justifyContent: 'center',
+    // backgroundColor: 'salmon',
   },
   removeHolder: {
     position: 'absolute',

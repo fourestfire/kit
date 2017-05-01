@@ -7,6 +7,8 @@ import Header from './Header';
 import Collapsible from 'react-native-collapsible';
 import { BlurView } from 'react-native-blur';
 import moment from 'moment';
+import AddContact from './AddContact'
+import UpdateContact from './UpdateContact'
 
 class Today extends Component {
   static navigationOptions = {
@@ -21,12 +23,21 @@ class Today extends Component {
     this.state = {
       isTodayCollapsed: false,
       isTomorrowCollapsed: false,
+      isWeekCollapsed: true,
+      isLaterCollapsed: true,
       viewRef: null,
+      showAddModal: false,
+      showUpdateModal: false,
+      updateModalContact: {}
     }
   }
 
-  toggleUpdateModal = () => {
-    this.setState({ showUpdateModal: !this.state.showUpdateModal })
+  toggleAddModal = () => {
+    this.setState({ showAddModal: !this.state.showAddModal })
+  }
+
+  toggleUpdateModal = (contact) => {
+    this.setState({ showUpdateModal: !this.state.showUpdateModal, updateModalContact: contact})
   }
 
   toggleTodayCollapse() {
@@ -34,6 +45,14 @@ class Today extends Component {
   }
 
   toggleTomorrowCollapse() {
+    this.setState({ isTomorrowCollapsed: !this.state.isTomorrowCollapsed });
+  }
+
+  toggleWeekCollapse() {
+    this.setState({ isTomorrowCollapsed: !this.state.isTomorrowCollapsed });
+  }
+
+  toggleLaterCollapse() {
     this.setState({ isTomorrowCollapsed: !this.state.isTomorrowCollapsed });
   }
 
@@ -52,16 +71,16 @@ class Today extends Component {
 
       <Header
         leftItem={{
-          title: null,
+          title: 'settings',
           layout: null,
           onPress: null,
-          icon: null,
+          icon: null
         }}
-        title="In the Moment"
+        title="keep in touch"
         rightItem={{
-          title: null,
+          title: '     add',
           layout: null,
-          onPress: null,
+          onPress: () => this.toggleAddModal(),
           icon: null,
         }}
         content="testcontentnotshowing??"
@@ -69,6 +88,23 @@ class Today extends Component {
       />
 
         <View style={styles.container}>
+
+          <Modal
+            visible={this.state.showAddModal}
+            onRequestClose={this.toggleAddModal}
+            animationType='slide'
+          >
+            <AddContact screenProps={{ toggle: this.toggleAddModal }} />
+          </Modal>
+
+          <Modal
+            visible={this.state.showUpdateModal}
+            onRequestClose={this.toggleUpdateModal}
+            animationType='slide'
+          >
+            <UpdateContact screenProps={{ toggle: this.toggleUpdateModal }} contact={this.state.updateModalContact} />
+          </Modal>
+
 
           <View style={styles.heavyDivider} />
 
@@ -79,27 +115,30 @@ class Today extends Component {
             </View>
           </TouchableOpacity>
 
-          <Collapsible collapsed={this.state.isTodayCollapsed}>
-          {
-            this.props.store.contacts
-              .filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day'))
-              .map((contact) => {
-                return (
-                  <Row key={contact.firstName} physics={physics} contact={contact}>
-                    <View style={styles.rowContent}>
-                      <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
-                      <View>
-                        <Text style={styles.rowTitle}>{contact.firstName} {contact.lastName}</Text>
-                        <Text style={styles.rowSubtitle}>{contact.frequency} (Last contact {moment(contact.lastContact).format('L')})</Text>
-                        <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
+            <Collapsible collapsed={this.state.isTodayCollapsed}>
+            {
+              this.props.store.contacts
+                .filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day'))
+                .map((contact) => {
+                  return (
+                    <TouchableOpacity activeOpacity={0.9} onPress={this.toggleUpdateModal.bind(this, contact)} >
+                      <Row key={contact.firstName} physics={physics} contact={contact}>
+                        <View style={styles.rowContent}>
+                          <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
+                          <View>
+                            <Text style={styles.rowTitle}>{contact.firstName} {contact.lastName}</Text>
+                            <Text style={styles.rowSubtitle}>{contact.frequency} (Last contact {moment(contact.lastContact).format('L')})</Text>
+                            <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
 
-                      </View>
-                    </View>
-                  </Row>
-                );
-            })
-          }
-        </Collapsible>
+                          </View>
+                        </View>
+                      </Row>
+                    </TouchableOpacity>
+                  );
+                })
+              }
+            </Collapsible>
+
 
         {/* Populate Tomorrow column */}
         <TouchableOpacity onPress={this.toggleTomorrowCollapse.bind(this)} >
@@ -114,17 +153,18 @@ class Today extends Component {
             .filter(el => moment(el.nextContact).subtract(1, 'day').isSame(moment(), 'day'))
             .map((contact) => {
               return (
-                <Row key={contact.firstName} physics={physics} contact={contact}>
-                  <View style={styles.rowContent}>
-                    <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
-                    <View>
-                      <Text style={styles.rowTitle}>{contact.firstName} {contact.lastName}</Text>
-                      <Text style={styles.rowSubtitle}>{contact.frequency} (Last contact {moment(contact.lastContact).format('L')})</Text>
-                      <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
-
+                <TouchableOpacity activeOpacity={0.9} onPress={this.toggleUpdateModal.bind(this, contact)} >
+                  <Row key={contact.firstName} physics={physics} contact={contact}>
+                    <View style={styles.rowContent}>
+                      <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
+                      <View>
+                        <Text style={styles.rowTitle}>{contact.firstName} {contact.lastName}</Text>
+                        <Text style={styles.rowSubtitle}>{contact.frequency} (Last contact {moment(contact.lastContact).format('L')})</Text>
+                        <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
+                      </View>
                     </View>
-                  </View>
-                </Row>
+                  </Row>
+                </TouchableOpacity>
               );
           })
         }

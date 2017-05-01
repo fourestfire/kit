@@ -178,7 +178,7 @@ export default kit = TabNavigator({
   MoreContacts: { screen: MoreContacts },
   // AsyncStorage: { screen: AsyncStorage },
 }, {
-  swipeEnabled: true,
+  // swipeEnabled: true,
   animationEnabled: true,
   style: {
     backgroundColor: 'purple'
@@ -189,7 +189,7 @@ export default kit = TabNavigator({
     activeTintColor: 'purple',
     style: {
       backgroundColor: 'aliceblue',
-      height: 60,
+      height: 1,
       // marginTop: 70
     },
     labelStyle: {
