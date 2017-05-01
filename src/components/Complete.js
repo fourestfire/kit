@@ -7,6 +7,7 @@ import {
   Button,
   TouchableOpacity
 } from 'react-native';
+import moment from 'moment';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 
 class Complete extends Component {
@@ -14,7 +15,6 @@ class Complete extends Component {
     super(props);
     this.state = {
       msg: 'N/A',
-      values: ['Daily', 'Every 3 days', 'Weekly', 'Every 2 weeks', 'Monthly'],
     }
   }
 
@@ -24,6 +24,8 @@ class Complete extends Component {
   }
 
   render() {
+    const nextContactDate = moment(this.props.contact.lastContact).add(this.props.contact.frequency, 'days')
+
     return (
       <View style={styles.container}>
         <View style={styles.secondContainer}>
@@ -40,8 +42,8 @@ class Complete extends Component {
           <Button title="Complete" onPress={this.updateContact.bind(this,
             Object.assign({}, this.props.contact, {
             lastMsg: this.state.msg,
-            nextContact: 'later',
-            // lastContact: 'N/A'
+            nextContact: nextContactDate,
+            lastContact: moment().format('x')
             })
           )}/>
         </View>

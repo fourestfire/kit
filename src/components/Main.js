@@ -19,7 +19,8 @@ import UpdateContact from './UpdateContact'
 import AsyncStorage from './AsyncStorage'
 import Test from './Test'
 import Icon from 'react-native-vector-icons/Ionicons';
-import Contacts from 'react-native-contacts'
+import Contacts from 'react-native-contacts';
+import moment from 'moment';
 
 Contacts.getAllWithoutPhotos((err, contacts) => {
   if(err === 'denied'){
@@ -48,6 +49,11 @@ class HomeScreen extends React.Component {
 
   componentDidMount(){
     console.log("mounted main")
+    let m = moment()
+    console.log(moment().format('x'))
+    m.add(1, 'd');
+    console.log("newdate", m.format('x'))
+
   }
 
   toggleAddModal = () => {
@@ -91,7 +97,7 @@ class HomeScreen extends React.Component {
             this.props.store.contacts.map((contact, idx) => {
               return (
                 <View key={idx} style={styles.contactRowContainer}>
-                  <Text style={[styles.text, styles.contactKey]}> {contact.name} </Text>
+                  <Text style={[styles.text, styles.contactKey]}> {contact.firstName} </Text>
                   <Text style={[styles.text, styles.contactValue]}> {contact.frequency} </Text>
                 </View>
               );
@@ -149,6 +155,11 @@ const styles = StyleSheet.create({
     height: 26,
   },
 
+  // holder: {
+  //   flex: 0.25,
+  //   justifyContent: 'center',
+  // },
+
 });
 
 /* -------------------<   CONTAINER   >-------------------- */
@@ -170,14 +181,14 @@ export default kit = TabNavigator({
   swipeEnabled: true,
   animationEnabled: true,
   style: {
-    backgroundColor: 'darkgreen'
+    backgroundColor: 'purple'
   },
   // tabBarPosition: 'top',
   // lazy: true,
   tabBarOptions: {
-    activeTintColor: 'darkgreen',
+    activeTintColor: 'purple',
     style: {
-      backgroundColor: 'lavender',
+      backgroundColor: 'aliceblue',
       height: 60,
       // marginTop: 70
     },

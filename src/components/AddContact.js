@@ -14,7 +14,8 @@ class AddContact extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
+      firstName: '',
+      lastName: '',
       frequency: 'Weekly',
       values: ['Daily', 'Every 3 days', 'Weekly', 'Every 2 weeks', 'Monthly'],
     }
@@ -34,44 +35,42 @@ class AddContact extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.secondContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder='Name'
-            onChangeText={name=>this.setState({name})}
-          />
-          <TextInput
-            style={styles.input}
-            onChangeText={frequency=>this.setState({frequency})}
-            placeholder='Frequency'
-          />
 
-          <Text style={styles.text} >
-            Value: {this.state.frequency}
-          </Text>
+        <TouchableOpacity onPress={this.props.screenProps.toggle} style={styles.closeButton}>
+          <Icon name="close" size={35} color="darkgrey" />
+        </TouchableOpacity>
+
+        <TextInput
+          style={styles.input}
+          placeholder='First Name'
+          onChangeText={firstName=>this.setState({firstName})}
+        />
+
+        <TextInput
+          style={styles.input}
+          placeholder='Last Name'
+          onChangeText={lastName=>this.setState({lastName})}
+        />
+
+        <View style={{width: 400}}>
           <SegmentedControlIOS
             selectedIndex={2}
             values={this.state.values}
             tintColor='darkgrey'
             onValueChange={this._onValueChange} />
-
-          <Button title="Submit" onPress={this.addContact.bind(this, {
-            name: this.state.name,
-            frequency: this.state.frequency,
-            nextContact: 'today',
-            lastContact: 'N/A'
-          }
-          )}/>
         </View>
 
-        <TouchableOpacity onPress={this.props.screenProps.toggle} style={{
-            position: 'absolute',
-            paddingTop: 30,
-            paddingHorizontal: 10,
-            zIndex: 10
-          }}>
-          <Icon name="close" size={35} color="darkgrey" />
-        </TouchableOpacity>
+        <Button title="Submit" onPress={this.addContact.bind(this, {
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          frequency: this.state.frequency,
+          nextContact: 'today',
+          lastContact: null,
+          prevNote: 'N/A',
+          phoneNum: '1-212-351-2504',
+          color: '#73d4e3',
+        }
+        )}/>
 
       </View>
     );
@@ -93,16 +92,25 @@ export default connect(mapState, mapDispatch)(AddContact);
 const styles = StyleSheet.create({
   container: {
     height: 500,
-    marginTop: 30
+    marginTop: 30,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  secondContainer: {
-    marginTop: 60
-  },
+
   input: {
     backgroundColor: 'ghostwhite',
     height: 40,
-    borderColor: 'gray',
+    borderColor: 'lightgray',
     borderWidth: 1,
-    margin: 20
+    margin: 20,
+    borderRadius: 10,
   },
+  closeButton: {
+    alignSelf: 'flex-end'
+    // position: 'absolute',
+    // paddingTop: 30,
+    // paddingHorizontal: 10,
+    // zIndex: 10
+  }
 });

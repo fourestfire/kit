@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, Animated, TouchableOpacity, Dimensions, ScrollView, Modal } from 'react-native';
 import Interactable from 'react-native-interactable';
 import Complete from './Complete';
+import Communications from 'react-native-communications';
 
 const Screen = Dimensions.get('window');
 
@@ -49,7 +50,8 @@ class SingleContactRow extends Component {
               }]
             }
           ]}>
-            <TouchableOpacity onPress={this.removeContact.bind(this, 'remove')} style={styles.button}>
+            {/*<TouchableOpacity onPress={this.removeContact.bind(this, 'remove')} style={styles.button}>*/}
+            <TouchableOpacity onPress={() => Communications.phonecall('0123456789', true)}>
               <View style={styles.button} />
             </TouchableOpacity>
           </Animated.View>
@@ -64,7 +66,7 @@ class SingleContactRow extends Component {
               }]
             }
             ]}>
-            <TouchableOpacity onPress={this.onButtonPress.bind(this, 'snooze')} style={styles.button}>
+            <TouchableOpacity onPress={() => Communications.text('8885555512', "Hey! Haven't talked to you in a while. What's up?")}>
               <View style={styles.button} />
             </TouchableOpacity>
           </Animated.View>

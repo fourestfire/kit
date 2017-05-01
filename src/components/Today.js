@@ -6,11 +6,12 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Header from './Header';
 import Collapsible from 'react-native-collapsible';
 import { BlurView } from 'react-native-blur';
+import moment from 'moment';
 
 class Today extends Component {
   static navigationOptions = {
     tabBar: {
-      label: 'Top of Mind',
+      label: 'Today',
       icon: ({ tintColor }) => <Icon size={25} name='calendar-check' color={ tintColor }/>
     }
   }
@@ -18,13 +19,22 @@ class Today extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isCollapsed: false,
+      isTodayCollapsed: false,
+      isTomorrowCollapsed: false,
       viewRef: null,
     }
   }
 
   toggleUpdateModal = () => {
     this.setState({ showUpdateModal: !this.state.showUpdateModal })
+  }
+
+  toggleTodayCollapse() {
+    this.setState({ isTodayCollapsed: !this.state.isTodayCollapsed });
+  }
+
+  toggleTomorrowCollapse() {
+    this.setState({ isTomorrowCollapsed: !this.state.isTomorrowCollapsed });
   }
 
   render() {
@@ -47,7 +57,7 @@ class Today extends Component {
           onPress: null,
           icon: null,
         }}
-        title="Top of Mind"
+        title="In the Moment"
         rightItem={{
           title: null,
           layout: null,
@@ -60,30 +70,28 @@ class Today extends Component {
 
         <View style={styles.container}>
 
-           {/*<View style={{flex: 1, height: 50, backgroundColor: 'green'}}>
-              <TouchableOpacity onPress={this.onButtonPress.bind(this)} >
-                <View style={styles.button} />
-              </TouchableOpacity>
-            </View>*/}
-
           <View style={styles.heavyDivider} />
-          <View style={styles.rowHeader}>
-            <Text style={styles.rowHeaderText}> Today </Text>
-          </View>
 
-          <Collapsible collapsed={this.state.isCollapsed}>
+          {/* Populate Today column if person's date is same as today's or before it */}
+          <TouchableOpacity onPress={this.toggleTodayCollapse.bind(this)} >
+            <View style={styles.rowHeader}>
+              <Text style={styles.rowHeaderText}> Today </Text>
+            </View>
+          </TouchableOpacity>
+
+          <Collapsible collapsed={this.state.isTodayCollapsed}>
           {
             this.props.store.contacts
-              .filter(el => el.nextContact === 'today')
+              .filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day'))
               .map((contact) => {
                 return (
-                  <Row key={contact.name} physics={physics} contact={contact}>
+                  <Row key={contact.firstName} physics={physics} contact={contact}>
                     <View style={styles.rowContent}>
                       <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
                       <View>
-                        <Text style={styles.rowTitle}>{contact.name}</Text>
-                        <Text style={styles.rowSubtitle}>{contact.frequency} (Last contact {contact.lastContact})</Text>
-                        <Text style={styles.rowSubtitle}>Prev. note: {contact.lastMsg} </Text>
+                        <Text style={styles.rowTitle}>{contact.firstName} {contact.lastName}</Text>
+                        <Text style={styles.rowSubtitle}>{contact.frequency} (Last contact {moment(contact.lastContact).format('L')})</Text>
+                        <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
 
                       </View>
                     </View>
@@ -93,40 +101,39 @@ class Today extends Component {
           }
         </Collapsible>
 
-        <View style={styles.rowHeader}>
+        {/* Populate Tomorrow column */}
+        <TouchableOpacity onPress={this.toggleTomorrowCollapse.bind(this)} >
+          <View style={styles.rowHeader}>
             <Text style={styles.rowHeaderText}> Tomorrow </Text>
           </View>
+        </TouchableOpacity>
 
-          <Collapsible collapsed={this.state.isCollapsed}>
-          {
-            this.props.store.contacts
-              .filter(el => el.nextContact === 'tomorrow')
-              .map((contact) => {
-                return (
-                  <Row key={contact.name} physics={physics} contact={contact}>
-                    <View style={styles.rowContent}>
-                      <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
-                      <View>
-                        <Text style={styles.rowTitle}>{contact.name}</Text>
-                        <Text style={styles.rowSubtitle}>{contact.frequency} (Last contact {contact.lastContact})</Text>
-                        <Text style={styles.rowSubtitle}>Prev. note: {contact.lastMsg} </Text>
+        <Collapsible collapsed={this.state.isTomorrowCollapsed}>
+        {
+          this.props.store.contacts
+            .filter(el => moment(el.nextContact).subtract(1, 'day').isSame(moment(), 'day'))
+            .map((contact) => {
+              return (
+                <Row key={contact.firstName} physics={physics} contact={contact}>
+                  <View style={styles.rowContent}>
+                    <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
+                    <View>
+                      <Text style={styles.rowTitle}>{contact.firstName} {contact.lastName}</Text>
+                      <Text style={styles.rowSubtitle}>{contact.frequency} (Last contact {moment(contact.lastContact).format('L')})</Text>
+                      <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
 
-                      </View>
                     </View>
-                  </Row>
-                );
-            })
-          }
-        </Collapsible>
+                  </View>
+                </Row>
+              );
+          })
+        }
+      </Collapsible>
 
         </View>
       </ScrollView>
 
     );
-  }
-
-  onButtonPress() {
-    this.setState({ isCollapsed: !this.state.isCollapsed });
   }
 }
 
