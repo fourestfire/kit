@@ -1,41 +1,110 @@
 import React, { Component } from 'react';
-import { View, Image, Text, findNodeHandle, StyleSheet } from 'react-native';
-import { BlurView } from 'react-native-blur';
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Button,
+  SegmentedControlIOS,
+  TouchableOpacity
+} from 'react-native';
+import Icon from 'react-native-vector-icons/SimpleLineIcons';
 
-export default class Menu extends Component {
+class UpdateContact extends Component {
   constructor(props) {
     super(props);
-    this.state = { viewRef: null };
+    this.state = {
+      name: 'Test',
+      frequency: 'Weekly',
+      values: ['Daily', 'Every 3 days', 'Weekly', 'Every 2 weeks', 'Monthly'],
+    }
   }
 
-  imageLoaded() {
-    this.setState({ viewRef: findNodeHandle(this.backgroundImage) });
+  _onValueChange = (frequency) => {
+    this.setState({
+      frequency: frequency,
+    });
+  };
+
+  updateContact(contact) {
+    this.props.updateContactSync(contact)
+    this.props.screenProps.toggle()
   }
 
   render() {
-    const uri = './horse.png'
+    console.log(this.props.contact)
     return (
       <View style={styles.container}>
-        <Image source={{uri}} onLoadEnd={this.imageLoaded.bind(this)} />
-        <BlurView
-          style={styles.absolute}
-          viewRef={this.state.viewRef}
-          blurType="light"
-          blurAmount={10}
-        />
-        <Text>Hi, I am some unblurred text</Text>
+        <View style={styles.secondContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder='Test'
+            onChangeText={name=>this.setState({name})}
+          />
+          <TextInput
+            style={styles.input}
+            onChangeText={frequency=>this.setState({frequency})}
+            placeholder='Frequency'
+          />
+
+          <Text style={styles.text} >
+            Value: {this.state.frequency}
+          </Text>
+          <SegmentedControlIOS
+            selectedIndex={2}
+            values={this.state.values}
+            tintColor='darkgrey'
+            onValueChange={this._onValueChange} />
+
+          <Button title="Submit" onPress=
+          {this.updateContact.bind(this,
+            Object.assign({}, this.props.contact, {
+            name: this.state.name,
+            frequency: this.state.frequency,
+            lastContact: 'N/A'})
+          )}
+          />
+        </View>
+
+        <TouchableOpacity onPress={this.props.screenProps.toggle} style={{
+            position: 'absolute',
+            paddingTop: 30,
+            paddingHorizontal: 10,
+            zIndex: 10
+          }}>
+          <Icon name="close" size={35} color="darkgrey" />
+        </TouchableOpacity>
+
       </View>
     );
   }
 }
 
+/* -------------------<   CONTAINER   >-------------------- */
+
+import { connect } from 'react-redux';
+import { updateContactSync } from '../redux/reducer';
+
+const mapState = ({ store }) => ({ store });
+const mapDispatch = ({ updateContactSync });
+
+export default connect(mapState, mapDispatch)(UpdateContact);
+
+/* -------------------<   STYLING   >-------------------- */
+
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    height: 500,
+    marginTop: 30,
   },
-  absolute: {
-    position: "absolute",
-    top: 0, left: 0, bottom: 0, right: 0,
+  secondContainer: {
+    marginTop: 60
+  },
+  input: {
+    backgroundColor: 'ghostwhite',
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    margin: 20
   },
 });

@@ -7,6 +7,7 @@ import {
   SegmentedControlIOS,
   TouchableOpacity
 } from 'react-native';
+import moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {
@@ -30,7 +31,7 @@ class AddContact extends Component {
       lastName: '',
       phoneNum: '1-212-442-5201',
       color: '#73d4e3',
-      frequency: 'Weekly',
+      frequency: 7,
       values: ['Daily',  'Weekly', 'Monthly'],
     }
   }
@@ -52,6 +53,8 @@ class AddContact extends Component {
       {label: 'Germany', value: 'DE'},
       {label: 'United States', value: 'US'}
     ]
+    const date = parseInt(moment().format('x'), 10)
+
     return (
       <View style={styles.container}>
       <TouchableOpacity onPress={this.props.screenProps.toggle} style={styles.closeButton}>
@@ -59,22 +62,22 @@ class AddContact extends Component {
       </TouchableOpacity>
       <Form>
         <FieldsContainer>
-          <Fieldset label="Details">
+          <Fieldset label="Add Details">
             <FormGroup>
-              <Label>First name</Label>
-              <Input placeholder="First Name" autoFocus={true} onChangeText={firstName=>this.setState({firstName})} />
+              <Label>First Name</Label>
+              <Input placeholder="John" autoFocus={true} onChangeText={firstName=>this.setState({firstName})} />
             </FormGroup>
             <FormGroup>
-              <Label>Last name</Label>
-              <Input placeholder="Last Name" onChangeText={lastName=>this.setState({lastName})} />
+              <Label>Last Name</Label>
+              <Input placeholder="Smith" onChangeText={lastName=>this.setState({lastName})} />
             </FormGroup>
             <FormGroup>
               <Label>Phone Number</Label>
-              <Input placeholder="Phone #" dataDetectorTypes="phoneNumber" keyboardType="phone-pad" onChangeText={phoneNum=>this.setState({phoneNum})} />
+              <Input placeholder="1-646-231-3438" dataDetectorTypes="phoneNumber" keyboardType="phone-pad" onChangeText={phoneNum=>this.setState({phoneNum})} />
             </FormGroup>
             <FormGroup>
-              <Label>Email</Label>
-              <Input placeholder="Email" keyboardType="email-address" returnKeyType="next" blurOnSubmit={false} onChangeText={lastName=>this.setState({lastName})} />
+              <Label>Contact Frequency</Label>
+              <Input placeholder="Number of days in between" keyboardType="phone-pad" onChangeText={frequency=>this.setState({frequency})} />
             </FormGroup>
           </Fieldset>
 
@@ -84,11 +87,11 @@ class AddContact extends Component {
             <Button icon="md-checkmark" iconPlacement="right" backgroundColor='black' onPress={this.addContact.bind(this, {
               firstName: this.state.firstName,
               lastName: this.state.lastName,
-              frequency: this.state.frequency,
-              nextContact: 'today',
+              frequency: Number(this.state.frequency),
+              nextContact: date,
               lastContact: null,
-              prevNote: 'N/A',
-              phoneNum: '1-212-351-2504',
+              lastMsg: 'N/A',
+              phoneNum: this.state.phoneNum,
               color: '#73d4e3'})}>Save</Button>
         </ActionsContainer>
       </Form>

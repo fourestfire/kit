@@ -31,15 +31,19 @@ class Complete extends Component {
 
     return (
       <View style={styles.container}>
+
+        <TouchableOpacity onPress={this.props.screenProps.toggle} style={styles.closeButton}>
+          <Icon name="ios-close" size={50} color="darkgrey" />
+        </TouchableOpacity>
+
         <View style={styles.secondContainer}>
           <Text style={styles.text}>
-            Briefly, what did you talk with {this.props.contact.firstName} about today?
+            Briefly, what did you talk about with {this.props.contact.firstName} today?
           </Text>
 
           <TextInput
             style={styles.input}
             autoFocus={true}
-            placeholder='Notes'
             onChangeText={msg=>this.setState({msg})}
           />
 
@@ -51,16 +55,6 @@ class Complete extends Component {
             })
           )}/>
         </View>
-
-        <TouchableOpacity onPress={this.props.screenProps.toggle} style={{
-            position: 'absolute',
-            paddingTop: 30,
-            paddingHorizontal: 10,
-            zIndex: 10
-          }}>
-          <Icon name="ios-close-circle-outline" size={35} color="darkgrey" />
-        </TouchableOpacity>
-
       </View>
     );
   }
@@ -101,6 +95,10 @@ const styles = StyleSheet.create({
     borderColor: 'lightgray',
     borderRadius: 10,
     borderWidth: 1,
-    margin: 20
+    margin: 30
   },
+  closeButton: {
+    alignSelf: 'flex-end',
+    marginRight: 30
+  }
 });

@@ -137,7 +137,7 @@ class Today extends Component {
                           <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
                           <View>
                             <Text style={styles.rowTitle}>{contact.firstName} {contact.lastName}</Text>
-                            <Text style={styles.rowSubtitle}>{this.convertFrequency(contact.frequency)} (Last contact {moment(contact.lastContact).format('L')})</Text>
+                            <Text style={styles.rowSubtitle}>{this.convertFrequency(contact.frequency)} (Last contact {contact.lastContact ? moment(contact.lastContact).format('L') : 'N/A'})</Text>
                             <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
 
                           </View>
@@ -170,7 +170,7 @@ class Today extends Component {
                       <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
                       <View>
                         <Text style={styles.rowTitle}>{contact.firstName} {contact.lastName}</Text>
-                        <Text style={styles.rowSubtitle}>{this.convertFrequency(contact.frequency)} (Last contact {moment(contact.lastContact).format('L')})</Text>
+                        <Text style={styles.rowSubtitle}>{this.convertFrequency(contact.frequency)} (Last contact {contact.lastContact ? moment(contact.lastContact).format('L') : 'N/A'})</Text>
                         <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
                       </View>
                     </View>
@@ -201,7 +201,7 @@ class Today extends Component {
                       <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
                       <View>
                         <Text style={styles.rowTitle}>{contact.firstName} {contact.lastName}</Text>
-                        <Text style={styles.rowSubtitle}>{this.convertFrequency(contact.frequency)} (Last contact {moment(contact.lastContact).format('L')})</Text>
+                        <Text style={styles.rowSubtitle}>{this.convertFrequency(contact.frequency)} (Last contact {contact.lastContact ? moment(contact.lastContact).format('L') : 'N/A'})</Text>
                         <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
                       </View>
                     </View>
@@ -232,7 +232,7 @@ class Today extends Component {
                       <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
                       <View>
                         <Text style={styles.rowTitle}>{contact.firstName} {contact.lastName}</Text>
-                        <Text style={styles.rowSubtitle}>{this.convertFrequency(contact.frequency)} (Last contact {moment(contact.lastContact).format('L')})</Text>
+                        <Text style={styles.rowSubtitle}>{this.convertFrequency(contact.frequency)} (Last contact {contact.lastContact ? moment(contact.lastContact).format('L') : 'N/A'})</Text>
                         <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
                       </View>
                     </View>

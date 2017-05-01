@@ -4,19 +4,36 @@ import {
   Text,
   TextInput,
   StyleSheet,
-  Button,
   SegmentedControlIOS,
   TouchableOpacity
 } from 'react-native';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import moment from 'moment';
+import Icon from 'react-native-vector-icons/Ionicons';
+
+import {
+  ActionsContainer,
+  Button,
+  FieldsContainer,
+  Fieldset,
+  Form,
+  FormGroup,
+  Input,
+  Label,
+  Switch,
+  Select
+} from 'react-native-clean-form'
 
 class UpdateContact extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: 'Test',
-      frequency: 'Weekly',
-      values: ['Daily', 'Every 3 days', 'Weekly', 'Every 2 weeks', 'Monthly'],
+      firstName: '',
+      lastName: '',
+      phoneNum: '1-212-442-5201',
+      color: '#73d4e3',
+      frequency: 7,
+      lastMsg: 'hi',
+      values: ['Daily',  'Weekly', 'Monthly'],
     }
   }
 
@@ -26,56 +43,67 @@ class UpdateContact extends Component {
     });
   };
 
+  componentDidMount() {
+    this.setState({
+      firstName: this.props.contact.firstName,
+      lastName: this.props.contact.lastName,
+      phoneNum: this.props.contact.phoneNum,
+      frequency: this.props.contact.frequency,
+      lastMsg: this.props.contact.lastMsg,
+    })
+  }
+
   updateContact(contact) {
     this.props.updateContactSync(contact)
     this.props.screenProps.toggle()
   }
 
   render() {
-    console.log(this.props.contact)
+    const contact = this.props.contact
     return (
       <View style={styles.container}>
-        <View style={styles.secondContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder='Test'
-            onChangeText={name=>this.setState({name})}
-          />
-          <TextInput
-            style={styles.input}
-            onChangeText={frequency=>this.setState({frequency})}
-            placeholder='Frequency'
-          />
+      <TouchableOpacity onPress={this.props.screenProps.toggle} style={styles.closeButton}>
+        <Icon name="ios-close" size={50} color="darkgrey" />
+      </TouchableOpacity>
+      <Form>
+        <FieldsContainer>
+          <Fieldset label="Edit Details">
+            <FormGroup>
+              <Label>First Name</Label>
+              <Input defaultValue={contact.firstName} onChangeText={firstName=>this.setState({firstName})} />
+            </FormGroup>
+            <FormGroup>
+              <Label>Last Name</Label>
+              <Input defaultValue={contact.lastName} onChangeText={lastName=>this.setState({lastName})} />
+            </FormGroup>
+            <FormGroup>
+              <Label>Phone Number</Label>
+              <Input defaultValue={contact.phoneNum} dataDetectorTypes="phoneNumber" keyboardType="phone-pad" onChangeText={phoneNum=>this.setState({phoneNum})} />
+            </FormGroup>
+            <FormGroup>
+              <Label>Contact Frequency</Label>
+              <Input defaultValue={String(contact.frequency)} keyboardType="phone-pad" onChangeText={frequency=>this.setState({frequency})} />
+            </FormGroup>
+            <FormGroup>
+              <Label>Most Recent Message</Label>
+              <Input defaultValue={contact.lastMsg} onChangeText={lastMsg=>this.setState({lastMsg})} />
+            </FormGroup>
+          </Fieldset>
 
-          <Text style={styles.text} >
-            Value: {this.state.frequency}
-          </Text>
-          <SegmentedControlIOS
-            selectedIndex={2}
-            values={this.state.values}
-            tintColor='darkgrey'
-            onValueChange={this._onValueChange} />
+        </FieldsContainer>
 
-          <Button title="Submit" onPress=
-          {this.updateContact.bind(this,
-            Object.assign({}, this.props.contact, {
-            name: this.state.name,
-            frequency: this.state.frequency,
-            lastContact: 'N/A'})
-          )}
-          />
-        </View>
-
-        <TouchableOpacity onPress={this.props.screenProps.toggle} style={{
-            position: 'absolute',
-            paddingTop: 30,
-            paddingHorizontal: 10,
-            zIndex: 10
-          }}>
-          <Icon name="close" size={35} color="darkgrey" />
-        </TouchableOpacity>
-
-      </View>
+        <ActionsContainer>
+            <Button icon="md-checkmark" iconPlacement="right" backgroundColor='black' onPress={this.updateContact.bind(this,
+              Object.assign({}, this.props.contact, {
+              firstName: this.state.firstName,
+              lastName: this.state.lastName,
+              frequency: Number(this.state.frequency),
+              phoneNum: this.state.phoneNum,
+              color: '#73d4e3'})
+            )}>Save</Button>
+        </ActionsContainer>
+      </Form>
+    </View>
     );
   }
 }
@@ -94,8 +122,8 @@ export default connect(mapState, mapDispatch)(UpdateContact);
 
 const styles = StyleSheet.create({
   container: {
-    height: 500,
-    marginTop: 30,
+    marginTop: 40,
+    flex: 1,
   },
   secondContainer: {
     marginTop: 60
@@ -107,4 +135,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     margin: 20
   },
+  closeButton: {
+    alignSelf: 'flex-end',
+    marginRight: 30
+  }
 });
