@@ -13,7 +13,6 @@ const GET_ALL_CONTACTS = 'GET_ALL_CONTACTS';
 export const addContactSync = contact => ({ type: ADD_CONTACT, contact });
 export const updateContactSync = contact => ({ type: UPDATE_CONTACT, contact });
 export const removeContactSync = contact => ({ type: REMOVE_CONTACT, contact });
-
 export const getAllContactsSync = contacts => ({ type: GET_ALL_CONTACTS, contacts });
 
 /* -------------------<   REDUCERS   >--------------------- */
@@ -91,7 +90,6 @@ const store = function(state = initialState, action) {
       return Object.assign({}, state, {contacts: state.contacts.filter(el => el.firstName !== action.contact.firstName).concat(action.contact)});
     case REMOVE_CONTACT:
       return Object.assign({}, state, {contacts: state.contacts.filter(el => el !== action.contact)});
-
     case GET_ALL_CONTACTS:
       return Object.assign({}, state, {contacts: action.contacts});
 

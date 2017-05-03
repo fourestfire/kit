@@ -87,7 +87,8 @@ const styles = StyleSheet.create({
   text: {
     margin: 20,
     fontSize: 20,
-    fontWeight: '300'
+    fontWeight: '300',
+    textAlign: 'center'
   },
   input: {
     backgroundColor: 'ghostwhite',
