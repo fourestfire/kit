@@ -15,18 +15,18 @@ class Complete extends Component {
     super(props);
     this.state = {
       msg: 'N/A',
-    }
+    };
   }
 
   updateContact(contact) {
-    this.props.updateContactSync(contact)
-    this.props.screenProps.toggle()
+    this.props.updateContactSync(contact);
+    this.props.screenProps.toggle();
   }
 
   render() {
-    const lastContactDate = parseInt(moment().format('x'), 10)
-    const nextContactDate = parseInt(moment(this.props.contact.lastContact).add(this.props.contact.frequency + 1, 'days').format('x'), 10)
-    console.log(lastContactDate, nextContactDate)
+    const lastContactDate = parseInt(moment().format('x'), 10);
+    const nextContactDate = parseInt(moment(this.props.contact.lastContact).add(this.props.contact.frequency + 1, 'days').format('x'), 10);
+    console.log(lastContactDate, nextContactDate);
     // console.log(lastContactDate, this.props.contact.frequency, this.props.contact.frequency + 1, typeof(this.props.contact.frequency))
 
     return (
@@ -44,16 +44,17 @@ class Complete extends Component {
           <TextInput
             style={styles.input}
             autoFocus={true}
-            onChangeText={msg=>this.setState({msg})}
+            onChangeText={msg => this.setState({msg})}
           />
 
-          <Button title="Complete" onPress={this.updateContact.bind(this,
+          <Button
+title="Complete" onPress={this.updateContact.bind(this,
             Object.assign({}, this.props.contact, {
             lastMsg: this.state.msg,
             nextContact: nextContactDate,
             lastContact: lastContactDate,
             })
-          )}/>
+          )} />
         </View>
       </View>
     );
