@@ -44,8 +44,6 @@ class ItemWrapperIOS extends React.Component {
     color: string;
   };
 
-
-
   render() {
     const {item, color} = this.props;
     if (!item) {

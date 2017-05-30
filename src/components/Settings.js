@@ -32,7 +32,6 @@ class Settings extends React.Component {
     return (
       <View style={styles.container}>
 
-
       </View>
     );
   }

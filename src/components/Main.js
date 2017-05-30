@@ -48,12 +48,12 @@ class HomeScreen extends React.Component {
   }
 
   componentDidMount(){
+    // allows us to tell current time in moment during testing
     console.log("mounted main")
     let m = moment()
     console.log(moment().format('x'))
     m.add(20, 'd');
     console.log("newdate", m.format('x'))
-
   }
 
   toggleAddModal = () => {
