@@ -57,10 +57,57 @@ class AddContact extends Component {
 
     return (
       <View style={styles.container}>
-      <TouchableOpacity onPress={this.props.screenProps.toggle} style={styles.closeButton}>
-        <Icon name="ios-close" size={50} color="darkgrey" />
-      </TouchableOpacity>
-      <Form>
+        <TouchableOpacity onPress={this.props.screenProps.toggle} style={styles.closeButton}>
+          <Icon name="ios-close" size={50} color="darkgrey" />
+        </TouchableOpacity>
+
+      <Text> Add Details
+      </Text>
+
+      <View style={styles.textWrapper}>
+        <TextInput
+          style={styles.textInput}
+          placeholder={'First Name'}
+          placeholderTextColor='lightgrey'
+          autoFocus={true}
+          onChangeText={firstName=>this.setState({firstName})}
+        />
+      </View>
+
+      <View style={styles.textWrapper}>
+        <TextInput
+          style={styles.textInput}
+          placeholder={'Last Name'}
+          placeholderTextColor='lightgrey'
+          onChangeText={lastName=>this.setState({lastName})}
+        />
+      </View>
+
+      <View style={styles.textWrapper}>
+        <TextInput
+          style={styles.textInput}
+          placeholder={'Phone #'}
+          placeholderTextColor='lightgrey'
+          dataDetectorTypes="phoneNumber"
+          keyboardType="phone-pad"
+          onChangeText={phoneNum=>this.setState({phoneNum})}
+        />
+      </View>
+
+      <View style={styles.textWrapper}>
+        <TextInput
+          style={styles.textInput}
+          placeholderTextColor='lightgrey'
+          placeholder="Contact Frequency (days in between each contact)"
+          keyboardType="numeric"
+          onChangeText={frequency=>this.setState({frequency})}
+        />
+      </View>
+
+
+
+
+      {/*<Form>
         <FieldsContainer>
           <Fieldset label="Add Details">
             <FormGroup>
@@ -94,7 +141,7 @@ class AddContact extends Component {
               phoneNum: this.state.phoneNum,
               color: '#73d4e3'})}>Save</Button>
         </ActionsContainer>
-      </Form>
+      </Form>*/}
     </View>
     );
   }
@@ -112,6 +159,8 @@ export default connect(mapState, mapDispatch)(AddContact);
 
 /* -------------------<   STYLING   >-------------------- */
 
+import { maxWidth } from '../styles/global';
+
 const styles = StyleSheet.create({
   container: {
     marginTop: 40,
@@ -128,6 +177,28 @@ const styles = StyleSheet.create({
     margin: 20,
     borderRadius: 10,
   },
+
+
+  textWrapper: {
+    borderBottomWidth: 1,
+    borderBottomColor: 'lightgray',
+    // backgroundColor: 'lavender',
+    // flexDirection: 'column',
+    height: 40,
+    width: maxWidth - 50,
+    margin: 30,
+    // flex: 1,
+  },
+  textInput: {
+    // backgroundColor: 'ghostwhite',
+    width: maxWidth - 50,
+    height: 40,
+    // borderColor: 'lightgray',
+    // borderRadius: 4,
+    // borderBottomWidth: 1,
+  },
+
+
   closeButton: {
     alignSelf: 'flex-end',
     marginRight: 30
