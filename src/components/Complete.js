@@ -40,14 +40,19 @@ class Complete extends Component {
             Briefly, what did you talk about with {this.props.contact.firstName} today?
           </Text>
 
-          <TextInput
-            style={styles.input}
-            autoFocus={true}
-            onChangeText={msg => this.setState({msg})}
-          />
+          <View style={styles.textWrapper}>
+            <TextInput
+              style={styles.textInput}
+              autoFocus={true}
+              autoCapitalize="none"
+              returnKeyType="done"
+              maxLength = {40}
+              onChangeText={msg => this.setState({msg})}
+            />
+          </View>
 
           <Button
-title="Complete" onPress={this.updateContact.bind(this,
+            title="Complete" onPress={this.updateContact.bind(this,
             Object.assign({}, this.props.contact, {
             lastMsg: this.state.msg,
             nextContact: nextContactDate,
@@ -72,6 +77,8 @@ export default connect(mapState, mapDispatch)(Complete);
 
 /* -------------------<   STYLING   >-------------------- */
 
+import { maxWidth } from '../styles/global';
+
 const styles = StyleSheet.create({
   container: {
     height: 500,
@@ -90,13 +97,23 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     textAlign: 'center'
   },
-  input: {
-    backgroundColor: 'ghostwhite',
+  textWrapper: {
+    borderBottomWidth: 1,
+    borderBottomColor: 'lightgray',
+    // backgroundColor: 'lavender',
+    // flexDirection: 'column',
     height: 40,
-    borderColor: 'lightgray',
-    borderRadius: 10,
-    borderWidth: 1,
-    margin: 30
+    width: maxWidth - 100,
+    margin: 30,
+    // flex: 1,
+  },
+  textInput: {
+    // backgroundColor: 'ghostwhite',
+    width: maxWidth - 100,
+    height: 40,
+    // borderColor: 'lightgray',
+    // borderRadius: 4,
+    // borderBottomWidth: 1,
   },
   closeButton: {
     alignSelf: 'flex-end',

@@ -17,14 +17,28 @@ export const getAllContactsSync = contacts => ({ type: GET_ALL_CONTACTS, contact
 
 /* -------------------<   REDUCERS   >--------------------- */
 
+import moment from 'moment';
+
+// create sample dates for seeding
+let lc1 = parseInt(moment().subtract(1, 'day').format('x'), 10);
+let lc2 = parseInt(moment().subtract(4, 'day').format('x'), 10);
+let lc3 = parseInt(moment().subtract(7, 'day').format('x'), 10);
+let lc4 = parseInt(moment().subtract(14, 'day').format('x'), 10);
+let lc5 = parseInt(moment().subtract(25, 'day').format('x'), 10);
+
+let nc1 = parseInt(moment().format('x'), 10);
+let nc2 = parseInt(moment().add(1, 'day').format('x'), 10);
+let nc3 = parseInt(moment().add(3, 'day').format('x'), 10);
+let nc4 = parseInt(moment().add(8, 'day').format('x'), 10);
+
 let initialState = {
   contacts: [
     {
       firstName: 'Katie',
       lastName: 'Smith',
       frequency: 7,
-      lastContact: 1493190000000,
-      nextContact: 1493611395235,
+      lastContact: lc4,
+      nextContact: nc1,
       lastMsg: 'We talked about dinosaurs',
       phoneNum: '1-324-351-2504',
       color: 'purple',
@@ -32,8 +46,8 @@ let initialState = {
       firstName: 'Ivan',
       lastName: 'Anderson',
       frequency: 1,
-      lastContact: 1492671600000,
-      nextContact: 1493611395235,
+      lastContact: lc1,
+      nextContact: nc1,
       lastMsg: 'Planning wedding',
       phoneNum: '1-212-351-2504',
       color: 'forestgreen',
@@ -41,8 +55,8 @@ let initialState = {
       firstName: 'Tyler',
       lastName: 'Miller',
       frequency: 4,
-      lastContact: 1493449200000,
-      nextContact: 1493697795235,
+      lastContact: lc2,
+      nextContact: nc2,
       lastMsg: 'Started rock climbing',
       phoneNum: '1-908-351-2504',
       color: '#73d4e3',
@@ -50,8 +64,8 @@ let initialState = {
       firstName: 'Sophie',
       lastName: 'Lee',
       frequency: 30,
-      lastContact: 1493362800000,
-      nextContact: 1493697795235,
+      lastContact: lc5,
+      nextContact: nc3,
       lastMsg: 'Birthday on May 7',
       phoneNum: '1-718-351-2504',
       color: 'forestgreen',
@@ -60,8 +74,8 @@ let initialState = {
       firstName: 'Alex',
       lastName: 'Garcia',
       frequency: 14,
-      lastContact: 1491062800000,
-      nextContact: 1494043725357,
+      lastContact: lc3,
+      nextContact: nc3,
       lastMsg: 'Went hiking together',
       phoneNum: '1-718-351-2504',
       color: 'purple',
@@ -70,8 +84,8 @@ let initialState = {
       firstName: 'Sofia',
       lastName: 'Rhodes',
       frequency: 14,
-      lastContact: 1492671600000,
-      nextContact: 1495340329819,
+      lastContact: lc4,
+      nextContact: nc4,
       lastMsg: 'Wants to go to UNIQLO',
       phoneNum: '1-718-351-2504',
       color: '#73d4e3',

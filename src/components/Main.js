@@ -189,8 +189,8 @@ export default kit = TabNavigator({
     activeTintColor: 'purple',
     style: {
       backgroundColor: 'aliceblue',
-      height: 1,
-      // marginTop: 70
+      height: 70,
+      marginTop: 70
     },
     labelStyle: {
       fontSize: 12,
