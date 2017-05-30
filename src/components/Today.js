@@ -150,7 +150,7 @@ class Today extends Component {
             </Collapsible>
 
 
-        {/* Populate Tomorrow column */}
+        {/* Populate Tomorrow column if person's date is the same date as tomorrow */}
         <TouchableOpacity activeOpacity={0.8} onPress={this.toggleTomorrowCollapse.bind(this)} >
           <View style={styles.rowHeader}>
             <Text style={styles.rowHeaderText}> {this.state.isTomorrowCollapsed ? <Icon size={30} name='ios-arrow-up' /> : <Icon size={30} name='ios-arrow-down' />}   Tomorrow
@@ -192,7 +192,7 @@ class Today extends Component {
         <Collapsible collapsed={this.state.isWeekCollapsed}>
         {
           this.props.store.contacts
-            .filter(el => moment(el.nextContact).isBetween(moment().add(2, 'day'), moment().add(7, 'day'), 'day'))
+            .filter(el => moment(el.nextContact).isBetween(moment().add(2, 'day'), moment().add(7, 'day'), 'day', '[]')) // [] symbol sets inclusivity to include both the 2nd and the 7th days
             .map((contact) => {
               return (
                 <TouchableOpacity activeOpacity={0.9} onPress={this.toggleUpdateModal.bind(this, contact)} key={contact.firstName} >

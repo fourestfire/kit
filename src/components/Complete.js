@@ -25,9 +25,8 @@ class Complete extends Component {
 
   render() {
     const lastContactDate = parseInt(moment().format('x'), 10);
-    const nextContactDate = parseInt(moment(this.props.contact.lastContact).add(this.props.contact.frequency + 1, 'days').format('x'), 10);
-    console.log(lastContactDate, nextContactDate);
-    // console.log(lastContactDate, this.props.contact.frequency, this.props.contact.frequency + 1, typeof(this.props.contact.frequency))
+    const nextContactDate = parseInt(moment().add(this.props.contact.frequency, 'days').format('x'), 10); // switched from nextContactDate taking into account this.props.contact.lastContact and instead calculates from the current date
+    console.log('lastcontactdate', moment(lastContactDate).format(), 'nextcontactdate', moment(nextContactDate).format());
 
     return (
       <View style={styles.container}>
