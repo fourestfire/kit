@@ -190,7 +190,7 @@ export default kit = TabNavigator({
     style: {
       backgroundColor: 'aliceblue',
       height: 70,
-      marginTop: 70
+      // marginTop: 70
     },
     labelStyle: {
       fontSize: 12,

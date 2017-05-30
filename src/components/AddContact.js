@@ -5,23 +5,12 @@ import {
   TextInput,
   StyleSheet,
   SegmentedControlIOS,
-  TouchableOpacity
+  TouchableOpacity,
+  Button,
 } from 'react-native';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
-
-import {
-  ActionsContainer,
-  Button,
-  FieldsContainer,
-  Fieldset,
-  Form,
-  FormGroup,
-  Input,
-  Label,
-  Switch,
-  Select
-} from 'react-native-clean-form'
+import {TextInputMask} from 'react-native-masked-text';
 
 class AddContact extends Component {
   constructor(props) {
@@ -29,7 +18,7 @@ class AddContact extends Component {
     this.state = {
       firstName: '',
       lastName: '',
-      phoneNum: '1-212-442-5201',
+      phoneNum: '',
       color: '#73d4e3',
       frequency: 7,
       values: ['Daily',  'Weekly', 'Monthly'],
@@ -41,6 +30,28 @@ class AddContact extends Component {
       frequency: frequency,
     });
   };
+
+  _onPhoneTextSubmit() {
+    let phoneNum = this.refs['3'].getRawValue()
+    console.log("phonenum", phoneNum, typeof(phoneNum))
+    this.setState({
+      phoneNum: phoneNum,
+    });
+  }
+
+  _onPhoneTextChange(text) {
+    this.setState({
+      phoneNum: text,
+    });
+  }
+
+  _focusNextField(nextField) {
+    this.refs[nextField].focus()
+  };
+
+  _focusPhoneField() {
+		this.refs['3'].getElement().focus();
+	}
 
   addContact(contact) {
     this.props.addContactSync(contact)
@@ -66,44 +77,91 @@ class AddContact extends Component {
 
       <View style={styles.textWrapper}>
         <TextInput
+          ref='1'
           style={styles.textInput}
           placeholder={'First Name'}
-          placeholderTextColor='lightgrey'
+          placeholderTextColor="lightgrey"
           autoFocus={true}
           onChangeText={firstName=>this.setState({firstName})}
+          returnKeyType="next"
+          blurOnSubmit={false}
+          onSubmitEditing={() => this._focusNextField('2')}
         />
       </View>
 
       <View style={styles.textWrapper}>
         <TextInput
+          ref='2'
           style={styles.textInput}
           placeholder={'Last Name'}
-          placeholderTextColor='lightgrey'
+          placeholderTextColor="lightgrey"
           onChangeText={lastName=>this.setState({lastName})}
+          returnKeyType="next"
+          onSubmitEditing={this._focusPhoneField.bind(this)}
         />
       </View>
 
       <View style={styles.textWrapper}>
-        <TextInput
-          style={styles.textInput}
+        <TextInputMask
+          ref='3'
+          style={[styles.textInput, styles.phoneInput]}
+          type={'custom'}
+          options={{
+            mask: '(999) 999-9999'
+          }}
           placeholder={'Phone #'}
-          placeholderTextColor='lightgrey'
+          placeholderTextColor="lightgrey"
+          dataDetectorTypes="phoneNumber"
+          keyboardType="numeric"
+          value={this.state.phoneNum}
+          onChangeText={this._onPhoneTextChange.bind(this)}
+          returnKeyType="next"
+          onSubmitEditing={() => {
+            this._onPhoneTextSubmit()
+            this._focusNextField('4')}
+          }
+        />
+        {/*<TextInput
+          ref='3'
+          style={[styles.textInput, styles.phoneInput]}
+          placeholder={'Phone #'}
+          placeholderTextColor="lightgrey"
           dataDetectorTypes="phoneNumber"
           keyboardType="phone-pad"
           onChangeText={phoneNum=>this.setState({phoneNum})}
-        />
+          returnKeyType="next"
+          onSubmitEditing={() => this._focusNextField('4')}
+        />*/}
       </View>
 
       <View style={styles.textWrapper}>
         <TextInput
+          ref='4'
           style={styles.textInput}
-          placeholderTextColor='lightgrey'
-          placeholder="Contact Frequency (days in between each contact)"
+          placeholderTextColor="lightgrey"
+          placeholder="Contact Frequency (in days)"
           keyboardType="numeric"
           onChangeText={frequency=>this.setState({frequency})}
+          returnKeyType="done"
         />
       </View>
 
+      <TouchableOpacity
+        //icon="md-checkmark"
+        //iconPlacement="right"
+        backgroundColor='black'
+        onPress={this.addContact.bind(this, {
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                frequency: Number(this.state.frequency),
+                nextContact: date,
+                lastContact: null,
+                lastMsg: 'N/A',
+                phoneNum: this.state.phoneNum,
+                color: '#73d4e3'})}
+      >
+        <Text> Save </Text>
+      </TouchableOpacity>
 
 
 
@@ -169,14 +227,6 @@ const styles = StyleSheet.create({
   segmented: {
     width: 340
   },
-  input: {
-    backgroundColor: 'ghostwhite',
-    height: 40,
-    borderColor: 'lightgray',
-    borderWidth: 1,
-    margin: 20,
-    borderRadius: 10,
-  },
 
 
   textWrapper: {
@@ -186,7 +236,7 @@ const styles = StyleSheet.create({
     // flexDirection: 'column',
     height: 40,
     width: maxWidth - 50,
-    margin: 30,
+    margin: 10,
     // flex: 1,
   },
   textInput: {
@@ -196,6 +246,9 @@ const styles = StyleSheet.create({
     // borderColor: 'lightgray',
     // borderRadius: 4,
     // borderBottomWidth: 1,
+  },
+  phoneInput: {
+    color: 'blue'
   },
 
 

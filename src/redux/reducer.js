@@ -40,7 +40,7 @@ let initialState = {
       lastContact: lc4,
       nextContact: nc1,
       lastMsg: 'We talked about dinosaurs',
-      phoneNum: '1-324-351-2504',
+      phoneNum: '1-000-351-2504',
       color: 'purple',
     }, {
       firstName: 'Ivan',
@@ -49,7 +49,7 @@ let initialState = {
       lastContact: lc1,
       nextContact: nc1,
       lastMsg: 'Planning wedding',
-      phoneNum: '1-212-351-2504',
+      phoneNum: '773-242-0926',
       color: 'forestgreen',
     }, {
       firstName: 'Tyler',
@@ -58,7 +58,7 @@ let initialState = {
       lastContact: lc2,
       nextContact: nc2,
       lastMsg: 'Started rock climbing',
-      phoneNum: '1-908-351-2504',
+      phoneNum: '347-371-3850',
       color: '#73d4e3',
     }, {
       firstName: 'Sophie',
@@ -67,7 +67,7 @@ let initialState = {
       lastContact: lc5,
       nextContact: nc3,
       lastMsg: 'Birthday on May 7',
-      phoneNum: '1-718-351-2504',
+      phoneNum: '1-000-351-2504',
       color: 'forestgreen',
     },
     {
@@ -77,7 +77,7 @@ let initialState = {
       lastContact: lc3,
       nextContact: nc3,
       lastMsg: 'Went hiking together',
-      phoneNum: '1-718-351-2504',
+      phoneNum: '1-000-351-2504',
       color: 'purple',
     },
     {
@@ -87,7 +87,7 @@ let initialState = {
       lastContact: lc4,
       nextContact: nc4,
       lastMsg: 'Wants to go to UNIQLO',
-      phoneNum: '1-718-351-2504',
+      phoneNum: '1-000-351-2504',
       color: '#73d4e3',
     },
  ],
