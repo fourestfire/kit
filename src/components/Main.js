@@ -16,8 +16,8 @@ import Today from './Today'
 import MoreContacts from './MoreContacts'
 import AddContact from './AddContact'
 import UpdateContact from './UpdateContact'
-import AsyncStorage from './AsyncStorage'
-import Test from './Test'
+// import AsyncStorage from './AsyncStorage'
+// import Test from './Test'
 import Icon from 'react-native-vector-icons/Ionicons';
 import Contacts from 'react-native-contacts';
 import moment from 'moment';
