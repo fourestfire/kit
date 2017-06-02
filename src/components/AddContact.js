@@ -146,9 +146,12 @@ class AddContact extends Component {
         />
       </View>
 
+      <View style={styles.spacer} />
+
       <TouchableOpacity
         //icon="md-checkmark"
         //iconPlacement="right"
+        style={styles.actionButton}
         backgroundColor='black'
         onPress={this.addContact.bind(this, {
                 firstName: this.state.firstName,
@@ -160,7 +163,7 @@ class AddContact extends Component {
                 phoneNum: this.state.phoneNum,
                 color: '#73d4e3'})}
       >
-        <Text> Save </Text>
+        <Text style={styles.actionText}> Save </Text>
       </TouchableOpacity>
 
 
@@ -223,6 +226,8 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 40,
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   segmented: {
     width: 340
@@ -235,13 +240,13 @@ const styles = StyleSheet.create({
     // backgroundColor: 'lavender',
     // flexDirection: 'column',
     height: 40,
-    width: maxWidth - 50,
+    width: maxWidth - 75,
     margin: 10,
     // flex: 1,
   },
   textInput: {
     // backgroundColor: 'ghostwhite',
-    width: maxWidth - 50,
+    width: maxWidth - 75,
     height: 40,
     // borderColor: 'lightgray',
     // borderRadius: 4,
@@ -251,10 +256,28 @@ const styles = StyleSheet.create({
     color: 'blue'
   },
 
+  actionButton: {
+    backgroundColor: 'darkblue',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
+    // alignSelf: 'flex-end',
+  },
+
+  actionText: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: '200'
+  },
+
+  spacer: {
+    flex: 1,
+  },
+
 
   closeButton: {
     alignSelf: 'flex-end',
-    marginRight: 30
+    marginRight: 30,
     // position: 'absolute',
     // paddingTop: 30,
     // paddingHorizontal: 10,

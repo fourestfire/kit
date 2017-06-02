@@ -285,6 +285,7 @@
 		05CB063C1EB2A93E00A8C048 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		05CB063D1EB2A93E00A8C048 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		05CB063E1EB2A93E00A8C048 /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
+		05D352171EE1B1A5000F4616 /* kit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = kit.entitlements; path = kit/kit.entitlements; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* kit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = kit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -436,6 +437,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		053355AC1EE1B48B00CC2F22 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		05CB06341EB2A93E00A8C048 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -483,6 +491,7 @@
 		13B07FAE1A68108700A75B9A /* kit */ = {
 			isa = PBXGroup;
 			children = (
+				05D352171EE1B1A5000F4616 /* kit.entitlements */,
 				05CB06341EB2A93E00A8C048 /* Fonts */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				052C9BB41EB17A12005331C3 /* RCTContacts.xcodeproj */,
@@ -565,6 +574,7 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* kitTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
+				053355AC1EE1B48B00CC2F22 /* Frameworks */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -672,6 +682,14 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = X7LADT9H8W;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 0;
+							};
+							com.apple.Push = {
+								enabled = 0;
+							};
+						};
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
