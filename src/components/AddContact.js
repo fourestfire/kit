@@ -72,7 +72,7 @@ class AddContact extends Component {
           <Icon name="ios-close" size={50} color="darkgrey" />
         </TouchableOpacity>
 
-      <Text> Add Details
+      <Text style={styles.headline}> Add Details
       </Text>
 
       <View style={styles.textWrapper}>
@@ -229,11 +229,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  segmented: {
-    width: 340
+  headline: {
+    fontSize: 20,
+    fontWeight: '700',
+    alignSelf: 'flex-start',
+    marginVertical: 10,
+    marginHorizontal: 33,
   },
-
-
   textWrapper: {
     borderBottomWidth: 1,
     borderBottomColor: 'lightgray',
@@ -261,6 +263,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: 50,
+    width: maxWidth
     // alignSelf: 'flex-end',
   },
 
