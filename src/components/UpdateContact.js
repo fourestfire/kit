@@ -4,24 +4,12 @@ import {
   Text,
   TextInput,
   StyleSheet,
-  SegmentedControlIOS,
   TouchableOpacity
 } from 'react-native';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import {
-  ActionsContainer,
-  Button,
-  FieldsContainer,
-  Fieldset,
-  Form,
-  FormGroup,
-  Input,
-  Label,
-  Switch,
-  Select
-} from 'react-native-clean-form'
+import {TextInputMask} from 'react-native-masked-text';
 
 class UpdateContact extends Component {
   constructor(props) {
@@ -37,12 +25,6 @@ class UpdateContact extends Component {
     }
   }
 
-  _onValueChange = (frequency) => {
-    this.setState({
-      frequency: frequency,
-    });
-  };
-
   componentDidMount() {
     this.setState({
       firstName: this.props.contact.firstName,
@@ -52,6 +34,28 @@ class UpdateContact extends Component {
       lastMsg: this.props.contact.lastMsg,
     })
   }
+
+  _onPhoneTextSubmit() {
+    let phoneNum = this.refs['3'].getRawValue()
+    console.log("phonenum", phoneNum, typeof(phoneNum))
+    this.setState({
+      phoneNum: phoneNum,
+    });
+  }
+
+  _onPhoneTextChange(text) {
+    this.setState({
+      phoneNum: text,
+    });
+  }
+
+  _focusNextField(nextField) {
+    this.refs[nextField].focus()
+  }
+
+  _focusPhoneField() {
+		this.refs['3'].getElement().focus();
+	}
 
   updateContact(contact) {
     this.props.updateContactSync(contact)
@@ -80,6 +84,55 @@ class UpdateContact extends Component {
           returnKeyType="next"
           blurOnSubmit={false}
           onSubmitEditing={() => this._focusNextField('2')}
+        />
+      </View>
+
+      <View style={styles.textWrapper}>
+        <TextInput
+          ref='2'
+          style={styles.textInput}
+          placeholder={'Last Name'}
+          defaultValue={contact.lastName}
+          placeholderTextColor="#bfbfbf"
+          onChangeText={lastName=>this.setState({lastName})}
+          returnKeyType="next"
+          onSubmitEditing={this._focusPhoneField.bind(this)}
+        />
+      </View>
+
+      <View style={styles.textWrapper}>
+        <TextInputMask
+          ref='3'
+          style={[styles.textInput, styles.phoneInput]}
+          type={'custom'}
+          options={{
+            mask: '(999) 999-9999'
+          }}
+          placeholder={'Phone #'}
+          defaultValue={contact.phoneNum}
+          placeholderTextColor="#bfbfbf"
+          dataDetectorTypes="phoneNumber"
+          keyboardType="numeric"
+          value={this.state.phoneNum}
+          onChangeText={this._onPhoneTextChange.bind(this)}
+          returnKeyType="next"
+          onSubmitEditing={() => {
+            this._onPhoneTextSubmit()
+            this._focusNextField('4')}
+          }
+        />
+      </View>
+
+       <View style={styles.textWrapper}>
+        <TextInput
+          ref='4'
+          style={styles.textInput}
+          defaultValue={String(contact.frequency)}
+          placeholderTextColor="#bfbfbf"
+          placeholder="Contact Frequency (in days)"
+          keyboardType="numeric"
+          onChangeText={frequency=>this.setState({frequency})}
+          returnKeyType="done"
         />
       </View>
 {/*
@@ -123,23 +176,22 @@ class UpdateContact extends Component {
         </ActionsContainer>
       </Form>*/}
 
+      <View style={styles.spacer} />
 
       <TouchableOpacity
         //icon="md-checkmark"
         //iconPlacement="right"
         style={styles.actionButton}
         backgroundColor='black'
-        onPress={this.addContact.bind(this, {
+        onPress={this.updateContact.bind(this, {
                 firstName: this.state.firstName,
                 lastName: this.state.lastName,
                 frequency: Number(this.state.frequency),
-                nextContact: date,
-                lastContact: null,
                 lastMsg: 'N/A',
                 phoneNum: this.state.phoneNum,
                 color: '#73d4e3'})}
       >
-        <Text style={styles.actionText}> Save </Text>
+        <Text style={styles.actionText}> Update </Text>
       </TouchableOpacity>
 
 
