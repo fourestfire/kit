@@ -25,12 +25,6 @@ class AddContact extends Component {
     }
   }
 
-  _onValueChange = (frequency) => {
-    this.setState({
-      frequency: frequency,
-    });
-  };
-
   _onPhoneTextSubmit() {
     let phoneNum = this.refs['3'].getRawValue()
     console.log("phonenum", phoneNum, typeof(phoneNum))
@@ -47,7 +41,7 @@ class AddContact extends Component {
 
   _focusNextField(nextField) {
     this.refs[nextField].focus()
-  };
+  }
 
   _focusPhoneField() {
 		this.refs['3'].getElement().focus();
@@ -72,15 +66,14 @@ class AddContact extends Component {
           <Icon name="ios-close" size={50} color="darkgrey" />
         </TouchableOpacity>
 
-      <Text style={styles.headline}> Add Details
-      </Text>
+      <Text style={styles.headline}> Add Contact </Text>
 
       <View style={styles.textWrapper}>
         <TextInput
           ref='1'
           style={styles.textInput}
           placeholder={'First Name'}
-          placeholderTextColor="lightgrey"
+          placeholderTextColor="#bfbfbf"
           autoFocus={true}
           onChangeText={firstName=>this.setState({firstName})}
           returnKeyType="next"
@@ -94,7 +87,7 @@ class AddContact extends Component {
           ref='2'
           style={styles.textInput}
           placeholder={'Last Name'}
-          placeholderTextColor="lightgrey"
+          placeholderTextColor="#bfbfbf"
           onChangeText={lastName=>this.setState({lastName})}
           returnKeyType="next"
           onSubmitEditing={this._focusPhoneField.bind(this)}
@@ -110,7 +103,7 @@ class AddContact extends Component {
             mask: '(999) 999-9999'
           }}
           placeholder={'Phone #'}
-          placeholderTextColor="lightgrey"
+          placeholderTextColor="#bfbfbf"
           dataDetectorTypes="phoneNumber"
           keyboardType="numeric"
           value={this.state.phoneNum}
@@ -125,7 +118,7 @@ class AddContact extends Component {
           ref='3'
           style={[styles.textInput, styles.phoneInput]}
           placeholder={'Phone #'}
-          placeholderTextColor="lightgrey"
+          placeholderTextColor="#bfbfbf"
           dataDetectorTypes="phoneNumber"
           keyboardType="phone-pad"
           onChangeText={phoneNum=>this.setState({phoneNum})}
@@ -138,7 +131,7 @@ class AddContact extends Component {
         <TextInput
           ref='4'
           style={styles.textInput}
-          placeholderTextColor="lightgrey"
+          placeholderTextColor="#bfbfbf"
           placeholder="Contact Frequency (in days)"
           keyboardType="numeric"
           onChangeText={frequency=>this.setState({frequency})}
@@ -166,43 +159,6 @@ class AddContact extends Component {
         <Text style={styles.actionText}> Save </Text>
       </TouchableOpacity>
 
-
-
-      {/*<Form>
-        <FieldsContainer>
-          <Fieldset label="Add Details">
-            <FormGroup>
-              <Label>First Name</Label>
-              <Input placeholder="John" autoFocus={true} onChangeText={firstName=>this.setState({firstName})} />
-            </FormGroup>
-            <FormGroup>
-              <Label>Last Name</Label>
-              <Input placeholder="Smith" onChangeText={lastName=>this.setState({lastName})} />
-            </FormGroup>
-            <FormGroup>
-              <Label>Phone Number</Label>
-              <Input placeholder="1-646-231-3438" dataDetectorTypes="phoneNumber" keyboardType="phone-pad" onChangeText={phoneNum=>this.setState({phoneNum})} />
-            </FormGroup>
-            <FormGroup>
-              <Label>Contact Frequency</Label>
-              <Input placeholder="Number of days in between" keyboardType="phone-pad" onChangeText={frequency=>this.setState({frequency})} />
-            </FormGroup>
-          </Fieldset>
-
-        </FieldsContainer>
-
-        <ActionsContainer>
-            <Button icon="md-checkmark" iconPlacement="right" backgroundColor='black' onPress={this.addContact.bind(this, {
-              firstName: this.state.firstName,
-              lastName: this.state.lastName,
-              frequency: Number(this.state.frequency),
-              nextContact: date,
-              lastContact: null,
-              lastMsg: 'N/A',
-              phoneNum: this.state.phoneNum,
-              color: '#73d4e3'})}>Save</Button>
-        </ActionsContainer>
-      </Form>*/}
     </View>
     );
   }
@@ -234,21 +190,21 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     alignSelf: 'flex-start',
     marginVertical: 10,
-    marginHorizontal: 33,
+    marginHorizontal: 20,
   },
   textWrapper: {
     borderBottomWidth: 1,
-    borderBottomColor: 'lightgray',
+    borderBottomColor: '#bfbfbf',
     // backgroundColor: 'lavender',
     // flexDirection: 'column',
     height: 40,
-    width: maxWidth - 75,
+    width: maxWidth - 50,
     margin: 10,
     // flex: 1,
   },
   textInput: {
     // backgroundColor: 'ghostwhite',
-    width: maxWidth - 75,
+    width: maxWidth - 50,
     height: 40,
     // borderColor: 'lightgray',
     // borderRadius: 4,

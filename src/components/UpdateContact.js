@@ -65,6 +65,25 @@ class UpdateContact extends Component {
       <TouchableOpacity onPress={this.props.screenProps.toggle} style={styles.closeButton}>
         <Icon name="ios-close" size={50} color="darkgrey" />
       </TouchableOpacity>
+
+      <Text style={styles.headline}> Edit Contact </Text>
+
+      <View style={styles.textWrapper}>
+        <TextInput
+          style={styles.textInput}
+          // placeholder={'First Name'}
+          placeholderTextColor="#bfbfbf"
+          autoFocus={true}
+          defaultValue={contact.firstName}
+          onChangeText={firstName=>this.setState({firstName})}
+          ref='1'
+          returnKeyType="next"
+          blurOnSubmit={false}
+          onSubmitEditing={() => this._focusNextField('2')}
+        />
+      </View>
+{/*
+
       <Form>
         <FieldsContainer>
           <Fieldset label="Edit Details">
@@ -102,7 +121,29 @@ class UpdateContact extends Component {
               color: '#73d4e3'})
             )}>Save</Button>
         </ActionsContainer>
-      </Form>
+      </Form>*/}
+
+
+      <TouchableOpacity
+        //icon="md-checkmark"
+        //iconPlacement="right"
+        style={styles.actionButton}
+        backgroundColor='black'
+        onPress={this.addContact.bind(this, {
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                frequency: Number(this.state.frequency),
+                nextContact: date,
+                lastContact: null,
+                lastMsg: 'N/A',
+                phoneNum: this.state.phoneNum,
+                color: '#73d4e3'})}
+      >
+        <Text style={styles.actionText}> Save </Text>
+      </TouchableOpacity>
+
+
+
     </View>
     );
   }
@@ -120,21 +161,64 @@ export default connect(mapState, mapDispatch)(UpdateContact);
 
 /* -------------------<   STYLING   >-------------------- */
 
+import { maxWidth } from '../styles/global';
+
 const styles = StyleSheet.create({
   container: {
     marginTop: 40,
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  secondContainer: {
-    marginTop: 60
+
+  headline: {
+    fontSize: 18,
+    fontWeight: '700',
+    alignSelf: 'flex-start',
+    marginVertical: 10,
+    marginHorizontal: 33,
   },
-  input: {
-    backgroundColor: 'ghostwhite',
+  textWrapper: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#bfbfbf',
+    // backgroundColor: 'lavender',
+    // flexDirection: 'column',
     height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    margin: 20
+    width: maxWidth - 75,
+    margin: 10,
+    // flex: 1,
   },
+  textInput: {
+    // backgroundColor: 'ghostwhite',
+    width: maxWidth - 75,
+    height: 40,
+    // borderColor: 'lightgray',
+    // borderRadius: 4,
+    // borderBottomWidth: 1,
+  },
+  phoneInput: {
+    color: 'blue'
+  },
+
+  actionButton: {
+    backgroundColor: 'darkblue',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
+    width: maxWidth
+    // alignSelf: 'flex-end',
+  },
+
+  actionText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: '200'
+  },
+
+  spacer: {
+    flex: 1,
+  },
+
   closeButton: {
     alignSelf: 'flex-end',
     marginRight: 30
