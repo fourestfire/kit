@@ -29,6 +29,44 @@ Contacts.getAllWithoutPhotos((err, contacts) => {
   }
 })
 
+// test of realm
+// import Realm from 'realm';
+var Realm = require('realm');
+
+// const CarSchema = {
+//   name: 'Car',
+//   properties: {
+//     make:  'string',
+//     model: 'string',
+//     miles: {type: 'int', default: 0},
+//   }
+// };
+// const PersonSchema = {
+//   name: 'Person',
+//   properties: {
+//     name:     'string',
+//     birthday: 'date',
+//     cars:     {type: 'list', objectType: 'Car'},
+//     picture:  {type: 'data', optional: true}, // optional property
+//   }
+// };
+
+// // Initialize a Realm with Car and Person models
+// let realm = new Realm({schema: [CarSchema, PersonSchema]});
+
+// realm.write(() => {
+//   let car = realm.create('Car', {
+//     make: 'Honda',
+//     model: 'Civic',
+//     miles: 750,
+//   });
+
+//   // you can access and set all properties defined in your model
+//   console.log('Car type is ' + car.make + ' ' + car.model);
+//   car.miles = 1500;
+// });
+
+
 /* -------------------<   COMPONENT   >-------------------- */
 
 class HomeScreen extends React.Component {
