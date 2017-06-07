@@ -1,36 +1,26 @@
 import Realm from 'realm';
 import uuid from 'uuid';
 // import { ListView } from 'realm/react-native'
-// const uuid = require('uuid')
 
-class Car {
-  static get () { return realm.objects(Car.schema.name) }
+class Contact {
+  static get () { return realm.objects(Contact.schema.name) }
   static schema = {
-    name: 'Car',
+    name: 'Contact',
+    primaryKey: 'id',
     properties: {
-      make:  'string',
-      model: 'string',
+      firstName:  'string',
+      lastName: 'string',
       miles: {type: 'int', default: 0},
     }
   }
 }
 
-// export const todoItemDS = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.id !== r2.id})
-
-export const getCars = () => {
-  const cars = Car.get()
-  return cars
+export const getContacts = () => {
+  return Contact.get()
 }
 
-export const getSomeCars = () => {
-  const cars = Car.get()
-  return cars.slice(10, cars.length - 1);
-}
-
-
-export const getCar = (id) => {
-  const car = realm.objectForPrimaryKey(Car, id)
-  return car
+export const getContact = (id) => {
+  return realm.objectForPrimaryKey(Contact, id)
 }
 
 // export const updateTodoItem = (todoItem, value, completed) => {
@@ -44,34 +34,29 @@ export const getCar = (id) => {
 //   })
 // }
 
-export const createTodoItem = (value) => {
-  console.log('creating new car')
+export const createContact = (value) => {
+  console.log('creating new contact')
   realm.write(() => {
-    realm.create(Car.schema.name, {
-      make: 'Another Honda',
-      model: 'Civic',
+    realm.create(Contact.schema.name, {
+      firstName:  'itsme',
+      lastName: 'shiba',
       miles: 1750,
     })
   })
-  console.log('# of cars', getCars().length)
+  console.log('# of contacts', getContact().length)
 }
 
-// export const deleteTodoItem = (todoItem) => {
-//   realm.write(() => {
-//     realm.delete(todoItem)
-//   })
-// }
+export const deleteContact = (Contact) => {
+  realm.write(() => {
+    realm.delete(Contact)
+  })
+}
 
-const realm = new Realm({schema: [Car]})
+export const deleteAllContacts = () => {
+  realm.write(() => {
+    let contacts = realm.objects('Contact')
+    realm.delete(contacts)
+  })
+}
 
-realm.write(() => {
-  let car = realm.create('Car', {
-    make: 'Honda',
-    model: 'Civic',
-    miles: 750,
-  });
-
-  // you can access and set all properties defined in your model
-  console.log('Car type is ' + car.make + ' ' + car.model);
-  car.miles = 1500;
-});
+const realm = new Realm({schema: [Contact]})

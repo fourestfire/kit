@@ -22,7 +22,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Contacts from 'react-native-contacts';
 import moment from 'moment';
 
-import { getCars, getSomeCars } from '../redux/realm'
+import { getContacts } from '../redux/realm'
 
 Contacts.getAllWithoutPhotos((err, contacts) => {
   if(err === 'denied'){
@@ -31,7 +31,6 @@ Contacts.getAllWithoutPhotos((err, contacts) => {
   }
 })
 
-console.log("some cars", getSomeCars())
 /* -------------------<   COMPONENT   >-------------------- */
 
 class HomeScreen extends React.Component {

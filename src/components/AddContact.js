@@ -12,7 +12,7 @@ import moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {TextInputMask} from 'react-native-masked-text';
 
-import { createTodoItem } from '../redux/realm';
+import { createContact } from '../redux/realm';
 
 class AddContact extends Component {
   constructor(props) {
@@ -50,7 +50,7 @@ class AddContact extends Component {
 	}
 
   addContact(contact) {
-    createTodoItem();
+    createContact();
     this.props.addContactSync(contact)
     this.props.screenProps.toggle()
   }
