@@ -1,4 +1,5 @@
-import Realm from 'realm'
+import Realm from 'realm';
+import uuid from 'uuid';
 // import { ListView } from 'realm/react-native'
 // const uuid = require('uuid')
 
@@ -21,10 +22,16 @@ export const getCars = () => {
   return cars
 }
 
-// export const getTodoItem = (id) => {
-//   const todoItem = realm.objectForPrimaryKey(TodoItem, id)
-//   return todoItem
-// }
+export const getSomeCars = () => {
+  const cars = Car.get()
+  return cars.slice(10, cars.length - 1);
+}
+
+
+export const getCar = (id) => {
+  const car = realm.objectForPrimaryKey(Car, id)
+  return car
+}
 
 // export const updateTodoItem = (todoItem, value, completed) => {
 //   realm.write(() => {
@@ -37,15 +44,17 @@ export const getCars = () => {
 //   })
 // }
 
-// export const createTodoItem = (value) => {
-//   realm.write(() => {
-//     realm.create(TodoItem.schema.name, {
-//       id: uuid.v1(),
-//       value,
-//       createdTimestamp: new Date()
-//     })
-//   })
-// }
+export const createTodoItem = (value) => {
+  console.log('creating new car')
+  realm.write(() => {
+    realm.create(Car.schema.name, {
+      make: 'Another Honda',
+      model: 'Civic',
+      miles: 1750,
+    })
+  })
+  console.log('# of cars', getCars().length)
+}
 
 // export const deleteTodoItem = (todoItem) => {
 //   realm.write(() => {
