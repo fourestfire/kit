@@ -8,6 +8,7 @@ class Contact {
     name: 'Contact',
     primaryKey: 'id',
     properties: {
+      id: 'string',
       firstName:  'string',
       lastName: 'string',
       miles: {type: 'int', default: 0},
@@ -19,9 +20,9 @@ export const getContacts = () => {
   return Contact.get()
 }
 
-export const getContact = (id) => {
-  return realm.objectForPrimaryKey(Contact, id)
-}
+// export const getContact = (id) => {
+//   return realm.objectForPrimaryKey(Contact, id)
+// }
 
 // export const updateTodoItem = (todoItem, value, completed) => {
 //   realm.write(() => {
@@ -36,14 +37,16 @@ export const getContact = (id) => {
 
 export const createContact = (value) => {
   console.log('creating new contact')
+  console.log(uuid.v1(), typeof(uuid.v1()))
   realm.write(() => {
     realm.create(Contact.schema.name, {
+      id: uuid.v1(),
       firstName:  'itsme',
       lastName: 'shiba',
       miles: 1750,
     })
   })
-  console.log('# of contacts', getContact().length)
+  console.log('# of contacts', getContacts().length)
 }
 
 export const deleteContact = (Contact) => {
