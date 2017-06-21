@@ -27,7 +27,7 @@ import { getContacts } from '../redux/realm'
 Contacts.getAllWithoutPhotos((err, contacts) => {
   if(err === 'denied'){
   } else {
-    console.log('contacts', contacts)
+    console.log('contacts from react-native-contacts', contacts)
   }
 })
 
@@ -51,11 +51,12 @@ class HomeScreen extends React.Component {
 
   componentDidMount(){
     // allows us to tell current time in moment during testing
-    console.log("mounted main")
-    let m = moment()
-    console.log(moment().format('x'))
-    m.add(20, 'd');
-    console.log("newdate", m.format('x'))
+
+    // console.log("mounted main")
+    // let m = moment()
+    // // console.log(moment().format('x'))
+    // m.add(20, 'd');
+    // console.log("newdate", m.format('x'))
   }
 
   toggleAddModal = () => {

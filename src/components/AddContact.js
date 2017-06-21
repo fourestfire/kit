@@ -22,14 +22,14 @@ class AddContact extends Component {
       lastName: '',
       phoneNum: '',
       color: '#73d4e3',
-      frequency: 7,
+      frequency: 14,
       values: ['Daily',  'Weekly', 'Monthly'],
-    }
+    };
   }
 
   _onPhoneTextSubmit() {
-    let phoneNum = this.refs['3'].getRawValue()
-    console.log("phonenum", phoneNum, typeof(phoneNum))
+    let phoneNum = this.refs['3'].getRawValue();
+    console.log('phonenum', phoneNum, typeof(phoneNum));
     this.setState({
       phoneNum: phoneNum,
     });
@@ -42,7 +42,7 @@ class AddContact extends Component {
   }
 
   _focusNextField(nextField) {
-    this.refs[nextField].focus()
+    this.refs[nextField].focus();
   }
 
   _focusPhoneField() {
@@ -50,9 +50,9 @@ class AddContact extends Component {
 	}
 
   addContact(contact) {
-    createContact();
-    this.props.addContactSync(contact)
-    this.props.screenProps.toggle()
+    createContact(contact);
+    this.props.addContactSync(contact);
+    this.props.screenProps.toggle();
   }
 
   render() {
@@ -60,8 +60,8 @@ class AddContact extends Component {
       {label: 'Denmark', value: 'DK'},
       {label: 'Germany', value: 'DE'},
       {label: 'United States', value: 'US'}
-    ]
-    const date = parseInt(moment().format('x'), 10)
+    ];
+    const date = parseInt(moment().format('x'), 10);
 
     return (
       <View style={styles.container}>
@@ -73,12 +73,12 @@ class AddContact extends Component {
 
       <View style={styles.textWrapper}>
         <TextInput
-          ref='1'
+          ref="1"
           style={styles.textInput}
           placeholder={'First Name'}
           placeholderTextColor="#bfbfbf"
           autoFocus={true}
-          onChangeText={firstName=>this.setState({firstName})}
+          onChangeText={firstName => this.setState({firstName})}
           returnKeyType="next"
           blurOnSubmit={false}
           onSubmitEditing={() => this._focusNextField('2')}
@@ -87,11 +87,11 @@ class AddContact extends Component {
 
       <View style={styles.textWrapper}>
         <TextInput
-          ref='2'
+          ref="2"
           style={styles.textInput}
           placeholder={'Last Name'}
           placeholderTextColor="#bfbfbf"
-          onChangeText={lastName=>this.setState({lastName})}
+          onChangeText={lastName => this.setState({lastName})}
           returnKeyType="next"
           onSubmitEditing={this._focusPhoneField.bind(this)}
         />
@@ -99,7 +99,7 @@ class AddContact extends Component {
 
       <View style={styles.textWrapper}>
         <TextInputMask
-          ref='3'
+          ref="3"
           style={[styles.textInput, styles.phoneInput]}
           type={'custom'}
           options={{
@@ -113,8 +113,8 @@ class AddContact extends Component {
           onChangeText={this._onPhoneTextChange.bind(this)}
           returnKeyType="next"
           onSubmitEditing={() => {
-            this._onPhoneTextSubmit()
-            this._focusNextField('4')}
+            this._onPhoneTextSubmit();
+            this._focusNextField('4');}
           }
         />
         {/*<TextInput
@@ -132,12 +132,12 @@ class AddContact extends Component {
 
       <View style={styles.textWrapper}>
         <TextInput
-          ref='4'
+          ref="4"
           style={styles.textInput}
           placeholderTextColor="#bfbfbf"
           placeholder="Contact Frequency (in days)"
           keyboardType="numeric"
-          onChangeText={frequency=>this.setState({frequency})}
+          onChangeText={frequency => this.setState({frequency})}
           returnKeyType="done"
         />
       </View>
@@ -148,7 +148,7 @@ class AddContact extends Component {
         //icon="md-checkmark"
         //iconPlacement="right"
         style={styles.actionButton}
-        backgroundColor='black'
+        backgroundColor="black"
         onPress={this.addContact.bind(this, {
                 firstName: this.state.firstName,
                 lastName: this.state.lastName,
