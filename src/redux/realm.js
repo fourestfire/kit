@@ -57,7 +57,7 @@ export const createContact = contact => {
   });
   // console.log('# of contacts', getContacts().length);
   getContacts().forEach((contact, idx) => console.log(`contact ${idx + 1}: ${contact.firstName} ${contact.lastName} ${contact.phoneNum} ${contact.nextContact} ${contact.lastContact}`));
-  deleteAllContacts();
+  // deleteAllContacts();
 };
 
 export const deleteContact = (Contact) => {
