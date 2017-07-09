@@ -8,8 +8,11 @@ import Header from './Header';
 import Collapsible from 'react-native-collapsible';
 import { BlurView } from 'react-native-blur';
 import moment from 'moment';
-import AddContact from './AddContact'
-import UpdateContact from './UpdateContact'
+import AddContact from './AddContact';
+import UpdateContact from './UpdateContact';
+import { getAllContacts } from '../redux/realm';
+
+let allContacts = Array.prototype.slice.call(getAllContacts());
 
 class Today extends Component {
   static navigationOptions = {
@@ -71,6 +74,8 @@ class Today extends Component {
       tension: 300
     }
 
+    console.log("allcontacts", allContacts)
+
     return (
       <ScrollView showsVerticalScrollIndicator={false} bounces={true} style={styles.container}>
 
@@ -127,7 +132,7 @@ class Today extends Component {
 
             <Collapsible collapsed={this.state.isTodayCollapsed}>
             {
-              this.props.store.contacts
+              allContacts
                 .filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day'))
                 .map((contact) => {
                   return (
@@ -160,7 +165,7 @@ class Today extends Component {
 
         <Collapsible collapsed={this.state.isTomorrowCollapsed}>
         {
-          this.props.store.contacts
+          allContacts
             .filter(el => moment(el.nextContact).isSame(moment().add(1, 'day'), 'day'))
             .map((contact) => {
               return (
@@ -191,7 +196,7 @@ class Today extends Component {
 
         <Collapsible collapsed={this.state.isWeekCollapsed}>
         {
-          this.props.store.contacts
+          allContacts
             .filter(el => moment(el.nextContact).isBetween(moment().add(2, 'day'), moment().add(7, 'day'), 'day', '[]')) // [] symbol sets inclusivity to include both the 2nd and the 7th days
             .map((contact) => {
               return (
@@ -222,7 +227,7 @@ class Today extends Component {
 
         <Collapsible collapsed={this.state.isLaterCollapsed}>
         {
-          this.props.store.contacts
+          allContacts
             .filter(el => moment(el.nextContact).isAfter(moment().add(7, 'day'), 'day'))
             .map((contact) => {
               return (

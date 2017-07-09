@@ -21,7 +21,7 @@ class Contact {
   }
 }
 
-export const getContacts = () => {
+export const getAllContacts = () => {
   return Contact.get();
 };
 
@@ -55,8 +55,8 @@ export const createContact = contact => {
       color: contact.color
     });
   });
-  // console.log('# of contacts', getContacts().length);
-  getContacts().forEach((contact, idx) => console.log(`contact ${idx + 1}: ${contact.firstName} ${contact.lastName} ${contact.phoneNum} ${contact.nextContact} ${contact.lastContact}`));
+  // console.log('# of contacts', getAllContacts().length);
+  getAllContacts().forEach((contact, idx) => console.log(`contact ${idx + 1}: ${contact.firstName} ${contact.lastName} ${contact.phoneNum} ${contact.nextContact} ${contact.lastContact}`));
   // deleteAllContacts();
 };
 
