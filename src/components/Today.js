@@ -14,6 +14,8 @@ import { getAllContacts } from '../redux/realm';
 
 let allContacts = Array.prototype.slice.call(getAllContacts());
 
+console.log("allcontacts on Today page", allContacts)
+
 class Today extends Component {
   static navigationOptions = {
     tabBar: {
@@ -52,20 +54,13 @@ class Today extends Component {
     this.setState({ showUpdateModal: !this.state.showUpdateModal, updateModalContact: contact})
   }
 
-  toggleTodayCollapse() {
-    this.setState({ isTodayCollapsed: !this.state.isTodayCollapsed });
-  }
-
-  toggleTomorrowCollapse() {
-    this.setState({ isTomorrowCollapsed: !this.state.isTomorrowCollapsed });
-  }
-
-  toggleWeekCollapse() {
-    this.setState({ isWeekCollapsed: !this.state.isWeekCollapsed });
-  }
-
-  toggleLaterCollapse() {
-    this.setState({ isLaterCollapsed: !this.state.isLaterCollapsed });
+  toggleCollapse(type) {
+    let stateToChange = `is${type}Collapsed`
+    if (type === 'Today') { currentState = this.state.isTodayCollapsed }
+    else if (type === 'Tomorrow') { currentState = this.state.isTomorrowCollapsed }
+    else if (type === 'Week') { currentState = this.state.isWeekCollapsed }
+    else if (type === 'Later') { currentState = this.state.isLaterCollapsed }
+    this.setState({ [stateToChange]: !currentState });
   }
 
   render() {
@@ -73,8 +68,6 @@ class Today extends Component {
       damping: 1 - 0.7,
       tension: 300
     }
-
-    console.log("allcontacts", allContacts)
 
     return (
       <ScrollView showsVerticalScrollIndicator={false} bounces={true} style={styles.container}>
@@ -123,7 +116,7 @@ class Today extends Component {
           <View style={styles.heavyDivider} />
 
           {/* Populate Today column if person's date is same as today's or before it */}
-          <TouchableOpacity activeOpacity={0.8} onPress={this.toggleTodayCollapse.bind(this)} >
+          <TouchableOpacity activeOpacity={0.8} onPress={this.toggleCollapse.bind(this, 'Today')} >
             <View style={styles.rowHeader}>
               <Text style={styles.rowHeaderText}> {this.state.isTodayCollapsed ? <Icon size={30} name='ios-arrow-up' /> : <Icon size={30} name='ios-arrow-down' />}   Today
               </Text>
@@ -156,7 +149,7 @@ class Today extends Component {
 
 
         {/* Populate Tomorrow column if person's date is the same date as tomorrow */}
-        <TouchableOpacity activeOpacity={0.8} onPress={this.toggleTomorrowCollapse.bind(this)} >
+        <TouchableOpacity activeOpacity={0.8} onPress={this.toggleCollapse.bind(this, 'Tomorrow')} >
           <View style={styles.rowHeader}>
             <Text style={styles.rowHeaderText}> {this.state.isTomorrowCollapsed ? <Icon size={30} name='ios-arrow-up' /> : <Icon size={30} name='ios-arrow-down' />}   Tomorrow
             </Text>
@@ -187,7 +180,7 @@ class Today extends Component {
       </Collapsible>
 
        {/* Populate This Week column */}
-        <TouchableOpacity activeOpacity={0.8} onPress={this.toggleWeekCollapse.bind(this)} >
+        <TouchableOpacity activeOpacity={0.8} onPress={this.toggleCollapse.bind(this, 'Week')} >
           <View style={styles.rowHeader}>
             <Text style={styles.rowHeaderText}> {this.state.isWeekCollapsed ? <Icon size={30} name='ios-arrow-up' /> : <Icon size={30} name='ios-arrow-down' />}   Rest of Week
             </Text>
@@ -218,7 +211,7 @@ class Today extends Component {
       </Collapsible>
 
       {/* Populate Later column */}
-        <TouchableOpacity activeOpacity={0.8} onPress={this.toggleLaterCollapse.bind(this)} >
+        <TouchableOpacity activeOpacity={0.8} onPress={this.toggleCollapse.bind(this, 'Later')} >
           <View style={styles.rowHeader}>
             <Text style={styles.rowHeaderText}> {this.state.isLaterCollapsed ? <Icon size={30} name='ios-arrow-up' /> : <Icon size={30} name='ios-arrow-down' />}   Later
             </Text>
