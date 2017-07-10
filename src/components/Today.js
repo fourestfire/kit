@@ -14,7 +14,12 @@ import { getAllContacts } from '../redux/realm';
 
 let allContacts = Array.prototype.slice.call(getAllContacts());
 
-console.log("allcontacts on Today page", allContacts)
+let dayContacts = allContacts.filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day'))
+let tomorrowContacts = allContacts.filter(el => moment(el.nextContact).isSame(moment().add(1, 'day'), 'day'))
+let weekContacts = allContacts.filter(el => moment(el.nextContact).isBetween(moment().add(2, 'day'), moment().add(7, 'day'), 'day', '[]')) // [] symbol sets inclusivity to include both the 2nd and the 7th days
+let laterContacts = allContacts.filter(el => moment(el.nextContact).isAfter(moment().add(7, 'day'), 'day'))
+
+console.log('day, tomorrow, week, later', dayContacts, tomorrowContacts, weekContacts, laterContacts)
 
 class Today extends Component {
   static navigationOptions = {

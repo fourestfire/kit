@@ -22,7 +22,7 @@ import sampleContacts from '../utils/seed'
 import Icon from 'react-native-vector-icons/Ionicons';
 import Contacts from 'react-native-contacts';
 import moment from 'moment';
-import { createContact, getAllContacts } from '../redux/realm';
+import { createContact, getAllContacts, deleteAllContacts } from '../redux/realm';
 
 Contacts.getAllWithoutPhotos((err, contacts) => {
   if(err === 'denied'){
@@ -57,15 +57,17 @@ class HomeScreen extends React.Component {
     // m.add(20, 'd');
     // console.log("newdate", m.format('x'))
 
-    // grabs all sample contacts and does initial load for testing
+    // delete existing contacts, then grabs sample contacts from seed file and does initial load for testing
     // console.log(sampleContacts)
+    // deleteAllContacts();
     // sampleContacts.forEach(contact => {
     //   createContact(contact)
     // });
 
-    console.log("here are all the current contacts");
+    // see current contacts
+    // console.log("here are all the current contacts");
+    // getAllContacts().forEach((contact, idx) => console.log(`contact ${idx + 1}: ${contact.firstName} ${contact.lastName} ${contact.phoneNum} ${contact.nextContact} ${contact.lastContact}`));
 
-    getAllContacts().forEach((contact, idx) => console.log(`contact ${idx + 1}: ${contact.firstName} ${contact.lastName} ${contact.phoneNum} ${contact.nextContact} ${contact.lastContact}`));
     // loads into store
     // this.props.getAllContactsSync(sampleContacts);
   }

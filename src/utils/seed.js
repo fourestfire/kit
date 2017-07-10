@@ -12,8 +12,7 @@ let nc2 = parseInt(moment().add(1, 'day').format('x'), 10);
 let nc3 = parseInt(moment().add(3, 'day').format('x'), 10);
 let nc4 = parseInt(moment().add(8, 'day').format('x'), 10);
 
-
-export const sampleContacts = [
+const sampleContacts = [
     {
       firstName: 'Katie',
       lastName: 'Smith',
@@ -71,4 +70,6 @@ export const sampleContacts = [
       phoneNum: '1-000-351-2504',
       color: '#73d4e3',
     },
- ]
+ ];
+
+export default sampleContacts;
