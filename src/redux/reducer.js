@@ -18,6 +18,7 @@ export const getAllContactsSync = contacts => ({ type: GET_ALL_CONTACTS, contact
 
 let initialState = {
   contacts: [],
+  // future use
   searchTerm: 'placeholder',
   results: ['hello']
 };
@@ -33,6 +34,7 @@ const store = function(state = initialState, action) {
     case REMOVE_CONTACT:
       return Object.assign({}, state, {contacts: state.contacts.filter(el => el !== action.contact)});
     case GET_ALL_CONTACTS:
+      console.log("allContacts from store", action.contacts)
       return Object.assign({}, state, {contacts: action.contacts});
 
     default:
@@ -41,11 +43,12 @@ const store = function(state = initialState, action) {
 };
 
 /* ---------------<   THUNK DISPATCHERS   >---------------- */
+import { createContact } from './realm';
 
-// export const getToday = () => dispatch => {
-//   const contacts = state.contacts.filter(el => el.nextContact === 'today')
-//   console.log(contacts)
-//   dispatch(getTodaySync(contacts));
-// };
+export const addContact = (contact) => dispatch => {
+  console.log("createcontact", createContact(contact))
+    // console.log("dispatching contact", receivedContact)
+    // dispatch(addContactSync(contact));
+};
 
 export default combineReducers({ store });

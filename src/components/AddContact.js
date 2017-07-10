@@ -50,17 +50,12 @@ class AddContact extends Component {
 	}
 
   addContact(contact) {
-    createContact(contact);
-    this.props.addContactSync(contact);
+    // createContact(contact);
+    this.props.addContact(contact);
     this.props.screenProps.toggle();
   }
 
   render() {
-    const countryOptions = [
-      {label: 'Denmark', value: 'DK'},
-      {label: 'Germany', value: 'DE'},
-      {label: 'United States', value: 'US'}
-    ];
     const date = parseInt(moment().format('x'), 10);
 
     return (
@@ -150,14 +145,14 @@ class AddContact extends Component {
         style={styles.actionButton}
         backgroundColor="black"
         onPress={this.addContact.bind(this, {
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
-                frequency: Number(this.state.frequency),
-                nextContact: date,
-                lastContact: null,
-                lastMsg: 'N/A',
-                phoneNum: this.state.phoneNum,
-                color: '#73d4e3'})}
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          frequency: Number(this.state.frequency),
+          nextContact: date,
+          lastContact: null,
+          lastMsg: 'N/A',
+          phoneNum: this.state.phoneNum,
+          color: '#73d4e3'})}
       >
         <Text style={styles.actionText}> Save </Text>
       </TouchableOpacity>
@@ -170,10 +165,10 @@ class AddContact extends Component {
 /* -------------------<   CONTAINER   >-------------------- */
 
 import { connect } from 'react-redux';
-import { addContactSync, removeContactSync } from '../redux/reducer';
+import { addContact, addContactSync, removeContactSync } from '../redux/reducer';
 
 const mapState = ({ store }) => ({ store });
-const mapDispatch = ({ addContactSync, removeContactSync });
+const mapDispatch = ({ addContactSync, addContact, removeContactSync });
 
 export default connect(mapState, mapDispatch)(AddContact);
 

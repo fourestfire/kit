@@ -58,7 +58,6 @@ class HomeScreen extends React.Component {
     // console.log("newdate", m.format('x'))
 
     // delete existing contacts, then grabs sample contacts from seed file and does initial load for testing
-    // console.log(sampleContacts)
     // deleteAllContacts();
     // sampleContacts.forEach(contact => {
     //   createContact(contact)
@@ -69,7 +68,9 @@ class HomeScreen extends React.Component {
     // getAllContacts().forEach((contact, idx) => console.log(`contact ${idx + 1}: ${contact.firstName} ${contact.lastName} ${contact.phoneNum} ${contact.nextContact} ${contact.lastContact}`));
 
     // loads into store
-    // this.props.getAllContactsSync(sampleContacts);
+    let allContacts = Array.prototype.slice.call(getAllContacts());
+    this.props.getAllContactsSync(allContacts);
+    console.log("allContacts", allContacts)
   }
 
   toggleAddModal = () => {

@@ -42,8 +42,9 @@ export const getAllContacts = () => {
 
 export const createContact = contact => {
   console.log('creating new contact', contact);
-  realm.write(() => {
-    realm.create(Contact.schema.name, {
+
+  console.log('new contact is', realm.write(() => {
+    let newContact = realm.create(Contact.schema.name, {
       id: uuid.v1(),
       firstName:  contact.firstName || 'itsme',
       lastName: contact.lastName || 'shiba',
@@ -54,9 +55,9 @@ export const createContact = contact => {
       phoneNum: contact.phoneNum || '123-123-1234',
       color: contact.color
     });
-  });
+  }))
   // console.log('# of contacts', getAllContacts().length);
-  getAllContacts().forEach((contact, idx) => console.log(`contact ${idx + 1}: ${contact.firstName} ${contact.lastName} ${contact.phoneNum} ${contact.nextContact} ${contact.lastContact}`));
+  // getAllContacts().forEach((contact, idx) => console.log(`contact ${idx + 1}: ${contact.firstName} ${contact.lastName} ${contact.phoneNum} ${contact.nextContact} ${contact.lastContact}`));
   // deleteAllContacts();
 };
 

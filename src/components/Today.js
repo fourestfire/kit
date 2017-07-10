@@ -12,15 +12,6 @@ import AddContact from './AddContact';
 import UpdateContact from './UpdateContact';
 import { getAllContacts } from '../redux/realm';
 
-let allContacts = Array.prototype.slice.call(getAllContacts());
-
-let dayContacts = allContacts.filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day'))
-let tomorrowContacts = allContacts.filter(el => moment(el.nextContact).isSame(moment().add(1, 'day'), 'day'))
-let weekContacts = allContacts.filter(el => moment(el.nextContact).isBetween(moment().add(2, 'day'), moment().add(7, 'day'), 'day', '[]')) // [] symbol sets inclusivity to include both the 2nd and the 7th days
-let laterContacts = allContacts.filter(el => moment(el.nextContact).isAfter(moment().add(7, 'day'), 'day'))
-
-console.log('day, tomorrow, week, later', dayContacts, tomorrowContacts, weekContacts, laterContacts)
-
 class Today extends Component {
   static navigationOptions = {
     tabBar: {
@@ -74,6 +65,8 @@ class Today extends Component {
       tension: 300
     }
 
+    console.log("rerendering, here are the contacts", this.props.store.contacts)
+
     return (
       <ScrollView showsVerticalScrollIndicator={false} bounces={true} style={styles.container}>
 
@@ -117,7 +110,6 @@ class Today extends Component {
             <UpdateContact screenProps={{ toggle: this.toggleUpdateModal }} contact={this.state.updateModalContact} />
           </Modal>
 
-
           <View style={styles.heavyDivider} />
 
           {/* Populate Today column if person's date is same as today's or before it */}
@@ -130,11 +122,11 @@ class Today extends Component {
 
             <Collapsible collapsed={this.state.isTodayCollapsed}>
             {
-              allContacts
-                .filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day'))
-                .map((contact) => {
+              this.props.store.contacts
+              .filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day'))
+              .map((contact) => {
                   return (
-                    <TouchableOpacity activeOpacity={0.9} onPress={this.toggleUpdateModal.bind(this, contact)} key={contact.firstName}>
+                    <TouchableOpacity activeOpacity={0.9} onPress={this.toggleUpdateModal.bind(this, contact)} key={contact.id}>
                       <Row physics={physics} contact={contact}>
                         <View style={styles.rowContent}>
                           <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
@@ -163,11 +155,11 @@ class Today extends Component {
 
         <Collapsible collapsed={this.state.isTomorrowCollapsed}>
         {
-          allContacts
-            .filter(el => moment(el.nextContact).isSame(moment().add(1, 'day'), 'day'))
-            .map((contact) => {
+          this.props.store.contacts
+          .filter(el => moment(el.nextContact).isSame(moment().add(1, 'day'), 'day'))
+          .map((contact) => {
               return (
-                <TouchableOpacity activeOpacity={0.9} onPress={this.toggleUpdateModal.bind(this, contact)} key={contact.firstName} >
+                <TouchableOpacity activeOpacity={0.9} onPress={this.toggleUpdateModal.bind(this, contact)} key={contact.id} >
                   <Row physics={physics} contact={contact}>
                     <View style={styles.rowContent}>
                       <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
@@ -194,11 +186,11 @@ class Today extends Component {
 
         <Collapsible collapsed={this.state.isWeekCollapsed}>
         {
-          allContacts
-            .filter(el => moment(el.nextContact).isBetween(moment().add(2, 'day'), moment().add(7, 'day'), 'day', '[]')) // [] symbol sets inclusivity to include both the 2nd and the 7th days
-            .map((contact) => {
+          this.props.store.contacts
+          .filter(el => moment(el.nextContact).isBetween(moment().add(2, 'day'), moment().add(7, 'day'), 'day', '[]')) // [] symbol sets inclusivity to include both the 2nd and the 7th days
+          .map((contact) => {
               return (
-                <TouchableOpacity activeOpacity={0.9} onPress={this.toggleUpdateModal.bind(this, contact)} key={contact.firstName} >
+                <TouchableOpacity activeOpacity={0.9} onPress={this.toggleUpdateModal.bind(this, contact)} key={contact.id} >
                   <Row physics={physics} contact={contact}>
                     <View style={styles.rowContent}>
                       <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
@@ -225,11 +217,11 @@ class Today extends Component {
 
         <Collapsible collapsed={this.state.isLaterCollapsed}>
         {
-          allContacts
-            .filter(el => moment(el.nextContact).isAfter(moment().add(7, 'day'), 'day'))
-            .map((contact) => {
+          this.props.store.contacts
+          .filter(el => moment(el.nextContact).isAfter(moment().add(7, 'day'), 'day'))
+          .map((contact) => {
               return (
-                <TouchableOpacity activeOpacity={0.9} onPress={this.toggleUpdateModal.bind(this, contact)} key={contact.firstName}>
+                <TouchableOpacity activeOpacity={0.9} onPress={this.toggleUpdateModal.bind(this, contact)} key={contact.id}>
                   <Row physics={physics} contact={contact}>
                     <View style={styles.rowContent}>
                       <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
