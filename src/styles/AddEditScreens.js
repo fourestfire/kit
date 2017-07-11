@@ -56,7 +56,6 @@ export default StyleSheet.create({
     flex: 1,
   },
 
-
   closeButton: {
     alignSelf: 'flex-end',
     marginRight: 30,

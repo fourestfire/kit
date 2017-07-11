@@ -25,8 +25,6 @@ let initialState = {
 
 const store = function(state = initialState, action) {
   switch (action.type) {
-    // case INITIALIZE_CONTACTS:
-    //   return Object.assign({}, state, {contacts: action.contacts});
     case ADD_CONTACT:
       return Object.assign({}, state, {contacts: [...state.contacts, action.contact]});
     case UPDATE_CONTACT:
@@ -43,10 +41,14 @@ const store = function(state = initialState, action) {
 };
 
 /* ---------------<   THUNK DISPATCHERS   >---------------- */
-import { createContact } from './realm';
+import { createContact, getAllContacts } from './realm';
 
 export const addContact = (contact) => dispatch => {
-  console.log("createcontact", createContact(contact))
+  console.log('creating new contact')
+  createContact(contact);
+  console.log('update store with new contact')
+  let allContacts = Array.prototype.slice.call(getAllContacts());
+  dispatch(getAllContactsSync(allContacts));
     // console.log("dispatching contact", receivedContact)
     // dispatch(addContactSync(contact));
 };

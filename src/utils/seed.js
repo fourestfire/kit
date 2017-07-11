@@ -20,7 +20,7 @@ const sampleContacts = [
       lastContact: lc4,
       nextContact: nc1,
       lastMsg: 'We talked about dinosaurs',
-      phoneNum: '1-000-351-2504',
+      phoneNum: '(123) 351-2504',
       color: 'purple',
     }, {
       firstName: 'Ivan',
@@ -29,7 +29,7 @@ const sampleContacts = [
       lastContact: lc1,
       nextContact: nc1,
       lastMsg: 'Planning wedding',
-      phoneNum: '773-242-0926',
+      phoneNum: '(773) 242-0926',
       color: 'forestgreen',
     }, {
       firstName: 'Tyler',
@@ -38,7 +38,7 @@ const sampleContacts = [
       lastContact: lc2,
       nextContact: nc2,
       lastMsg: 'Started rock climbing',
-      phoneNum: '347-371-3850',
+      phoneNum: '(347) 371-3850',
       color: '#73d4e3',
     }, {
       firstName: 'Sophie',
@@ -47,7 +47,7 @@ const sampleContacts = [
       lastContact: lc5,
       nextContact: nc3,
       lastMsg: 'Birthday on May 7',
-      phoneNum: '1-000-351-2504',
+      phoneNum: '(123) 351-2504',
       color: 'forestgreen',
     },
     {
@@ -57,7 +57,7 @@ const sampleContacts = [
       lastContact: lc3,
       nextContact: nc3,
       lastMsg: 'Went hiking together',
-      phoneNum: '1-000-351-2504',
+      phoneNum: '(123) 351-2504',
       color: 'purple',
     },
     {
@@ -67,7 +67,7 @@ const sampleContacts = [
       lastContact: lc4,
       nextContact: nc4,
       lastMsg: 'Wants to go to UNIQLO',
-      phoneNum: '1-000-351-2504',
+      phoneNum: '(123) 351-2504',
       color: '#73d4e3',
     },
  ];

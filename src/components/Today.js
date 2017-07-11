@@ -65,7 +65,7 @@ class Today extends Component {
       tension: 300
     }
 
-    console.log("rerendering, here are the contacts", this.props.store.contacts)
+    // console.log("rerendering, here are the contacts", this.props.store.contacts)
 
     return (
       <ScrollView showsVerticalScrollIndicator={false} bounces={true} style={styles.container}>

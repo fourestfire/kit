@@ -29,22 +29,21 @@ export const getAllContacts = () => {
 //   return realm.objectForPrimaryKey(Contact, id)
 // }
 
-// export const updateTodoItem = (todoItem, value, completed) => {
-//   realm.write(() => {
-//     try {
-//       todoItem.value = value
-//       todoItem.completed = completed
-//     } catch (e) {
-//       console.warn(e)
-//     }
-//   })
-// }
+export const updateContact = (contact, value, completed) => {
+  realm.write(() => {
+    try {
+      todoItem.value = value
+      todoItem.completed = completed
+    } catch (e) {
+      console.warn(e)
+    }
+  })
+}
 
 export const createContact = contact => {
   console.log('creating new contact', contact);
-
-  console.log('new contact is', realm.write(() => {
-    let newContact = realm.create(Contact.schema.name, {
+  realm.write(() => {
+    realm.create(Contact.schema.name, {
       id: uuid.v1(),
       firstName:  contact.firstName || 'itsme',
       lastName: contact.lastName || 'shiba',
@@ -55,10 +54,9 @@ export const createContact = contact => {
       phoneNum: contact.phoneNum || '123-123-1234',
       color: contact.color
     });
-  }))
-  // console.log('# of contacts', getAllContacts().length);
+  });
+  console.log('total # of contacts', getAllContacts().length);
   // getAllContacts().forEach((contact, idx) => console.log(`contact ${idx + 1}: ${contact.firstName} ${contact.lastName} ${contact.phoneNum} ${contact.nextContact} ${contact.lastContact}`));
-  // deleteAllContacts();
 };
 
 export const deleteContact = (Contact) => {

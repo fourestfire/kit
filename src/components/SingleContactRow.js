@@ -68,7 +68,7 @@ class SingleContactRow extends Component {
               }]
             }
             ]}>
-            <TouchableOpacity style={styles.button} onPress={() => Communications.text(this.props.contact.phoneNum, "Hey! Haven't talked to you in a while. What's up?")}>
+            <TouchableOpacity style={styles.button} onPress={() => Communications.textWithoutEncoding(this.props.contact.phoneNum, "Hey! Haven't talked to you in a while. What's up?")}>
               <MIcon name="message-text" size={35} color="white" />
             </TouchableOpacity>
           </Animated.View>
