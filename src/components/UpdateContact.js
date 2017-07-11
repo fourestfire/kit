@@ -8,8 +8,8 @@ import {
 } from 'react-native';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
-
 import {TextInputMask} from 'react-native-masked-text';
+import styles from '../styles/AddEditScreens';
 
 class UpdateContact extends Component {
   constructor(props) {
@@ -64,6 +64,7 @@ class UpdateContact extends Component {
 
   render() {
     const contact = this.props.contact;
+
     return (
       <View style={styles.container}>
       <TouchableOpacity onPress={this.props.screenProps.toggle} style={styles.closeButton}>
@@ -78,6 +79,7 @@ class UpdateContact extends Component {
           // placeholder={'First Name'}
           placeholderTextColor="#bfbfbf"
           autoFocus={true}
+          autoCorrect={false}
           defaultValue={contact.firstName}
           onChangeText={firstName=>this.setState({firstName})}
           ref='1'
@@ -93,6 +95,7 @@ class UpdateContact extends Component {
           style={styles.textInput}
           placeholder={'Last Name'}
           defaultValue={contact.lastName}
+          autoCorrect={false}
           placeholderTextColor="#bfbfbf"
           onChangeText={lastName=>this.setState({lastName})}
           returnKeyType="next"
@@ -171,6 +174,3 @@ const mapDispatch = ({ updateContactSync });
 
 export default connect(mapState, mapDispatch)(UpdateContact);
 
-/* -------------------<   STYLING   >-------------------- */
-
-import styles from '../styles/AddEditScreens';

@@ -73,6 +73,7 @@ class AddContact extends Component {
           placeholder={'First Name'}
           placeholderTextColor="#bfbfbf"
           autoFocus={true}
+          autoCorrect={false}
           onChangeText={firstName => this.setState({firstName})}
           returnKeyType="next"
           blurOnSubmit={false}
@@ -86,6 +87,7 @@ class AddContact extends Component {
           style={styles.textInput}
           placeholder={'Last Name'}
           placeholderTextColor="#bfbfbf"
+          autoCorrect={false}
           onChangeText={lastName => this.setState({lastName})}
           returnKeyType="next"
           onSubmitEditing={this._focusPhoneField.bind(this)}
