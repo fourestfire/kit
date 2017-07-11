@@ -64,7 +64,9 @@ class AddContact extends Component {
           <Icon name="ios-close" size={50} color="darkgrey" />
         </TouchableOpacity>
 
-      <Text style={styles.headline}> Add Contact </Text>
+      <View style={styles.topSpacer} />
+
+      <Text style={styles.headlineForAdd}> Add Contact </Text>
 
       <View style={styles.textWrapper}>
         <TextInput
@@ -139,7 +141,7 @@ class AddContact extends Component {
         />
       </View>
 
-      <View style={styles.spacer} />
+      <View style={styles.bottomSpacer} />
 
       <TouchableOpacity
         //icon="md-checkmark"

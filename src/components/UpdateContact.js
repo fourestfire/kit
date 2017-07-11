@@ -33,6 +33,8 @@ class UpdateContact extends Component {
       frequency: this.props.contact.frequency,
       lastMsg: this.props.contact.lastMsg,
     })
+
+    console.log("this is my contact", this.props.contact)
   }
 
   _onPhoneTextSubmit() {
@@ -71,14 +73,17 @@ class UpdateContact extends Component {
         <Icon name="ios-close" size={50} color="darkgrey" />
       </TouchableOpacity>
 
-      <Text style={styles.headline}> Edit Contact </Text>
+      <View style={styles.topSpacer} />
+
+      <Text style={styles.headlineForEdit}> Edit Contact </Text>
 
       <View style={styles.textWrapper}>
+        <Text style={styles.helpText}> First Name </Text>
         <TextInput
           style={styles.textInput}
           // placeholder={'First Name'}
           placeholderTextColor="#bfbfbf"
-          autoFocus={true}
+          autoFocus={false}
           autoCorrect={false}
           defaultValue={contact.firstName}
           onChangeText={firstName=>this.setState({firstName})}
@@ -90,10 +95,11 @@ class UpdateContact extends Component {
       </View>
 
       <View style={styles.textWrapper}>
+        <Text style={styles.helpText}> Last Name </Text>
         <TextInput
           ref='2'
           style={styles.textInput}
-          placeholder={'Last Name'}
+          placeholder={''}
           defaultValue={contact.lastName}
           autoCorrect={false}
           placeholderTextColor="#bfbfbf"
@@ -104,6 +110,7 @@ class UpdateContact extends Component {
       </View>
 
       <View style={styles.textWrapper}>
+        <Text style={styles.helpText}> Phone Number </Text>
         <TextInputMask
           ref='3'
           style={[styles.textInput, styles.phoneInput]}
@@ -111,7 +118,7 @@ class UpdateContact extends Component {
           options={{
             mask: '(999) 999-9999'
           }}
-          placeholder={'Phone #'}
+          placeholder={''}
           defaultValue={contact.phoneNum}
           placeholderTextColor="#bfbfbf"
           dataDetectorTypes="phoneNumber"
@@ -126,20 +133,21 @@ class UpdateContact extends Component {
         />
       </View>
 
-       <View style={styles.textWrapper}>
+      <View style={styles.textWrapper}>
+        <Text style={styles.helpText}> Contact Frequency (in days) </Text>
         <TextInput
           ref='4'
           style={styles.textInput}
           defaultValue={String(contact.frequency)}
           placeholderTextColor="#bfbfbf"
-          placeholder="Contact Frequency (in days)"
+          placeholder=""
           keyboardType="numeric"
           onChangeText={frequency=>this.setState({frequency})}
           returnKeyType="done"
         />
       </View>
 
-      <View style={styles.spacer} />
+      <View style={styles.bottomSpacer} />
 
       <TouchableOpacity
         //icon="md-checkmark"
