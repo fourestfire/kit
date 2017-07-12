@@ -47,6 +47,7 @@ var ListViewSimpleExample = React.createClass({
 
   _pressData: ({}: {[key: number]: boolean}),
 
+
   componentWillMount: function() {
     this._pressData = {};
   },

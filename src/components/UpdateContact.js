@@ -86,7 +86,7 @@ class UpdateContact extends Component {
           autoFocus={false}
           autoCorrect={false}
           defaultValue={contact.firstName}
-          onChangeText={firstName=>this.setState({firstName})}
+          onChangeText={firstName => this.setState({firstName})}
           ref='1'
           returnKeyType="next"
           blurOnSubmit={false}
@@ -103,7 +103,7 @@ class UpdateContact extends Component {
           defaultValue={contact.lastName}
           autoCorrect={false}
           placeholderTextColor="#bfbfbf"
-          onChangeText={lastName=>this.setState({lastName})}
+          onChangeText={lastName => this.setState({lastName})}
           returnKeyType="next"
           onSubmitEditing={this._focusPhoneField.bind(this)}
         />
@@ -142,7 +142,7 @@ class UpdateContact extends Component {
           placeholderTextColor="#bfbfbf"
           placeholder=""
           keyboardType="numeric"
-          onChangeText={frequency=>this.setState({frequency})}
+          onChangeText={frequency => this.setState({frequency})}
           returnKeyType="done"
         />
       </View>
