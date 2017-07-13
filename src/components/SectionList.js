@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity, Dimensions, FlatList} from 'react-native';
+import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity, Dimensions, SectionList, Modal} from 'react-native';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Header from './Header';
-
 import moment from 'moment';
 import { convertFrequency } from '../utils/utils';
-
 import Row from './SingleContactRow';
 import Interactable from 'react-native-interactable';
+import AddContact from './AddContact';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-class FlatView extends Component {
+class SectionListView extends Component {
   static navigationOptions = {
     tabBar: {
-      label: 'FlatView',
+      label: 'SectionList',
       icon: ({ tintColor }) => <MIcon size={25} name='calendar-check' color={ tintColor }/>
     }
   }
@@ -21,17 +21,48 @@ class FlatView extends Component {
     super(props);
     this.state = {
       query: '',
+      showAddModal: false,
+      isTodayCollapsed: false,
+      isTomorrowCollapsed: false,
+      isWeekCollapsed: true,
+      isLaterCollapsed: true,
     };
   }
 
-  filterContacts(contacts, query) {
-    return filteredContacts = contacts.filter(contact => {
-      return contact.firstName.match(new RegExp(query, 'i')) || contact.lastName.match(new RegExp(query, 'i'));
-    })
+  toggleAddModal = () => {
+    this.setState({ showAddModal: !this.state.showAddModal })
   }
 
-  filteredContacts() {
-    return this.filterContacts(this.props.store.contacts, this.state.query)
+  filterContacts(contacts, query, type) {
+    // if section is collapsed, we want to hide results
+    let hideResults = this.checkIfCollapsed(type) ? true : false;
+
+    if (!hideResults) {
+      return filteredContacts = contacts.filter(contact => {
+        return contact.firstName.match(new RegExp(query, 'i')) || contact.lastName.match(new RegExp(query, 'i'));
+      })
+    } else {
+      return [];
+    }
+  }
+
+  filteredContacts(type) {
+    return this.filterContacts(this.props.store.contacts, this.state.query, type);
+  }
+
+  checkIfCollapsed(type) {
+    let stateToChange = `is${type}Collapsed`;
+    if (type === 'Today') { currentState = this.state.isTodayCollapsed }
+    else if (type === 'Tomorrow') { currentState = this.state.isTomorrowCollapsed }
+    else if (type === 'Week') { currentState = this.state.isWeekCollapsed }
+    else if (type === 'Later') { currentState = this.state.isLaterCollapsed }
+    return currentState;
+  }
+
+  toggleCollapse(type) {
+    let stateToChange = `is${type}Collapsed`
+    this.checkIfCollapsed(type)
+    this.setState({ [stateToChange]: !currentState });
   }
 
   _keyExtractor = (item, index) => item.id;
@@ -44,6 +75,15 @@ class FlatView extends Component {
 
     return (
       <View style={styles.container}>
+        <Modal
+          visible={this.state.showAddModal}
+          onRequestClose={this.toggleAddModal}
+          animationType='slide'
+        >
+          <AddContact screenProps={{ toggle: this.toggleAddModal }} />
+        </Modal>
+
+
         <Header
           leftItem={{
             title: 'settings'
@@ -56,7 +96,7 @@ class FlatView extends Component {
           style={{backgroundColor: 'pink'}}
         />
 
-        <View style={styles.searchbar}>
+        {/* <View style={styles.searchbar}>
           <TextInput
             style={styles.textInput}
             placeholder={'Search contacts'}
@@ -66,12 +106,24 @@ class FlatView extends Component {
             returnKeyType="search"
             blurOnSubmit={false}
           />
-        </View>
+        </View> */}
 
-        <FlatList
-          style={styles.flatlist}
+        <SectionList
+          style={styles.sectionList}
+          renderSectionHeader={({section}) =>
+            <TouchableOpacity activeOpacity={0.8} onPress={this.toggleCollapse.bind(this, section.title)} >
+              <View style={styles.rowHeader}>
+                <Text style={styles.rowHeaderText}> {this.checkIfCollapsed(section.title) ? <Icon size={30} name='ios-arrow-up' /> : <Icon size={30} name='ios-arrow-down' />}   {section.title}
+                </Text>
+              </View>
+            </TouchableOpacity>}
           keyExtractor={this._keyExtractor}
-          data={this.filteredContacts()}
+          sections={[
+            {data: this.filteredContacts('Today').filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day')), title: 'Today'},
+            {data: this.filteredContacts('Tomorrow').filter(el => moment(el.nextContact).isSame(moment().add(1, 'day'), 'day')), title: 'Tomorrow'},
+            {data: this.filteredContacts('Week').filter(el => moment(el.nextContact).isBetween(moment().add(2, 'day'), moment().add(7, 'day'), 'day', '[]')), title: 'Next Week'},
+            {data: this.filteredContacts('Later').filter(el => moment(el.nextContact).isAfter(moment().add(7, 'day'), 'day')), title: 'Later'}
+          ]}
           renderItem={({item}) =>
             <Row physics={physics} contact={item}>
               <View style={styles.rowContent}>
@@ -82,8 +134,8 @@ class FlatView extends Component {
                   <Text style={styles.rowSubtitle}>Prev note: {item.lastMsg} </Text>
                 </View>
               </View>
-            </Row>
-        }/>
+            </Row>}
+          />
 
       </View>
     );
@@ -98,7 +150,7 @@ import { } from '../redux/reducer';
 const mapState = ({ store }) => ({ store });
 const mapDispatch = null;
 
-export default connect(mapState, mapDispatch)(FlatView);
+export default connect(mapState, mapDispatch)(SectionListView);
 
 /* -------------------<   STYLES   >-------------------- */
 const styles = StyleSheet.create({
@@ -122,7 +174,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent'
     // backgroundColor: 'darkgrey',
   },
-  flatlist: {
+  sectionList: {
     backgroundColor: 'white'
   },
   rowHeader: {

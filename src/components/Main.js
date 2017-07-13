@@ -14,6 +14,7 @@ import {
 import { TabNavigator } from "react-navigation";
 import Today from './Today';
 import FlatView from './FlatView';
+import SectionList from './SectionList';
 import MoreContacts from './MoreContacts';
 import AddContact from './AddContact';
 import UpdateContact from './UpdateContact';
@@ -99,6 +100,7 @@ const mapDispatch = ({ getAllContactsSync });
 const connectedHome = connect(mapState, mapDispatch)(HomeScreen);
 
 export default kit = TabNavigator({
+  SectionList: { screen: SectionList },
   FlatView: { screen: FlatView },
   Today: { screen: Today },
   Home: { screen: connectedHome },
