@@ -99,9 +99,9 @@ const mapDispatch = ({ getAllContactsSync });
 const connectedHome = connect(mapState, mapDispatch)(HomeScreen);
 
 export default kit = TabNavigator({
+  FlatView: { screen: FlatView },
   Today: { screen: Today },
   Home: { screen: connectedHome },
-  FlatView: { screen: FlatView },
   // Test: { screen: Test },
   MoreContacts: { screen: MoreContacts },
   // AsyncStorage: { screen: AsyncStorage },
