@@ -66,11 +66,6 @@ class SectionListView extends Component {
     this.setState({ [stateToChange]: !currentState });
   }
 
-  _keyExtractor = (item, index) => {
-    console.log('id in key extractor', item.id)
-    return item.id;
-  }
-
   render() {
     const physics = {
       damping: 1 - 0.7,
@@ -120,12 +115,12 @@ class SectionListView extends Component {
                 </Text>
               </View>
             </TouchableOpacity>}
-          keyExtractor={this._keyExtractor}
+          keyExtractor={item => item.id}
           sections={[
-            {data: this.filteredContacts('Today').filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day')), title: 'Today'},
-            {data: this.filteredContacts('Tomorrow').filter(el => moment(el.nextContact).isSame(moment().add(1, 'day'), 'day')), title: 'Tomorrow'},
-            {data: this.filteredContacts('Week').filter(el => moment(el.nextContact).isBetween(moment().add(2, 'day'), moment().add(7, 'day'), 'day', '[]')), title: 'Next Week'},
-            {data: this.filteredContacts('Later').filter(el => moment(el.nextContact).isAfter(moment().add(7, 'day'), 'day')), title: 'Later'}
+            {key: 'today', data: this.filteredContacts('Today').filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day')), title: 'Today'},
+            {key: 'tomorrow', data: this.filteredContacts('Tomorrow').filter(el => moment(el.nextContact).isSame(moment().add(1, 'day'), 'day')), title: 'Tomorrow'},
+            {key: 'week', data: this.filteredContacts('Week').filter(el => moment(el.nextContact).isBetween(moment().add(2, 'day'), moment().add(7, 'day'), 'day', '[]')), title: 'Next Week'},
+            {key: 'later', data: this.filteredContacts('Later').filter(el => moment(el.nextContact).isAfter(moment().add(7, 'day'), 'day')), title: 'Later'}
           ]}
           renderItem={({item}) =>
             <Row physics={physics} contact={item}>
