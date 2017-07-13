@@ -11,6 +11,7 @@ import moment from 'moment';
 import AddContact from './AddContact';
 import UpdateContact from './UpdateContact';
 import { getAllContacts } from '../redux/realm';
+import { convertFrequency } from '../utils/utils';
 
 class Today extends Component {
   static navigationOptions = {
@@ -32,14 +33,6 @@ class Today extends Component {
       showUpdateModal: false,
       updateModalContact: {}
     }
-  }
-
-  convertFrequency = (frequency) => {
-    if (frequency === 1) return 'Daily'
-    if (frequency === 7) return 'Weekly'
-    if (frequency === 30 || frequency === 31) return 'Monthly'
-    if (frequency === 14) return 'Bi-Weekly'
-    else return `Every ${frequency} Days`
   }
 
   toggleAddModal = () => {
@@ -132,7 +125,7 @@ class Today extends Component {
                           <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
                           <View>
                             <Text style={styles.rowTitle}>{contact.firstName} {contact.lastName}</Text>
-                            <Text style={styles.rowSubtitle}>{this.convertFrequency(contact.frequency)} (Last contact {contact.lastContact ? moment(contact.lastContact).format('L') : 'N/A'})</Text>
+                            <Text style={styles.rowSubtitle}>{convertFrequency(contact.frequency)} (Last contact {contact.lastContact ? moment(contact.lastContact).format('L') : 'N/A'})</Text>
                             <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
 
                           </View>
@@ -165,7 +158,7 @@ class Today extends Component {
                       <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
                       <View>
                         <Text style={styles.rowTitle}>{contact.firstName} {contact.lastName}</Text>
-                        <Text style={styles.rowSubtitle}>{this.convertFrequency(contact.frequency)} (Last contact {contact.lastContact ? moment(contact.lastContact).format('L') : 'N/A'})</Text>
+                        <Text style={styles.rowSubtitle}>{convertFrequency(contact.frequency)} (Last contact {contact.lastContact ? moment(contact.lastContact).format('L') : 'N/A'})</Text>
                         <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
                       </View>
                     </View>
@@ -196,7 +189,7 @@ class Today extends Component {
                       <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
                       <View>
                         <Text style={styles.rowTitle}>{contact.firstName} {contact.lastName}</Text>
-                        <Text style={styles.rowSubtitle}>{this.convertFrequency(contact.frequency)} (Last contact {contact.lastContact ? moment(contact.lastContact).format('L') : 'N/A'})</Text>
+                        <Text style={styles.rowSubtitle}>{convertFrequency(contact.frequency)} (Last contact {contact.lastContact ? moment(contact.lastContact).format('L') : 'N/A'})</Text>
                         <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
                       </View>
                     </View>
@@ -227,7 +220,7 @@ class Today extends Component {
                       <View style={[styles.rowIcon, {backgroundColor: contact.color}]} />
                       <View>
                         <Text style={styles.rowTitle}>{contact.firstName} {contact.lastName}</Text>
-                        <Text style={styles.rowSubtitle}>{this.convertFrequency(contact.frequency)} (Last contact {contact.lastContact ? moment(contact.lastContact).format('L') : 'N/A'})</Text>
+                        <Text style={styles.rowSubtitle}>{convertFrequency(contact.frequency)} (Last contact {contact.lastContact ? moment(contact.lastContact).format('L') : 'N/A'})</Text>
                         <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
                       </View>
                     </View>

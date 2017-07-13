@@ -3,6 +3,12 @@ import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity, Dimensions,
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Header from './Header';
 
+import moment from 'moment';
+import { convertFrequency } from '../utils/utils';
+
+import Row from './SingleContactRow';
+import Interactable from 'react-native-interactable';
+
 class FlatView extends Component {
   static navigationOptions = {
     tabBar: {
@@ -31,8 +37,11 @@ class FlatView extends Component {
   _keyExtractor = (item, index) => item.id;
 
   render() {
-    console.log("on flatView, here are the contacts", this.state.contacts, this.props.store.contacts)
-    console.log("filtered contacts and query", this.state.contacts, this.state.query)
+    const physics = {
+      damping: 1 - 0.7,
+      tension: 300
+    }
+
     return (
       <View style={styles.container}>
         <Header
@@ -52,13 +61,11 @@ class FlatView extends Component {
             ref="1"
               style={styles.textInput}
               placeholder={'Search for a contact'}
-              placeholderTextColor="#bfbfbf"
-              autoFocus={true}
+              placeholderTextColor="white"
               autoCorrect={false}
               onChangeText={query => this.setState({query: query})}
               returnKeyType="next"
               blurOnSubmit={false}
-              onSubmitEditing={() => this._focusNextField('2')}
           />
         </View>
 
@@ -66,8 +73,18 @@ class FlatView extends Component {
           style={styles.flatlist}
           keyExtractor={this._keyExtractor}
           data={this.filteredContacts()}
-          renderItem={({item}) => <Text>{item.firstName} {item.lastName}</Text>}
-        />
+          renderItem={({item}) =>
+            <Row physics={physics} contact={item}>
+              <View style={styles.rowContent}>
+                <View style={[styles.rowIcon, {backgroundColor: item.color}]} />
+                <View>
+                  <Text style={styles.rowTitle}>{item.firstName} {item.lastName}</Text>
+                  <Text style={styles.rowSubtitle}>{convertFrequency(item.frequency)} (Last contact {item.lastContact ? moment(item.lastContact).format('L') : 'N/A'})</Text>
+                  <Text style={styles.rowSubtitle}>Prev note: {item.lastMsg} </Text>
+                </View>
+              </View>
+            </Row>
+        }/>
 
       </View>
     );
@@ -94,7 +111,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   textInput: {
-    color: 'black',
+    color: 'white',
     height: 50,
     backgroundColor: 'darkgrey',
   },
