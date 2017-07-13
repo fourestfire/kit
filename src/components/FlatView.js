@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   },
   searchbar: {
     height: 50,
-    color: 'green',
+    backgroundColor: 'white',
     shadowColor: 'grey',
     shadowOffset: {width: 10, height: 10},
     shadowOpacity: 1.0,

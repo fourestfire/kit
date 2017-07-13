@@ -60,12 +60,16 @@ class SectionListView extends Component {
   }
 
   toggleCollapse(type) {
-    let stateToChange = `is${type}Collapsed`
-    this.checkIfCollapsed(type)
+    let stateToChange = `is${type}Collapsed`;
+    let currentState = this.checkIfCollapsed(type);
+    console.log('currentstate', stateToChange, currentState)
     this.setState({ [stateToChange]: !currentState });
   }
 
-  _keyExtractor = (item, index) => item.id;
+  _keyExtractor = (item, index) => {
+    console.log('id in key extractor', item.id)
+    return item.id;
+  }
 
   render() {
     const physics = {
@@ -82,7 +86,6 @@ class SectionListView extends Component {
         >
           <AddContact screenProps={{ toggle: this.toggleAddModal }} />
         </Modal>
-
 
         <Header
           leftItem={{
@@ -160,7 +163,7 @@ const styles = StyleSheet.create({
   },
   searchbar: {
     height: 50,
-    color: 'green',
+    backgroundColor: 'green',
     shadowColor: 'grey',
     shadowOffset: {width: 10, height: 10},
     shadowOpacity: 1.0,

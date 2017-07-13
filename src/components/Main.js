@@ -105,7 +105,7 @@ export default kit = TabNavigator({
   Today: { screen: Today },
   Home: { screen: connectedHome },
   // Test: { screen: Test },
-  MoreContacts: { screen: MoreContacts },
+  // MoreContacts: { screen: MoreContacts },
   // AsyncStorage: { screen: AsyncStorage },
 }, {
   // swipeEnabled: true,
