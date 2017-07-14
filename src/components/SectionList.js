@@ -29,6 +29,20 @@ class SectionListView extends Component {
     };
   }
 
+  renderHeader = () => {
+    return <View>
+      <View style={styles.logo}>
+        <Icon size={80} name='logo-nodejs' />
+      </View>
+      <Header
+        leftItem={{ title: 'settings' }}
+        title="keep in touch"
+        rightItem={{ title: '     add', onPress: () => this.toggleAddModal()}}
+        style={{ backgroundColor: 'pink' }}
+      />
+    </View>
+  };
+
   toggleAddModal = () => {
     this.setState({ showAddModal: !this.state.showAddModal })
   }
@@ -66,10 +80,6 @@ class SectionListView extends Component {
     this.setState({ [stateToChange]: !currentState });
   }
 
-  // renderHeader = () => {
-  //   return <View> <Text> Header </Text> <View/>;
-  // }
-
   render() {
     const physics = {
       damping: 1 - 0.7,
@@ -86,18 +96,6 @@ class SectionListView extends Component {
           <AddContact screenProps={{ toggle: this.toggleAddModal }} />
         </Modal>
 
-        <Header
-          leftItem={{
-            title: 'settings'
-          }}
-          title="keep in touch"
-          rightItem={{
-            title: '     add',
-            onPress: () => this.toggleAddModal(),
-          }}
-          style={{backgroundColor: 'pink'}}
-        />
-
         {/* <View style={styles.searchbar}>
           <TextInput
             style={styles.textInput}
@@ -112,6 +110,7 @@ class SectionListView extends Component {
 
         <SectionList
           style={styles.sectionList}
+          ListHeaderComponent={this.renderHeader}
           renderSectionHeader={({section}) =>
             <TouchableOpacity activeOpacity={0.8} onPress={this.toggleCollapse.bind(this, section.title)} >
               <View style={styles.rowHeader}>
@@ -138,7 +137,6 @@ class SectionListView extends Component {
               </View>
             </Row>}
           />
-
       </View>
     );
   }
@@ -155,6 +153,8 @@ const mapDispatch = null;
 export default connect(mapState, mapDispatch)(SectionListView);
 
 /* -------------------<   STYLES   >-------------------- */
+const Screen = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -213,5 +213,13 @@ const styles = StyleSheet.create({
   rowSubtitle: {
     fontSize: 14,
     color: 'gray'
+  },
+  logo: {
+    marginTop: -250,
+    width: Screen.width,
+    height: 250,
+    backgroundColor: 'pink',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 });
