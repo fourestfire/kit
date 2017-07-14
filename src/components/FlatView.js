@@ -25,9 +25,14 @@ class FlatView extends Component {
   }
 
   filterContacts(contacts, query) {
-    return filteredContacts = contacts.filter(contact => {
+    try {
+      return filteredContacts = contacts.filter(contact => {
       return contact.firstName.match(new RegExp(query, 'i')) || contact.lastName.match(new RegExp(query, 'i'));
-    })
+      })
+    } catch(e) {
+      console.log("received error", e)
+      return [];
+    }
   }
 
   filteredContacts() {
