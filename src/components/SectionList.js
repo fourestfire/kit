@@ -66,6 +66,10 @@ class SectionListView extends Component {
     this.setState({ [stateToChange]: !currentState });
   }
 
+  // renderHeader = () => {
+  //   return <View> <Text> Header </Text> <View/>;
+  // }
+
   render() {
     const physics = {
       damping: 1 - 0.7,
@@ -119,7 +123,7 @@ class SectionListView extends Component {
           sections={[
             {key: 'today', data: this.filteredContacts('Today').filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day')), title: 'Today'},
             {key: 'tomorrow', data: this.filteredContacts('Tomorrow').filter(el => moment(el.nextContact).isSame(moment().add(1, 'day'), 'day')), title: 'Tomorrow'},
-            {key: 'week', data: this.filteredContacts('Week').filter(el => moment(el.nextContact).isBetween(moment().add(2, 'day'), moment().add(7, 'day'), 'day', '[]')), title: 'Next Week'},
+            {key: 'week', data: this.filteredContacts('Week').filter(el => moment(el.nextContact).isBetween(moment().add(2, 'day'), moment().add(7, 'day'), 'day', '[]')), title: 'Week'},
             {key: 'later', data: this.filteredContacts('Later').filter(el => moment(el.nextContact).isAfter(moment().add(7, 'day'), 'day')), title: 'Later'}
           ]}
           renderItem={({item}) =>
