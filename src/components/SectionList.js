@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity, Dimensions, SectionList, Modal} from 'react-native';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Header from './Header';
+import Collapsible from 'react-native-collapsible';
 import moment from 'moment';
 import { convertFrequency } from '../utils/utils';
 import Row from './SingleContactRow';
@@ -48,16 +49,9 @@ class SectionListView extends Component {
   }
 
   filterContacts(contacts, query, type) {
-    // if section is collapsed, we want to hide results
-    let hideResults = this.checkIfCollapsed(type) ? true : false;
-
-    if (!hideResults) {
-      return filteredContacts = contacts.filter(contact => {
-        return contact.firstName.match(new RegExp(query, 'i')) || contact.lastName.match(new RegExp(query, 'i'));
-      })
-    } else {
-      return [];
-    }
+    return filteredContacts = contacts.filter(contact => {
+      return contact.firstName.match(new RegExp(query, 'i')) || contact.lastName.match(new RegExp(query, 'i'));
+    })
   }
 
   filteredContacts(type) {
@@ -125,17 +119,19 @@ class SectionListView extends Component {
             {key: 'week', data: this.filteredContacts('Week').filter(el => moment(el.nextContact).isBetween(moment().add(2, 'day'), moment().add(7, 'day'), 'day', '[]')), title: 'Week'},
             {key: 'later', data: this.filteredContacts('Later').filter(el => moment(el.nextContact).isAfter(moment().add(7, 'day'), 'day')), title: 'Later'}
           ]}
-          renderItem={({item}) =>
-            <Row physics={physics} contact={item}>
-              <View style={styles.rowContent}>
-                <View style={[styles.rowIcon, {backgroundColor: item.color}]} />
-                <View>
-                  <Text style={styles.rowTitle}>{item.firstName} {item.lastName}</Text>
-                  <Text style={styles.rowSubtitle}>{convertFrequency(item.frequency)} (Last contact {item.lastContact ? moment(item.lastContact).format('L') : 'N/A'})</Text>
-                  <Text style={styles.rowSubtitle}>Prev note: {item.lastMsg} </Text>
+          renderItem={({item, idx, section}) =>
+            <Collapsible collapsed={this.checkIfCollapsed(section)}>
+              <Row physics={physics} contact={item}>
+                <View style={styles.rowContent}>
+                  <View style={[styles.rowIcon, {backgroundColor: item.color}]} />
+                  <View>
+                    <Text style={styles.rowTitle}>{item.firstName} {item.lastName}</Text>
+                    <Text style={styles.rowSubtitle}>{convertFrequency(item.frequency)} (Last contact {item.lastContact ? moment(item.lastContact).format('L') : 'N/A'})</Text>
+                    <Text style={styles.rowSubtitle}>Prev note: {item.lastMsg} </Text>
+                  </View>
                 </View>
-              </View>
-            </Row>}
+              </Row>
+            </Collapsible>}
           />
       </View>
     );
