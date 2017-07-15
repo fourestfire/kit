@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity, Dimensions, SectionList, Modal} from 'react-native';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Header from './Header';
+import Header2 from './Header2';
 import Collapsible from 'react-native-collapsible';
 import moment from 'moment';
 import Interactable from 'react-native-interactable';
@@ -16,7 +17,6 @@ import sampleContacts from '../utils/seed'
 import { TabNavigator } from "react-navigation";
 import Today from './Today';
 import FlatView from './FlatView';
-import MoreContacts from './MoreContacts';
 import UpdateContact from './UpdateContact';
 
 Contacts.getAllWithoutPhotos((err, contacts) => {
@@ -30,7 +30,7 @@ class SectionListView extends Component {
   static navigationOptions = {
     tabBar: {
       label: 'Today',
-      icon: ({ tintColor }) => <MIcon size={25} name='calendar-check' color={ tintColor }/>
+      icon: ({ tintColor }) => <MIcon size={24} name='calendar-check' color={ tintColor }/>
     }
   }
 
@@ -49,39 +49,29 @@ class SectionListView extends Component {
   componentWillMount() {
     // allows us to tell current time in moment during testing
     // console.log("mounted main")
-    // let m = moment()
-    // // console.log(moment().format('x'))
-    // m.add(20, 'd');
-    // console.log("newdate", m.format('x'))
+      // let m = moment()
+      // // console.log(moment().format('x'))
+      // m.add(20, 'd');
+      // console.log("newdate", m.format('x'))
 
     // delete existing contacts, then grabs sample contacts from seed file and does initial load for testing
-    deleteAllContacts();
-    sampleContacts.forEach(contact => {
-      createContact(contact)
-    });
+      // deleteAllContacts();
+      // sampleContacts.forEach(contact => {
+      //   createContact(contact)
+      // });
 
     // see current contacts
-    // console.log("here are all the current contacts");
-    // getAllContacts().forEach((contact, idx) => console.log(`contact ${idx + 1}: ${contact.firstName} ${contact.lastName} ${contact.phoneNum} ${contact.nextContact} ${contact.lastContact}`));
+      // console.log("here are all the current contacts");
+      // getAllContacts().forEach((contact, idx) => console.log(`contact ${idx + 1}: ${contact.firstName} ${contact.lastName} ${contact.phoneNum} ${contact.nextContact} ${contact.lastContact}`));
 
-    // loads into store
+    // load contacts into store
     let allContacts = Array.prototype.slice.call(getAllContacts());
     this.props.getAllContactsSync(allContacts);
     console.log("allContacts", allContacts)
   }
 
   renderHeader = () => {
-    return <View>
-      <View style={styles.logo}>
-        <Icon size={80} name='logo-nodejs' />
-      </View>
-      <Header
-        leftItem={{ title: 'settings' }}
-        title="keep in touch"
-        rightItem={{ title: '     add', onPress: () => this.toggleAddModal()}}
-        style={{ backgroundColor: 'pink' }}
-      />
-    </View>
+    return <Header2 />
   };
 
   toggleAddModal = () => {
@@ -169,14 +159,10 @@ const Main = connect(mapState, mapDispatch)(SectionListView);
 export default kit = TabNavigator({
   Main: { screen: Main },
   FlatView: { screen: FlatView },
-  // Today: { screen: Today },
-  // Home: { screen: connectedHome },
-  // Test: { screen: Test },
-  // MoreContacts: { screen: MoreContacts },
-  // AsyncStorage: { screen: AsyncStorage },
+  Today: { screen: Today },
 }, {
   // swipeEnabled: true,
-  animationEnabled: true,
+  // animationEnabled: true,
   style: {
     backgroundColor: 'purple'
   },
@@ -186,11 +172,11 @@ export default kit = TabNavigator({
     activeTintColor: 'purple',
     style: {
       backgroundColor: '#fff',
-      height: 60,
+      height: 50,
       // marginTop: 70
     },
     labelStyle: {
-      fontSize: 12,
+      fontSize: 11,
     },
   },
 });

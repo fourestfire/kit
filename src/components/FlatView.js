@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity, Dimensions, FlatList, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Header from './Header';
+import Header2 from './Header2';
 import AddContact from './AddContact';
 import moment from 'moment';
 import { convertFrequency } from '../utils/utils';
@@ -13,7 +14,7 @@ class FlatView extends Component {
   static navigationOptions = {
     tabBar: {
       label: 'All Contacts',
-      icon: ({ tintColor }) => <Icon size={25} name='md-contacts' color={ tintColor }/>
+      icon: ({ tintColor }) => <Icon size={24} name='md-contacts' color={ tintColor }/>
     }
   }
 
@@ -21,14 +22,13 @@ class FlatView extends Component {
     super(props);
     this.state = {
       query: '',
-      showAddModal: false,
     };
   }
 
   filterContacts(contacts, query) {
     try {
-      return filteredContacts = contacts.filter(contact => {
-      return contact.firstName.match(new RegExp(query, 'i')) || contact.lastName.match(new RegExp(query, 'i'));
+      return filteredContacts = contacts.sort((a, b) => result = a.firstName > b.firstName ? 1 : -1).filter(contact => {
+        return contact.firstName.match(new RegExp(query, 'i')) || contact.lastName.match(new RegExp(query, 'i'));
       })
     } catch(e) {
       console.log("received error", e)
@@ -40,10 +40,6 @@ class FlatView extends Component {
     return this.filterContacts(this.props.store.contacts, this.state.query)
   }
 
-  toggleAddModal = () => {
-    this.setState({ showAddModal: !this.state.showAddModal })
-  }
-
   render() {
     const physics = {
       damping: 1 - 0.7,
@@ -52,20 +48,9 @@ class FlatView extends Component {
 
     return (
       <View style={styles.container}>
-        <Modal
-          visible={this.state.showAddModal}
-          onRequestClose={this.toggleAddModal}
-          animationType='slide'
-        >
-          <AddContact screenProps={{ toggle: this.toggleAddModal }} />
-        </Modal>
 
-        <Header
-          leftItem={{ title: 'settings' }}
-          title="keep in touch"
-          rightItem={{ title: '     add', onPress: () => this.toggleAddModal()}}
-          style={{ backgroundColor: 'pink' }}
-        />
+
+        <Header2 />
 
         <View style={styles.searchbar}>
           <TextInput
@@ -84,16 +69,15 @@ class FlatView extends Component {
           keyExtractor={item => item.id}
           data={this.filteredContacts()}
           renderItem={({item}) =>
-            <Row physics={physics} contact={item}>
+
               <View style={styles.rowContent}>
                 <View style={[styles.rowIcon, {backgroundColor: item.color}]} />
                 <View>
                   <Text style={styles.rowTitle}>{item.firstName} {item.lastName}</Text>
-                  <Text style={styles.rowSubtitle}>{convertFrequency(item.frequency)} (Last contact {item.lastContact ? moment(item.lastContact).format('L') : 'N/A'})</Text>
                   <Text style={styles.rowSubtitle}>Prev note: {item.lastMsg} </Text>
                 </View>
               </View>
-            </Row>
+
         }/>
 
       </View>
@@ -118,7 +102,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   searchbar: {
-    height: 50,
+    height: 40,
     backgroundColor: 'white',
     shadowColor: 'grey',
     shadowOffset: {width: 10, height: 10},
@@ -129,7 +113,7 @@ const styles = StyleSheet.create({
   textInput: {
     color: 'darkgrey',
     marginLeft: 10,
-    height: 50,
+    height: 40,
     backgroundColor: 'transparent'
     // backgroundColor: 'darkgrey',
   },
@@ -139,7 +123,7 @@ const styles = StyleSheet.create({
   rowHeader: {
     flex: 1,
     backgroundColor: 'lightgrey',
-    height: 50,
+    height: 30,
     justifyContent: 'center',
     borderColor: 'darkgray',
     borderBottomWidth: 1,
@@ -154,11 +138,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderColor: '#eeeeee'
+    borderColor: '#eeeeee',
+    height: 50,
   },
   rowIcon: {
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
     borderRadius: 20,
     backgroundColor: '#73d4e3',
     margin: 15

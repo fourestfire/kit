@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, Animated, TouchableOpacity, Dimensions, ScrollView, Platform } from 'react-native';
-import Interactable from 'react-native-interactable';
-import Row from './SingleContactRow';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-export default class F8HeaderIOS extends React.Component {
+export default class HeaderiOS extends React.Component {
   static height: number;
   props: Props;
 
