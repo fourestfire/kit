@@ -4,16 +4,32 @@ import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Header from './Header';
 import Collapsible from 'react-native-collapsible';
 import moment from 'moment';
+import Interactable from 'react-native-interactable';
 import { convertFrequency } from '../utils/utils';
 import Row from './SingleContactRow';
-import Interactable from 'react-native-interactable';
 import AddContact from './AddContact';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Contacts from 'react-native-contacts';
+import { createContact, getAllContacts, deleteAllContacts } from '../redux/realm';
+import sampleContacts from '../utils/seed'
+
+import { TabNavigator } from "react-navigation";
+import Today from './Today';
+import FlatView from './FlatView';
+import MoreContacts from './MoreContacts';
+import UpdateContact from './UpdateContact';
+
+Contacts.getAllWithoutPhotos((err, contacts) => {
+  if(err === 'denied'){
+  } else {
+    console.log('contacts from react-native-contacts', contacts)
+  }
+})
 
 class SectionListView extends Component {
   static navigationOptions = {
     tabBar: {
-      label: 'SectionList',
+      label: 'Today',
       icon: ({ tintColor }) => <MIcon size={25} name='calendar-check' color={ tintColor }/>
     }
   }
@@ -28,6 +44,30 @@ class SectionListView extends Component {
       isWeekCollapsed: true,
       isLaterCollapsed: true,
     };
+  }
+
+  componentWillMount() {
+    // allows us to tell current time in moment during testing
+    // console.log("mounted main")
+    // let m = moment()
+    // // console.log(moment().format('x'))
+    // m.add(20, 'd');
+    // console.log("newdate", m.format('x'))
+
+    // delete existing contacts, then grabs sample contacts from seed file and does initial load for testing
+    deleteAllContacts();
+    sampleContacts.forEach(contact => {
+      createContact(contact)
+    });
+
+    // see current contacts
+    // console.log("here are all the current contacts");
+    // getAllContacts().forEach((contact, idx) => console.log(`contact ${idx + 1}: ${contact.firstName} ${contact.lastName} ${contact.phoneNum} ${contact.nextContact} ${contact.lastContact}`));
+
+    // loads into store
+    let allContacts = Array.prototype.slice.call(getAllContacts());
+    this.props.getAllContactsSync(allContacts);
+    console.log("allContacts", allContacts)
   }
 
   renderHeader = () => {
@@ -46,16 +86,6 @@ class SectionListView extends Component {
 
   toggleAddModal = () => {
     this.setState({ showAddModal: !this.state.showAddModal })
-  }
-
-  filterContacts(contacts, query, type) {
-    return filteredContacts = contacts.filter(contact => {
-      return contact.firstName.match(new RegExp(query, 'i')) || contact.lastName.match(new RegExp(query, 'i'));
-    })
-  }
-
-  filteredContacts(type) {
-    return this.filterContacts(this.props.store.contacts, this.state.query, type);
   }
 
   checkIfCollapsed(type) {
@@ -90,18 +120,6 @@ class SectionListView extends Component {
           <AddContact screenProps={{ toggle: this.toggleAddModal }} />
         </Modal>
 
-        {/* <View style={styles.searchbar}>
-          <TextInput
-            style={styles.textInput}
-            placeholder={'Search contacts'}
-            placeholderTextColor="darkgrey"
-            autoCorrect={false}
-            onChangeText={query => this.setState({query: query})}
-            returnKeyType="search"
-            blurOnSubmit={false}
-          />
-        </View> */}
-
         <SectionList
           style={styles.sectionList}
           ListHeaderComponent={this.renderHeader}
@@ -114,10 +132,10 @@ class SectionListView extends Component {
             </TouchableOpacity>}
           keyExtractor={item => item.id}
           sections={[
-            {key: 'today', data: this.filteredContacts('Today').filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day')), title: 'Today'},
-            {key: 'tomorrow', data: this.filteredContacts('Tomorrow').filter(el => moment(el.nextContact).isSame(moment().add(1, 'day'), 'day')), title: 'Tomorrow'},
-            {key: 'week', data: this.filteredContacts('Week').filter(el => moment(el.nextContact).isBetween(moment().add(2, 'day'), moment().add(7, 'day'), 'day', '[]')), title: 'Week'},
-            {key: 'later', data: this.filteredContacts('Later').filter(el => moment(el.nextContact).isAfter(moment().add(7, 'day'), 'day')), title: 'Later'}
+            {key: 'today', data: this.props.store.contacts.filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day')), title: 'Today'},
+            {key: 'tomorrow', data: this.props.store.contacts.filter(el => moment(el.nextContact).isSame(moment().add(1, 'day'), 'day')), title: 'Tomorrow'},
+            {key: 'week', data: this.props.store.contacts.filter(el => moment(el.nextContact).isBetween(moment().add(2, 'day'), moment().add(7, 'day'), 'day', '[]')), title: 'Week'},
+            {key: 'later', data: this.props.store.contacts.filter(el => moment(el.nextContact).isAfter(moment().add(7, 'day'), 'day')), title: 'Later'}
           ]}
           renderItem={({item, idx, section}) =>
             <Collapsible collapsed={this.checkIfCollapsed(section)}>
@@ -141,12 +159,42 @@ class SectionListView extends Component {
 /* -------------------<   CONTAINER   >-------------------- */
 
 import { connect } from 'react-redux';
-import { } from '../redux/reducer';
+import { getAllContactsSync } from '../redux/reducer';
 
 const mapState = ({ store }) => ({ store });
-const mapDispatch = null;
+const mapDispatch = ({ getAllContactsSync });
 
-export default connect(mapState, mapDispatch)(SectionListView);
+const Main = connect(mapState, mapDispatch)(SectionListView);
+
+export default kit = TabNavigator({
+  Main: { screen: Main },
+  FlatView: { screen: FlatView },
+  // Today: { screen: Today },
+  // Home: { screen: connectedHome },
+  // Test: { screen: Test },
+  // MoreContacts: { screen: MoreContacts },
+  // AsyncStorage: { screen: AsyncStorage },
+}, {
+  // swipeEnabled: true,
+  animationEnabled: true,
+  style: {
+    backgroundColor: 'purple'
+  },
+  // tabBarPosition: 'top',
+  // lazy: true,
+  tabBarOptions: {
+    activeTintColor: 'purple',
+    style: {
+      backgroundColor: '#fff',
+      height: 60,
+      // marginTop: 70
+    },
+    labelStyle: {
+      fontSize: 12,
+    },
+  },
+});
+
 
 /* -------------------<   STYLES   >-------------------- */
 const Screen = Dimensions.get('window');

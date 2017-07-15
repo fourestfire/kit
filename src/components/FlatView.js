@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity, Dimensions, FlatList} from 'react-native';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity, Dimensions, FlatList, Modal } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import Header from './Header';
-
+import AddContact from './AddContact';
 import moment from 'moment';
 import { convertFrequency } from '../utils/utils';
 
@@ -12,8 +12,8 @@ import Interactable from 'react-native-interactable';
 class FlatView extends Component {
   static navigationOptions = {
     tabBar: {
-      label: 'FlatView',
-      icon: ({ tintColor }) => <MIcon size={25} name='calendar-check' color={ tintColor }/>
+      label: 'All Contacts',
+      icon: ({ tintColor }) => <Icon size={25} name='md-contacts' color={ tintColor }/>
     }
   }
 
@@ -21,6 +21,7 @@ class FlatView extends Component {
     super(props);
     this.state = {
       query: '',
+      showAddModal: false,
     };
   }
 
@@ -39,7 +40,9 @@ class FlatView extends Component {
     return this.filterContacts(this.props.store.contacts, this.state.query)
   }
 
-  _keyExtractor = (item, index) => item.id;
+  toggleAddModal = () => {
+    this.setState({ showAddModal: !this.state.showAddModal })
+  }
 
   render() {
     const physics = {
@@ -49,16 +52,19 @@ class FlatView extends Component {
 
     return (
       <View style={styles.container}>
+        <Modal
+          visible={this.state.showAddModal}
+          onRequestClose={this.toggleAddModal}
+          animationType='slide'
+        >
+          <AddContact screenProps={{ toggle: this.toggleAddModal }} />
+        </Modal>
+
         <Header
-          leftItem={{
-            title: 'settings'
-          }}
+          leftItem={{ title: 'settings' }}
           title="keep in touch"
-          rightItem={{
-            title: '     add',
-            onPress: () => this.toggleAddModal(),
-          }}
-          style={{backgroundColor: 'pink'}}
+          rightItem={{ title: '     add', onPress: () => this.toggleAddModal()}}
+          style={{ backgroundColor: 'pink' }}
         />
 
         <View style={styles.searchbar}>
@@ -75,7 +81,7 @@ class FlatView extends Component {
 
         <FlatList
           style={styles.flatlist}
-          keyExtractor={this._keyExtractor}
+          keyExtractor={item => item.id}
           data={this.filteredContacts()}
           renderItem={({item}) =>
             <Row physics={physics} contact={item}>

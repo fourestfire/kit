@@ -38,7 +38,7 @@ Contacts.getAllWithoutPhotos((err, contacts) => {
 class HomeScreen extends React.Component {
   static navigationOptions = {
     tabBar: {
-      label: 'Home',
+      label: 'Loader',
       icon: ({ tintColor }) => <Icon size={25} name='md-contacts' color={ tintColor }/>
     }
   };
@@ -52,10 +52,10 @@ class HomeScreen extends React.Component {
     // console.log("newdate", m.format('x'))
 
     // delete existing contacts, then grabs sample contacts from seed file and does initial load for testing
-    // deleteAllContacts();
-    // sampleContacts.forEach(contact => {
-    //   createContact(contact)
-    // });
+    deleteAllContacts();
+    sampleContacts.forEach(contact => {
+      createContact(contact)
+    });
 
     // see current contacts
     // console.log("here are all the current contacts");
@@ -102,7 +102,7 @@ const connectedHome = connect(mapState, mapDispatch)(HomeScreen);
 export default kit = TabNavigator({
   SectionList: { screen: SectionList },
   FlatView: { screen: FlatView },
-  Today: { screen: Today },
+  // Today: { screen: Today },
   Home: { screen: connectedHome },
   // Test: { screen: Test },
   // MoreContacts: { screen: MoreContacts },
@@ -118,8 +118,8 @@ export default kit = TabNavigator({
   tabBarOptions: {
     activeTintColor: 'purple',
     style: {
-      backgroundColor: 'aliceblue',
-      height: 70,
+      backgroundColor: '#fff',
+      height: 60,
       // marginTop: 70
     },
     labelStyle: {

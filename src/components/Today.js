@@ -16,7 +16,7 @@ import { convertFrequency } from '../utils/utils';
 class Today extends Component {
   static navigationOptions = {
     tabBar: {
-      label: 'Today',
+      label: '(Old) Today',
       icon: ({ tintColor }) => <MIcon size={25} name='calendar-check' color={ tintColor }/>
     }
   }
