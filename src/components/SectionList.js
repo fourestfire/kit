@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity, Dimensions, SectionList, Modal} from 'react-native';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Header from './Header';
-import Header2 from './Header2';
 import Collapsible from 'react-native-collapsible';
 import moment from 'moment';
 import Interactable from 'react-native-interactable';
@@ -71,7 +70,12 @@ class SectionListView extends Component {
   }
 
   renderHeader = () => {
-    return <Header2 />
+    return <View>
+      <View style={styles.logo}>
+        <Icon size={80} name='logo-nodejs' />
+      </View>
+      <Header />
+    </View>
   };
 
   toggleAddModal = () => {
@@ -159,7 +163,7 @@ const Main = connect(mapState, mapDispatch)(SectionListView);
 export default kit = TabNavigator({
   Main: { screen: Main },
   FlatView: { screen: FlatView },
-  Today: { screen: Today },
+  // Today: { screen: Today },
 }, {
   // swipeEnabled: true,
   // animationEnabled: true,

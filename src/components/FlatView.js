@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity, Dimensions, FlatList, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Header from './Header';
-import Header2 from './Header2';
 import AddContact from './AddContact';
 import moment from 'moment';
 import { convertFrequency } from '../utils/utils';
+import UpdateContact from './UpdateContact';
 
 import Row from './SingleContactRow';
 import Interactable from 'react-native-interactable';
@@ -15,6 +15,9 @@ class FlatView extends Component {
     tabBar: {
       label: 'All Contacts',
       icon: ({ tintColor }) => <Icon size={24} name='md-contacts' color={ tintColor }/>
+    },
+    header: {
+      visible: false
     }
   }
 
@@ -22,6 +25,8 @@ class FlatView extends Component {
     super(props);
     this.state = {
       query: '',
+      showUpdateModal: false,
+      updateModalContact: {}
     };
   }
 
@@ -40,6 +45,10 @@ class FlatView extends Component {
     return this.filterContacts(this.props.store.contacts, this.state.query)
   }
 
+  toggleUpdateModal = (contact) => {
+    this.setState({ showUpdateModal: !this.state.showUpdateModal, updateModalContact: contact})
+  }
+
   render() {
     const physics = {
       damping: 1 - 0.7,
@@ -48,9 +57,14 @@ class FlatView extends Component {
 
     return (
       <View style={styles.container}>
-
-
-        <Header2 />
+        <Header />
+        <Modal
+          visible={this.state.showUpdateModal}
+          onRequestClose={this.toggleUpdateModal}
+          animationType='slide'
+        >
+          <UpdateContact screenProps={{ toggle: this.toggleUpdateModal }} contact={this.state.updateModalContact} />
+        </Modal>
 
         <View style={styles.searchbar}>
           <TextInput
@@ -69,7 +83,7 @@ class FlatView extends Component {
           keyExtractor={item => item.id}
           data={this.filteredContacts()}
           renderItem={({item}) =>
-
+            <TouchableOpacity activeOpacity={0.4} onPress={this.toggleUpdateModal.bind(this, item)} key={item.id}>
               <View style={styles.rowContent}>
                 <View style={[styles.rowIcon, {backgroundColor: item.color}]} />
                 <View>
@@ -77,7 +91,7 @@ class FlatView extends Component {
                   <Text style={styles.rowSubtitle}>Prev note: {item.lastMsg} </Text>
                 </View>
               </View>
-
+            </TouchableOpacity>
         }/>
 
       </View>
@@ -108,13 +122,14 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 10, height: 10},
     shadowOpacity: 1.0,
     borderBottomWidth: 1,
-    borderColor: '#ddd'
+    borderColor: '#ddd',
   },
   textInput: {
     color: 'darkgrey',
     marginLeft: 10,
     height: 40,
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    fontSize: 15,
     // backgroundColor: 'darkgrey',
   },
   flatlist: {

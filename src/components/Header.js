@@ -1,77 +1,54 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, Animated, TouchableOpacity, Dimensions, ScrollView, Platform } from 'react-native';
+import { StyleSheet, View, Image, Text, Animated, TouchableOpacity, Dimensions, ScrollView, Platform, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import AddContact from './AddContact';
 
-export default class HeaderiOS extends React.Component {
-  static height: number;
-  props: Props;
+export default class Header extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showAddModal: false,
+    };
+  }
+
+  toggleAddModal() {
+    this.setState({ showAddModal: !this.state.showAddModal })
+  }
 
   render() {
-    const {leftItem, title, rightItem} = this.props;
-    const titleColor = 'black';
-    const itemsColor = 'black';
+     return (
+      <View style={styles.header}>
+        <Modal
+          visible={this.state.showAddModal}
+          animationType="slide"
+        >
+          <AddContact screenProps={{ toggle: this.toggleAddModal.bind(this) }} />
+        </Modal>
 
-    const content = React.Children.count(this.props.children) === 0
-      ? <Text style={[styles.titleText, {color: titleColor}]}>
-          {title}
-        </Text>
-      : this.props.children;
-    return (
-      <View style={[styles.header, this.props.style]}>
         <View style={styles.leftItem}>
-          <ItemWrapperIOS color={itemsColor} item={leftItem} />
+          <TouchableOpacity
+            accessibilityTraits="button"
+            style={styles.itemWrapper}>
+            <Text style={styles.itemText}>SETTINGS</Text>
+          </TouchableOpacity>
         </View>
-        <View
-          accessible={true}
-          accessibilityLabel={title}
-          accessibilityTraits="header"
-          style={styles.centerItem}>
-          {content}
+
+        <View style={styles.centerItem}>
+          <Text style={styles.titleText}>keep in touch</Text>
         </View>
+
         <View style={styles.rightItem}>
-          <ItemWrapperIOS color={itemsColor} item={rightItem} />
+          <TouchableOpacity
+            accessibilityTraits="button"
+            onPress={() => this.toggleAddModal()}
+            style={styles.itemWrapper}>
+            <Text style={styles.itemText}>        ADD</Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
   }
 }
-
-class ItemWrapperIOS extends React.Component {
-  props: {
-    item: Item;
-    color: string;
-  };
-
-  render() {
-    const {item, color} = this.props;
-    if (!item) {
-      return null;
-    }
-    let content;
-    const {title, icon, layout, onPress} = item;
-    if (layout !== 'icon' && title) {
-      content = (
-        <Text style={[styles.itemText, {color}]}>
-          {title.toUpperCase()}
-        </Text>
-
-      );
-    } else if (icon) {
-      content = <Image source={icon} />;
-    }
-
-    return (
-      <TouchableOpacity
-        accessibilityLabel={title}
-        accessibilityTraits="button"
-        onPress={onPress}
-        style={styles.itemWrapper}>
-        {content}
-      </TouchableOpacity>
-    );
-  }
-}
-
 
 const STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? 20 : 25;
 const HEADER_HEIGHT = Platform.OS === 'ios' ? 44 + STATUS_BAR_HEIGHT : 56 + STATUS_BAR_HEIGHT;
@@ -84,7 +61,7 @@ const styles = StyleSheet.create({
     height: HEADER_HEIGHT - STATUS_BAR_HEIGHT,
   },
   header: {
-    backgroundColor: 'transparent',
+    backgroundColor: 'pink',
     paddingTop: STATUS_BAR_HEIGHT,
     height: HEADER_HEIGHT,
     flexDirection: 'row',
@@ -92,7 +69,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   titleText: {
-    color: 'white',
+    color: 'black',
     fontWeight: '300',
     fontSize: 20,
   },
@@ -114,6 +91,6 @@ const styles = StyleSheet.create({
   itemText: {
     letterSpacing: 1,
     fontSize: 12,
-    color: 'white',
+    color: 'black'
   },
 });
