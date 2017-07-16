@@ -6,6 +6,7 @@ import AddContact from './AddContact';
 import moment from 'moment';
 import { convertFrequency } from '../utils/utils';
 import Contacts from 'react-native-contacts';
+import Checkbox from 'react-native-check-box'
 
 import Row from './SingleContactRow';
 import Interactable from 'react-native-interactable';
@@ -43,7 +44,7 @@ class ImportContacts extends Component {
 
   filterContacts(contacts, query) {
     try {
-      return filteredContacts = contacts.sort((a, b) => result = a.firstName > b.firstName ? 1 : -1).filter(contact => {
+      return filteredContacts = contacts.sort((a, b) => result = a.givenName > b.givenName ? 1 : -1).filter(contact => {
         return contact.givenName.match(new RegExp(query, 'i')) || contact.familyName.match(new RegExp(query, 'i'));
       })
     } catch(e) {
@@ -54,10 +55,6 @@ class ImportContacts extends Component {
 
   filteredContacts() {
     return this.filterContacts(this.state.importedContacts, this.state.query)
-  }
-
-  toggleUpdateModal = (contact) => {
-    this.setState({ showUpdateModal: !this.state.showUpdateModal, updateModalContact: contact})
   }
 
   render() {
@@ -87,14 +84,19 @@ class ImportContacts extends Component {
         <FlatList
           style={styles.flatlist}
           keyExtractor={item => item.recordID}
-          data={this.state.importedContacts}
+          data={this.filteredContacts()}
           renderItem={({item}) =>
 
               <View style={styles.rowContent}>
-                <View>
+                <Checkbox
+                  style={{padding: 10, color: 'pink'}}
+                  onClick={()=>{}}
+                  isChecked={false}
+                  leftText={null}
+                />
                   <Text style={styles.rowTitle}>{item.givenName} {item.familyName}</Text>
                   <Text style={styles.rowSubtitle}>{item.phoneNumbers[0].number}</Text>
-                </View>
+
               </View>
 
         }/>
@@ -137,19 +139,22 @@ const styles = StyleSheet.create({
     fontSize: 15,
     // backgroundColor: 'darkgrey',
   },
+  wrap: {
+    flexWrap: 'wrap'
+  },
   flatlist: {
     backgroundColor: 'white'
   },
   rowHeader: {
     flex: 1,
     backgroundColor: 'lightgrey',
-    height: 30,
+    height: 20,
     justifyContent: 'center',
     borderColor: 'darkgray',
     borderBottomWidth: 1,
   },
   rowHeaderText: {
-    fontSize: 30,
+    fontSize: 20,
     fontWeight: '200',
     marginLeft: 10,
   },
@@ -159,21 +164,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 1,
     borderColor: '#eeeeee',
-    height: 50,
-  },
-  rowIcon: {
-    width: 30,
-    height: 30,
-    borderRadius: 20,
-    backgroundColor: '#73d4e3',
-    margin: 15
+    height: 35,
   },
   rowTitle: {
     fontWeight: 'bold',
-    fontSize: 16
+    fontSize: 16,
+    width: 180,
   },
   rowSubtitle: {
-    fontSize: 14,
-    color: 'gray'
+    fontSize: 16,
+    color: 'gray',
   },
 });
