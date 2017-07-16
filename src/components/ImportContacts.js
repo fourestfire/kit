@@ -5,15 +5,15 @@ import Header from './Header';
 import AddContact from './AddContact';
 import moment from 'moment';
 import { convertFrequency } from '../utils/utils';
-import UpdateContact from './UpdateContact';
+import Contacts from 'react-native-contacts';
 
 import Row from './SingleContactRow';
 import Interactable from 'react-native-interactable';
 
-class FlatView extends Component {
+class ImportContacts extends Component {
   static navigationOptions = {
     tabBar: {
-      label: 'All Contacts',
+      label: 'Import Contacts',
       icon: ({ tintColor }) => <Icon size={24} name='md-contacts' color={ tintColor }/>
     },
     header: {
@@ -26,14 +26,25 @@ class FlatView extends Component {
     this.state = {
       query: '',
       showUpdateModal: false,
-      updateModalContact: {}
+      updateModalContact: {},
+      importedContacts: []
     };
+  }
+
+  componentWillMount() {
+    Contacts.getAllWithoutPhotos((err, contacts) => {
+      if(err === 'denied'){
+      } else {
+        console.log('contacts from react-native-contacts', contacts)
+        this.setState({importedContacts: contacts})
+      }
+    })
   }
 
   filterContacts(contacts, query) {
     try {
       return filteredContacts = contacts.sort((a, b) => result = a.firstName > b.firstName ? 1 : -1).filter(contact => {
-        return contact.firstName.match(new RegExp(query, 'i')) || contact.lastName.match(new RegExp(query, 'i'));
+        return contact.givenName.match(new RegExp(query, 'i')) || contact.familyName.match(new RegExp(query, 'i'));
       })
     } catch(e) {
       console.log("received error", e)
@@ -42,7 +53,7 @@ class FlatView extends Component {
   }
 
   filteredContacts() {
-    return this.filterContacts(this.props.store.contacts, this.state.query)
+    return this.filterContacts(this.state.importedContacts, this.state.query)
   }
 
   toggleUpdateModal = (contact) => {
@@ -55,16 +66,11 @@ class FlatView extends Component {
       tension: 300
     }
 
+    console.log("import contacts", this.state.importedContacts, Array.isArray(this.state.importedContacts))
+
     return (
       <View style={styles.container}>
         <Header />
-        <Modal
-          visible={this.state.showUpdateModal}
-          onRequestClose={this.toggleUpdateModal}
-          animationType='slide'
-        >
-          <UpdateContact screenProps={{ toggle: this.toggleUpdateModal }} contact={this.state.updateModalContact} />
-        </Modal>
 
         <View style={styles.searchbar}>
           <TextInput
@@ -80,18 +86,17 @@ class FlatView extends Component {
 
         <FlatList
           style={styles.flatlist}
-          keyExtractor={item => item.id}
-          data={this.filteredContacts()}
+          keyExtractor={item => item.recordID}
+          data={this.state.importedContacts}
           renderItem={({item}) =>
-            <TouchableOpacity activeOpacity={0.4} onPress={this.toggleUpdateModal.bind(this, item)} key={item.id}>
+
               <View style={styles.rowContent}>
-                <View style={[styles.rowIcon, {backgroundColor: item.color}]} />
                 <View>
-                  <Text style={styles.rowTitle}>{item.firstName} {item.lastName}</Text>
-                  <Text style={styles.rowSubtitle}>{convertFrequency(item.frequency)} (Last contact {item.lastContact ? moment(item.lastContact).format('L') : 'N/A'})</Text>
+                  <Text style={styles.rowTitle}>{item.givenName} {item.familyName}</Text>
+                  <Text style={styles.rowSubtitle}>{item.phoneNumbers[0].number}</Text>
                 </View>
               </View>
-            </TouchableOpacity>
+
         }/>
 
       </View>
@@ -107,7 +112,7 @@ import { } from '../redux/reducer';
 const mapState = ({ store }) => ({ store });
 const mapDispatch = null;
 
-export default connect(mapState, mapDispatch)(FlatView);
+export default connect(mapState, mapDispatch)(ImportContacts);
 
 /* -------------------<   STYLES   >-------------------- */
 const styles = StyleSheet.create({

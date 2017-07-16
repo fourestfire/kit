@@ -9,21 +9,14 @@ import { convertFrequency } from '../utils/utils';
 import Row from './SingleContactRow';
 import AddContact from './AddContact';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Contacts from 'react-native-contacts';
 import { createContact, getAllContacts, deleteAllContacts } from '../redux/realm';
 import sampleContacts from '../utils/seed'
 
 import { TabNavigator } from "react-navigation";
 import Today from './Today';
-import FlatView from './FlatView';
 import UpdateContact from './UpdateContact';
-
-Contacts.getAllWithoutPhotos((err, contacts) => {
-  if(err === 'denied'){
-  } else {
-    console.log('contacts from react-native-contacts', contacts)
-  }
-})
+import FlatView from './FlatView';
+import ImportContacts from './ImportContacts';
 
 class SectionListView extends Component {
   static navigationOptions = {
@@ -163,10 +156,11 @@ const Main = connect(mapState, mapDispatch)(SectionListView);
 export default kit = TabNavigator({
   Main: { screen: Main },
   FlatView: { screen: FlatView },
+  ImportContacts: { screen: ImportContacts }
   // Today: { screen: Today },
 }, {
   // swipeEnabled: true,
-  // animationEnabled: true,
+  animationEnabled: true,
   style: {
     backgroundColor: 'purple'
   },
@@ -175,7 +169,7 @@ export default kit = TabNavigator({
   tabBarOptions: {
     activeTintColor: 'purple',
     style: {
-      backgroundColor: '#fff',
+      backgroundColor: 'transparent',
       height: 50,
       // marginTop: 70
     },
