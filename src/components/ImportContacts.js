@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity, Dimensions, FlatList, Modal, Alert } from 'react-native';
+import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, Dimensions, FlatList, Modal, Alert, Keyboard } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Header from './Header';
-import AddContact from './AddContact';
-import moment from 'moment';
-import { convertFrequency } from '../utils/utils';
 import Contacts from 'react-native-contacts';
-
-import Row from './SingleContactRow';
-import Interactable from 'react-native-interactable';
+import SearchBar from 'react-native-search-bar';
 
 class ImportContacts extends Component {
   constructor(props) {
@@ -91,26 +85,35 @@ class ImportContacts extends Component {
     return this.state.contactsToImport.includes(index);
   }
 
+  importContacts() {
+
+  }
+
   render() {
     return (
+
       <View style={styles.container}>
+
         <TouchableOpacity onPress={this.props.screenProps.toggle} style={styles.closeButton}>
           <Icon name="ios-close" size={50} color="darkgrey" />
         </TouchableOpacity>
 
-        <View style={styles.topSpacer} />
+        <TouchableWithoutFeedback onPress={() => this.refs.searchbar.unFocus()}>
+          <View style={styles.topSpacer} />
+        </TouchableWithoutFeedback>
 
-        <View style={styles.searchbar}>
-          <TextInput
-            style={styles.textInput}
-            placeholder={'Search contacts from phone'}
-            placeholderTextColor="darkgrey"
-            autoCorrect={false}
-            onChangeText={query => this.setState({query: query})}
-            returnKeyType="search"
-            blurOnSubmit={false}
-          />
-        </View>
+        <SearchBar
+          ref='searchbar'
+          showsCancelButton={true}
+          placeholder='Search'
+          onChangeText={query => this.setState({query: query})}
+          onSearchButtonPress={() => this.refs.searchbar.unFocus()}
+          onCancelButtonPress={() => {
+            this.setState({ query: '' });
+            this.refs.searchbar.unFocus();
+          }}
+          searchBarStyle={'minimal'}
+        />
 
         <FlatList
           style={styles.flatlist}
@@ -129,14 +132,16 @@ class ImportContacts extends Component {
             }
         />
 
-      <TouchableOpacity
-        style={styles.actionButton}
-        backgroundColor="black"
-      >
-        <Text style={styles.actionText}> Import {this.state.numToImport} Contacts </Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.actionButton}
+          onPress={this.importContacts}
+          backgroundColor="black"
+        >
+          <Text style={styles.actionText}> Import {this.state.numToImport} Contacts </Text>
+        </TouchableOpacity>
 
       </View>
+
     );
   }
 }

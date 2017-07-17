@@ -3,6 +3,7 @@ package com.kit;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.oblador.vectoricons.VectorIconsPackage;
 import io.realm.react.RealmReactPackage;
 import com.cmcewen.blurview.BlurViewPackage;
 import com.wix.interactable.Interactable;
@@ -26,6 +27,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new VectorIconsPackage(),
             new RealmReactPackage(),
             new BlurViewPackage(),
             new Interactable()
