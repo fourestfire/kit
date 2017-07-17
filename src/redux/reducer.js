@@ -51,8 +51,7 @@ export const addContact = (contact) => dispatch => {
 
 export const updateContact = (contact) => dispatch => {
   editContact(contact);
-  let editedContact = Array.prototype.slice.call(getContact(contact.id))
-  console.log(editedContact, "num contacts", getAllContacts().length)
+  let editedContact = Array.prototype.slice.call(getContact(contact.id))[0];
   dispatch(updateContactSync(editedContact));
 };
 
