@@ -8,7 +8,7 @@ class Contact {
     name: 'Contact',
     primaryKey: 'id',
     properties: {
-      id: 'string',
+      id: {type: 'string', indexed: true},
       firstName:  'string',
       lastName: 'string',
       frequency: {type: 'int', default: 14},
@@ -21,6 +21,10 @@ class Contact {
   }
 }
 
+export const getContact = (id) => {
+  return Contact.get().filtered(`id = '${id}'`)
+};
+
 export const getAllContacts = () => {
   return Contact.get();
 };
@@ -29,15 +33,20 @@ export const getAllContacts = () => {
 //   return realm.objectForPrimaryKey(Contact, id)
 // }
 
-export const updateContact = (contact, value, completed) => {
+export const editContact = (contact) => {
   realm.write(() => {
     try {
-      todoItem.value = value
-      todoItem.completed = completed
+      realm.create('Contact', {
+        id: contact.id,
+        firstName: contact.firstName,
+        lastName: contact.lastName,
+        frequency: contact.frequency,
+        color: contact.color,
+      }, true); // true updates contact instead of creating new one
     } catch (e) {
       console.warn(e)
     }
-  })
+  });
 }
 
 export const createContact = contact => {

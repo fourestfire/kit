@@ -52,10 +52,10 @@ class HomeScreen extends React.Component {
     // console.log("newdate", m.format('x'))
 
     // delete existing contacts, then grabs sample contacts from seed file and does initial load for testing
-    deleteAllContacts();
-    sampleContacts.forEach(contact => {
-      createContact(contact)
-    });
+    // deleteAllContacts();
+    // sampleContacts.forEach(contact => {
+    //   createContact(contact)
+    // });
 
     // see current contacts
     // console.log("here are all the current contacts");

@@ -17,6 +17,7 @@ class UpdateContact extends Component {
     this.state = {
       firstName: '',
       lastName: '',
+      id: 9000,
       phoneNum: '1-212-442-5201',
       color: '#73d4e3',
       frequency: 7,
@@ -27,27 +28,13 @@ class UpdateContact extends Component {
 
   componentDidMount() {
     this.setState({
+      id: this.props.contact.id,
       firstName: this.props.contact.firstName,
       lastName: this.props.contact.lastName,
       phoneNum: this.props.contact.phoneNum,
       frequency: this.props.contact.frequency,
       lastMsg: this.props.contact.lastMsg,
-    })
-
-    console.log("this is my contact", this.props.contact)
-  }
-
-  _onPhoneTextSubmit() {
-    let phoneNum = this.refs['3'].getRawValue()
-    console.log("phonenum", phoneNum, typeof(phoneNum))
-    this.setState({
-      phoneNum: phoneNum,
-    });
-  }
-
-  _onPhoneTextChange(text) {
-    this.setState({
-      phoneNum: text,
+      color: this.props.contact.color,
     });
   }
 
@@ -55,12 +42,8 @@ class UpdateContact extends Component {
     this.refs[nextField].focus()
   }
 
-  _focusPhoneField() {
-		this.refs['3'].getElement().focus();
-	}
-
   updateContact(contact) {
-    this.props.updateContactSync(contact);
+    this.props.updateContact(contact);
     this.props.screenProps.toggle();
   }
 
@@ -105,7 +88,7 @@ class UpdateContact extends Component {
           placeholderTextColor="#bfbfbf"
           onChangeText={lastName => this.setState({lastName})}
           returnKeyType="next"
-          onSubmitEditing={this._focusPhoneField.bind(this)}
+          onSubmitEditing={() => this._focusNextField('3')}
         />
       </View>
 
@@ -146,12 +129,12 @@ class UpdateContact extends Component {
         style={styles.actionButton}
         backgroundColor='black'
         onPress={this.updateContact.bind(this, {
+                id: this.state.id,
                 firstName: this.state.firstName,
                 lastName: this.state.lastName,
                 frequency: Number(this.state.frequency),
-                lastMsg: 'N/A',
                 phoneNum: this.state.phoneNum,
-                color: '#73d4e3'})}
+                color: this.state.color})}
       >
         <Text style={styles.actionText}> Update </Text>
       </TouchableOpacity>
@@ -164,10 +147,10 @@ class UpdateContact extends Component {
 /* -------------------<   CONTAINER   >-------------------- */
 
 import { connect } from 'react-redux';
-import { updateContactSync } from '../redux/reducer';
+import { updateContact } from '../redux/reducer';
 
 const mapState = ({ store }) => ({ store });
-const mapDispatch = ({ updateContactSync });
+const mapDispatch = ({ updateContact });
 
 export default connect(mapState, mapDispatch)(UpdateContact);
 

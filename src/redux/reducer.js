@@ -28,7 +28,7 @@ const store = function(state = initialState, action) {
     case ADD_CONTACT:
       return Object.assign({}, state, {contacts: [...state.contacts, action.contact]});
     case UPDATE_CONTACT:
-      return Object.assign({}, state, {contacts: state.contacts.filter(el => el.firstName !== action.contact.firstName).concat(action.contact)});
+      return Object.assign({}, state, {contacts: state.contacts.filter(el => el.id !== action.contact.id).concat(action.contact)});
     case REMOVE_CONTACT:
       return Object.assign({}, state, {contacts: state.contacts.filter(el => el !== action.contact)});
     case GET_ALL_CONTACTS:
@@ -41,16 +41,19 @@ const store = function(state = initialState, action) {
 };
 
 /* ---------------<   THUNK DISPATCHERS   >---------------- */
-import { createContact, getAllContacts } from './realm';
+import { createContact, getContact, editContact, getAllContacts } from './realm';
 
 export const addContact = (contact) => dispatch => {
-  console.log('creating new contact')
-  createContact(contact);
-  console.log('update store with new contact')
+  createContact(contact); // create new contact in realm
   let allContacts = Array.prototype.slice.call(getAllContacts());
-  dispatch(getAllContactsSync(allContacts));
-    // console.log("dispatching contact", receivedContact)
-    // dispatch(addContactSync(contact));
+  dispatch(getAllContactsSync(allContacts)); // update store with new contact
+};
+
+export const updateContact = (contact) => dispatch => {
+  editContact(contact);
+  let editedContact = Array.prototype.slice.call(getContact(contact.id))
+  console.log(editedContact, "num contacts", getAllContacts().length)
+  dispatch(updateContactSync(editedContact));
 };
 
 export default combineReducers({ store });
