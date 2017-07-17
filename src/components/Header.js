@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, Animated, TouchableOpacity, Dimensions, ScrollView, Platform, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import AddContact from './AddContact';
 
 export default class Header extends React.Component {
   constructor(props) {
@@ -11,26 +10,16 @@ export default class Header extends React.Component {
     };
   }
 
-  toggleAddModal() {
-    this.setState({ showAddModal: !this.state.showAddModal })
-  }
-
   render() {
      return (
       <View style={styles.header}>
-        <Modal
-          visible={this.state.showAddModal}
-          animationType="slide"
-        >
-          <AddContact screenProps={{ toggle: this.toggleAddModal.bind(this) }} />
-        </Modal>
 
         <View style={styles.leftItem}>
           <TouchableOpacity
             accessibilityTraits="button"
             onPress={this.props.leftOnPress}
             style={styles.itemWrapper}>
-            <Text style={styles.itemText}>{this.props.leftText}</Text>
+            <Text style={styles.itemText}>{this.props.leftText.toUpperCase()}</Text>
           </TouchableOpacity>
         </View>
 
@@ -43,7 +32,7 @@ export default class Header extends React.Component {
             accessibilityTraits="button"
             onPress={this.props.rightOnPress}
             style={styles.itemWrapper}>
-            <Text style={styles.itemText}>{this.props.rightText}</Text>
+            <Text style={styles.itemText}>{this.props.rightText.toUpperCase()}</Text>
           </TouchableOpacity>
         </View>
       </View>

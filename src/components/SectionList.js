@@ -13,7 +13,6 @@ import { createContact, getAllContacts, deleteAllContacts } from '../redux/realm
 import sampleContacts from '../utils/seed'
 
 import { StackNavigator, TabNavigator } from "react-navigation";
-import Today from './Today';
 import UpdateContact from './UpdateContact';
 import FlatView from './FlatView';
 import ImportContacts from './ImportContacts';
@@ -69,9 +68,9 @@ class SectionListView extends Component {
       </View>
       <Header
         leftOnPress={null}
-        leftText='SETTINGS'
-        rightOnPress={null}
-        rightText='    ADD'
+        leftText='Settings'
+        rightOnPress={() => this.props.navigation.navigate('AllContacts')}
+        rightText='    Edit'
       />
     </View>
   };
@@ -101,8 +100,6 @@ class SectionListView extends Component {
       damping: 1 - 0.7,
       tension: 300
     }
-
-    const { navigate } = this.props.navigation;
 
     return (
       <View style={styles.container}>
@@ -158,17 +155,20 @@ import { getAllContactsSync } from '../redux/reducer';
 const mapState = ({ store }) => ({ store });
 const mapDispatch = ({ getAllContactsSync });
 
-const Main = connect(mapState, mapDispatch)(SectionListView);
+const Today = connect(mapState, mapDispatch)(SectionListView);
 
 export default kit = StackNavigator({
-  Main: {
-    screen: Main,
+  Today: {
+    screen: Today,
     navigationOptions: {
       header: { visible: false },
     },
   },
   AllContacts: {
     screen: FlatView
+  },
+  ImportContacts: {
+    screen: ImportContacts
   },
   }, { headerMode: 'screen' }
 );
@@ -177,7 +177,6 @@ export default kit = StackNavigator({
 //   Main: { screen: Main },
 //   FlatView: { screen: FlatView },
 //   ImportContacts: { screen: ImportContacts }
-//   // Today: { screen: Today },
 // }, {
 //   // swipeEnabled: true,
 //   animationEnabled: true,

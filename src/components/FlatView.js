@@ -10,6 +10,8 @@ import UpdateContact from './UpdateContact';
 import Row from './SingleContactRow';
 import Interactable from 'react-native-interactable';
 
+import { NavigationActions } from 'react-navigation';
+
 class FlatView extends Component {
   static navigationOptions = {
     tabBar: {
@@ -55,9 +57,18 @@ class FlatView extends Component {
       tension: 300
     }
 
+    const backAction = NavigationActions.back({
+      key: 'Today'
+    })
+
     return (
       <View style={styles.container}>
-        <Header />
+        <Header
+          leftOnPress={() => this.props.navigation.goBack('Today')}
+          leftText='Back'
+          rightOnPress={() => this.props.navigation.navigate('Import')}
+          rightText='    Import'
+        />
         <Modal
           visible={this.state.showUpdateModal}
           onRequestClose={this.toggleUpdateModal}
