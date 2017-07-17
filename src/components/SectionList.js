@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { createContact, getAllContacts, deleteAllContacts } from '../redux/realm';
 import sampleContacts from '../utils/seed'
 
-import { TabNavigator } from "react-navigation";
+import { StackNavigator, TabNavigator } from "react-navigation";
 import Today from './Today';
 import UpdateContact from './UpdateContact';
 import FlatView from './FlatView';
@@ -67,7 +67,12 @@ class SectionListView extends Component {
       <View style={styles.logo}>
         <Icon size={80} name='logo-nodejs' />
       </View>
-      <Header />
+      <Header
+        leftOnPress={null}
+        leftText='SETTINGS'
+        rightOnPress={null}
+        rightText='    ADD'
+      />
     </View>
   };
 
@@ -96,6 +101,8 @@ class SectionListView extends Component {
       damping: 1 - 0.7,
       tension: 300
     }
+
+    const { navigate } = this.props.navigation;
 
     return (
       <View style={styles.container}>
@@ -153,31 +160,46 @@ const mapDispatch = ({ getAllContactsSync });
 
 const Main = connect(mapState, mapDispatch)(SectionListView);
 
-export default kit = TabNavigator({
-  Main: { screen: Main },
-  FlatView: { screen: FlatView },
-  ImportContacts: { screen: ImportContacts }
-  // Today: { screen: Today },
-}, {
-  // swipeEnabled: true,
-  animationEnabled: true,
-  style: {
-    backgroundColor: 'purple'
-  },
-  // tabBarPosition: 'top',
-  // lazy: true,
-  tabBarOptions: {
-    activeTintColor: 'purple',
-    style: {
-      backgroundColor: 'transparent',
-      height: 50,
-      // marginTop: 70
-    },
-    labelStyle: {
-      fontSize: 11,
+export default kit = StackNavigator({
+  Main: {
+    screen: Main,
+    navigationOptions: {
+      header: { visible: false },
     },
   },
-});
+  AllContacts: {
+    screen: FlatView
+  },
+  }, { headerMode: 'screen' }
+);
+
+// export default kit = TabNavigator({
+//   Main: { screen: Main },
+//   FlatView: { screen: FlatView },
+//   ImportContacts: { screen: ImportContacts }
+//   // Today: { screen: Today },
+// }, {
+//   // swipeEnabled: true,
+//   animationEnabled: true,
+//   style: {
+//     backgroundColor: 'purple'
+//   },
+//   // tabBarPosition: 'top',
+//   // lazy: true,
+//   tabBarOptions: {
+//     activeTintColor: 'purple',
+//     style: {
+//       backgroundColor: 'transparent',
+//       height: 50,
+//       // marginTop: 70
+//     },
+//     labelStyle: {
+//       fontSize: 11,
+//     },
+//   },
+// });
+
+
 
 
 /* -------------------<   STYLES   >-------------------- */

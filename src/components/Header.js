@@ -28,8 +28,9 @@ export default class Header extends React.Component {
         <View style={styles.leftItem}>
           <TouchableOpacity
             accessibilityTraits="button"
+            onPress={this.props.leftOnPress}
             style={styles.itemWrapper}>
-            <Text style={styles.itemText}>SETTINGS</Text>
+            <Text style={styles.itemText}>{this.props.leftText}</Text>
           </TouchableOpacity>
         </View>
 
@@ -40,9 +41,9 @@ export default class Header extends React.Component {
         <View style={styles.rightItem}>
           <TouchableOpacity
             accessibilityTraits="button"
-            onPress={() => this.toggleAddModal()}
+            onPress={this.props.rightOnPress}
             style={styles.itemWrapper}>
-            <Text style={styles.itemText}>        ADD</Text>
+            <Text style={styles.itemText}>{this.props.rightText}</Text>
           </TouchableOpacity>
         </View>
       </View>
