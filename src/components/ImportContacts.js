@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity, Dimensions, FlatList, Modal } from 'react-native';
+import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity, Dimensions, FlatList, Modal, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Header from './Header';
 import AddContact from './AddContact';
@@ -25,6 +25,13 @@ class ImportContacts extends Component {
   componentWillMount() {
     Contacts.getAllWithoutPhotos((err, contacts) => {
       if (err === 'denied'){
+        Alert.alert(
+          'Enable Permission in Settings',
+          "To allow KIT to access your contacts for import, please navigate to your phone's settings page. From there, go to 'keep in touch,' and then switch contacts to 'on'",
+          [
+            {text: 'OK', onPress: () => this.props.screenProps.toggle},
+          ]
+        )
       } else {
         let strippedContacts = [];
         contacts.forEach(contact => {
