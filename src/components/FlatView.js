@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   searchbar: {
-    height: 40,
+    height: 45,
     backgroundColor: 'white',
     shadowColor: 'grey',
     shadowOffset: {width: 10, height: 10},
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   textInput: {
     color: 'darkgrey',
     marginLeft: 10,
-    height: 40,
+    height: 45,
     backgroundColor: 'transparent',
     fontSize: 15,
     // backgroundColor: 'darkgrey',

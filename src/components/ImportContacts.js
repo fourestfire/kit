@@ -26,9 +26,9 @@ class ImportContacts extends Component {
     super(props);
     this.state = {
       query: '',
-      showUpdateModal: false,
-      updateModalContact: {},
-      importedContacts: []
+      numToImport: 0,
+      originalContacts: [],
+      contactsToImport: [],
     };
   }
 
@@ -37,14 +37,23 @@ class ImportContacts extends Component {
       if(err === 'denied'){
       } else {
         console.log('contacts from react-native-contacts', contacts)
-        this.setState({importedContacts: contacts})
+        this.setState({originalContacts: contacts})
       }
     })
   }
 
+  renderFooter = () => {
+    return <TouchableOpacity
+      style={styles.actionButton}
+      backgroundColor="black"
+      >
+      <Text style={styles.actionText}> Import {this.state.numToImport} Contacts </Text>
+    </TouchableOpacity>
+  };
+
   filterContacts(contacts, query) {
     try {
-      return filteredContacts = contacts.sort((a, b) => result = a.givenName > b.givenName ? 1 : -1).filter(contact => {
+      return filteredContacts = contacts.filter(contact => {
         return contact.givenName.match(new RegExp(query, 'i')) || contact.familyName.match(new RegExp(query, 'i'));
       })
     } catch(e) {
@@ -54,7 +63,21 @@ class ImportContacts extends Component {
   }
 
   filteredContacts() {
-    return this.filterContacts(this.state.importedContacts, this.state.query)
+    return this.filterContacts(this.state.originalContacts, this.state.query);
+  }
+
+  markContactForImport(index) {
+    let contacts = this.state.contactsToImport.slice(0); // clones array
+
+    if (contacts.includes(index)) {
+      let idxToRemove = contacts.indexOf(index);
+      contacts.splice(idxToRemove, 1);
+      this.setState({ contactsToImport: contacts })
+      this.setState({ numToImport: --this.state.numToImport })
+    } else {
+      this.setState({ contactsToImport: contacts.concat([index]) })
+      this.setState({ numToImport: ++this.state.numToImport })
+    }
   }
 
   render() {
@@ -62,8 +85,6 @@ class ImportContacts extends Component {
       damping: 1 - 0.7,
       tension: 300
     }
-
-    console.log("import contacts", this.state.importedContacts, Array.isArray(this.state.importedContacts))
 
     return (
       <View style={styles.container}>
@@ -85,21 +106,26 @@ class ImportContacts extends Component {
           style={styles.flatlist}
           keyExtractor={item => item.recordID}
           data={this.filteredContacts()}
-          renderItem={({item}) =>
+          renderItem={({item, index}) =>
 
+            <TouchableOpacity onPress={this.markContactForImport.bind(this, index)}>
               <View style={styles.rowContent}>
-                <Checkbox
-                  style={{padding: 10, color: 'pink'}}
-                  onClick={()=>{}}
-                  isChecked={false}
-                  leftText={null}
-                />
-                  <Text style={styles.rowTitle}>{item.givenName} {item.familyName}</Text>
-                  <Text style={styles.rowSubtitle}>{item.phoneNumbers[0].number}</Text>
-
+                  <Text style={styles.rowWidth}>
+                    <Text style={styles.rowFirst}>{item.givenName}</Text>
+                    <Text style={styles.rowLast}> {item.familyName}</Text>
+                  </Text>
+                  <Text style={styles.rowInfo}>{item.phoneNumbers[0] ? item.phoneNumbers[0].number : 'No number found'}</Text>
               </View>
+            </TouchableOpacity>
+            }
+          />
 
-        }/>
+          <TouchableOpacity
+      style={styles.actionButton}
+      backgroundColor="black"
+      >
+      <Text style={styles.actionText}> Import {this.state.numToImport} Contacts </Text>
+    </TouchableOpacity>
 
       </View>
     );
@@ -117,13 +143,15 @@ const mapDispatch = null;
 export default connect(mapState, mapDispatch)(ImportContacts);
 
 /* -------------------<   STYLES   >-------------------- */
+import { maxHeight, maxWidth } from '../styles/global';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white'
   },
   searchbar: {
-    height: 40,
+    height: 45,
     backgroundColor: 'white',
     shadowColor: 'grey',
     shadowOffset: {width: 10, height: 10},
@@ -134,13 +162,10 @@ const styles = StyleSheet.create({
   textInput: {
     color: 'darkgrey',
     marginLeft: 10,
-    height: 40,
+    height: 45,
     backgroundColor: 'transparent',
     fontSize: 15,
     // backgroundColor: 'darkgrey',
-  },
-  wrap: {
-    flexWrap: 'wrap'
   },
   flatlist: {
     backgroundColor: 'white'
@@ -164,15 +189,36 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 1,
     borderColor: '#eeeeee',
-    height: 35,
+    height: 45,
   },
-  rowTitle: {
+  rowFirst: {
+    fontSize: 16,
+  },
+  rowLast: {
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  rowWidth: {
+    marginLeft: 10,
     width: 180,
   },
-  rowSubtitle: {
+  rowInfo: {
     fontSize: 16,
     color: 'gray',
   },
+
+  actionButton: {
+    backgroundColor: 'darkblue',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
+    width: maxWidth
+    // alignSelf: 'flex-end',
+  },
+  actionText: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: '200'
+  },
+
 });
