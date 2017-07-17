@@ -36,8 +36,19 @@ class ImportContacts extends Component {
     Contacts.getAllWithoutPhotos((err, contacts) => {
       if(err === 'denied'){
       } else {
-        console.log('contacts from react-native-contacts', contacts)
-        this.setState({originalContacts: contacts})
+        let strippedContacts = [];
+        contacts.forEach(contact => {
+          if (contact.phoneNumbers[0]) { // only if a phone number exists for contact, otherwise it will error
+            strippedContacts.push({
+              firstName: contact.givenName,
+              lastName: contact.familyName,
+              phoneNum: contact.phoneNumbers[0].number,
+              recordID: contact.recordID
+            })
+          }
+        });
+        console.log('stripped contacts from react-native-contacts', strippedContacts)
+        this.setState({originalContacts: strippedContacts})
       }
     })
   }
@@ -54,7 +65,7 @@ class ImportContacts extends Component {
   filterContacts(contacts, query) {
     try {
       return filteredContacts = contacts.filter(contact => {
-        return contact.givenName.match(new RegExp(query, 'i')) || contact.familyName.match(new RegExp(query, 'i'));
+        return contact.firstName.match(new RegExp(query, 'i')) || contact.lastName.match(new RegExp(query, 'i'));
       })
     } catch(e) {
       console.log("received error", e)
@@ -67,7 +78,7 @@ class ImportContacts extends Component {
   }
 
   markContactForImport(index) {
-    let contacts = this.state.contactsToImport.slice(0); // clones array
+    let contacts = this.state.contactsToImport // .slice(0); to clone array taken out for performance reasons
 
     if (this.isMarkedForImport(index)) {
       let idxToRemove = contacts.indexOf(index);
@@ -111,25 +122,24 @@ class ImportContacts extends Component {
           keyExtractor={item => item.recordID}
           data={this.filteredContacts()}
           renderItem={({item, index}) =>
-
             <TouchableOpacity onPress={this.markContactForImport.bind(this, index)}>
               <View style={this.isMarkedForImport(index) ? styles.rowContentHighlighted : styles.rowContentNormal}>
                   <Text style={styles.rowWidth}>
-                    <Text style={styles.rowFirst}>{item.givenName}</Text>
-                    <Text style={styles.rowLast}> {item.familyName}</Text>
+                    <Text style={styles.rowFirst}>{item.firstName}</Text>
+                    <Text style={styles.rowLast}> {item.lastName}</Text>
                   </Text>
-                  <Text style={styles.rowInfo}>{item.phoneNumbers[0] ? item.phoneNumbers[0].number : 'No number found'}</Text>
+                  <Text style={styles.rowInfo}>{item.phoneNum}</Text>
               </View>
             </TouchableOpacity>
             }
-          />
+        />
 
-          <TouchableOpacity
-      style={styles.actionButton}
-      backgroundColor="black"
+      <TouchableOpacity
+        style={styles.actionButton}
+        backgroundColor="black"
       >
-      <Text style={styles.actionText}> Import {this.state.numToImport} Contacts </Text>
-    </TouchableOpacity>
+        <Text style={styles.actionText}> Import {this.state.numToImport} Contacts </Text>
+      </TouchableOpacity>
 
       </View>
     );

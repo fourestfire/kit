@@ -111,25 +111,16 @@ class UpdateContact extends Component {
 
       <View style={styles.textWrapper}>
         <Text style={styles.helpText}> Phone Number </Text>
-        <TextInputMask
+        <TextInput
           ref='3'
           style={[styles.textInput, styles.phoneInput]}
-          type={'custom'}
-          options={{
-            mask: '(999) 999-9999'
-          }}
-          placeholder={''}
           defaultValue={contact.phoneNum}
-          placeholderTextColor="#bfbfbf"
-          dataDetectorTypes="phoneNumber"
-          keyboardType="numeric"
           value={this.state.phoneNum}
-          onChangeText={this._onPhoneTextChange.bind(this)}
-          returnKeyType="next"
-          onSubmitEditing={() => {
-            this._onPhoneTextSubmit()
-            this._focusNextField('4')}
-          }
+          placeholderTextColor="#bfbfbf"
+          placeholder=""
+          keyboardType="numeric"
+          onChangeText={phoneNum => this.setState({phoneNum})}
+          returnKeyType="done"
         />
       </View>
 
@@ -164,8 +155,6 @@ class UpdateContact extends Component {
       >
         <Text style={styles.actionText}> Update </Text>
       </TouchableOpacity>
-
-
 
     </View>
     );
