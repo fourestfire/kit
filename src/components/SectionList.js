@@ -16,7 +16,7 @@ import { StackNavigator, TabNavigator } from "react-navigation";
 import UpdateContact from './UpdateContact';
 import FlatView from './FlatView';
 import ImportContacts from './ImportContacts';
-import Settings from './Settings';
+import SettingsMenu from './SettingsMenu';
 
 class SectionListView extends Component {
   static navigationOptions = {
@@ -171,8 +171,8 @@ export default kit = StackNavigator({
     ImportContacts: {
       screen: ImportContacts
     },
-    Settings: {
-      screen: Settings
+    SettingsMenu: {
+      screen: SettingsMenu
     }
 
   }, { headerMode: 'screen' }

@@ -50,15 +50,39 @@ export default StyleSheet.create({
   phoneInput: {
     color: 'blue'
   },
+  segmentedWrapper: {
+    // borderBottomWidth: 1,
+    // borderBottomColor: '#bfbfbf',
+    // backgroundColor: 'lavender',
+    // flexDirection: 'column',
+    height: 70,
+    width: maxWidth - 50,
+    margin: 10,
+    // flex: 1,
+  },
+  segmentedControl: {
+    marginTop: 20,
+    // backgroundColor: 'blue',
+    // color: 'blue'
+  },
+
+  flexWrap: {
+    flexWrap: 'wrap',
+    flexDirection: 'row'
+  },
+
   actionButton: {
     backgroundColor: 'darkblue',
     justifyContent: 'center',
     alignItems: 'center',
     height: 50,
-    width: maxWidth
+    width: maxWidth * 3 / 4
     // alignSelf: 'flex-end',
   },
-
+  delete: {
+    backgroundColor: 'red',
+    width: maxWidth * 1 / 4
+  },
   actionText: {
     color: 'white',
     fontSize: 20,

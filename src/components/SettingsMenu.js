@@ -14,14 +14,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 /* -------------------<   COMPONENT   >-------------------- */
 
-class Settings extends React.Component {
-  static navigationOptions = {
-    tabBar: {
-      label: 'Settings',
-      icon: ({ tintColor }) => <Icon size={25} name='md-contacts' color={ tintColor }/>
-    }
-  };
-
+class SettingsMenu extends React.Component {
   render() {
     return (
       <View style={styles.container}>
@@ -86,4 +79,4 @@ import { connect } from 'react-redux';
 const mapState = ({ store }) => ({ store });
 const mapDispatch = null;
 
-export default connectedHome = connect(mapState, mapDispatch)(Settings);
+export default connect(mapState, mapDispatch)(SettingsMenu);

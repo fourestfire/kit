@@ -3,6 +3,7 @@ import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity, TouchableWi
 import Icon from 'react-native-vector-icons/Ionicons';
 import Contacts from 'react-native-contacts';
 import SearchBar from 'react-native-search-bar';
+import { randomNextContactDate } from '../utils/utils';
 
 class ImportContacts extends Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class ImportContacts extends Component {
       numToImport: 0,
       originalContacts: [],
       contactsToImport: [],
+      isActionConfirmed: false,
     };
   }
 
@@ -33,7 +35,8 @@ class ImportContacts extends Component {
               firstName: contact.givenName,
               lastName: contact.familyName,
               phoneNum: contact.phoneNumbers[0].number,
-              recordID: contact.recordID
+              recordID: contact.recordID,
+              nextContact: randomNextContactDate(),
             });
           }
         });
@@ -54,7 +57,7 @@ class ImportContacts extends Component {
 
   filterContacts(contacts, query) {
     try {
-      return filteredContacts = contacts.filter(contact => {
+      return contacts.filter(contact => {
         return contact.firstName.match(new RegExp(query, 'i')) || contact.lastName.match(new RegExp(query, 'i'));
       });
     } catch (e) {
@@ -86,62 +89,70 @@ class ImportContacts extends Component {
   }
 
   importContacts() {
+    // if (!this.state.isActionConfirmed) { this.setState({ isActionConfirmed: true }); } // eventual confirmation logic - press twice to import instead of just once
+    this.state.contactsToImport.forEach(contactIdx => {
+      this.props.addContact(this.state.originalContacts[contactIdx]);
+    });
 
+    this.props.screenProps.toggle();
   }
 
   render() {
     return (
+        <View style={styles.container}>
 
-      <View style={styles.container}>
+          <TouchableOpacity onPress={this.props.screenProps.toggle} style={styles.closeButton}>
+            <Icon name="ios-close" size={50} color="darkgrey" />
+          </TouchableOpacity>
 
-        <TouchableOpacity onPress={this.props.screenProps.toggle} style={styles.closeButton}>
-          <Icon name="ios-close" size={50} color="darkgrey" />
-        </TouchableOpacity>
+          <TouchableWithoutFeedback onPress={() => this.refs.searchbar.unFocus()}>
+            <View style={styles.topSpacer} />
+          </TouchableWithoutFeedback>
 
-        <TouchableWithoutFeedback onPress={() => this.refs.searchbar.unFocus()}>
-          <View style={styles.topSpacer} />
-        </TouchableWithoutFeedback>
+          <SearchBar
+            ref='searchbar'
+            showsCancelButton={true}
+            placeholder='Search'
+            onChangeText={query => this.setState({query: query})}
+            onSearchButtonPress={() => this.refs.searchbar.unFocus()}
+            onCancelButtonPress={() => {
+              this.setState({ query: '' });
+              this.refs.searchbar.unFocus();
+            }}
+            searchBarStyle={'minimal'}
+          />
 
-        <SearchBar
-          ref='searchbar'
-          showsCancelButton={true}
-          placeholder='Search'
-          onChangeText={query => this.setState({query: query})}
-          onSearchButtonPress={() => this.refs.searchbar.unFocus()}
-          onCancelButtonPress={() => {
-            this.setState({ query: '' });
-            this.refs.searchbar.unFocus();
-          }}
-          searchBarStyle={'minimal'}
-        />
+          <FlatList
+            style={styles.flatlist}
+            keyExtractor={item => item.recordID}
+            data={this.filteredContacts()}
+            renderItem={({item, index}) =>
+              (<TouchableOpacity onPress={this.markContactForImport.bind(this, index)}>
+                <View style={this.isMarkedForImport(index) ? styles.rowContentHighlighted : styles.rowContentNormal}>
+                    <Text style={styles.rowWidth}>
+                      <Text style={styles.rowFirst}>{item.firstName}</Text>
+                      <Text style={styles.rowLast}> {item.lastName}</Text>
+                    </Text>
+                    <Text style={styles.rowInfo}>{item.phoneNum}</Text>
+                </View>
+              </TouchableOpacity>)
+              }
+          />
 
-        <FlatList
-          style={styles.flatlist}
-          keyExtractor={item => item.recordID}
-          data={this.filteredContacts()}
-          renderItem={({item, index}) =>
-            (<TouchableOpacity onPress={this.markContactForImport.bind(this, index)}>
-              <View style={this.isMarkedForImport(index) ? styles.rowContentHighlighted : styles.rowContentNormal}>
-                  <Text style={styles.rowWidth}>
-                    <Text style={styles.rowFirst}>{item.firstName}</Text>
-                    <Text style={styles.rowLast}> {item.lastName}</Text>
-                  </Text>
-                  <Text style={styles.rowInfo}>{item.phoneNum}</Text>
-              </View>
-            </TouchableOpacity>)
+          <TouchableOpacity
+            style={this.state.numToImport === 0 ? [styles.actionButton, styles.disabled] : styles.actionButton }
+            disabled={this.state.numToImport === 0}
+            onPress={this.importContacts.bind(this)}
+            backgroundColor="black"
+          >
+            { this.state.isActionConfirmed
+              ? <Text style={styles.actionText}> Confirm </Text>
+              : <Text style={styles.actionText}> Import {this.state.numToImport} Contacts </Text>
             }
-        />
 
-        <TouchableOpacity
-          style={styles.actionButton}
-          onPress={this.importContacts}
-          backgroundColor="black"
-        >
-          <Text style={styles.actionText}> Import {this.state.numToImport} Contacts </Text>
-        </TouchableOpacity>
+          </TouchableOpacity>
 
-      </View>
-
+        </View>
     );
   }
 }
@@ -149,10 +160,10 @@ class ImportContacts extends Component {
 /* -------------------<   CONTAINER   >-------------------- */
 
 import { connect } from 'react-redux';
-import { } from '../redux/reducer';
+import { addContact } from '../redux/reducer';
 
 const mapState = ({ store }) => ({ store });
-const mapDispatch = null;
+const mapDispatch = ({ addContact });
 
 export default connect(mapState, mapDispatch)(ImportContacts);
 
@@ -239,6 +250,12 @@ const styles = StyleSheet.create({
     height: 50,
     width: maxWidth,
     // alignSelf: 'flex-end',
+  },
+  disabled: {
+    backgroundColor: 'hsla(240, 100%, 27%, 0.7)',
+  },
+  confirmed: {
+    backgroundColor: 'darkgreen',
   },
   actionText: {
     color: 'white',

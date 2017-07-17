@@ -1,6 +1,25 @@
 import Realm from 'realm';
 import uuid from 'uuid';
+import moment from 'moment';
 // import { ListView } from 'realm/react-native'
+
+class Settings {
+  static get () { return realm.objects(Settings.schema.name) }
+  static schema = {
+    name: 'Settings',
+    properties: {
+      appFirstOpen: 'boolean',
+      firstName:  'string',
+      lastName: 'string',
+      frequency: {type: 'int', default: 14},
+      nextContact: 'int',
+      lastContact: {type: 'int', default: 0},
+      lastMsg: 'string',
+      phoneNum: 'string',
+      color: 'string'
+    }
+  }
+}
 
 class Contact {
   static get () { return realm.objects(Contact.schema.name) }
@@ -54,14 +73,14 @@ export const createContact = contact => {
   realm.write(() => {
     realm.create(Contact.schema.name, {
       id: uuid.v1(),
-      firstName:  contact.firstName || 'itsme',
-      lastName: contact.lastName || 'shiba',
+      firstName:  contact.firstName || 'Placeholder',
+      lastName: contact.lastName || 'Placeholder',
       frequency: contact.frequency || 14,
-      nextContact: contact.nextContact,
+      nextContact: contact.nextContact || parseInt(moment().format('x'), 10),
       lastContact: contact.lastContact || 0,
-      lastMsg: contact.lastMsg,
+      lastMsg: contact.lastMsg || 'N/A',
       phoneNum: contact.phoneNum || '123-123-1234',
-      color: contact.color
+      color: contact.color || 'purple'
     });
   });
   console.log('total # of contacts', getAllContacts().length);

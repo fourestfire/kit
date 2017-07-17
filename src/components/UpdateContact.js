@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
+  SegmentedControlIOS
 } from 'react-native';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -24,7 +25,6 @@ class UpdateContact extends Component {
       color: '#73d4e3',
       frequency: 7,
       lastMsg: 'hi',
-      values: ['Daily',  'Weekly', 'Monthly'],
     }
   }
 
@@ -37,6 +37,7 @@ class UpdateContact extends Component {
       frequency: this.props.contact.frequency,
       lastMsg: this.props.contact.lastMsg,
       color: this.props.contact.color,
+      values: ['Group 1', 'Group 2', 'Group 3'],
     });
   }
 
@@ -47,6 +48,19 @@ class UpdateContact extends Component {
   updateContact(contact) {
     this.props.updateContact(contact);
     this.props.screenProps.toggle();
+  }
+
+  findColorIndex() {
+    console.log(this.props.contact.color);
+    if (this.props.contact.color === 'purple') return 0;
+    else if (this.props.contact.color === '#73d4e3') return 1;
+    else if (this.props.contact.color === 'forestgreen') return 2;
+  }
+
+  setColor(color) {
+    if (color === 'Purple') this.setState({color: 'purple'});
+    else if (color === 'Teal') this.setState({color: '#73d4e3'});
+    else if (color === 'Green') this.setState({color: 'forestgreen'});
   }
 
   render() {
@@ -111,7 +125,7 @@ class UpdateContact extends Component {
         </View>
 
         <View style={styles.textWrapper}>
-          <Text style={styles.helpText}> Contact Frequency (in days) </Text>
+          <Text style={styles.helpText}> Minimum Contact Frequency (in days) </Text>
           <TextInput
             ref='4'
             style={styles.textInput}
@@ -124,23 +138,53 @@ class UpdateContact extends Component {
           />
         </View>
 
+        <View style={styles.segmentedWrapper}>
+          <Text style={styles.helpText}> Color / Group </Text>
+          <SegmentedControlIOS
+              style={styles.segmentedControl}
+              selectedIndex={this.findColorIndex()}
+              values={['Purple', 'Teal', 'Green']}
+              tintColor='darkblue'
+              onValueChange={color => this.setColor(color)}
+          />
+        </View>
+
         <View style={styles.bottomSpacer} />
 
-        <TouchableOpacity
-          //icon="md-checkmark"
-          //iconPlacement="right"
-          style={styles.actionButton}
-          backgroundColor='black'
-          onPress={this.updateContact.bind(this, {
-                  id: this.state.id,
-                  firstName: this.state.firstName,
-                  lastName: this.state.lastName,
-                  frequency: Number(this.state.frequency),
-                  phoneNum: this.state.phoneNum,
-                  color: this.state.color})}
-        >
-          <Text style={styles.actionText}> Update </Text>
-        </TouchableOpacity>
+        <View style={styles.flexWrap}>
+
+          <TouchableOpacity
+            //icon="md-checkmark"
+            //iconPlacement="right"
+            style={styles.actionButton}
+            backgroundColor='black'
+            onPress={this.updateContact.bind(this, {
+                    id: this.state.id,
+                    firstName: this.state.firstName,
+                    lastName: this.state.lastName,
+                    frequency: Number(this.state.frequency),
+                    phoneNum: this.state.phoneNum,
+                    color: this.state.color})}
+          >
+            <Text style={styles.actionText}> Update Contact </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            //icon="md-checkmark"
+            //iconPlacement="right"
+            style={[styles.actionButton, styles.delete]}
+            backgroundColor='black'
+            onPress={this.updateContact.bind(this, {
+                    id: this.state.id,
+                    firstName: this.state.firstName,
+                    lastName: this.state.lastName,
+                    frequency: Number(this.state.frequency),
+                    phoneNum: this.state.phoneNum,
+                    color: this.state.color})}
+          >
+            <Text style={styles.actionText}> Delete </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </TouchableWithoutFeedback>
     );
