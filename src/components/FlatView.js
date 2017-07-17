@@ -13,7 +13,7 @@ import Interactable from 'react-native-interactable';
 class FlatView extends Component {
   static navigationOptions = {
     tabBar: {
-      label: 'All Contacts',
+      label: 'Manage Contacts',
       icon: ({ tintColor }) => <Icon size={24} name='md-contacts' color={ tintColor }/>
     },
     header: {

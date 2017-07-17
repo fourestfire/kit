@@ -7,6 +7,8 @@ import {
   SegmentedControlIOS,
   TouchableOpacity,
   Button,
+  TouchableWithoutFeedback,
+  Keyboard
 } from 'react-native';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -59,6 +61,7 @@ class AddContact extends Component {
     const date = parseInt(moment().format('x'), 10);
 
     return (
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
         <TouchableOpacity onPress={this.props.screenProps.toggle} style={styles.closeButton}>
           <Icon name="ios-close" size={50} color="darkgrey" />
@@ -160,8 +163,8 @@ class AddContact extends Component {
       >
         <Text style={styles.actionText}> Save </Text>
       </TouchableOpacity>
-
     </View>
+    </TouchableWithoutFeedback>
     );
   }
 }

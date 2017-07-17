@@ -4,7 +4,9 @@ import {
   Text,
   TextInput,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -51,95 +53,96 @@ class UpdateContact extends Component {
     const contact = this.props.contact;
 
     return (
-      <View style={styles.container}>
-      <TouchableOpacity onPress={this.props.screenProps.toggle} style={styles.closeButton}>
-        <Icon name="ios-close" size={50} color="darkgrey" />
-      </TouchableOpacity>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <View style={styles.container}>
+        <TouchableOpacity onPress={this.props.screenProps.toggle} style={styles.closeButton}>
+          <Icon name="ios-close" size={50} color="darkgrey" />
+        </TouchableOpacity>
 
-      <View style={styles.topSpacer} />
+        <View style={styles.topSpacer} />
 
-      <Text style={styles.headlineForEdit}> Edit Contact </Text>
+        <Text style={styles.headlineForEdit}> Edit Contact </Text>
 
-      <View style={styles.textWrapper}>
-        <Text style={styles.helpText}> First Name </Text>
-        <TextInput
-          style={styles.textInput}
-          // placeholder={'First Name'}
-          placeholderTextColor="#bfbfbf"
-          autoFocus={false}
-          autoCorrect={false}
-          defaultValue={contact.firstName}
-          onChangeText={firstName => this.setState({firstName})}
-          ref='1'
-          returnKeyType="next"
-          blurOnSubmit={false}
-          onSubmitEditing={() => this._focusNextField('2')}
-        />
+        <View style={styles.textWrapper}>
+          <Text style={styles.helpText}> First Name </Text>
+          <TextInput
+            style={styles.textInput}
+            // placeholder={'First Name'}
+            placeholderTextColor="#bfbfbf"
+            autoFocus={false}
+            autoCorrect={false}
+            defaultValue={contact.firstName}
+            onChangeText={firstName => this.setState({firstName})}
+            ref='1'
+            returnKeyType="next"
+            blurOnSubmit={false}
+            onSubmitEditing={() => this._focusNextField('2')}
+          />
+        </View>
+
+        <View style={styles.textWrapper}>
+          <Text style={styles.helpText}> Last Name </Text>
+          <TextInput
+            ref='2'
+            style={styles.textInput}
+            placeholder={''}
+            defaultValue={contact.lastName}
+            autoCorrect={false}
+            placeholderTextColor="#bfbfbf"
+            onChangeText={lastName => this.setState({lastName})}
+            returnKeyType="next"
+            onSubmitEditing={() => this._focusNextField('3')}
+          />
+        </View>
+
+        <View style={styles.textWrapper}>
+          <Text style={styles.helpText}> Phone Number </Text>
+          <TextInput
+            ref='3'
+            style={[styles.textInput, styles.phoneInput]}
+            defaultValue={contact.phoneNum}
+            value={this.state.phoneNum}
+            placeholderTextColor="#bfbfbf"
+            placeholder=""
+            keyboardType="numeric"
+            onChangeText={phoneNum => this.setState({phoneNum})}
+            returnKeyType="done"
+          />
+        </View>
+
+        <View style={styles.textWrapper}>
+          <Text style={styles.helpText}> Contact Frequency (in days) </Text>
+          <TextInput
+            ref='4'
+            style={styles.textInput}
+            defaultValue={String(contact.frequency)}
+            placeholderTextColor="#bfbfbf"
+            placeholder=""
+            keyboardType="numeric"
+            onChangeText={frequency => this.setState({frequency})}
+            returnKeyType="done"
+          />
+        </View>
+
+        <View style={styles.bottomSpacer} />
+
+        <TouchableOpacity
+          //icon="md-checkmark"
+          //iconPlacement="right"
+          style={styles.actionButton}
+          backgroundColor='black'
+          onPress={this.updateContact.bind(this, {
+                  id: this.state.id,
+                  firstName: this.state.firstName,
+                  lastName: this.state.lastName,
+                  frequency: Number(this.state.frequency),
+                  phoneNum: this.state.phoneNum,
+                  color: this.state.color})}
+        >
+          <Text style={styles.actionText}> Update </Text>
+        </TouchableOpacity>
       </View>
-
-      <View style={styles.textWrapper}>
-        <Text style={styles.helpText}> Last Name </Text>
-        <TextInput
-          ref='2'
-          style={styles.textInput}
-          placeholder={''}
-          defaultValue={contact.lastName}
-          autoCorrect={false}
-          placeholderTextColor="#bfbfbf"
-          onChangeText={lastName => this.setState({lastName})}
-          returnKeyType="next"
-          onSubmitEditing={() => this._focusNextField('3')}
-        />
-      </View>
-
-      <View style={styles.textWrapper}>
-        <Text style={styles.helpText}> Phone Number </Text>
-        <TextInput
-          ref='3'
-          style={[styles.textInput, styles.phoneInput]}
-          defaultValue={contact.phoneNum}
-          value={this.state.phoneNum}
-          placeholderTextColor="#bfbfbf"
-          placeholder=""
-          keyboardType="numeric"
-          onChangeText={phoneNum => this.setState({phoneNum})}
-          returnKeyType="done"
-        />
-      </View>
-
-      <View style={styles.textWrapper}>
-        <Text style={styles.helpText}> Contact Frequency (in days) </Text>
-        <TextInput
-          ref='4'
-          style={styles.textInput}
-          defaultValue={String(contact.frequency)}
-          placeholderTextColor="#bfbfbf"
-          placeholder=""
-          keyboardType="numeric"
-          onChangeText={frequency => this.setState({frequency})}
-          returnKeyType="done"
-        />
-      </View>
-
-      <View style={styles.bottomSpacer} />
-
-      <TouchableOpacity
-        //icon="md-checkmark"
-        //iconPlacement="right"
-        style={styles.actionButton}
-        backgroundColor='black'
-        onPress={this.updateContact.bind(this, {
-                id: this.state.id,
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
-                frequency: Number(this.state.frequency),
-                phoneNum: this.state.phoneNum,
-                color: this.state.color})}
-      >
-        <Text style={styles.actionText}> Update </Text>
-      </TouchableOpacity>
-
-    </View>
+    </TouchableWithoutFeedback>
     );
   }
 }
