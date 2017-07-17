@@ -69,7 +69,7 @@ class ImportContacts extends Component {
   markContactForImport(index) {
     let contacts = this.state.contactsToImport.slice(0); // clones array
 
-    if (contacts.includes(index)) {
+    if (this.isMarkedForImport(index)) {
       let idxToRemove = contacts.indexOf(index);
       contacts.splice(idxToRemove, 1);
       this.setState({ contactsToImport: contacts })
@@ -78,6 +78,10 @@ class ImportContacts extends Component {
       this.setState({ contactsToImport: contacts.concat([index]) })
       this.setState({ numToImport: ++this.state.numToImport })
     }
+  }
+
+  isMarkedForImport(index) {
+    return this.state.contactsToImport.includes(index);
   }
 
   render() {
@@ -109,7 +113,7 @@ class ImportContacts extends Component {
           renderItem={({item, index}) =>
 
             <TouchableOpacity onPress={this.markContactForImport.bind(this, index)}>
-              <View style={styles.rowContent}>
+              <View style={this.isMarkedForImport(index) ? styles.rowContentHighlighted : styles.rowContentNormal}>
                   <Text style={styles.rowWidth}>
                     <Text style={styles.rowFirst}>{item.givenName}</Text>
                     <Text style={styles.rowLast}> {item.familyName}</Text>
@@ -183,13 +187,22 @@ const styles = StyleSheet.create({
     fontWeight: '200',
     marginLeft: 10,
   },
-  rowContent: {
+  rowContentNormal: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: 1,
     borderColor: '#eeeeee',
     height: 45,
+  },
+  rowContentHighlighted: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderColor: '#eeeeee',
+    height: 45,
+    backgroundColor: 'lightblue'
   },
   rowFirst: {
     fontSize: 16,
@@ -212,7 +225,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: 50,
-    width: maxWidth
+    width: maxWidth,
     // alignSelf: 'flex-end',
   },
   actionText: {
