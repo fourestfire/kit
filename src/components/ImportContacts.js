@@ -6,7 +6,6 @@ import AddContact from './AddContact';
 import moment from 'moment';
 import { convertFrequency } from '../utils/utils';
 import Contacts from 'react-native-contacts';
-import Checkbox from 'react-native-check-box';
 
 import Row from './SingleContactRow';
 import Interactable from 'react-native-interactable';
