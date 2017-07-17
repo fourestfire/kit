@@ -6,22 +6,12 @@ import AddContact from './AddContact';
 import moment from 'moment';
 import { convertFrequency } from '../utils/utils';
 import Contacts from 'react-native-contacts';
-import Checkbox from 'react-native-check-box'
+import Checkbox from 'react-native-check-box';
 
 import Row from './SingleContactRow';
 import Interactable from 'react-native-interactable';
 
 class ImportContacts extends Component {
-  static navigationOptions = {
-    tabBar: {
-      label: 'Import Contacts',
-      icon: ({ tintColor }) => <Icon size={24} name='md-contacts' color={ tintColor }/>
-    },
-    header: {
-      visible: false
-    }
-  }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -34,7 +24,7 @@ class ImportContacts extends Component {
 
   componentWillMount() {
     Contacts.getAllWithoutPhotos((err, contacts) => {
-      if(err === 'denied'){
+      if (err === 'denied'){
       } else {
         let strippedContacts = [];
         contacts.forEach(contact => {
@@ -44,31 +34,31 @@ class ImportContacts extends Component {
               lastName: contact.familyName,
               phoneNum: contact.phoneNumbers[0].number,
               recordID: contact.recordID
-            })
+            });
           }
         });
-        console.log('stripped contacts from react-native-contacts', strippedContacts)
-        this.setState({originalContacts: strippedContacts})
+        console.log('stripped contacts from react-native-contacts', strippedContacts);
+        this.setState({originalContacts: strippedContacts});
       }
-    })
+    });
   }
 
-  renderFooter = () => {
-    return <TouchableOpacity
+  renderFooter() {
+    return (<TouchableOpacity
       style={styles.actionButton}
       backgroundColor="black"
       >
       <Text style={styles.actionText}> Import {this.state.numToImport} Contacts </Text>
-    </TouchableOpacity>
-  };
+    </TouchableOpacity>);
+  }
 
   filterContacts(contacts, query) {
     try {
       return filteredContacts = contacts.filter(contact => {
         return contact.firstName.match(new RegExp(query, 'i')) || contact.lastName.match(new RegExp(query, 'i'));
-      })
-    } catch(e) {
-      console.log("received error", e)
+      });
+    } catch (e) {
+      console.log('received error', e);
       return [];
     }
   }
@@ -78,16 +68,16 @@ class ImportContacts extends Component {
   }
 
   markContactForImport(index) {
-    let contacts = this.state.contactsToImport // .slice(0); to clone array taken out for performance reasons
+    let contacts = this.state.contactsToImport; // .slice(0); to clone array taken out for performance reasons
 
     if (this.isMarkedForImport(index)) {
       let idxToRemove = contacts.indexOf(index);
       contacts.splice(idxToRemove, 1);
-      this.setState({ contactsToImport: contacts })
-      this.setState({ numToImport: --this.state.numToImport })
+      this.setState({ contactsToImport: contacts });
+      this.setState({ numToImport: --this.state.numToImport });
     } else {
-      this.setState({ contactsToImport: contacts.concat([index]) })
-      this.setState({ numToImport: ++this.state.numToImport })
+      this.setState({ contactsToImport: contacts.concat([index]) });
+      this.setState({ numToImport: ++this.state.numToImport });
     }
   }
 
@@ -96,19 +86,18 @@ class ImportContacts extends Component {
   }
 
   render() {
-    const physics = {
-      damping: 1 - 0.7,
-      tension: 300
-    }
-
     return (
       <View style={styles.container}>
-        <Header />
+        <TouchableOpacity onPress={this.props.screenProps.toggle} style={styles.closeButton}>
+          <Icon name="ios-close" size={50} color="darkgrey" />
+        </TouchableOpacity>
+
+        <View style={styles.topSpacer} />
 
         <View style={styles.searchbar}>
           <TextInput
             style={styles.textInput}
-            placeholder={'Search contacts'}
+            placeholder={'Search contacts from phone'}
             placeholderTextColor="darkgrey"
             autoCorrect={false}
             onChangeText={query => this.setState({query: query})}
@@ -122,7 +111,7 @@ class ImportContacts extends Component {
           keyExtractor={item => item.recordID}
           data={this.filteredContacts()}
           renderItem={({item, index}) =>
-            <TouchableOpacity onPress={this.markContactForImport.bind(this, index)}>
+            (<TouchableOpacity onPress={this.markContactForImport.bind(this, index)}>
               <View style={this.isMarkedForImport(index) ? styles.rowContentHighlighted : styles.rowContentNormal}>
                   <Text style={styles.rowWidth}>
                     <Text style={styles.rowFirst}>{item.firstName}</Text>
@@ -130,7 +119,7 @@ class ImportContacts extends Component {
                   </Text>
                   <Text style={styles.rowInfo}>{item.phoneNum}</Text>
               </View>
-            </TouchableOpacity>
+            </TouchableOpacity>)
             }
         />
 
@@ -162,7 +151,8 @@ import { maxHeight, maxWidth } from '../styles/global';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    marginTop: 40,
   },
   searchbar: {
     height: 45,
@@ -170,6 +160,7 @@ const styles = StyleSheet.create({
     shadowColor: 'grey',
     shadowOffset: {width: 10, height: 10},
     shadowOpacity: 1.0,
+    borderTopWidth: 1,
     borderBottomWidth: 1,
     borderColor: '#ddd',
   },
@@ -243,5 +234,20 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '200'
   },
+
+  topSpacer: {
+    height: 60,
+  },
+  closeButton: {
+    height: maxHeight / 12,
+    width: maxHeight / 12,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    zIndex: 10
+  }
 
 });

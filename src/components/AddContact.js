@@ -14,8 +14,6 @@ import moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {TextInputMask} from 'react-native-masked-text';
 
-import { createContact } from '../redux/realm';
-
 class AddContact extends Component {
   constructor(props) {
     super(props);

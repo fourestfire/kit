@@ -16,6 +16,7 @@ import { StackNavigator, TabNavigator } from "react-navigation";
 import UpdateContact from './UpdateContact';
 import FlatView from './FlatView';
 import ImportContacts from './ImportContacts';
+import Settings from './Settings';
 
 class SectionListView extends Component {
   static navigationOptions = {
@@ -67,7 +68,7 @@ class SectionListView extends Component {
         <Icon size={80} name='logo-nodejs' />
       </View>
       <Header
-        leftOnPress={null}
+        leftOnPress={() => this.props.navigation.navigate('Settings')}
         leftText='Settings'
         rightOnPress={() => this.props.navigation.navigate('AllContacts')}
         rightText='    Edit'
@@ -158,18 +159,22 @@ const mapDispatch = ({ getAllContactsSync });
 const Today = connect(mapState, mapDispatch)(SectionListView);
 
 export default kit = StackNavigator({
-  Today: {
-    screen: Today,
-    navigationOptions: {
-      header: { visible: false },
+    Today: {
+      screen: Today,
+      navigationOptions: {
+        header: { visible: false },
+      },
     },
-  },
-  AllContacts: {
-    screen: FlatView
-  },
-  ImportContacts: {
-    screen: ImportContacts
-  },
+    AllContacts: {
+      screen: FlatView
+    },
+    ImportContacts: {
+      screen: ImportContacts
+    },
+    Settings: {
+      screen: Settings
+    }
+
   }, { headerMode: 'screen' }
 );
 

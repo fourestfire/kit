@@ -6,6 +6,7 @@ import AddContact from './AddContact';
 import moment from 'moment';
 import { convertFrequency } from '../utils/utils';
 import UpdateContact from './UpdateContact';
+import ImportContacts from './ImportContacts';
 
 import Row from './SingleContactRow';
 import Interactable from 'react-native-interactable';
@@ -27,6 +28,7 @@ class FlatView extends Component {
     super(props);
     this.state = {
       query: '',
+      showImportModal: false,
       showUpdateModal: false,
       updateModalContact: {}
     };
@@ -38,43 +40,47 @@ class FlatView extends Component {
         return contact.firstName.match(new RegExp(query, 'i')) || contact.lastName.match(new RegExp(query, 'i'));
       })
     } catch(e) {
-      console.log("received error", e)
+      console.log("received error", e);
       return [];
     }
   }
 
   filteredContacts() {
-    return this.filterContacts(this.props.store.contacts, this.state.query)
+    return this.filterContacts(this.props.store.contacts, this.state.query);
   }
 
   toggleUpdateModal = (contact) => {
-    this.setState({ showUpdateModal: !this.state.showUpdateModal, updateModalContact: contact})
+    this.setState({ showUpdateModal: !this.state.showUpdateModal, updateModalContact: contact });
+  }
+
+  toggleImportModal = (contact) => {
+    this.setState({ showImportModal: !this.state.showImportModal });
   }
 
   render() {
-    const physics = {
-      damping: 1 - 0.7,
-      tension: 300
-    }
-
-    const backAction = NavigationActions.back({
-      key: 'Today'
-    })
-
     return (
       <View style={styles.container}>
         <Header
-          leftOnPress={() => this.props.navigation.goBack('Today')}
+          leftOnPress={() => this.props.navigation.goBack(null)}
           leftText='Back'
-          rightOnPress={() => this.props.navigation.navigate('Import')}
+          rightOnPress={() => this.toggleImportModal()}
           rightText='    Import'
         />
+
         <Modal
           visible={this.state.showUpdateModal}
           onRequestClose={this.toggleUpdateModal}
           animationType='slide'
         >
           <UpdateContact screenProps={{ toggle: this.toggleUpdateModal }} contact={this.state.updateModalContact} />
+        </Modal>
+
+        <Modal
+          visible={this.state.showImportModal}
+          onRequestClose={this.toggleImportModal}
+          animationType='slide'
+        >
+          <ImportContacts screenProps={{ toggle: this.toggleImportModal }} />
         </Modal>
 
         <View style={styles.searchbar}>

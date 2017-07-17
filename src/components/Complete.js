@@ -77,7 +77,7 @@ export default connect(mapState, mapDispatch)(Complete);
 
 /* -------------------<   STYLING   >-------------------- */
 
-import { maxWidth } from '../styles/global';
+import { maxHeight, maxWidth } from '../styles/global';
 
 const styles = StyleSheet.create({
   container: {
@@ -116,7 +116,14 @@ const styles = StyleSheet.create({
     // borderBottomWidth: 1,
   },
   closeButton: {
-    alignSelf: 'flex-end',
-    marginRight: 30
+    height: maxHeight / 8,
+    width: maxHeight / 8,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    zIndex: 10
   }
 });
