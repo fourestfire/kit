@@ -19,8 +19,8 @@ export default StyleSheet.create({
     fontSize: 20,
     fontWeight: '700',
     alignSelf: 'flex-start',
-    marginTop: 10,
-    marginBottom: 30,
+    marginTop: 0,
+    marginBottom: 23,
     marginHorizontal: 20,
   },
   textWrapper: {

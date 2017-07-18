@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Contacts from 'react-native-contacts';
 import SearchBar from 'react-native-search-bar';
 import { randomNextContactDate } from '../utils/utils';
+import Emoji from 'react-native-emoji';
 
 class ImportContacts extends Component {
   constructor(props) {
@@ -105,10 +106,16 @@ class ImportContacts extends Component {
             <Icon name="ios-close" size={50} color="darkgrey" />
           </TouchableOpacity>
 
+          {/* <Text style={styles.headline}> Import Contacts
+            <Emoji name=":cat:"/>
+            <Emoji name=":dog:"/>
+          </Text> */}
+
           <TouchableWithoutFeedback onPress={() => this.refs.searchbar.unFocus()}>
             <View style={styles.topSpacer} />
           </TouchableWithoutFeedback>
 
+          <View style={styles.searchbar}>
           <SearchBar
             ref='searchbar'
             showsCancelButton={true}
@@ -121,6 +128,7 @@ class ImportContacts extends Component {
             }}
             searchBarStyle={'minimal'}
           />
+          </View>
 
           <FlatList
             style={styles.flatlist}
@@ -174,17 +182,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    marginTop: 40,
+    marginTop: 25,
+  },
+  headline: {
+    fontSize: 16,
+    fontWeight: '200',
+    // textAlign: 'center',
+    // alignSelf: 'flex-start',
+    marginTop: 15,
+    marginBottom: 10,
+    marginHorizontal: 5,
   },
   searchbar: {
-    height: 45,
-    backgroundColor: 'white',
-    shadowColor: 'grey',
-    shadowOffset: {width: 10, height: 10},
-    shadowOpacity: 1.0,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: '#ddd',
+    width: 320,
+    height: maxHeight / 14,
+    marginTop: 3,
   },
   textInput: {
     color: 'darkgrey',
@@ -264,11 +276,11 @@ const styles = StyleSheet.create({
   },
 
   topSpacer: {
-    height: 60,
+    height: 1,
   },
   closeButton: {
-    height: maxHeight / 12,
-    width: maxHeight / 12,
+    height: maxHeight / 14,
+    width: maxHeight / 14,
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: 'transparent',
