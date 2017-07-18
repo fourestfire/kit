@@ -52,7 +52,6 @@ class UpdateContact extends Component {
   }
 
   initiateDeleteContact(contactID) {
-    console.log('contactID at first step', contactID)
     Alert.alert(
           'Confirm Delete',
           "Are you sure you want to delete this contact? Note: this will not impact your actual phone contact.",
@@ -98,7 +97,7 @@ class UpdateContact extends Component {
           <Text style={styles.helpText}> First Name </Text>
           <TextInput
             style={styles.textInput}
-            // placeholder={'First Name'}
+            placeholder=""
             placeholderTextColor="#bfbfbf"
             autoFocus={false}
             autoCorrect={false}
@@ -136,7 +135,7 @@ class UpdateContact extends Component {
             placeholderTextColor="#bfbfbf"
             placeholder=""
             keyboardType="numeric"
-            onChangeText={phoneNum => this.setState({phoneNum})}
+            onChangeText={phoneNum => {this.setState({phoneNum})}}
             returnKeyType="done"
           />
         </View>

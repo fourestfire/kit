@@ -57,7 +57,6 @@ export const updateContact = (contact) => dispatch => {
 };
 
 export const removeContact = (contactID) => dispatch => {
-  console.log('contact id coming in', contactID)
   dispatch(removeContactSync(contactID));
   deleteContact(contactID);
 };
@@ -66,6 +65,5 @@ export const removeAllContacts = () => dispatch => {
   dispatch(removeAllContactsSync());
   deleteAllContacts();
 };
-
 
 export default combineReducers({ store });

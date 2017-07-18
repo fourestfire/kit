@@ -60,6 +60,7 @@ export const editContact = (contact) => {
         firstName: contact.firstName,
         lastName: contact.lastName,
         frequency: contact.frequency,
+        phoneNum: contact.phoneNum,
         color: contact.color,
       }, true); // true updates contact instead of creating new one
     } catch (e) {
