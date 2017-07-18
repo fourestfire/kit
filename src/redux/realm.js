@@ -1,7 +1,6 @@
 import Realm from 'realm';
 import uuid from 'uuid';
 import moment from 'moment';
-// import { ListView } from 'realm/react-native'
 
 class Settings {
   static get () { return realm.objects(Settings.schema.name) }
@@ -48,10 +47,6 @@ export const getAllContacts = () => {
   return Contact.get();
 };
 
-// export const getContact = (id) => {
-//   return realm.objectForPrimaryKey(Contact, id)
-// }
-
 export const editContact = (contact) => {
   realm.write(() => {
     try {
@@ -60,11 +55,11 @@ export const editContact = (contact) => {
         firstName: contact.firstName,
         lastName: contact.lastName,
         frequency: contact.frequency,
-        phoneNum: contact.phoneNum,
-        color: contact.color,
-        lastMsg: contact.lastMsg,
         nextContact: contact.nextContact,
         lastContact: contact.lastContact,
+        lastMsg: contact.lastMsg,
+        phoneNum: contact.phoneNum,
+        color: contact.color,
       }, true); // true updates contact instead of creating new one
     } catch (e) {
       console.warn(e)
@@ -73,7 +68,7 @@ export const editContact = (contact) => {
 }
 
 export const createContact = contact => {
-  console.log('creating new contact', contact);
+  // console.log('creating new contact', contact);
   realm.write(() => {
     realm.create(Contact.schema.name, {
       id: uuid.v1(),
@@ -87,7 +82,7 @@ export const createContact = contact => {
       color: contact.color || 'purple'
     });
   });
-  console.log('total # of contacts', getAllContacts().length);
+  // console.log('total # of contacts', getAllContacts().length);
   // getAllContacts().forEach((contact, idx) => console.log(`contact ${idx + 1}: ${contact.firstName} ${contact.lastName} ${contact.phoneNum} ${contact.nextContact} ${contact.lastContact}`));
 };
 

@@ -18,8 +18,8 @@ class Complete extends Component {
     };
   }
 
-  updateContact(contact, contactID) {
-    this.props.updateContactSync(contactID);
+  updateContact(contact) {
+    this.props.updateContact(contact);
     this.props.screenProps.toggle();
   }
 
@@ -54,10 +54,11 @@ class Complete extends Component {
           <Button
             title="Complete" onPress={this.updateContact.bind(this,
             Object.assign({}, this.props.contact, {
+            id: this.props.contact.id,
             lastMsg: this.state.msg,
             nextContact: nextContactDate,
             lastContact: lastContactDate,
-            }, this.props.contact.id)
+            })
           )} />
         </View>
       </View>
@@ -68,10 +69,10 @@ class Complete extends Component {
 /* -------------------<   CONTAINER   >-------------------- */
 
 import { connect } from 'react-redux';
-import { updateContactSync } from '../redux/reducer';
+import { updateContact } from '../redux/reducer';
 
 const mapState = ({ store }) => ({ store });
-const mapDispatch = ({ updateContactSync });
+const mapDispatch = ({ updateContact });
 
 export default connect(mapState, mapDispatch)(Complete);
 
