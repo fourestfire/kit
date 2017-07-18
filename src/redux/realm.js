@@ -87,9 +87,9 @@ export const createContact = contact => {
   // getAllContacts().forEach((contact, idx) => console.log(`contact ${idx + 1}: ${contact.firstName} ${contact.lastName} ${contact.phoneNum} ${contact.nextContact} ${contact.lastContact}`));
 };
 
-export const deleteContact = (Contact) => {
+export const deleteContact = id => {
   realm.write(() => {
-    realm.delete(Contact);
+    realm.delete(getContact(id));
   });
 };
 

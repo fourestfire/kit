@@ -51,19 +51,24 @@ class UpdateContact extends Component {
     this.props.screenProps.toggle();
   }
 
-  deleteContact(contactID) {
+  initiateDeleteContact(contactID) {
+    console.log('contactID at first step', contactID)
     Alert.alert(
           'Confirm Delete',
           "Are you sure you want to delete this contact? Note: this will not impact your actual phone contact.",
           [
             {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-            {text: 'Delete', onPress: () => console.log('Delete Pressed'), style: 'destructive'},
+            {text: 'Delete', onPress: () => this.deleteContact(contactID), style: 'destructive'},
           ]
         );
   }
 
+  deleteContact(contactID) {
+    this.props.removeContact(contactID);
+    this.props.screenProps.toggle();
+  }
+
   findColorIndex() {
-    console.log(this.props.contact.color);
     if (this.props.contact.color === 'purple') return 0;
     else if (this.props.contact.color === '#73d4e3') return 1;
     else if (this.props.contact.color === 'forestgreen') return 2;
@@ -186,7 +191,7 @@ class UpdateContact extends Component {
             //iconPlacement="right"
             style={[styles.actionButton, styles.delete]}
             backgroundColor='black'
-            onPress={this.deleteContact.bind(this, this.state.id)}
+            onPress={this.initiateDeleteContact.bind(this, this.state.id)}
           >
             <Text style={styles.actionText}> Delete </Text>
           </TouchableOpacity>
@@ -200,10 +205,9 @@ class UpdateContact extends Component {
 /* -------------------<   CONTAINER   >-------------------- */
 
 import { connect } from 'react-redux';
-import { updateContact } from '../redux/reducer';
+import { updateContact, removeContact } from '../redux/reducer';
 
 const mapState = ({ store }) => ({ store });
-const mapDispatch = ({ updateContact });
+const mapDispatch = ({ updateContact, removeContact });
 
 export default connect(mapState, mapDispatch)(UpdateContact);
-
