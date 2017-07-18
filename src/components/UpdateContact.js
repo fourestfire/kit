@@ -126,30 +126,29 @@ class UpdateContact extends Component {
         </View>
 
         <View style={styles.textWrapper}>
-          <Text style={styles.helpText}> Phone Number </Text>
-          <TextInput
-            ref='3'
-            style={[styles.textInput, styles.phoneInput]}
-            defaultValue={contact.phoneNum}
-            value={this.state.phoneNum}
-            placeholderTextColor="#bfbfbf"
-            placeholder=""
-            keyboardType="numeric"
-            onChangeText={phoneNum => {this.setState({phoneNum})}}
-            returnKeyType="done"
-          />
-        </View>
-
-        <View style={styles.textWrapper}>
           <Text style={styles.helpText}> Minimum Contact Frequency (in days) </Text>
           <TextInput
-            ref='4'
+            ref='3'
             style={styles.textInput}
             defaultValue={String(contact.frequency)}
             placeholderTextColor="#bfbfbf"
             placeholder=""
             keyboardType="numeric"
             onChangeText={frequency => this.setState({frequency})}
+            returnKeyType="done"
+          />
+        </View>
+
+        <View style={styles.textWrapper}>
+          <Text style={styles.helpText}> Phone Number </Text>
+          <TextInput
+            ref='4'
+            style={[styles.textInput, styles.phoneInput]}
+            defaultValue={contact.phoneNum}
+            value={this.state.phoneNum}
+            placeholderTextColor="#bfbfbf"
+            placeholder=""
+            onChangeText={phoneNum => {this.setState({phoneNum})}}
             returnKeyType="done"
           />
         </View>

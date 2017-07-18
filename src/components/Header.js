@@ -24,7 +24,7 @@ export default class Header extends React.Component {
         </View>
 
         <View style={styles.centerItem}>
-          <Text style={styles.titleText}>keep in touch</Text>
+          <Text style={styles.titleText}>{this.props.title || 'keep in touch'}</Text>
         </View>
 
         <View style={styles.rightItem}>

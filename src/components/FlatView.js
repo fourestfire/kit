@@ -63,6 +63,7 @@ class FlatView extends Component {
         <Header
           leftOnPress={() => this.props.navigation.goBack(null)}
           leftText='Back'
+          title='manage contacts'
           rightOnPress={() => this.toggleImportModal()}
           rightText='    Import'
         />

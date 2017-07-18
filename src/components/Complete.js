@@ -18,8 +18,8 @@ class Complete extends Component {
     };
   }
 
-  updateContact(contact) {
-    this.props.updateContactSync(contact);
+  updateContact(contact, contactID) {
+    this.props.updateContactSync(contactID);
     this.props.screenProps.toggle();
   }
 
@@ -57,7 +57,7 @@ class Complete extends Component {
             lastMsg: this.state.msg,
             nextContact: nextContactDate,
             lastContact: lastContactDate,
-            })
+            }, this.props.contact.id)
           )} />
         </View>
       </View>

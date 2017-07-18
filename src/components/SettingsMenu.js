@@ -11,14 +11,53 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
+import Header from './Header';
+import SettingsRow from './SettingsRow';
 
 /* -------------------<   COMPONENT   >-------------------- */
 
 class SettingsMenu extends React.Component {
+  static navigationOptions = {
+    header: {
+      visible: false
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
+        <Header
+          leftOnPress={() => this.props.navigation.goBack(null)}
+          leftText='Back'
+          title='settings'
+          rightOnPress={null}
+          rightText='   '
+        />
 
+        <SettingsRow
+          navigate={null}
+          rowText={'Need Help?'}
+        />
+        <SettingsRow
+          navigate={null}
+          rowText={'Set Push Notifications'}
+        />
+        <SettingsRow
+          navigate={null}
+          rowText={'Change Group Colors'}
+        />
+        <SettingsRow
+          navigate={null}
+          rowText={'Change Default Text Message'}
+        />
+        <SettingsRow
+          navigate={null}
+          rowText={'Export Data to CSV'}
+        />
+        <SettingsRow
+          navigate={null}
+          rowText={'Leave Feedback'}
+        />
       </View>
     );
   }
@@ -27,49 +66,8 @@ class SettingsMenu extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    backgroundColor: 'white'
   },
-
-  contactContainer: {
-    marginTop: 30,
-    marginBottom: 30
-  },
-
-  text: {
-    fontSize: 14
-  },
-
-  divider: {
-    borderColor: 'lightgrey',
-    borderBottomWidth: 1
-  },
-
-  contactRowContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: 'lightgrey',
-    borderBottomWidth: 1
-  },
-
-  contactKey: {
-    fontWeight: 'bold',
-    width: 130,
-    marginLeft: 10
-  },
-
-  contactValue: {
-    paddingVertical: 7,
-  },
-
-  addButton: {
-    backgroundColor: 'black'
-  },
-
-  icon: {
-    width: 26,
-    height: 26,
-  },
-
 });
 
 /* -------------------<   CONTAINER   >-------------------- */

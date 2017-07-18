@@ -70,6 +70,7 @@ class SectionListView extends Component {
       <Header
         leftOnPress={() => this.props.navigation.navigate('SettingsMenu')}
         leftText='Settings'
+        title='keep in touch'
         rightOnPress={() => this.props.navigation.navigate('AllContacts')}
         rightText='    Edit'
       />

@@ -62,6 +62,9 @@ export const editContact = (contact) => {
         frequency: contact.frequency,
         phoneNum: contact.phoneNum,
         color: contact.color,
+        lastMsg: contact.lastMsg,
+        nextContact: contact.nextContact,
+        lastContact: contact.lastContact,
       }, true); // true updates contact instead of creating new one
     } catch (e) {
       console.warn(e)
