@@ -31,7 +31,7 @@ class Contact {
       lastName: 'string',
       frequency: {type: 'int', default: 14},
       nextContact: 'int',
-      lastContact: {type: 'int', default: 0},
+      lastContact: 'int',
       lastMsg: 'string',
       phoneNum: 'string',
       color: 'string'
@@ -50,17 +50,24 @@ export const getAllContacts = () => {
 export const editContact = (contact) => {
   realm.write(() => {
     try {
-      realm.create('Contact', {
-        id: contact.id,
-        firstName: contact.firstName,
-        lastName: contact.lastName,
-        frequency: contact.frequency,
-        nextContact: contact.nextContact,
-        lastContact: contact.lastContact,
-        lastMsg: contact.lastMsg,
-        phoneNum: contact.phoneNum,
-        color: contact.color,
-      }, true); // true updates contact instead of creating new one
+      if (!contact.lastMsg) {
+        realm.create('Contact', {
+          id: contact.id,
+          firstName: contact.firstName,
+          lastName: contact.lastName,
+          frequency: contact.frequency,
+
+          phoneNum: contact.phoneNum,
+          color: contact.color,
+        }, true); // true updates contact instead of creating new one
+      } else {
+         realm.create('Contact', {
+          id: contact.id,
+          nextContact: contact.nextContact,
+          lastContact: contact.lastContact,
+          lastMsg: contact.lastMsg,
+        }, true); // true updates contact instead of creating new one
+      }
     } catch (e) {
       console.warn(e)
     }
@@ -79,7 +86,7 @@ export const createContact = contact => {
       lastContact: contact.lastContact || 0,
       lastMsg: contact.lastMsg || 'N/A',
       phoneNum: contact.phoneNum || '123-123-1234',
-      color: contact.color || 'purple'
+      color: contact.color || 'None'
     });
   });
   // console.log('total # of contacts', getAllContacts().length);

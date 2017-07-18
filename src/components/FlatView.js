@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Header from './Header';
 import AddContact from './AddContact';
 import moment from 'moment';
-import { convertFrequency } from '../utils/utils';
+import { convertFrequency, convertColor } from '../utils/utils';
 import UpdateContact from './UpdateContact';
 import ImportContacts from './ImportContacts';
 
@@ -103,7 +103,7 @@ class FlatView extends Component {
           renderItem={({item}) =>
             <TouchableOpacity activeOpacity={0.4} onPress={this.toggleUpdateModal.bind(this, item)} key={item.id}>
               <View style={styles.rowContent}>
-                <View style={[styles.rowIcon, {backgroundColor: item.color}]} />
+                <View style={[styles.rowIcon, {backgroundColor: convertColor(item.color)}]} />
                 <View>
                   <Text style={styles.rowTitle}>{item.firstName} {item.lastName}</Text>
                   <Text style={styles.rowSubtitle}>{convertFrequency(item.frequency)} (Last contact {item.lastContact ? moment(item.lastContact).format('L') : 'N/A'})</Text>
@@ -175,11 +175,11 @@ const styles = StyleSheet.create({
     height: 50,
   },
   rowIcon: {
-    width: 30,
+    width: 15,
     height: 30,
-    borderRadius: 20,
     backgroundColor: '#73d4e3',
-    margin: 15
+    margin: 15,
+    borderRadius: 4
   },
   rowTitle: {
     fontWeight: 'bold',

@@ -38,7 +38,7 @@ class UpdateContact extends Component {
       frequency: this.props.contact.frequency,
       lastMsg: this.props.contact.lastMsg,
       color: this.props.contact.color,
-      values: ['Group 1', 'Group 2', 'Group 3'],
+      values: ['Group 1', 'Group 2', 'Group 3', 'None'],
     });
   }
 
@@ -47,6 +47,7 @@ class UpdateContact extends Component {
   }
 
   updateContact(contact) {
+    console.log(contact, "updated contact")
     this.props.updateContact(contact);
     this.props.screenProps.toggle();
   }
@@ -68,15 +69,17 @@ class UpdateContact extends Component {
   }
 
   findColorIndex() {
-    if (this.props.contact.color === 'purple') return 0;
-    else if (this.props.contact.color === '#73d4e3') return 1;
-    else if (this.props.contact.color === 'forestgreen') return 2;
+    if (this.props.contact.color === 'Group 1') return 0;
+    else if (this.props.contact.color === 'Group 2') return 1;
+    else if (this.props.contact.color === 'Group 3') return 2;
+    else if (this.props.contact.color === 'None') return 3;
   }
 
   setColor(color) {
-    if (color === 'Purple') this.setState({color: 'purple'});
-    else if (color === 'Teal') this.setState({color: '#73d4e3'});
-    else if (color === 'Green') this.setState({color: 'forestgreen'});
+    if (color === 'Purple') this.setState({color: 'Group 1'});
+    else if (color === 'Teal') this.setState({color: 'Group 2'});
+    else if (color === 'Green') this.setState({color: 'Group 3'});
+    else if (color === 'None') this.setState({color: 'None'});
   }
 
   render() {
@@ -158,7 +161,7 @@ class UpdateContact extends Component {
           <SegmentedControlIOS
               style={styles.segmentedControl}
               selectedIndex={this.findColorIndex()}
-              values={['Purple', 'Teal', 'Green']}
+              values={['Purple', 'Teal', 'Green', 'None']}
               tintColor='#333'
               onValueChange={color => this.setColor(color)}
           />

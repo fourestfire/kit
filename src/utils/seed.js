@@ -21,7 +21,7 @@ const sampleContacts = [
       nextContact: nc1,
       lastMsg: 'We talked about dinosaurs',
       phoneNum: '(123) 351-2504',
-      color: 'purple',
+      color: 'Group 1',
     }, {
       firstName: 'Ivan',
       lastName: 'Anderson',
@@ -30,7 +30,7 @@ const sampleContacts = [
       nextContact: nc1,
       lastMsg: 'Planning wedding',
       phoneNum: '(773) 242-0926',
-      color: 'forestgreen',
+      color: 'Group 3',
     }, {
       firstName: 'Tyler',
       lastName: 'Miller',
@@ -39,7 +39,7 @@ const sampleContacts = [
       nextContact: nc2,
       lastMsg: 'Started rock climbing',
       phoneNum: '(347) 371-3850',
-      color: '#73d4e3',
+      color: 'Group 2',
     }, {
       firstName: 'Sophie',
       lastName: 'Lee',
@@ -48,7 +48,7 @@ const sampleContacts = [
       nextContact: nc3,
       lastMsg: 'Birthday on May 7',
       phoneNum: '(123) 351-2504',
-      color: 'forestgreen',
+      color: 'Group 3',
     },
     {
       firstName: 'Alex',
@@ -58,7 +58,7 @@ const sampleContacts = [
       nextContact: nc3,
       lastMsg: 'Went hiking together',
       phoneNum: '(123) 351-2504',
-      color: 'purple',
+      color: 'Group 1',
     },
     {
       firstName: 'Sofia',
@@ -68,7 +68,7 @@ const sampleContacts = [
       nextContact: nc4,
       lastMsg: 'Wants to go to UNIQLO',
       phoneNum: '(123) 351-2504',
-      color: '#73d4e3',
+      color: 'Group 2',
     },
  ];
 

@@ -54,15 +54,15 @@ class SettingsMenu extends React.Component {
         />
         <SettingsRow
           navigate={null}
-          rowText={'Change Group Colors'}
-        />
-        <SettingsRow
-          navigate={null}
           rowText={'Change Default Text Message'}
         />
         <SettingsRow
           navigate={null}
           rowText={'Export Data to CSV'}
+        />
+        <SettingsRow
+          navigate={null}
+          rowText={'Delete All Data'}
         />
         <SettingsRow
           navigate={null}

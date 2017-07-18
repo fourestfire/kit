@@ -86,7 +86,7 @@ class SingleContactRow extends Component {
               }]
             }
             ]}>
-            <TouchableOpacity onPress={this.toggleCompleteModal.bind(this, 'done')} style={styles.button}>
+            <TouchableOpacity onPress={this.toggleCompleteModal.bind(this, 'done')} style={[styles.button]}>
               <Icon name="check" size={35} color="white" />
             </TouchableOpacity>
           </Animated.View>

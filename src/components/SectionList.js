@@ -10,7 +10,8 @@ import Row from './SingleContactRow';
 import AddContact from './AddContact';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { createContact, getAllContacts, deleteAllContacts } from '../redux/realm';
-import sampleContacts from '../utils/seed'
+import sampleContacts from '../utils/seed';
+import { convertColor } from '../utils/utils';
 
 import { StackNavigator, TabNavigator } from "react-navigation";
 import UpdateContact from './UpdateContact';
@@ -61,7 +62,7 @@ class SectionListView extends Component {
     // load contacts into store
     let allContacts = Array.prototype.slice.call(getAllContacts());
     this.props.getAllContactsSync(allContacts);
-    console.log("allContacts", allContacts)
+    // console.log("allContacts", allContacts)
 
     PushNotification.configure({
         // (optional) Called when Token is generated (iOS and Android)
@@ -155,7 +156,7 @@ class SectionListView extends Component {
             <Collapsible collapsed={this.checkIfCollapsed(section)}>
               <Row physics={physics} contact={item}>
                 <View style={styles.rowContent}>
-                  <View style={[styles.rowIcon, {backgroundColor: item.color}]} />
+                  <View style={[styles.rowIcon, {backgroundColor: convertColor(item.color)}]} />
                   <View>
                     <Text style={styles.rowTitle}>{item.firstName} {item.lastName}</Text>
                     <Text style={styles.rowSubtitle}>{convertFrequency(item.frequency)} (Last contact {item.lastContact ? moment(item.lastContact).format('L') : 'N/A'})</Text>
@@ -276,11 +277,13 @@ const styles = StyleSheet.create({
     borderColor: '#eeeeee'
   },
   rowIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 20,
+    height: 50,
+    borderRadius: 5,
     backgroundColor: '#73d4e3',
-    margin: 15
+    marginLeft: 10,
+    marginRight: 15,
+    zIndex: -1,
   },
   rowTitle: {
     fontWeight: 'bold',

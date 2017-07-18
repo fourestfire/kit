@@ -18,3 +18,15 @@ export function randomNextContactDate() {
   let daysToAdd = getRandomInt(0, 5);
   return parseInt(moment().add(daysToAdd, 'day').format('x'), 10);
 }
+
+export function convertColor(str) {
+  if (str === 'Group 1') return 'purple';
+  if (str === 'Group 2') return '#73d4e3';
+  if (str === 'Group 3') return 'green';
+  if (str === 'None') return 'transparent';
+  return 'grey';
+}
+
+export function setColorArray() {
+
+}
