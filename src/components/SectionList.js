@@ -68,7 +68,7 @@ class SectionListView extends Component {
         <Icon size={80} name='logo-nodejs' />
       </View>
       <Header
-        leftOnPress={() => this.props.navigation.navigate('Settings')}
+        leftOnPress={() => this.props.navigation.navigate('SettingsMenu')}
         leftText='Settings'
         rightOnPress={() => this.props.navigation.navigate('AllContacts')}
         rightText='    Edit'

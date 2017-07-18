@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
-  SegmentedControlIOS
+  SegmentedControlIOS,
+  Alert,
 } from 'react-native';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -48,6 +49,17 @@ class UpdateContact extends Component {
   updateContact(contact) {
     this.props.updateContact(contact);
     this.props.screenProps.toggle();
+  }
+
+  deleteContact(contactID) {
+    Alert.alert(
+          'Confirm Delete',
+          "Are you sure you want to delete this contact? Note: this will not impact your actual phone contact.",
+          [
+            {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+            {text: 'Delete', onPress: () => console.log('Delete Pressed'), style: 'destructive'},
+          ]
+        );
   }
 
   findColorIndex() {
@@ -144,7 +156,7 @@ class UpdateContact extends Component {
               style={styles.segmentedControl}
               selectedIndex={this.findColorIndex()}
               values={['Purple', 'Teal', 'Green']}
-              tintColor='darkblue'
+              tintColor='#333'
               onValueChange={color => this.setColor(color)}
           />
         </View>
@@ -174,13 +186,7 @@ class UpdateContact extends Component {
             //iconPlacement="right"
             style={[styles.actionButton, styles.delete]}
             backgroundColor='black'
-            onPress={this.updateContact.bind(this, {
-                    id: this.state.id,
-                    firstName: this.state.firstName,
-                    lastName: this.state.lastName,
-                    frequency: Number(this.state.frequency),
-                    phoneNum: this.state.phoneNum,
-                    color: this.state.color})}
+            onPress={this.deleteContact.bind(this, this.state.id)}
           >
             <Text style={styles.actionText}> Delete </Text>
           </TouchableOpacity>

@@ -26,7 +26,7 @@ class ImportContacts extends Component {
           [
             {text: 'OK', onPress: () => this.props.screenProps.toggle},
           ]
-        )
+        );
       } else {
         let strippedContacts = [];
         contacts.forEach(contact => {

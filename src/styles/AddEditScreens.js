@@ -76,12 +76,12 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: 50,
-    width: maxWidth * 3 / 4
+    width: maxWidth * 2 / 3
     // alignSelf: 'flex-end',
   },
   delete: {
     backgroundColor: 'red',
-    width: maxWidth * 1 / 4
+    width: maxWidth * 1 / 3
   },
   actionText: {
     color: 'white',
