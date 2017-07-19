@@ -28,7 +28,7 @@ class SettingsMenu extends React.Component {
       <View style={styles.container}>
         <Header
           leftOnPress={() => this.props.navigation.goBack(null)}
-          leftText='Back'
+          leftText='BACK'
           title='settings'
           rightOnPress={null}
           rightText='   '
