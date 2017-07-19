@@ -13,6 +13,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import Header from './Header';
 import SettingsRow from './SettingsRow';
+import Emoji from 'react-native-emoji';
 
 /* -------------------<   COMPONENT   >-------------------- */
 
@@ -58,6 +59,10 @@ class SettingsMenu extends React.Component {
           navigate={() => this.props.navigation.navigate('SettingsLeaveFeedback')}
           rowText={'Leave Feedback'}
         />
+        <View style={styles.spacer} />
+
+        <View style={styles.footer}>
+        </View>
       </View>
     );
   }
@@ -68,6 +73,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white'
   },
+  spacer: {
+    flex: 1
+  },
+  footer: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 });
 
 /* -------------------<   CONTAINER   >-------------------- */

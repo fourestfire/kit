@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { AppRegistry, Alert } from 'react-native';
 import AppIntro from 'react-native-app-intro';
 import { markTutorialSeenTrue } from '../redux/realm';
+import Emoji from 'react-native-emoji';
 
 class Intro extends Component {
   onSkipBtnHandle = (index) => {
@@ -45,7 +46,7 @@ class Intro extends Component {
       level: 10,
     }, {
       title: 'Get started!',
-      description: "You should first import some contacts. You can then set how often you want to talk to each person. That's all for now!",
+      description: "First, import some contacts. You can set how often you want to talk to each person later. That's all for now!",
       img: require('../../img/tutorial3.png'),
       imgStyle: {
         height: 93 * 2.5,
