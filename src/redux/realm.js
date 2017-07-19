@@ -7,7 +7,8 @@ class Settings {
   static schema = {
     name: 'Settings',
     properties: {
-      firstTime: {type: 'bool', default: true},
+      contactsImported: {type: 'bool', default: false},
+      tutorialSeen: {type: 'bool', default: false},
       color1: {type: 'string', default: 'purple'},
       color2: {type: 'string', default: '#73d4e3'},
       color3: {type: 'string', default: 'forestgreen'},
@@ -44,10 +45,20 @@ export const changeMessageInSettings = (newMessage) => {
   });
 }
 
-export const markFirstTimeAsFalse = () => {
+export const markContactsImportedTrue = () => {
   realm.write(() => {
     try {
-      getSettings().firstTime = false;
+      getSettings().contactsImported = true;
+    } catch (e) {
+      console.warn(e)
+    }
+  });
+}
+
+export const markTutorialSeenTrue = () => {
+  realm.write(() => {
+    try {
+      getSettings().tutorialSeen = true;
     } catch (e) {
       console.warn(e)
     }

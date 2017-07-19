@@ -25,6 +25,8 @@ import SettingsDeleteAll from './SettingsDeleteAll';
 import SettingsLeaveFeedback from './SettingsLeaveFeedback';
 import SettingsPushNotifications from './SettingsPushNotifications';
 
+import Intro from './Intro';
+
 class SectionListView extends Component {
   static navigationOptions = {
     tabBar: {
@@ -39,6 +41,7 @@ class SectionListView extends Component {
       query: '',
       showAddModal: false,
       showImportModal: false,
+      showTutorialModal: false,
       isTodayCollapsed: false,
       isTomorrowCollapsed: false,
       isWeekCollapsed: true,
@@ -71,6 +74,9 @@ class SectionListView extends Component {
 
     // initialize global settings if uninitialized
     initializeSettingsIfNeeded();
+
+    // show tutorial on first run
+    if (!getSettings().tutorialSeen) this.toggleTutorialModal();
   }
 
   renderHeader = () => {
@@ -83,10 +89,10 @@ class SectionListView extends Component {
         leftText='Settings'
         title='keep in touch'
         rightOnPress={() => {  // on first run, send them to import before edit
-          if (getSettings().firstTime) this.toggleImportModal();
-          else this.props.navigation.navigate('AllContacts');
+          if (getSettings().contactsImported) this.props.navigation.navigate('AllContacts');
+          else this.toggleImportModal();
         }}
-        rightText={getSettings().firstTime ? '   Import' : '    Edit'}
+        rightText={getSettings().contactsImported ? '    Edit' : '   Import'}
       />
     </View>
   };
@@ -97,6 +103,10 @@ class SectionListView extends Component {
 
   toggleImportModal = (contact) => {
     this.setState({ showImportModal: !this.state.showImportModal });
+  }
+
+  toggleTutorialModal = () => {
+    this.setState({ showTutorialModal: !this.state.showTutorialModal });
   }
 
   checkIfCollapsed(type) {
@@ -137,6 +147,14 @@ class SectionListView extends Component {
           animationType='slide'
         >
           <ImportContacts screenProps={{ toggle: this.toggleImportModal }} />
+        </Modal>
+
+        <Modal
+          visible={this.state.showTutorialModal}
+          onRequestClose={this.toggleTutorial}
+          animationType='slide'
+        >
+          <Intro screenProps={{ toggle: this.toggleTutorialModal }} />
         </Modal>
 
         <SectionList
