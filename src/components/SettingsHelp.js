@@ -13,6 +13,7 @@ import {
 
 import Header from './Header';
 import { getSettings } from '../redux/realm';
+import Communications from 'react-native-communications';
 
 /* -------------------<   COMPONENT   >-------------------- */
 
@@ -34,10 +35,20 @@ class SettingsHelp extends React.Component {
           rightText='   '
         />
 
+
         <View style={styles.flex}>
-          <Text style={styles.paragraph}>Hi! Thanks for helping me test this app. To get started, first some contacts.</Text>
-          <Text style={styles.paragraph}>Once you have some contacts loaded, each day, you should contact whoever is in the 'Today' column. Once you've reached out to the person, swipe to reveal the checkmark button on the left to clear that contact from the column! </Text>
-          <Text style={styles.paragraph}>If you have any other questions, feel free to shoot me a note at deanguonyc@gmail.com.</Text>
+          <Text style={styles.paragraph}>To get started, first import some contacts.</Text>
+          <Text style={styles.paragraph}>Each day, you should contact whoever is in the 'Today' column. Try swiping left and right on that screen. To move them out of the 'Today' column, mark them as complete.</Text>
+          <Text style={styles.paragraph}>If you have questions, feel free to message me.</Text>
+
+          <TouchableOpacity
+            style={styles.submitButton}
+            backgroundColor='black'
+            onPress={() => Communications.textWithoutEncoding('646-531-3004', "yo dean, what's with your app, man?")}
+          >
+            <Text style={styles.submitText}> ask dean a question </Text>
+          </TouchableOpacity>
+
         </View>
 
       </View>
@@ -55,6 +66,7 @@ const mapDispatch = null;
 export default connect(mapState, mapDispatch)(SettingsHelp);
 
 /* -------------------<   STYLING   >-------------------- */
+import { maxHeight, maxWidth } from '../styles/global';
 
 const styles = StyleSheet.create({
   container: {
@@ -62,11 +74,27 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   flex: {
-    // justifyContent: 'center',
-    // alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
   },
   paragraph: {
-    margin: 10,
-    fontSize: 15
+    margin: 14,
+    fontSize: 16,
+    fontWeight: '300'
+  },
+  submitButton: {
+    marginTop: 40,
+    backgroundColor: 'darkblue',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
+    width: maxWidth / 1.5,
+    borderRadius: 10,
+    alignSelf: 'center'
+  },
+  submitText: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: '300'
   },
 });

@@ -46,7 +46,8 @@ class SettingsLeaveFeedback extends React.Component {
         />
 
         <View style={styles.flex}>
-          <Text style={styles.paragraph}>Hi! Thanks for helping me test this app. If you encounter any issues or just have any suggestions or comments, please submit the form below with details. It's anonymous, so if you want a response, include some sort of identifying information. </Text>
+          <Text style={styles.paragraph}>Hi! Thanks for helping me test this app. If you encounter any issues or just have any suggestions or comments, please submit the form below with details.</Text>
+          <Text style={styles.paragraph}>It's anonymous, so if you want a response, you should include some sort of identifying information.</Text>
           <TextInput
               style={styles.textInput}
               autoFocus={true}
@@ -56,27 +57,27 @@ class SettingsLeaveFeedback extends React.Component {
               onChangeText={message => this.setState({message})}
           />
 
-        <TouchableOpacity
-            style={styles.submitButton}
-            backgroundColor='black'
-            onPress={() => {
-              try {
-                axios.post('https://script.google.com/macros/s/AKfycbwHVoG7eNO3V7-Pf_rkuHfNJbA6oL5AIoA9gK-StILPWI2Aa5PW/exec',
-                  querystring.stringify({ Feedback: this.state.message })
-                )
-                .then(function (response) {
-                  this.props.navigation.goBack(null);
-                })
-                .catch(function (error) {
-                  console.log(error);
-                });
-              } catch (error) {
-                console.warning("an error occurred", error)
-              }
-            }}
-          >
-            <Text style={styles.submitText}> Submit Feedback <Emoji name=":balloon:"/></Text>
-          </TouchableOpacity>
+          <TouchableOpacity
+              style={styles.submitButton}
+              backgroundColor='black'
+              onPress={() => {
+                try {
+                  axios.post('https://script.google.com/macros/s/AKfycbwHVoG7eNO3V7-Pf_rkuHfNJbA6oL5AIoA9gK-StILPWI2Aa5PW/exec',
+                    querystring.stringify({ Feedback: this.state.message })
+                  )
+                  .then(function (response) {
+                    this.props.navigation.goBack(null);
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
+                } catch (error) {
+                  console.warning("an error occurred", error)
+                }
+              }}
+            >
+              <Text style={styles.submitText}> Submit Feedback <Emoji name=":balloon:"/></Text>
+            </TouchableOpacity>
         </View>
       </View>
     );
@@ -101,10 +102,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   flex: {
-    // justifyContent: 'center',
-    // alignItems: 'center',
-  },
-  flex: {
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
@@ -112,7 +109,7 @@ const styles = StyleSheet.create({
   textInput: {
     backgroundColor: 'azure',
     padding: 5,
-    margin: 10,
+    margin: 15,
     // width: maxWidth - 50,
     height: 100,
     fontSize: 15,
@@ -120,7 +117,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   paragraph: {
-    margin: 10,
+    margin: 19,
     fontSize: 18,
     fontWeight: '300'
   },

@@ -37,6 +37,12 @@ class ChangeMessage extends React.Component {
 
   changeMessage() {
     changeMessageInSettings(this.state.message);
+    this.props.navigation.goBack(null);
+  }
+
+  removeMessage() {
+    changeMessageInSettings('');
+    this.props.navigation.goBack(null);
   }
 
   render() {
@@ -68,6 +74,14 @@ class ChangeMessage extends React.Component {
           >
             <Text style={styles.submitText}> Change Message <Emoji name=":cat:"/><Emoji name=":dog:"/> </Text>
           </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.submitButton}
+            backgroundColor='black'
+            onPress={this.removeMessage.bind(this)}
+          >
+            <Text style={styles.submitText}> Set Message as Blank </Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -95,19 +109,20 @@ const styles = StyleSheet.create({
   flex: {
     justifyContent: 'center',
     alignItems: 'center',
+    flex: 1,
   },
   textInput: {
-    backgroundColor: 'azure',
+    backgroundColor: 'white',
     padding: 5,
-    margin: 10,
+    margin: 16,
     // width: maxWidth - 50,
-    height: 100,
+    height: 60,
     fontSize: 15,
     borderColor: 'lightgray',
     borderWidth: 1,
   },
   paragraph: {
-    margin: 10,
+    margin: 15,
     fontSize: 18,
     fontWeight: '300'
   },

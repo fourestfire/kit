@@ -56,7 +56,7 @@ class SettingsMenu extends React.Component {
         />
         <SettingsRow
           navigate={() => this.props.navigation.navigate('SettingsPushNotifications')}
-          rowText={'Set Push Notifications'}
+          rowText={'Enable Push Notifications'}
         />
         <SettingsRow
           navigate={() => this.props.navigation.navigate('SettingsChangeMessage')}

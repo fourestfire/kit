@@ -15,6 +15,9 @@ import Header from './Header';
 import { getSettings } from '../redux/realm';
 import Emoji from 'react-native-emoji';
 
+import PushNotification from 'react-native-push-notification';
+
+
 /* -------------------<   COMPONENT   >-------------------- */
 
 class SettingsPushNotifications extends React.Component {
@@ -24,13 +27,35 @@ class SettingsPushNotifications extends React.Component {
     }
   }
 
+  componentDidMount() {
+    PushNotification.configure({
+        // (optional) Called when Token is generated (iOS and Android)
+        onRegister: function(token) {
+            console.log( 'TOKEN:', token );
+        },
+
+        // (required) Called when a remote or local notification is opened or received
+        onNotification: function(notification) {
+            console.log( 'NOTIFICATION:', notification );
+        },
+
+        // IOS ONLY (optional): default: all - Permissions to register.
+        permissions: { alert: true, badge: true, sound: true },
+
+        // Should the initial notification be popped automatically; default: true
+        popInitialNotification: true,
+        requestPermissions: true, // if false, must call PushNotificationsHandler.requestPermissions() later
+    });
+  }
+
   render() {
+
     return (
       <View style={styles.container}>
         <Header
           leftOnPress={() => this.props.navigation.goBack(null)}
           leftText='Back'
-          title='reset app data'
+          title='push notifications'
           rightOnPress={null}
           rightText='   '
         />
@@ -38,22 +63,13 @@ class SettingsPushNotifications extends React.Component {
         <View style={styles.flex}>
 
           <View style={styles.spacer} />
-          <Text style={styles.paragraph}>Are you looking to start all over? Well, you're in luck. Don't worry, this won't delete the actual contacts on your phone ... I think. It might crash the app though.</Text>
+          <Text style={styles.paragraph}>Still working on this feature...</Text>
           <TouchableOpacity
-            style={styles.deleteButton}
+            style={styles.submitButton}
             backgroundColor='black'
-            onPress={() => {
-
-              try {
-                this.props.navigation.goBack(null);
-                this.props.removeAllContacts();
-              } catch (error) {
-                console.warning("an error occurred", error)
-              }
-
-            }}
+            onPress={null}
           >
-            <Text style={styles.deleteText}> Blow it up <Emoji name=":bomb:"/> </Text>
+            <Text style={styles.submitText}> Enable Notifications <Emoji name=":pizza:"/> </Text>
           </TouchableOpacity>
 
           <View style={styles.spacer} />

@@ -38,7 +38,7 @@ class SettingsDeleteAll extends React.Component {
         <View style={styles.flex}>
 
           <View style={styles.spacer} />
-          <Text style={styles.paragraph}>Are you looking to start all over? Well, you're in luck. Don't worry, this won't delete the actual contacts on your phone ... I think. It might crash the app though.</Text>
+          <Text style={styles.paragraph}>Are you looking to start all over? Well, you're in luck. Don't worry, this won't delete the actual contacts on your phone ... I think.</Text>
           <TouchableOpacity
             style={styles.deleteButton}
             backgroundColor='black'
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   paragraph: {
-    margin: 10,
+    margin: 16,
     fontSize: 18,
     fontWeight: '300'
   },
