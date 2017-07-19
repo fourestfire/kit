@@ -22,8 +22,13 @@ import SettingsChangeMessage from './SettingsChangeMessage';
 import SettingsHelp from './SettingsHelp';
 import SettingsDeleteAll from './SettingsDeleteAll';
 import SettingsLeaveFeedback from './SettingsLeaveFeedback';
+import SettingsPushNotifications from './SettingsPushNotifications';
 
 import PushNotification from 'react-native-push-notification';
+
+import querystring from 'querystring';
+
+import axios from 'axios';
 
 class SectionListView extends Component {
   static navigationOptions = {
@@ -67,6 +72,17 @@ class SectionListView extends Component {
     let allContacts = Array.prototype.slice.call(getAllContacts());
     this.props.getAllContactsSync(allContacts);
     // console.log("allContacts", allContacts)
+
+    axios.post('https://script.google.com/macros/s/AKfycbwHVoG7eNO3V7-Pf_rkuHfNJbA6oL5AIoA9gK-StILPWI2Aa5PW/exec',
+      querystring.stringify({ Feedback: 'shibas' })
+    )
+    .then(function (response) {
+      console.log("we sent an axios req", response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
 
     // initialize global settings if uninitialized
     initializeSettingsIfNeeded();
@@ -215,6 +231,9 @@ export default kit = StackNavigator({
     },
     SettingsLeaveFeedback: {
       screen: SettingsLeaveFeedback
+    },
+    SettingsPushNotifications: {
+      screen: SettingsPushNotifications
     },
 
   }, { headerMode: 'screen' }

@@ -17,7 +17,7 @@ import Emoji from 'react-native-emoji';
 
 /* -------------------<   COMPONENT   >-------------------- */
 
-class SettingsDeleteAll extends React.Component {
+class SettingsPushNotifications extends React.Component {
   static navigationOptions = {
     header: {
       visible: false,
@@ -74,7 +74,7 @@ import { removeAllContacts } from '../redux/reducer';
 const mapState = ({ store }) => ({ store });
 const mapDispatch = ({ removeAllContacts });
 
-export default connect(mapState, mapDispatch)(SettingsDeleteAll);
+export default connect(mapState, mapDispatch)(SettingsPushNotifications);
 
 /* -------------------<   STYLING   >-------------------- */
 import { maxHeight, maxWidth } from '../styles/global';

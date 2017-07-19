@@ -36,7 +36,7 @@ class SettingsHelp extends React.Component {
 
         <View style={styles.flex}>
           <Text style={styles.paragraph}>Hi! Thanks for helping me test this app. To get started, first some contacts.</Text>
-          <Text style={styles.paragraph}>Once you have some contacts loaded, the idea is that you should contact whoever is in the 'Today' column. Once you've reached out to the person, swipe to reveal the checkmark button on the left and mark it as complete! </Text>
+          <Text style={styles.paragraph}>Once you have some contacts loaded, each day, you should contact whoever is in the 'Today' column. Once you've reached out to the person, swipe to reveal the checkmark button on the left to clear that contact from the column! </Text>
           <Text style={styles.paragraph}>If you have any other questions, feel free to shoot me a note at deanguonyc@gmail.com.</Text>
         </View>
 

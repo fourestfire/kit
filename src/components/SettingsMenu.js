@@ -31,7 +31,13 @@ class SettingsMenu extends React.Component {
       title: "keep in touch", // only used in apple watch
       message: "check in with your contacts!", // (required)
       playSound: false, // (optional) default: true
+      repeatType: 'minute',
       number: 10, // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero)
+    });
+
+    PushNotification.localNotificationSchedule({
+      message: "check in with your contacts!", //
+      date: new Date(Date.now() + (10 * 1000)) // in 60 secs
     });
 
     return (
@@ -49,25 +55,25 @@ class SettingsMenu extends React.Component {
           rowText={'Need Help?'}
         />
         <SettingsRow
-          navigate={null}
+          navigate={() => this.props.navigation.navigate('SettingsPushNotifications')}
           rowText={'Set Push Notifications'}
         />
         <SettingsRow
           navigate={() => this.props.navigation.navigate('SettingsChangeMessage')}
           rowText={'Change Default Text Message'}
         />
-        <SettingsRow
+        {/* <SettingsRow
           navigate={null}
           rowText={'Export Contact History to CSV'}
-        />
+        /> */}
         <SettingsRow
           navigate={() => this.props.navigation.navigate('SettingsDeleteAll')}
           rowText={'Delete All Data'}
         />
-        <SettingsRow
+        {/* <SettingsRow
           navigate={() => this.props.navigation.navigate('SettingsLeaveFeedback')}
           rowText={'Leave Feedback'}
-        />
+        /> */}
       </View>
     );
   }
