@@ -18,6 +18,10 @@ import UpdateContact from './UpdateContact';
 import FlatView from './FlatView';
 import ImportContacts from './ImportContacts';
 import SettingsMenu from './SettingsMenu';
+import SettingsChangeMessage from './SettingsChangeMessage';
+import SettingsHelp from './SettingsHelp';
+import SettingsDeleteAll from './SettingsDeleteAll';
+import SettingsLeaveFeedback from './SettingsLeaveFeedback';
 
 import PushNotification from 'react-native-push-notification';
 
@@ -199,7 +203,19 @@ export default kit = StackNavigator({
     },
     SettingsMenu: {
       screen: SettingsMenu
-    }
+    },
+    SettingsChangeMessage: {
+      screen: SettingsChangeMessage
+    },
+    SettingsHelp: {
+      screen: SettingsHelp
+    },
+    SettingsDeleteAll: {
+      screen: SettingsDeleteAll
+    },
+    SettingsLeaveFeedback: {
+      screen: SettingsLeaveFeedback
+    },
 
   }, { headerMode: 'screen' }
 );

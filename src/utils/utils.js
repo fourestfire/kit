@@ -26,7 +26,3 @@ export function convertColor(str) {
   if (str === 'None') return 'transparent';
   return 'grey';
 }
-
-export function setColorArray() {
-
-}

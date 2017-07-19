@@ -45,7 +45,7 @@ class SettingsMenu extends React.Component {
         />
 
         <SettingsRow
-          navigate={null}
+          navigate={() => this.props.navigation.navigate('SettingsHelp')}
           rowText={'Need Help?'}
         />
         <SettingsRow
@@ -53,7 +53,7 @@ class SettingsMenu extends React.Component {
           rowText={'Set Push Notifications'}
         />
         <SettingsRow
-          navigate={null}
+          navigate={() => this.props.navigation.navigate('SettingsChangeMessage')}
           rowText={'Change Default Text Message'}
         />
         <SettingsRow
@@ -61,11 +61,11 @@ class SettingsMenu extends React.Component {
           rowText={'Export Contact History to CSV'}
         />
         <SettingsRow
-          navigate={null}
+          navigate={() => this.props.navigation.navigate('SettingsDeleteAll')}
           rowText={'Delete All Data'}
         />
         <SettingsRow
-          navigate={null}
+          navigate={() => this.props.navigation.navigate('SettingsLeaveFeedback')}
           rowText={'Leave Feedback'}
         />
       </View>

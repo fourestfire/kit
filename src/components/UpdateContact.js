@@ -11,9 +11,7 @@ import {
   Alert,
   ScrollView,
 } from 'react-native';
-import moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {TextInputMask} from 'react-native-masked-text';
 import styles from '../styles/AddEditScreens';
 
 class UpdateContact extends Component {

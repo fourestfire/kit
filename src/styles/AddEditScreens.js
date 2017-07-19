@@ -118,7 +118,6 @@ export default StyleSheet.create({
 
   bottomSpacer: {
     flex: 1,
-    height: 20,
   },
 
   closeButton: {
