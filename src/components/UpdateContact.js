@@ -94,7 +94,6 @@ class UpdateContact extends Component {
       }
     }
 
-
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={styles.container}>

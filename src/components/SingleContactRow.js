@@ -5,6 +5,7 @@ import Complete from './Complete';
 import Communications from 'react-native-communications';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { getSettings } from '../redux/realm';
 
 const Screen = Dimensions.get('window');
 
@@ -68,7 +69,7 @@ class SingleContactRow extends Component {
               }]
             }
             ]}>
-            <TouchableOpacity style={styles.button} onPress={() => Communications.textWithoutEncoding(this.props.contact.phoneNum, "Hey! Haven't talked to you in a while. What's up?")}>
+            <TouchableOpacity style={styles.button} onPress={() => Communications.textWithoutEncoding(this.props.contact.phoneNum, getSettings().textMessage)}>
               <MIcon name="message-text" size={35} color="white" />
             </TouchableOpacity>
           </Animated.View>

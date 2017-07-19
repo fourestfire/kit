@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity, Dimensions, SectionList, Modal } from 'react-native';
+import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity, Dimensions, SectionList, Modal, AsyncStorage } from 'react-native';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Header from './Header';
 import Collapsible from 'react-native-collapsible';
@@ -9,7 +9,7 @@ import { convertFrequency } from '../utils/utils';
 import Row from './SingleContactRow';
 import AddContact from './AddContact';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { createContact, getAllContacts, deleteAllContacts } from '../redux/realm';
+import { createContact, getAllContacts, deleteAllContacts, initializeSettingsIfNeeded } from '../redux/realm';
 import sampleContacts from '../utils/seed';
 import { convertColor } from '../utils/utils';
 
@@ -63,6 +63,9 @@ class SectionListView extends Component {
     let allContacts = Array.prototype.slice.call(getAllContacts());
     this.props.getAllContactsSync(allContacts);
     // console.log("allContacts", allContacts)
+
+    // initialize global settings if uninitialized
+    initializeSettingsIfNeeded();
 
     PushNotification.configure({
         // (optional) Called when Token is generated (iOS and Android)

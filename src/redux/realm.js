@@ -2,6 +2,38 @@ import Realm from 'realm';
 import uuid from 'uuid';
 import moment from 'moment';
 
+class Settings {
+  static get () { return realm.objects(Settings.schema.name) }
+  static schema = {
+    name: 'Settings',
+    properties: {
+      firstTime: {type: 'bool', default: true},
+      color1: {type: 'string', default: 'purple'},
+      color2: {type: 'string', default: '#73d4e3'},
+      color3: {type: 'string', default: 'forestgreen'},
+      textMessage: {type: 'string', default: "Hey! Haven't talked to you in a while. What's up?"},
+    }
+  }
+}
+
+export const createInitialSettings = () => {
+  realm.write(() => {
+    realm.create(Settings.schema.name, {});
+  });
+};
+
+export const initializeSettingsIfNeeded = () => {
+  if (Settings.get().length === 0) {
+    createInitialSettings();
+  } else {
+    // console.log('current settings', getSettings());
+  }
+}
+
+export const getSettings = () => {
+  return Settings.get()[0];
+}
+
 class Contact {
   static get () { return realm.objects(Contact.schema.name) }
   static schema = {
@@ -104,5 +136,5 @@ export const deleteAllContacts = () => {
 };
 
 const realm = new Realm({
-  schema: [Contact, ContactHistory]
+  schema: [Contact, ContactHistory, Settings]
 });
