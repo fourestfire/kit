@@ -9,6 +9,9 @@ import {
   Modal,
   TouchableOpacity,
   TextInput,
+  TouchableWithoutFeedback,
+  Keyboard,
+  KeyboardAvoidingView,
 } from 'react-native';
 
 import Header from './Header';
@@ -35,52 +38,55 @@ class SettingsLeaveFeedback extends React.Component {
   }
 
   render() {
+    {/* keyboardavoidingview is not really doing anything yet */}
     return (
-      <View style={styles.container}>
-        <Header
-          leftOnPress={() => this.props.navigation.goBack(null)}
-          leftText='BACK'
-          title='leave feedback'
-          rightOnPress={null}
-          rightText='   '
-        />
-
-        <View style={styles.flex}>
-          <Text style={styles.paragraph}>Hi! Thanks for helping me test this app. If you encounter any issues or just have any suggestions or comments, please submit the form below with details.</Text>
-          <Text style={styles.paragraph}>It's anonymous, so if you want a response, you should include some sort of identifying information.</Text>
-          <TextInput
-              style={styles.textInput}
-              autoFocus={true}
-              multiline={true}
-              returnKeyType="done"
-              defaultValue={''}
-              onChangeText={message => this.setState({message})}
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <KeyboardAvoidingView style={styles.container} behavior='padding'>
+          <Header
+            leftOnPress={() => this.props.navigation.goBack(null)}
+            leftText='BACK'
+            title='leave feedback'
+            rightOnPress={null}
+            rightText='   '
           />
 
-          <TouchableOpacity
-              style={styles.submitButton}
-              backgroundColor='black'
-              onPress={() => {
-                this.props.navigation.goBack(null);
-                try {
-                  axios.post('https://script.google.com/macros/s/AKfycbwHVoG7eNO3V7-Pf_rkuHfNJbA6oL5AIoA9gK-StILPWI2Aa5PW/exec',
-                    querystring.stringify({ Feedback: this.state.message })
-                  )
-                  .then(function (response) {
-                    console.log(response)
-                  })
-                  .catch(function (error) {
-                    console.log(error);
-                  });
-                } catch (error) {
-                  console.warning("an error occurred", error)
-                }
-              }}
-            >
-              <Text style={styles.submitText}> Submit Feedback <Emoji name=":balloon:"/></Text>
-            </TouchableOpacity>
-        </View>
-      </View>
+          <View style={styles.flex}>
+            <Text style={styles.paragraph}>Hi! Thanks for helping me test this app. If you encounter any issues or just have any suggestions or comments, please submit the form below with details.</Text>
+            <Text style={styles.paragraph}>It's anonymous, so if you want a response, you should include some sort of identifying information.</Text>
+            <TextInput
+                style={styles.textInput}
+                autoFocus={false}
+                multiline={true}
+                returnKeyType="done"
+                defaultValue={''}
+                onChangeText={message => this.setState({message})}
+            />
+
+            <TouchableOpacity
+                style={styles.submitButton}
+                backgroundColor='black'
+                onPress={() => {
+                  this.props.navigation.goBack(null);
+                  try {
+                    axios.post('https://script.google.com/macros/s/AKfycbwHVoG7eNO3V7-Pf_rkuHfNJbA6oL5AIoA9gK-StILPWI2Aa5PW/exec',
+                      querystring.stringify({ Feedback: this.state.message })
+                    )
+                    .then(function (response) {
+                      console.log(response)
+                    })
+                    .catch(function (error) {
+                      console.log(error);
+                    });
+                  } catch (error) {
+                    console.warning("an error occurred", error)
+                  }
+                }}
+              >
+                <Text style={styles.submitText}> Submit Feedback <Emoji name=":balloon:"/></Text>
+              </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
     );
   }
 }
@@ -110,7 +116,7 @@ const styles = StyleSheet.create({
   textInput: {
     backgroundColor: 'azure',
     padding: 5,
-    margin: 15,
+    margin: 20,
     // width: maxWidth - 50,
     height: 100,
     fontSize: 15,

@@ -9,6 +9,8 @@ import {
   Modal,
   TouchableOpacity,
   TextInput,
+  TouchableWithoutFeedback,
+  Keyboard
 } from 'react-native';
 
 import Header from './Header';
@@ -47,6 +49,7 @@ class ChangeMessage extends React.Component {
 
   render() {
     return (
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
         <Header
           leftOnPress={() => this.props.navigation.goBack(null)}
@@ -60,7 +63,7 @@ class ChangeMessage extends React.Component {
 
           <TextInput
             style={styles.textInput}
-            autoFocus={true}
+            autoFocus={false}
             multiline={true}
             returnKeyType="done"
             defaultValue={getSettings().textMessage}
@@ -84,6 +87,7 @@ class ChangeMessage extends React.Component {
           </TouchableOpacity>
         </View>
       </View>
+      </TouchableWithoutFeedback>
     );
   }
 }
@@ -112,7 +116,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   textInput: {
-    backgroundColor: 'white',
+    backgroundColor: 'azure',
     padding: 5,
     margin: 16,
     // width: maxWidth - 50,
