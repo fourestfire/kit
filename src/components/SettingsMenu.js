@@ -24,8 +24,6 @@ class SettingsMenu extends React.Component {
   }
 
   render() {
-
-
     return (
       <View style={styles.container}>
         <Header

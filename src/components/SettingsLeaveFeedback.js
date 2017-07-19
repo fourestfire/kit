@@ -39,7 +39,7 @@ class SettingsLeaveFeedback extends React.Component {
       <View style={styles.container}>
         <Header
           leftOnPress={() => this.props.navigation.goBack(null)}
-          leftText='Back'
+          leftText='BACK'
           title='leave feedback'
           rightOnPress={null}
           rightText='   '

@@ -12,6 +12,8 @@ import Row from './SingleContactRow';
 import Interactable from 'react-native-interactable';
 
 import { NavigationActions } from 'react-navigation';
+import { getSettings } from '../redux/realm';
+import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 class FlatView extends Component {
   static navigationOptions = {
@@ -62,10 +64,10 @@ class FlatView extends Component {
       <View style={styles.container}>
         <Header
           leftOnPress={() => this.props.navigation.goBack(null)}
-          leftText='Back'
+          leftText='BACK'
           title='manage contacts'
           rightOnPress={() => this.toggleImportModal()}
-          rightText='    Import'
+          rightText={getSettings().deviceSize === 'small' ?  <MIcon size={25} name='import' /> : '   IMPORT'}
         />
 
         <Modal

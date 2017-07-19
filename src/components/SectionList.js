@@ -86,13 +86,13 @@ class SectionListView extends Component {
       </View>
       <Header
         leftOnPress={() => this.props.navigation.navigate('SettingsMenu')}
-        leftText='Settings'
-        title='keep in touch'
+        leftText={getSettings().deviceSize === 'small' ?  <Icon size={25} name='ios-settings' /> : 'SETTINGS'}
+        title={'keep in touch'}
         rightOnPress={() => {  // on first run, send them to import before edit
           if (getSettings().contactsImported) this.props.navigation.navigate('AllContacts');
           else this.toggleImportModal();
         }}
-        rightText={getSettings().contactsImported ? '    Edit' : '   Import'}
+        rightText={getSettings().contactsImported ? '    EDIT' : getSettings().deviceSize === 'small' ?  <MIcon size={25} name='import' /> : '   IMPORT'} // if device size is small, have to make the import text into an icon
       />
     </View>
   };

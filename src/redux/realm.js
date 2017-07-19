@@ -1,6 +1,7 @@
 import Realm from 'realm';
 import uuid from 'uuid';
 import moment from 'moment';
+import { Dimensions } from 'react-native';
 
 class Settings {
   static get () { return realm.objects(Settings.schema.name) }
@@ -13,13 +14,21 @@ class Settings {
       color2: {type: 'string', default: '#73d4e3'},
       color3: {type: 'string', default: 'forestgreen'},
       textMessage: {type: 'string', default: "Hey! Haven't talked to you in a while. What's up?"},
+      deviceSize: {type: 'string', default: 'regular'}
     }
   }
 }
 
 export const createInitialSettings = () => {
+  let {width} = Dimensions.get('window');
+  let deviceSize;
+  if (width <= 320) deviceSize = 'small';
+  else deviceSize = 'regular';
+
   realm.write(() => {
-    realm.create(Settings.schema.name, {});
+    realm.create(Settings.schema.name, {
+      deviceSize: deviceSize
+    });
   });
 };
 

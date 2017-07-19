@@ -29,8 +29,8 @@ class SettingsHelp extends React.Component {
       <View style={styles.container}>
         <Header
           leftOnPress={() => this.props.navigation.goBack(null)}
-          leftText='Back'
-          title='learn how to use kit'
+          leftText='BACK'
+          title='learn about kit'
           rightOnPress={null}
           rightText='   '
         />

@@ -19,7 +19,7 @@ export default class Header extends React.Component {
             accessibilityTraits="button"
             onPress={this.props.leftOnPress}
             style={styles.itemWrapper}>
-            <Text style={styles.itemText}>{this.props.leftText.toUpperCase()}</Text>
+            <Text style={styles.itemText}>{this.props.leftText}</Text>
           </TouchableOpacity>
         </View>
 
@@ -32,7 +32,7 @@ export default class Header extends React.Component {
             accessibilityTraits="button"
             onPress={this.props.rightOnPress}
             style={styles.itemWrapper}>
-            <Text style={styles.itemText}>{this.props.rightText.toUpperCase()}</Text>
+            <Text style={styles.itemText}>{this.props.rightText}</Text>
           </TouchableOpacity>
         </View>
       </View>
