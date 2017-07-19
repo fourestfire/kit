@@ -9,6 +9,7 @@ import {
   Modal,
   TouchableOpacity,
   TextInput,
+  Alert,
 } from 'react-native';
 
 import Header from './Header';
@@ -43,14 +44,19 @@ class SettingsDeleteAll extends React.Component {
             style={styles.deleteButton}
             backgroundColor='black'
             onPress={() => {
-
-              try {
-                this.props.navigation.goBack(null);
-                this.props.removeAllContacts();
-              } catch (error) {
-                console.warning("an error occurred", error)
-              }
-
+              Alert.alert(
+                  'Confirm Delete',
+                  "Just double checking...",
+                  [
+                    {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                    {text: 'Delete', onPress: () => {try {
+                      this.props.navigation.goBack(null);
+                      this.props.removeAllContacts();
+                    } catch (error) {
+                      console.warning("an error occurred", error)
+                    }}, style: 'destructive'},
+                  ]
+                );
             }}
           >
             <Text style={styles.deleteText}> Blow it up <Emoji name=":bomb:"/> </Text>

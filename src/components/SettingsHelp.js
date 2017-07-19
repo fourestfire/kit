@@ -37,9 +37,10 @@ class SettingsHelp extends React.Component {
 
 
         <View style={styles.flex}>
-          <Text style={styles.paragraph}>To get started, first import some contacts.</Text>
+          <Text style={styles.paragraph}>To get started, first import some contacts. Start with just a few.</Text>
           <Text style={styles.paragraph}>Each day, you should contact whoever is in the 'Today' column. Try swiping left and right on that screen. To move them out of the 'Today' column, mark them as complete.</Text>
-          <Text style={styles.paragraph}>If you have questions, feel free to message me.</Text>
+          <Text style={styles.paragraph}>If you click edit, you'll be brought to a screen where you can tap to modify each contact's color / group, and you can change how often you want to contact them at a minimum.</Text>
+          <Text style={styles.paragraph}>That's the gist of it. If you have questions, feel free to message me.</Text>
 
           <TouchableOpacity
             style={styles.submitButton}
