@@ -30,13 +30,14 @@ class ImportContacts extends Component {
         );
       } else {
         let strippedContacts = [];
-        contacts.forEach(contact => {
+        contacts.forEach((contact, idx) => {
           if (contact.phoneNumbers[0]) { // only if a phone number exists for contact, otherwise it will error
             strippedContacts.push({
               firstName: contact.givenName,
               lastName: contact.familyName,
               phoneNum: contact.phoneNumbers[0].number,
               recordID: contact.recordID,
+              arrayIdx: idx,
               nextContact: randomNextContactDate(),
             });
           }
@@ -71,28 +72,30 @@ class ImportContacts extends Component {
     return this.filterContacts(this.state.originalContacts, this.state.query);
   }
 
-  markContactForImport(index) {
+  markContactForImport(arrayIdx) {
+    // console.log('marking this idx for import', arrayIdx);
     let contacts = this.state.contactsToImport; // .slice(0); to clone array taken out for performance reasons
 
-    if (this.isMarkedForImport(index)) {
-      let idxToRemove = contacts.indexOf(index);
+    if (this.isMarkedForImport(arrayIdx)) {
+      let idxToRemove = contacts.indexOf(arrayIdx);
       contacts.splice(idxToRemove, 1);
       this.setState({ contactsToImport: contacts });
       this.setState({ numToImport: --this.state.numToImport });
     } else {
-      this.setState({ contactsToImport: contacts.concat([index]) });
+      this.setState({ contactsToImport: contacts.concat([arrayIdx]) });
       this.setState({ numToImport: ++this.state.numToImport });
     }
   }
 
-  isMarkedForImport(index) {
-    return this.state.contactsToImport.includes(index);
+  isMarkedForImport(arrayIdx) {
+    // console.log('is this already marked for input?', this.state.contactsToImport, this.state.contactsToImport.includes(arrayIdx));
+    return this.state.contactsToImport.includes(arrayIdx);
   }
 
   importContacts() {
     // if (!this.state.isActionConfirmed) { this.setState({ isActionConfirmed: true }); } // eventual confirmation logic - press twice to import instead of just once
-    this.state.contactsToImport.forEach(contactIdx => {
-      this.props.addContact(this.state.originalContacts[contactIdx]);
+    this.state.contactsToImport.forEach(arrayIdx => {
+      this.props.addContact(this.state.originalContacts[arrayIdx]);
     });
 
     this.props.screenProps.toggle();
@@ -134,9 +137,9 @@ class ImportContacts extends Component {
             style={styles.flatlist}
             keyExtractor={item => item.recordID}
             data={this.filteredContacts()}
-            renderItem={({item, index}) =>
-              (<TouchableOpacity onPress={this.markContactForImport.bind(this, index)}>
-                <View style={this.isMarkedForImport(index) ? styles.rowContentHighlighted : styles.rowContentNormal}>
+            renderItem={({item}) =>
+              (<TouchableOpacity onPress={this.markContactForImport.bind(this, item.arrayIdx)}>
+                <View style={this.isMarkedForImport(item.arrayIdx) ? styles.rowContentHighlighted : styles.rowContentNormal}>
                     <Text style={styles.rowWidth}>
                       <Text style={styles.rowFirst}>{item.firstName}</Text>
                       <Text style={styles.rowLast}> {item.lastName}</Text>
