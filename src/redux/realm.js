@@ -2,24 +2,6 @@ import Realm from 'realm';
 import uuid from 'uuid';
 import moment from 'moment';
 
-class Settings {
-  static get () { return realm.objects(Settings.schema.name) }
-  static schema = {
-    name: 'Settings',
-    properties: {
-      appFirstOpen: 'boolean',
-      firstName:  'string',
-      lastName: 'string',
-      frequency: {type: 'int', default: 14},
-      nextContact: 'int',
-      lastContact: {type: 'int', default: 0},
-      lastMsg: 'string',
-      phoneNum: 'string',
-      color: 'string'
-    }
-  }
-}
-
 class Contact {
   static get () { return realm.objects(Contact.schema.name) }
   static schema = {
@@ -34,7 +16,18 @@ class Contact {
       lastContact: 'int',
       lastMsg: 'string',
       phoneNum: 'string',
-      color: 'string'
+      color: 'string',
+      contactHistory: {type: 'list', objectType: 'ContactHistory'},
+    }
+  }
+}
+
+class ContactHistory {
+  static schema = {
+    name: 'ContactHistory',
+    properties: {
+      date:  'string',
+      message: 'string',
     }
   }
 }
@@ -48,25 +41,29 @@ export const getAllContacts = () => {
 };
 
 export const editContact = (contact) => {
+  let contactHistory = getContact(contact.id)[0].contactHistory
+  let date = moment(contact.lastContact).format('L')
+
   realm.write(() => {
     try {
-      if (!contact.lastMsg) {
+      if (!contact.lastMsg) {  // used for update contact modal, which updates core contact information
         realm.create('Contact', {
           id: contact.id,
           firstName: contact.firstName,
           lastName: contact.lastName,
           frequency: contact.frequency,
-
           phoneNum: contact.phoneNum,
           color: contact.color,
         }, true); // true updates contact instead of creating new one
       } else {
-         realm.create('Contact', {
+         realm.create('Contact', { // used for complete modal, which only updates the contact dates and message
           id: contact.id,
           nextContact: contact.nextContact,
           lastContact: contact.lastContact,
           lastMsg: contact.lastMsg,
-        }, true); // true updates contact instead of creating new one
+        }, true);
+
+        contactHistory.push({ date: date, message: contact.lastMsg }) // adds to data history array for contact
       }
     } catch (e) {
       console.warn(e)
@@ -86,7 +83,7 @@ export const createContact = contact => {
       lastContact: contact.lastContact || 0,
       lastMsg: contact.lastMsg || 'N/A',
       phoneNum: contact.phoneNum || '123-123-1234',
-      color: contact.color || 'None'
+      color: contact.color || 'Group 1',
     });
   });
   // console.log('total # of contacts', getAllContacts().length);
@@ -107,5 +104,5 @@ export const deleteAllContacts = () => {
 };
 
 const realm = new Realm({
-  schema: [Contact]
+  schema: [Contact, ContactHistory]
 });

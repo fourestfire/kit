@@ -9,6 +9,7 @@ import {
   Keyboard,
   SegmentedControlIOS,
   Alert,
+  ScrollView,
 } from 'react-native';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -84,6 +85,15 @@ class UpdateContact extends Component {
 
   render() {
     const contact = this.props.contact;
+    let contactHistory;
+
+    if (contact.contactHistory.length > 0) { // shaves contact history length to fit within modal confines
+      contactHistory = contact.contactHistory.slice().reverse();
+      if (contactHistory.length >= 4) {
+        contactHistory = contactHistory.slice(0, 4);
+      }
+    }
+
 
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -165,6 +175,20 @@ class UpdateContact extends Component {
               tintColor='#333'
               onValueChange={color => this.setColor(color)}
           />
+        </View>
+
+        {/* because scrollView doesn't work in a Modal...*/}
+        <View style={styles.contactHistory}>
+          <Text style={styles.helpTextForHistory}> Most Recent Messages </Text>
+
+          <View style={styles.contactBorder}>
+            {contact.contactHistory.length > 0
+              ? contactHistory.map((el, idx) => {
+                  return <Text key={idx} style={styles.historyRow}> {el.date}: {el.message} </Text>;
+                })
+              : <Text style={styles.historyRow}> No contact history found </Text>
+            }
+          </View>
         </View>
 
         <View style={styles.bottomSpacer} />

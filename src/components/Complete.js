@@ -26,7 +26,7 @@ class Complete extends Component {
   render() {
     const lastContactDate = parseInt(moment().format('x'), 10);
     const nextContactDate = parseInt(moment().add(this.props.contact.frequency, 'days').format('x'), 10); // switched from nextContactDate taking into account this.props.contact.lastContact and instead calculates from the current date
-    console.log('lastcontactdate', moment(lastContactDate).format(), 'nextcontactdate', moment(nextContactDate).format());
+    // console.log('lastcontactdate', moment(lastContactDate).format(), 'nextcontactdate', moment(nextContactDate).format());
 
     return (
       <View style={styles.container}>
@@ -44,7 +44,6 @@ class Complete extends Component {
             <TextInput
               style={styles.textInput}
               autoFocus={true}
-              autoCapitalize="none"
               returnKeyType="done"
               maxLength = {40}
               onChangeText={msg => this.setState({msg})}

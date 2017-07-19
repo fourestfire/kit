@@ -33,6 +33,14 @@ export default StyleSheet.create({
     margin: 10,
     // flex: 1,
   },
+  contactHistory: {
+    // backgroundColor: 'green',
+    height: 40,
+    width: maxWidth - 50,
+    paddingTop: 10,
+    borderTopWidth: 1,
+    borderTopColor: '#bfbfbf',
+  },
   textInput: {
     // backgroundColor: 'ghostwhite',
     width: maxWidth - 50,
@@ -47,6 +55,21 @@ export default StyleSheet.create({
     color: 'grey',
     margin: -4
   },
+  helpTextForHistory: {
+    fontSize: 14,
+    fontStyle: 'italic',
+    color: 'grey',
+    marginLeft: -4,
+    marginBottom: 10,
+  },
+  contactBorder: {
+    // borderColor: 'grey',
+    // borderWidth: 1,
+  },
+  historyRow: {
+    color: '#333',
+    marginLeft: -4
+  },
   phoneInput: {
     color: 'blue'
   },
@@ -55,13 +78,13 @@ export default StyleSheet.create({
     // borderBottomColor: '#bfbfbf',
     // backgroundColor: 'lavender',
     // flexDirection: 'column',
-    height: 70,
+    height: 60,
     width: maxWidth - 50,
-    margin: 10,
+    margin: 7,
     // flex: 1,
   },
   segmentedControl: {
-    marginTop: 20,
+    marginTop: 12,
     // backgroundColor: 'blue',
     // color: 'blue'
   },
@@ -95,6 +118,7 @@ export default StyleSheet.create({
 
   bottomSpacer: {
     flex: 1,
+    height: 20,
   },
 
   closeButton: {
@@ -111,5 +135,5 @@ export default StyleSheet.create({
     // marginTop: maxHeight / 4,
     // paddingHorizontal: 10,
     zIndex: 10
-  }
+  },
 });

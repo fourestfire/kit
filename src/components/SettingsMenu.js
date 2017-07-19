@@ -58,7 +58,7 @@ class SettingsMenu extends React.Component {
         />
         <SettingsRow
           navigate={null}
-          rowText={'Export Data to CSV'}
+          rowText={'Export Contact History to CSV'}
         />
         <SettingsRow
           navigate={null}
