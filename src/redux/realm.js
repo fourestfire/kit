@@ -34,6 +34,16 @@ export const getSettings = () => {
   return Settings.get()[0];
 }
 
+export const changeMessageInSettings = (newMessage) => {
+  realm.write(() => {
+    try {
+      getSettings().textMessage = newMessage
+    } catch (e) {
+      console.warn(e)
+    }
+  });
+}
+
 class Contact {
   static get () { return realm.objects(Contact.schema.name) }
   static schema = {

@@ -70,10 +70,10 @@ class SettingsMenu extends React.Component {
           navigate={() => this.props.navigation.navigate('SettingsDeleteAll')}
           rowText={'Delete All Data'}
         />
-        {/* <SettingsRow
+        <SettingsRow
           navigate={() => this.props.navigation.navigate('SettingsLeaveFeedback')}
           rowText={'Leave Feedback'}
-        /> */}
+        />
       </View>
     );
   }
