@@ -17,7 +17,6 @@ import Emoji from 'react-native-emoji';
 
 import PushNotification from 'react-native-push-notification';
 
-
 /* -------------------<   COMPONENT   >-------------------- */
 
 class SettingsPushNotifications extends React.Component {
@@ -49,6 +48,19 @@ class SettingsPushNotifications extends React.Component {
   }
 
   render() {
+    PushNotification.localNotification({
+      /* iOS and Android properties */
+      title: "keep in touch", // only used in apple watch
+      message: "check in with your contacts!", // (required)
+      playSound: false, // (optional) default: true
+      repeatType: 'minute',
+      number: 10, // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero)
+    });
+
+    PushNotification.localNotificationSchedule({
+      message: "check in with your contacts!", //
+      date: new Date(Date.now() + (60 * 60 * 24 * 1000)) // in 24 hours
+    });
 
     return (
       <View style={styles.container}>
@@ -63,14 +75,14 @@ class SettingsPushNotifications extends React.Component {
         <View style={styles.flex}>
 
           <View style={styles.spacer} />
-          <Text style={styles.paragraph}>Still working on this feature...</Text>
-          <TouchableOpacity
+          <Text style={styles.paragraph}>Still working on this feature... <Emoji name=":pizza:"/></Text>
+          {/* <TouchableOpacity
             style={styles.submitButton}
             backgroundColor='black'
             onPress={null}
           >
-            <Text style={styles.submitText}> Enable Notifications <Emoji name=":pizza:"/> </Text>
-          </TouchableOpacity>
+            <Text style={styles.submitText}> Enable Notifications </Text>
+          </TouchableOpacity> */}
 
           <View style={styles.spacer} />
 

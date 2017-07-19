@@ -14,8 +14,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Header from './Header';
 import SettingsRow from './SettingsRow';
 
-import PushNotification from 'react-native-push-notification';
-
 /* -------------------<   COMPONENT   >-------------------- */
 
 class SettingsMenu extends React.Component {
@@ -26,19 +24,7 @@ class SettingsMenu extends React.Component {
   }
 
   render() {
-    PushNotification.localNotification({
-      /* iOS and Android properties */
-      title: "keep in touch", // only used in apple watch
-      message: "check in with your contacts!", // (required)
-      playSound: false, // (optional) default: true
-      repeatType: 'minute',
-      number: 10, // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero)
-    });
 
-    PushNotification.localNotificationSchedule({
-      message: "check in with your contacts!", //
-      date: new Date(Date.now() + (10 * 1000)) // in 60 secs
-    });
 
     return (
       <View style={styles.container}>

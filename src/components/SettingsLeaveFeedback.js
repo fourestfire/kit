@@ -61,12 +61,13 @@ class SettingsLeaveFeedback extends React.Component {
               style={styles.submitButton}
               backgroundColor='black'
               onPress={() => {
+                this.props.navigation.goBack(null);
                 try {
                   axios.post('https://script.google.com/macros/s/AKfycbwHVoG7eNO3V7-Pf_rkuHfNJbA6oL5AIoA9gK-StILPWI2Aa5PW/exec',
                     querystring.stringify({ Feedback: this.state.message })
                   )
                   .then(function (response) {
-                    this.props.navigation.goBack(null);
+                    console.log(response)
                   })
                   .catch(function (error) {
                     console.log(error);

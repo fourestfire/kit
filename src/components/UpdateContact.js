@@ -42,7 +42,7 @@ class UpdateContact extends Component {
   }
 
   _focusNextField(nextField) {
-    this.refs[nextField].focus()
+    this.refs[nextField].focus();
   }
 
   updateContact(contact) {
@@ -53,13 +53,13 @@ class UpdateContact extends Component {
 
   initiateDeleteContact(contactID) {
     Alert.alert(
-          'Confirm Delete',
-          "Are you sure you want to delete this contact? Note: this will not impact your actual phone contact.",
-          [
-            {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-            {text: 'Delete', onPress: () => this.deleteContact(contactID), style: 'destructive'},
-          ]
-        );
+      'Confirm Delete',
+      "Are you sure you want to delete this contact from keep in touch app?",
+      [
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'Delete', onPress: () => this.deleteContact(contactID), style: 'destructive'},
+      ]
+    );
   }
 
   deleteContact(contactID) {
