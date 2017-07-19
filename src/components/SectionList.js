@@ -9,7 +9,7 @@ import { convertFrequency } from '../utils/utils';
 import Row from './SingleContactRow';
 import AddContact from './AddContact';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { createContact, getAllContacts, deleteAllContacts, initializeSettingsIfNeeded } from '../redux/realm';
+import { createContact, getAllContacts, deleteAllContacts, initializeSettingsIfNeeded, getSettings } from '../redux/realm';
 import sampleContacts from '../utils/seed';
 import { convertColor } from '../utils/utils';
 
@@ -17,6 +17,7 @@ import { StackNavigator, TabNavigator } from "react-navigation";
 import UpdateContact from './UpdateContact';
 import FlatView from './FlatView';
 import ImportContacts from './ImportContacts';
+
 import SettingsMenu from './SettingsMenu';
 import SettingsChangeMessage from './SettingsChangeMessage';
 import SettingsHelp from './SettingsHelp';
@@ -37,6 +38,7 @@ class SectionListView extends Component {
     this.state = {
       query: '',
       showAddModal: false,
+      showImportModal: false,
       isTodayCollapsed: false,
       isTomorrowCollapsed: false,
       isWeekCollapsed: true,
@@ -80,14 +82,21 @@ class SectionListView extends Component {
         leftOnPress={() => this.props.navigation.navigate('SettingsMenu')}
         leftText='Settings'
         title='keep in touch'
-        rightOnPress={() => this.props.navigation.navigate('AllContacts')}
-        rightText='    Edit'
+        rightOnPress={() => {  // on first run, send them to import before edit
+          if (getSettings().firstTime) this.toggleImportModal();
+          else this.props.navigation.navigate('AllContacts');
+        }}
+        rightText={getSettings().firstTime ? '   Import' : '    Edit'}
       />
     </View>
   };
 
   toggleAddModal = () => {
     this.setState({ showAddModal: !this.state.showAddModal })
+  }
+
+  toggleImportModal = (contact) => {
+    this.setState({ showImportModal: !this.state.showImportModal });
   }
 
   checkIfCollapsed(type) {
@@ -120,6 +129,14 @@ class SectionListView extends Component {
           animationType='slide'
         >
           <AddContact screenProps={{ toggle: this.toggleAddModal }} />
+        </Modal>
+
+        <Modal
+          visible={this.state.showImportModal}
+          onRequestClose={this.toggleImportModal}
+          animationType='slide'
+        >
+          <ImportContacts screenProps={{ toggle: this.toggleImportModal }} />
         </Modal>
 
         <SectionList

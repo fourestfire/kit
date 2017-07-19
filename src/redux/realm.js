@@ -37,7 +37,17 @@ export const getSettings = () => {
 export const changeMessageInSettings = (newMessage) => {
   realm.write(() => {
     try {
-      getSettings().textMessage = newMessage
+      getSettings().textMessage = newMessage;
+    } catch (e) {
+      console.warn(e)
+    }
+  });
+}
+
+export const markFirstTimeAsFalse = () => {
+  realm.write(() => {
+    try {
+      getSettings().firstTime = false;
     } catch (e) {
       console.warn(e)
     }

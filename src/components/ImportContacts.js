@@ -5,6 +5,7 @@ import Contacts from 'react-native-contacts';
 import SearchBar from 'react-native-search-bar';
 import { randomNextContactDate } from '../utils/utils';
 import Emoji from 'react-native-emoji';
+import { markFirstTimeAsFalse } from '../redux/realm';
 
 class ImportContacts extends Component {
   constructor(props) {
@@ -107,6 +108,7 @@ class ImportContacts extends Component {
       this.props.addContact(this.state.originalContacts[arrayIdx]);
     });
 
+    markFirstTimeAsFalse();
     this.props.screenProps.toggle();
   }
 

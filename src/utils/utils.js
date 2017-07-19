@@ -15,7 +15,7 @@ function getRandomInt(min, max) {
 }
 
 export function randomNextContactDate() {
-  let daysToAdd = getRandomInt(0, 5);
+  let daysToAdd = getRandomInt(0, 3);
   return parseInt(moment().add(daysToAdd, 'day').format('x'), 10);
 }
 
