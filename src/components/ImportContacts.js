@@ -40,6 +40,15 @@ class ImportContacts extends Component {
               arrayIdx: idx,
               nextContact: randomNextContactDate(),
             });
+          } else {
+            strippedContacts.push({
+              firstName: contact.givenName,
+              lastName: contact.familyName,
+              phoneNum: 'No number found',
+              recordID: contact.recordID,
+              arrayIdx: idx,
+              nextContact: randomNextContactDate(),
+            });
           }
         });
         console.log('stripped contacts from react-native-contacts', strippedContacts);
@@ -73,7 +82,7 @@ class ImportContacts extends Component {
   }
 
   markContactForImport(arrayIdx) {
-    // console.log('marking this idx for import', arrayIdx);
+    console.log('marking this idx for import', arrayIdx);
     let contacts = this.state.contactsToImport; // .slice(0); to clone array taken out for performance reasons
 
     if (this.isMarkedForImport(arrayIdx)) {
@@ -88,7 +97,7 @@ class ImportContacts extends Component {
   }
 
   isMarkedForImport(arrayIdx) {
-    // console.log('is this already marked for input?', this.state.contactsToImport, this.state.contactsToImport.includes(arrayIdx));
+    console.log('is this already marked for input?', this.state.contactsToImport, this.state.contactsToImport.includes(arrayIdx));
     return this.state.contactsToImport.includes(arrayIdx);
   }
 

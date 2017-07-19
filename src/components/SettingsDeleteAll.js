@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 import Header from './Header';
-import { getSettings, deleteAllContacts } from '../redux/realm';
+import { getSettings } from '../redux/realm';
 import Emoji from 'react-native-emoji';
 
 /* -------------------<   COMPONENT   >-------------------- */
@@ -42,7 +42,16 @@ class SettingsDeleteAll extends React.Component {
           <TouchableOpacity
             style={styles.deleteButton}
             backgroundColor='black'
-            onPress={null}
+            onPress={() => {
+
+              try {
+                this.props.navigation.goBack(null);
+                this.props.removeAllContacts();
+              } catch (error) {
+                console.warning("an error occurred", error)
+              }
+
+            }}
           >
             <Text style={styles.deleteText}> Blow it up <Emoji name=":bomb:"/> </Text>
           </TouchableOpacity>
@@ -60,9 +69,10 @@ class SettingsDeleteAll extends React.Component {
 /* -------------------<   CONTAINER   >-------------------- */
 
 import { connect } from 'react-redux';
+import { removeAllContacts } from '../redux/reducer';
 
 const mapState = ({ store }) => ({ store });
-const mapDispatch = null;
+const mapDispatch = ({ removeAllContacts });
 
 export default connect(mapState, mapDispatch)(SettingsDeleteAll);
 
