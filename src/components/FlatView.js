@@ -32,7 +32,7 @@ class FlatView extends Component {
       query: '',
       showImportModal: false,
       showUpdateModal: false,
-      updateModalContact: {}
+      updateModalContact: {},
     };
   }
 

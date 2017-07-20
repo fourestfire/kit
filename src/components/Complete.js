@@ -100,20 +100,13 @@ const styles = StyleSheet.create({
   textWrapper: {
     borderBottomWidth: 1,
     borderBottomColor: 'lightgray',
-    // backgroundColor: 'lavender',
-    // flexDirection: 'column',
     height: 40,
     width: maxWidth - 50,
     margin: 30,
-    // flex: 1,
   },
   textInput: {
-    // backgroundColor: 'ghostwhite',
     width: maxWidth - 50,
     height: 40,
-    // borderColor: 'lightgray',
-    // borderRadius: 4,
-    // borderBottomWidth: 1,
   },
   closeButton: {
     height: maxHeight / 8,

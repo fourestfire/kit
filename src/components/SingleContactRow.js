@@ -19,7 +19,7 @@ class SingleContactRow extends Component {
   }
 
   toggleCompleteModal = () => {
-    this.setState({ showCompleteModal: !this.state.showCompleteModal })
+    this.setState({ showCompleteModal: !this.state.showCompleteModal });
   }
 
   onButtonPress(name) {
@@ -27,7 +27,7 @@ class SingleContactRow extends Component {
   }
 
   removeContact() {
-    this.props.removeContactSync(this.props.contact)
+    this.props.removeContactSync(this.props.contact);
   }
 
   render() {

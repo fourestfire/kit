@@ -3,10 +3,8 @@ import {
   View,
   Text,
   TextInput,
-  StyleSheet,
   SegmentedControlIOS,
   TouchableOpacity,
-  Button,
   TouchableWithoutFeedback,
   Keyboard
 } from 'react-native';
@@ -50,7 +48,6 @@ class AddContact extends Component {
 	}
 
   addContact(contact) {
-    // createContact(contact);
     this.props.addContact(contact);
     this.props.screenProps.toggle();
   }
@@ -170,10 +167,10 @@ class AddContact extends Component {
 /* -------------------<   CONTAINER   >-------------------- */
 
 import { connect } from 'react-redux';
-import { addContact, addContactSync, removeContactSync } from '../redux/reducer';
+import { addContact } from '../redux/reducer';
 
 const mapState = ({ store }) => ({ store });
-const mapDispatch = ({ addContactSync, addContact, removeContactSync });
+const mapDispatch = ({ addContact });
 
 export default connect(mapState, mapDispatch)(AddContact);
 
