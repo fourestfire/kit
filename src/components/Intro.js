@@ -8,18 +8,15 @@ class Intro extends Component {
   onSkipBtnHandle = (index) => {
     markTutorialSeenTrue();
     this.props.screenProps.toggle();
-    console.log(index);
   }
   doneBtnHandle = () => {
     markTutorialSeenTrue();
     this.props.screenProps.toggle();
   }
   nextBtnHandle = (index) => {
-    // Alert.alert('Next');
-    console.log(index);
   }
   onSlideChangeHandle = (index, total) => {
-    console.log(index, total);
+    // console.log(index, total);
   }
   render() {
     const pageArray = [{

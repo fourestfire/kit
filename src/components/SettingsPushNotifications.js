@@ -85,8 +85,6 @@ class SettingsPushNotifications extends React.Component {
           </TouchableOpacity> */}
 
           <View style={styles.spacer} />
-
-
         </View>
 
       </View>

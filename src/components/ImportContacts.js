@@ -120,11 +120,6 @@ class ImportContacts extends Component {
             <Icon name="ios-close" size={50} color="darkgrey" />
           </TouchableOpacity>
 
-          {/* <Text style={styles.headline}> Import Contacts
-            <Emoji name=":cat:"/>
-            <Emoji name=":dog:"/>
-          </Text> */}
-
           <TouchableWithoutFeedback onPress={() => this.refs.searchbar.unFocus()}>
             <View style={styles.topSpacer} />
           </TouchableWithoutFeedback>
