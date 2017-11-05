@@ -44,6 +44,8 @@ class SectionListView extends Component {
       showTutorialModal: false,
       isTodayCollapsed: false,
       isTomorrowCollapsed: false,
+      isWeekCollapsed: true,
+      isLaterCollapsed: true,
     };
   }
 
@@ -118,8 +120,8 @@ class SectionListView extends Component {
     let stateToChange = `is${type}Collapsed`;
     if (type === 'Today') { currentState = this.state.isTodayCollapsed }
     else if (type === 'Tomorrow') { currentState = this.state.isTomorrowCollapsed }
-    // else if (type === 'Week') { currentState = this.state.isWeekCollapsed }
-    // else if (type === 'Later') { currentState = this.state.isLaterCollapsed }
+    else if (type === 'Week') { currentState = this.state.isWeekCollapsed }
+    else if (type === 'Later') { currentState = this.state.isLaterCollapsed }
     return currentState;
   }
 
@@ -159,15 +161,21 @@ class SectionListView extends Component {
           style={styles.sectionList}
           ListHeaderComponent={this.renderHeader}
           renderSectionHeader={({section}) =>
+            <TouchableOpacity activeOpacity={0.8} onPress={this.toggleCollapse.bind(this, section.title)} >
               <View style={styles.rowHeader}>
-                <Text style={styles.rowHeaderText}> {section.title} </Text>
-              </View>}
+                <Text style={styles.rowHeaderText}> {this.checkIfCollapsed(section.title) ? <Icon size={30} name='ios-arrow-up' /> : <Icon size={30} name='ios-arrow-down' />}   {section.title}
+                </Text>
+              </View>
+            </TouchableOpacity>}
           keyExtractor={item => item.id}
           sections={[
             {key: 'today', data: this.props.store.contacts.filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day')), title: 'Today'},
-            {key: 'tomorrow', data: this.props.store.contacts.filter(el => moment(el.nextContact).isSame(moment().add(1, 'day'), 'day')), title: 'Tomorrow'}
+            {key: 'tomorrow', data: this.props.store.contacts.filter(el => moment(el.nextContact).isSame(moment().add(1, 'day'), 'day')), title: 'Tomorrow'},
+            {key: 'week', data: this.props.store.contacts.filter(el => moment(el.nextContact).isBetween(moment().add(2, 'day'), moment().add(7, 'day'), 'day', '[]')), title: 'Week'},
+            {key: 'later', data: this.props.store.contacts.filter(el => moment(el.nextContact).isAfter(moment().add(7, 'day'), 'day')), title: 'Later'}
           ]}
           renderItem={({item, idx, section}) =>
+            <Collapsible collapsed={this.checkIfCollapsed(section)}>
               <Row physics={physics} contact={item}>
                 <View style={styles.rowContent}>
                   <View style={[styles.rowIcon, {backgroundColor: convertColor(item.color)}]} />
@@ -177,19 +185,13 @@ class SectionListView extends Component {
                     <Text style={styles.rowSubtitle}>Prev note: {item.lastMsg} </Text>
                   </View>
                 </View>
-              </Row>}
+              </Row>
+            </Collapsible>}
           />
       </View>
     );
   }
 }
-
-/* icon for down arrow <Icon size={30} name='ios-arrow-down' /> */
-
-/* Removed sections from Today list
-{key: 'week', data: this.props.store.contacts.filter(el => moment(el.nextContact).isBetween(moment().add(2, 'day'), moment().add(7, 'day'), 'day', '[]')), title: 'Week'},
-{key: 'later', data: this.props.store.contacts.filter(el => moment(el.nextContact).isAfter(moment().add(7, 'day'), 'day')), title: 'Later'}
-*/
 
 /* -------------------<   CONTAINER   >-------------------- */
 
