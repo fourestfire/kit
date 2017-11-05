@@ -33,9 +33,11 @@ class ImportContacts extends Component {
         let strippedContacts = [];
         contacts.forEach((contact, idx) => {
           if (contact.phoneNumbers[0]) { // only if a phone number exists for contact, otherwise it will error
+            console.log("contact", contact, idx);
             strippedContacts.push({
               firstName: contact.givenName,
               lastName: contact.familyName,
+              fullName: `${contact.givenName} ${contact.familyName}`,
               phoneNum: contact.phoneNumbers[0].number,
               recordID: contact.recordID,
               arrayIdx: idx,
@@ -45,6 +47,7 @@ class ImportContacts extends Component {
             strippedContacts.push({
               firstName: contact.givenName,
               lastName: contact.familyName,
+              fullName: `${contact.givenName} ${contact.familyName}`,
               phoneNum: 'No number found',
               recordID: contact.recordID,
               arrayIdx: idx,
@@ -70,7 +73,7 @@ class ImportContacts extends Component {
   filterContacts(contacts, query) {
     try {
       return contacts.filter(contact => {
-        return contact.firstName.match(new RegExp(query, 'i')) || contact.lastName.match(new RegExp(query, 'i'));
+        return contact.fullName.match(new RegExp(query, 'i'));
       });
     } catch (e) {
       console.log('received error', e);
