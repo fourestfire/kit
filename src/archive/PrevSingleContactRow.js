@@ -100,7 +100,6 @@ class SingleContactRow extends Component {
             {x: 0, damping: 1-this.props.physics.damping, tension: this.props.physics.tension},
             {x: -155, damping: 1-this.props.physics.damping, tension: this.props.physics.tension}
           ]}
-          boundaries={{right: 0, bounce: 0.2}}
           animatedValueX={this._deltaX}>
           <View style={{left: 0, right: 0, height: 75, backgroundColor: 'white'}}>
             {this.props.children}
