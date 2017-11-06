@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity, Dimensions, FlatList, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import MIcon from 'react-native-vector-icons/MaterialIcons';
 import Header from './Header';
 import AddContact from './AddContact';
 import moment from 'moment';
@@ -13,7 +14,7 @@ import Interactable from 'react-native-interactable';
 
 import { NavigationActions } from 'react-navigation';
 import { getSettings } from '../redux/realm';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 class FlatView extends Component {
   static navigationOptions = {
@@ -67,7 +68,7 @@ class FlatView extends Component {
           leftText='BACK'
           title='manage contacts'
           rightOnPress={() => this.toggleImportModal()}
-          rightText={getSettings().deviceSize === 'small' ?  <MIcon size={25} name='import' /> : '   IMPORT'}
+          rightText={getSettings().deviceSize === 'small' ?  <MCIcon size={25} name='import' /> : '   IMPORT'}
         />
 
         <Modal
@@ -104,12 +105,13 @@ class FlatView extends Component {
           data={this.filteredContacts()}
           renderItem={({item}) =>
             <TouchableOpacity activeOpacity={0.4} onPress={this.toggleUpdateModal.bind(this, item)} key={item.id}>
-              <View style={styles.rowContent}>
-                <View style={[styles.rowIcon, {backgroundColor: convertColor(item.color)}]} />
-                <View>
+              <View style={styles.wholeRow}>
+                <View style={[styles.rowColor, {backgroundColor: convertColor(item.color)}]} />
+                <View style={styles.rowContent}>
                   <Text style={styles.rowTitle}>{item.firstName} {item.lastName}</Text>
                   <Text style={styles.rowSubtitle}>{convertFrequency(item.frequency)} (Last contact {item.lastContact ? moment(item.lastContact).format('L') : 'N/A'})</Text>
                 </View>
+                <MIcon name="edit" style={styles.editIcon} size={25} color="#7f7fbf" />
               </View>
             </TouchableOpacity>
         }/>
@@ -168,7 +170,7 @@ const styles = StyleSheet.create({
     fontWeight: '200',
     marginLeft: 10,
   },
-  rowContent: {
+  wholeRow: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
@@ -176,12 +178,16 @@ const styles = StyleSheet.create({
     borderColor: '#eeeeee',
     height: 50,
   },
-  rowIcon: {
-    width: 15,
-    height: 30,
+  rowColor: {
+    width: 8,
+    height: 46,
     backgroundColor: '#73d4e3',
-    margin: 15,
-    borderRadius: 4
+    // marginLeft: 5,
+    marginRight: 15,
+    // borderRadius: 4
+  },
+  rowContent: {
+    flex: 1
   },
   rowTitle: {
     fontWeight: 'bold',
@@ -191,4 +197,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: 'gray'
   },
+  editIcon: {
+    width: 25,
+    height: 25,
+    marginRight: 12,
+  }
 });

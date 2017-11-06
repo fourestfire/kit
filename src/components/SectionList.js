@@ -112,7 +112,6 @@ class SectionListView extends Component {
   }
 
   toggleCompleteModal = (contact) => {
-    console.log("contact from complete modal click", contact)
     this.setState({ showCompleteModal: !this.state.showCompleteModal, completeModalContact: contact});
   }
 
@@ -338,7 +337,7 @@ const styles = StyleSheet.create({
   },
   rowColor: {
     width: 10,
-    height: 75,
+    height: 70,
     backgroundColor: '#73d4e3',
     marginRight: 15,
     zIndex: -1,
