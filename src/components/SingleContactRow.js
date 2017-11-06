@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, Animated, TouchableOpacity, Dimensions, ScrollView, Modal } from 'react-native';
 import Interactable from 'react-native-interactable';
-import Complete from './Complete';
 import Communications from 'react-native-communications';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -13,13 +12,6 @@ class SingleContactRow extends Component {
   constructor(props) {
     super(props);
     this._deltaX = new Animated.Value(0);
-    this.state = {
-      showCompleteModal: false,
-    }
-  }
-
-  toggleCompleteModal = () => {
-    this.setState({ showCompleteModal: !this.state.showCompleteModal });
   }
 
   onButtonPress(name) {
@@ -33,13 +25,6 @@ class SingleContactRow extends Component {
   render() {
     return (
       <View>
-        <Modal
-          visible={this.state.showCompleteModal}
-          onRequestClose={this.toggleCompleteModal}
-          animationType='fade'
-        >
-          <Complete contact={this.props.contact} screenProps={{ toggle: this.toggleCompleteModal }} />
-        </Modal>
 
       <View style={{backgroundColor: '#ceced2'}}>
         <View style={{position: 'absolute', left: 0, right: 0, height: 75}} pointerEvents='box-none'>
@@ -75,32 +60,13 @@ class SingleContactRow extends Component {
           </Animated.View>
         </View>
 
-        <View style={{position: 'absolute', left: 0, right: 0, height: 75}} pointerEvents='box-none'>
-
-          <Animated.View style={
-            [styles.doneHolder, {
-              transform: [{
-                translateX: this._deltaX.interpolate({
-                  inputRange: [0, 78],
-                  outputRange: [-78, 0]
-                })
-              }]
-            }
-            ]}>
-            <TouchableOpacity onPress={this.toggleCompleteModal.bind(this, 'done')} style={[styles.button]}>
-              <Icon name="check" size={35} color="white" />
-            </TouchableOpacity>
-          </Animated.View>
-        </View>
-
         <Interactable.View
           horizontalOnly={true}
           snapPoints={[
-            {x: 78, damping: 1-this.props.physics.damping, tension: this.props.physics.tension},
             {x: 0, damping: 1-this.props.physics.damping, tension: this.props.physics.tension},
             {x: -155, damping: 1-this.props.physics.damping, tension: this.props.physics.tension}
           ]}
-          boundaries={{right: 0, bounce: 0.2}}
+          boundaries={{right: 0, bounce: 0.2}} // helps limit direction of sliding
           animatedValueX={this._deltaX}>
           <View style={{left: 0, right: 0, height: 75, backgroundColor: 'white'}}>
             {this.props.children}
@@ -157,16 +123,5 @@ const styles = StyleSheet.create({
     paddingLeft: 18,
     backgroundColor: '#4f7db0',
     justifyContent: 'center'
-  },
-  doneHolder: {
-    position: 'absolute',
-    top: 0,
-    right: Screen.width - 78,
-    width: Screen.width,
-    height: 75,
-    paddingRight: 18,
-    backgroundColor: '#2f9a5d',
-    justifyContent: 'center',
-    alignItems: 'flex-end'
   },
 });

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity, Dimensions, SectionList, Modal, AsyncStorage } from 'react-native';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Header from './Header';
 import Collapsible from 'react-native-collapsible';
 import moment from 'moment';
@@ -9,6 +8,8 @@ import { convertFrequency } from '../utils/utils';
 import Row from './SingleContactRow';
 import AddContact from './AddContact';
 import Icon from 'react-native-vector-icons/Ionicons';
+import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import FIcon from 'react-native-vector-icons/FontAwesome';
 import { createContact, getAllContacts, deleteAllContacts, initializeSettingsIfNeeded, getSettings } from '../redux/realm';
 import sampleContacts from '../utils/seed';
 import { convertColor } from '../utils/utils';
@@ -17,6 +18,7 @@ import { StackNavigator, TabNavigator } from "react-navigation";
 import UpdateContact from './UpdateContact';
 import FlatView from './FlatView';
 import ImportContacts from './ImportContacts';
+import Complete from './Complete';
 
 import SettingsMenu from './SettingsMenu';
 import SettingsChangeMessage from './SettingsChangeMessage';
@@ -41,6 +43,8 @@ class SectionListView extends Component {
       query: '',
       showAddModal: false,
       showImportModal: false,
+      showCompleteModal: false,
+      completeModalContact: {},
       showTutorialModal: false,
       isTodayCollapsed: false,
       isTomorrowCollapsed: false,
@@ -107,6 +111,11 @@ class SectionListView extends Component {
     this.setState({ showTutorialModal: !this.state.showTutorialModal });
   }
 
+  toggleCompleteModal = (contact) => {
+    console.log("contact from complete modal click", contact)
+    this.setState({ showCompleteModal: !this.state.showCompleteModal, completeModalContact: contact});
+  }
+
   toggleCollapse(type) {
     let stateToChange = `is${type}Collapsed`;
     let currentState = this.checkIfCollapsed(type);
@@ -155,6 +164,14 @@ class SectionListView extends Component {
           <Intro screenProps={{ toggle: this.toggleTutorialModal }} />
         </Modal>
 
+        <Modal
+        visible={this.state.showCompleteModal}
+        onRequestClose={this.toggleCompleteModal}
+        animationType='fade'
+        >
+          <Complete contact={this.state.completeModalContact} screenProps={{ toggle: this.toggleCompleteModal }} />
+        </Modal>
+
         <SectionList
           style={styles.sectionList}
           ListHeaderComponent={this.renderHeader}
@@ -169,13 +186,18 @@ class SectionListView extends Component {
           ]}
           renderItem={({item, idx, section}) =>
               <Row physics={physics} contact={item}>
-                <View style={styles.rowContent}>
-                  <View style={[styles.rowIcon, {backgroundColor: convertColor(item.color)}]} />
-                  <View>
+                <View style={styles.wholeRow}>
+                  <View style={[styles.rowColor, {backgroundColor: convertColor(item.color)}]} />
+
+                  <View style={styles.rowContent}>
                     <Text style={styles.rowTitle}>{item.firstName} {item.lastName}</Text>
                     <Text style={styles.rowSubtitle}>{convertFrequency(item.frequency)} (Last contact {item.lastContact ? moment(item.lastContact).format('L') : 'N/A'})</Text>
                     <Text style={styles.rowSubtitle}>Prev note: {item.lastMsg} </Text>
                   </View>
+
+                  <TouchableOpacity onPress={this.toggleCompleteModal.bind(this, item)} style={[styles.doneHolder]}>
+                    <FIcon name="check" style={styles.doneButton} size={25} color="lightgray" />
+                  </TouchableOpacity>
                 </View>
               </Row>}
           />
@@ -304,19 +326,20 @@ const styles = StyleSheet.create({
     fontWeight: '200',
     marginLeft: 10,
   },
-  rowContent: {
+  wholeRow: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: 1,
     borderColor: '#eeeeee'
   },
-  rowIcon: {
-    width: 20,
-    height: 50,
-    borderRadius: 5,
+  rowContent: {
+    flex: 1
+  },
+  rowColor: {
+    width: 10,
+    height: 75,
     backgroundColor: '#73d4e3',
-    marginLeft: 10,
     marginRight: 15,
     zIndex: -1,
   },
@@ -336,4 +359,33 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+
+  doneHolder: {
+    top: 0,
+    width: 70,
+    height: 70,
+    paddingRight: 0,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  doneButton: {
+    width: 25,
+    height: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
 });
+
+/* alternative color styling
+rowColor: {
+    width: 20,
+    height: 50,
+    borderRadius: 5,
+    backgroundColor: '#73d4e3',
+    marginLeft: 10,
+    marginRight: 15,
+    zIndex: -1,
+  },
+
+  */
