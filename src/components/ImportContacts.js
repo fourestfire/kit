@@ -55,7 +55,7 @@ class ImportContacts extends Component {
             });
           }
         });
-        // console.log('stripped contacts from react-native-contacts', strippedContacts);
+        console.log('stripped contacts from react-native-contacts', strippedContacts);
         this.setState({originalContacts: strippedContacts});
       }
     });
@@ -127,20 +127,32 @@ class ImportContacts extends Component {
             <View style={styles.topSpacer} />
           </TouchableWithoutFeedback>
 
-          <View style={styles.searchbar}>
-          <SearchBar
-            ref='searchbar'
-            showsCancelButton={true}
-            placeholder='Search'
-            onChangeText={query => this.setState({query: query})}
-            onSearchButtonPress={() => this.refs.searchbar.unFocus()}
-            onCancelButtonPress={() => {
-              this.setState({ query: '' });
-              this.refs.searchbar.unFocus();
-            }}
-            searchBarStyle={'minimal'}
-          />
-          </View>
+        <TouchableOpacity
+          style={this.state.numToImport === 0 ? [styles.actionButton, styles.disabled] : styles.actionButton }
+          disabled={this.state.numToImport === 0}
+          onPress={this.importContacts.bind(this)}
+          backgroundColor="black"
+          >
+          { this.state.isActionConfirmed
+            ? <Text style={styles.actionText}> Confirm </Text>
+            : <Text style={styles.actionText}> Import {this.state.numToImport} Contacts </Text>
+          }
+        </TouchableOpacity>
+
+        <View style={styles.searchbar}>
+        <SearchBar
+          ref='searchbar'
+          showsCancelButton={false}
+          placeholder='Search'
+          onChangeText={query => this.setState({query: query})}
+          onSearchButtonPress={() => this.refs.searchbar.unFocus()}
+          onCancelButtonPress={() => {
+            this.setState({ query: '' });
+            this.refs.searchbar.unFocus();
+          }}
+          searchBarStyle={'minimal'}
+        />
+      </View>
 
           <FlatList
             style={styles.flatlist}
@@ -158,19 +170,6 @@ class ImportContacts extends Component {
               </TouchableOpacity>)
               }
           />
-
-          <TouchableOpacity
-            style={this.state.numToImport === 0 ? [styles.actionButton, styles.disabled] : styles.actionButton }
-            disabled={this.state.numToImport === 0}
-            onPress={this.importContacts.bind(this)}
-            backgroundColor="black"
-          >
-            { this.state.isActionConfirmed
-              ? <Text style={styles.actionText}> Confirm </Text>
-              : <Text style={styles.actionText}> Import {this.state.numToImport} Contacts </Text>
-            }
-
-          </TouchableOpacity>
 
         </View>
     );
@@ -196,17 +195,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     marginTop: 25,
   },
-  headline: {
-    fontSize: 16,
-    fontWeight: '200',
-    // textAlign: 'center',
-    // alignSelf: 'flex-start',
-    marginTop: 15,
-    marginBottom: 10,
-    marginHorizontal: 5,
-  },
   searchbar: {
-    width: 320,
+    width: maxWidth,
     height: maxHeight / 14,
     marginTop: 3,
   },
@@ -288,7 +278,7 @@ const styles = StyleSheet.create({
   },
 
   topSpacer: {
-    height: 1,
+    height: 55,
   },
   closeButton: {
     height: maxHeight / 14,
