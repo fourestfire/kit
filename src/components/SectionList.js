@@ -113,6 +113,7 @@ class SectionListView extends Component {
 
   toggleCompleteModal = (contact) => {
     this.setState({ showCompleteModal: !this.state.showCompleteModal, completeModalContact: contact});
+    // console.log("completeModalBoolStatus", this.state.showCompleteModal)
   }
 
   toggleCollapse(type) {

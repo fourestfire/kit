@@ -111,7 +111,7 @@ class FlatView extends Component {
                   <Text style={styles.rowTitle}>{item.firstName} {item.lastName}</Text>
                   <Text style={styles.rowSubtitle}>{convertFrequency(item.frequency)} (Last contact {item.lastContact ? moment(item.lastContact).format('L') : 'N/A'})</Text>
                 </View>
-                <MIcon name="edit" style={styles.editIcon} size={25} color="#7f7fbf" />
+                <MIcon name="edit" style={styles.editIcon} size={25} color="gray" />
               </View>
             </TouchableOpacity>
         }/>
@@ -200,6 +200,6 @@ const styles = StyleSheet.create({
   editIcon: {
     width: 25,
     height: 25,
-    marginRight: 12,
+    marginRight: 14,
   }
 });
