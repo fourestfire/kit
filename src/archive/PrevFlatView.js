@@ -104,7 +104,7 @@ class FlatView extends Component {
           keyExtractor={item => item.id}
           data={this.filteredContacts()}
           renderItem={({item}) =>
-            <TouchableOpacity activeOpacity={0.4} onPress={() => this.props.navigation.navigate('UpdateContacts', {contact: item})} key={item.id}>
+            <TouchableOpacity activeOpacity={0.4} onPress={this.toggleUpdateModal.bind(this, item)} key={item.id}>
               <View style={styles.wholeRow}>
                 <View style={[styles.rowColor, {backgroundColor: convertColor(item.color)}]} />
                 <View style={styles.rowContent}>

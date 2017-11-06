@@ -11,18 +11,10 @@ import {
   Alert,
   ScrollView,
 } from 'react-native';
-import Header from './Header';
 import Icon from 'react-native-vector-icons/Ionicons';
-import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from '../styles/AddEditScreens';
 
 class UpdateContact extends Component {
-  static navigationOptions = {
-    header: {
-      visible: false
-    }
-  }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -37,16 +29,14 @@ class UpdateContact extends Component {
   }
 
   componentDidMount() {
-    let contact = this.props.navigation.state.params.contact;
-
     this.setState({
-      id: contact.id,
-      firstName: contact.firstName,
-      lastName: contact.lastName,
-      phoneNum: contact.phoneNum,
-      frequency: contact.frequency,
-      lastMsg: contact.lastMsg,
-      color: contact.color,
+      id: this.props.contact.id,
+      firstName: this.props.contact.firstName,
+      lastName: this.props.contact.lastName,
+      phoneNum: this.props.contact.phoneNum,
+      frequency: this.props.contact.frequency,
+      lastMsg: this.props.contact.lastMsg,
+      color: this.props.contact.color,
       values: ['Group 1', 'Group 2', 'Group 3', 'None'],
     });
   }
@@ -56,9 +46,9 @@ class UpdateContact extends Component {
   }
 
   updateContact(contact) {
-    // console.log(contact, "updated contact")
+    console.log(contact, "updated contact")
     this.props.updateContact(contact);
-    this.props.navigation.goBack(null)
+    this.props.screenProps.toggle();
   }
 
   initiateDeleteContact(contactID) {
@@ -74,16 +64,14 @@ class UpdateContact extends Component {
 
   deleteContact(contactID) {
     this.props.removeContact(contactID);
-    this.props.navigation.goBack(null)
+    this.props.screenProps.toggle();
   }
 
   findColorIndex() {
-    let contact = this.props.navigation.state.params.contact;
-
-    if (contact.color === 'Group 1') return 0;
-    else if (contact.color === 'Group 2') return 1;
-    else if (contact.color === 'Group 3') return 2;
-    else if (contact.color === 'None') return 3;
+    if (this.props.contact.color === 'Group 1') return 0;
+    else if (this.props.contact.color === 'Group 2') return 1;
+    else if (this.props.contact.color === 'Group 3') return 2;
+    else if (this.props.contact.color === 'None') return 3;
   }
 
   setColor(color) {
@@ -94,7 +82,7 @@ class UpdateContact extends Component {
   }
 
   render() {
-    const contact = this.props.navigation.state.params.contact;
+    const contact = this.props.contact;
     let contactHistory;
 
     if (contact.contactHistory.length > 0) { // shaves contact history length to fit within modal confines
@@ -107,16 +95,13 @@ class UpdateContact extends Component {
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={styles.container}>
-
-        <Header
-          leftOnPress={() => this.props.navigation.goBack(null)}
-          leftText='BACK'
-          title='edit contact'
-        />
-
-        <ScrollView>
+        <TouchableOpacity onPress={this.props.screenProps.toggle} style={styles.closeButton}>
+          <Icon name="ios-close" size={50} color="darkgrey" />
+        </TouchableOpacity>
 
         <View style={styles.topSpacer} />
+
+        <Text style={styles.headlineForEdit}> Edit Contact </Text>
 
         <View style={styles.textWrapper}>
           <Text style={styles.helpText}> First Name </Text>
@@ -151,7 +136,7 @@ class UpdateContact extends Component {
         </View>
 
         <View style={styles.textWrapper}>
-          <Text style={styles.helpText}> Contact Frequency (in days) </Text>
+          <Text style={styles.helpText}> Minimum Contact Frequency (in days) </Text>
           <TextInput
             ref='3'
             style={styles.textInput}
@@ -189,9 +174,9 @@ class UpdateContact extends Component {
           />
         </View>
 
-        <View style={styles.textWrapper}>
+        {/* because scrollView doesn't work in a Modal...*/}
         <View style={styles.contactHistory}>
-          <Text style={styles.helpTextForHistory}> Recent Messages </Text>
+          <Text style={styles.helpTextForHistory}> Most Recent Messages </Text>
 
           <View style={styles.contactBorder}>
             {contact.contactHistory.length > 0
@@ -202,10 +187,8 @@ class UpdateContact extends Component {
             }
           </View>
         </View>
-        </View>
 
         <View style={styles.bottomSpacer} />
-        </ScrollView>
 
         <View style={styles.flexWrap}>
 
@@ -235,10 +218,8 @@ class UpdateContact extends Component {
             <Text style={styles.actionText}> Delete </Text>
           </TouchableOpacity>
         </View>
-
       </View>
     </TouchableWithoutFeedback>
-
     );
   }
 }

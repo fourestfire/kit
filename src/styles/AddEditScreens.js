@@ -3,10 +3,10 @@ import { maxHeight, maxWidth } from './global';
 
 export default StyleSheet.create({
   container: {
-    marginTop: 40,
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: 'white'
   },
   headlineForAdd: {
     fontSize: 20,
@@ -15,7 +15,7 @@ export default StyleSheet.create({
     marginVertical: 10,
     marginHorizontal: 20,
   },
-  headlineForEdit: {
+  headlineForEdit: { // will be unnecessary if there's no headline that says "Edit Contact"
     fontSize: 20,
     fontWeight: '700',
     alignSelf: 'flex-start',
@@ -35,7 +35,6 @@ export default StyleSheet.create({
   },
   contactHistory: {
     // backgroundColor: 'green',
-    height: 40,
     width: maxWidth - 50,
     paddingTop: 10,
     borderTopWidth: 1,
@@ -78,9 +77,12 @@ export default StyleSheet.create({
     // borderBottomColor: '#bfbfbf',
     // backgroundColor: 'lavender',
     // flexDirection: 'column',
-    height: 60,
+    height: 50,
     width: maxWidth - 50,
-    margin: 7,
+    // margin: 10,
+    marginTop: 7,
+    marginBottom: 2,
+    marginHorizontal: 10,
     // flex: 1,
   },
   segmentedControl: {
@@ -113,7 +115,7 @@ export default StyleSheet.create({
   },
 
   topSpacer: {
-    height: 50,
+    height: 10,
   },
 
   bottomSpacer: {

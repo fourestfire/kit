@@ -15,7 +15,7 @@ import sampleContacts from '../utils/seed';
 import { convertColor } from '../utils/utils';
 
 import { StackNavigator, TabNavigator } from "react-navigation";
-import UpdateContact from './UpdateContact';
+import UpdateContacts from './UpdateContact';
 import FlatView from './FlatView';
 import ImportContacts from './ImportContacts';
 import Complete from './Complete';
@@ -232,6 +232,9 @@ export default kit = StackNavigator({
     },
     AllContacts: {
       screen: FlatView
+    },
+    UpdateContacts: {
+      screen: UpdateContacts
     },
     ImportContacts: {
       screen: ImportContacts
