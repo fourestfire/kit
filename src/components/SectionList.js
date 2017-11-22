@@ -297,22 +297,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white'
   },
-  searchbar: {
-    height: 50,
-    backgroundColor: 'green',
-    shadowColor: 'grey',
-    shadowOffset: {width: 10, height: 10},
-    shadowOpacity: 1.0,
-    borderBottomWidth: 1,
-    borderColor: '#ddd'
-  },
-  textInput: {
-    color: 'darkgrey',
-    marginLeft: 10,
-    height: 50,
-    backgroundColor: 'transparent'
-    // backgroundColor: 'darkgrey',
-  },
   sectionList: {
     backgroundColor: 'white'
   },

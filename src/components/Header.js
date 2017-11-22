@@ -41,7 +41,7 @@ export default class Header extends React.Component {
 }
 
 const STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? 20 : 25;
-const HEADER_HEIGHT = Platform.OS === 'ios' ? 44 + STATUS_BAR_HEIGHT : 56 + STATUS_BAR_HEIGHT;
+const HEADER_HEIGHT = Platform.OS === 'ios' ? 44 + STATUS_BAR_HEIGHT : 56 + STATUS_BAR_HEIGHT; // originally 44 + STATUS_BAR_HEIGHT for iOS
 
 const styles = StyleSheet.create({
   toolbarContainer: {

@@ -61,14 +61,11 @@ class ImportContacts extends Component {
     });
   }
 
-  renderFooter() {
-    return (<TouchableOpacity
-      style={styles.actionButton}
-      backgroundColor="black"
-      >
-      <Text style={styles.actionText}> Import {this.state.numToImport} Contacts </Text>
-    </TouchableOpacity>);
-  }
+  // renderFooter() {
+  //   return (<TouchableOpacity style={styles.actionButton}>
+  //             <Text style={styles.actionText}> Import {this.state.numToImport} Contacts </Text>
+  //           </TouchableOpacity>);
+  // }
 
   filterContacts(contacts, query) {
     try {
@@ -127,32 +124,29 @@ class ImportContacts extends Component {
             <View style={styles.topSpacer} />
           </TouchableWithoutFeedback>
 
-        <TouchableOpacity
-          style={this.state.numToImport === 0 ? [styles.actionButton, styles.disabled] : styles.actionButton }
-          disabled={this.state.numToImport === 0}
-          onPress={this.importContacts.bind(this)}
-          backgroundColor="black"
-          >
-          { this.state.isActionConfirmed
-            ? <Text style={styles.actionText}> Confirm </Text>
-            : <Text style={styles.actionText}> Import {this.state.numToImport} Contacts </Text>
-          }
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={this.state.numToImport === 0 ? [styles.actionButton, styles.disabled] : styles.actionButton }
+            disabled={this.state.numToImport === 0}
+            onPress={this.importContacts.bind(this)}
+            >
+              <Text
+                style={this.state.numToImport === 0 ? styles.actionTextDisabled : styles.actionText}> Import {this.state.numToImport} Contacts </Text>
+          </TouchableOpacity>
 
-        <View style={styles.searchbar}>
-        <SearchBar
-          ref='searchbar'
-          showsCancelButton={false}
-          placeholder='Search'
-          onChangeText={query => this.setState({query: query})}
-          onSearchButtonPress={() => this.refs.searchbar.unFocus()}
-          onCancelButtonPress={() => {
-            this.setState({ query: '' });
-            this.refs.searchbar.unFocus();
-          }}
-          searchBarStyle={'minimal'}
-        />
-      </View>
+          <View style={styles.searchbar}>
+          <SearchBar
+            ref='searchbar'
+            showsCancelButton={false}
+            placeholder='Search'
+            onChangeText={query => this.setState({query: query})}
+            onSearchButtonPress={() => this.refs.searchbar.unFocus()}
+            onCancelButtonPress={() => {
+              this.setState({ query: '' });
+              this.refs.searchbar.unFocus();
+            }}
+            searchBarStyle={'minimal'}
+          />
+        </View>
 
           <FlatList
             style={styles.flatlist}
@@ -199,6 +193,7 @@ const styles = StyleSheet.create({
     width: maxWidth,
     height: maxHeight / 14,
     marginTop: 3,
+    marginBottom: 5,
   },
   textInput: {
     color: 'darkgrey',
@@ -236,10 +231,14 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    borderBottomWidth: 1,
-    borderColor: '#eeeeee',
+    borderColor: 'darkblue',
     height: 45,
-    backgroundColor: '#f1f1f1'
+    backgroundColor: 'hsla(240, 100%, 27%, 0.15)',
+    // borderLeftWidth: 1.5,
+    borderRightWidth: 5,
+    // borderTopWidth: 1.5,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eeeeee',
   },
   rowFirst: {
     fontSize: 16,
@@ -256,25 +255,44 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'gray',
   },
-
   actionButton: {
-    backgroundColor: 'darkblue',
+    backgroundColor: 'hsla(240, 100%, 27%, 0.65)',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 50,
-    width: maxWidth,
+    height: 40,
+    width: maxWidth - maxWidth / 4,
+    marginLeft: maxWidth / 32,
+    borderRadius: 5,
+    borderColor: 'hsla(240, 100%, 27%, 0.9)', // dark blue base,
+    borderLeftWidth: 1.2,
+    borderRightWidth: 1.2,
+    borderTopWidth: 1.2,
+    position: 'absolute',
+    left: 0,
+    top: 5,
+    zIndex: 10,
+    borderBottomWidth: 3,
+    borderBottomColor: 'darkblue',
     // alignSelf: 'flex-end',
   },
   disabled: {
-    backgroundColor: 'hsla(240, 100%, 27%, 0.7)',
-  },
-  confirmed: {
-    backgroundColor: 'darkgreen',
+    backgroundColor: '#f1f1f1',
+    borderColor: 'grey',
+    borderBottomWidth: 3,
+    borderLeftWidth: 1.2,
+    borderRightWidth: 1.2,
+    borderTopWidth: 1.2,
+    borderBottomColor: 'grey',
   },
   actionText: {
     color: 'white',
     fontSize: 20,
-    fontWeight: '200'
+    fontWeight: '300'
+  },
+  actionTextDisabled: {
+    color: 'grey',
+    fontSize: 20,
+    fontWeight: '300'
   },
 
   topSpacer: {
