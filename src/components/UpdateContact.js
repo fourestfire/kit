@@ -35,6 +35,7 @@ class UpdateContact extends Component {
       color: '#73d4e3',
       frequency: 7,
       lastMsg: 'hi',
+      notes: 'hello',
     }
   }
 
@@ -51,6 +52,7 @@ class UpdateContact extends Component {
       lastMsg: contact.lastMsg,
       color: contact.color,
       values: ['Group 1', 'Group 2', 'Group 3', 'None'],
+      notes: contact.notes,
     });
   }
 
@@ -123,7 +125,7 @@ class UpdateContact extends Component {
 
         <View style={styles.flexWrap}>
           <View style={styles.textWrapperHalf}>
-            <Text style={styles.helpText}> First Name </Text>
+            <Text style={styles.subtitle}> First Name </Text>
             <TextInput
               style={styles.textInputHalf}
               placeholder=""
@@ -140,7 +142,7 @@ class UpdateContact extends Component {
           </View>
 
           <View style={styles.textWrapperHalf}>
-            <Text style={styles.helpText}> Last Name </Text>
+            <Text style={styles.subtitle}> Last Name </Text>
             <TextInput
               ref='2'
               style={styles.textInputHalf}
@@ -156,38 +158,7 @@ class UpdateContact extends Component {
         </View>
 
         <View style={styles.textWrapper}>
-          <Text style={styles.helpText}> Contact Frequency (in days) </Text>
-          <TextInput
-            ref='3'
-            style={styles.textInput}
-            defaultValue={String(contact.frequency)}
-            placeholderTextColor="#bfbfbf"
-            placeholder=""
-            keyboardType="numeric"
-            onChangeText={frequency => this.setState({frequency})}
-            returnKeyType="done"
-          />
-        </View>
-
-        <View style={styles.textWrapper}>
-        <Text style={styles.helpText}> Next Contact Date </Text>
-        <TextInput
-          ref='4'
-          style={styles.textInput}
-          defaultValue={String(moment(contact.nextContact).format('L'))}
-          placeholderTextColor="#bfbfbf"
-          placeholder=""
-          keyboardType="numeric"
-          onChangeText={nextContact => {this.setState({nextContact: parseInt(moment(nextContact).format('x'), 10)})
-          console.log(this.state.nextContact)
-        }
-      }
-          returnKeyType="done"
-        />
-      </View>
-
-        <View style={styles.textWrapper}>
-          <Text style={styles.helpText}> Phone Number </Text>
+          <Text style={styles.subtitle}> Phone Number </Text>
           <TextInput
             ref='5'
             style={[styles.textInput, styles.phoneInput]}
@@ -200,8 +171,53 @@ class UpdateContact extends Component {
           />
         </View>
 
+        <View style={styles.flexWrap}>
+          <View style={styles.textWrapperHalf}>
+            <Text style={styles.subtitle}> Next Contact Date </Text>
+            <TextInput
+              ref='3'
+              style={styles.textInputHalf}
+              defaultValue={String(moment(contact.nextContact).format('L'))}
+              placeholderTextColor="#bfbfbf"
+              placeholder=""
+              keyboardType="numeric"
+              onChangeText={nextContact => this.setState({nextContact: parseInt(moment(nextContact).format('x'), 10)})}
+              returnKeyType="done"
+            />
+          </View>
+
+          <View style={styles.textWrapperHalf}>
+            <Text style={styles.subtitle}> Contact Frequency </Text>
+            <TextInput
+              ref='4'
+              style={styles.textInputHalf}
+              defaultValue={String(contact.frequency)}
+              placeholderTextColor="#bfbfbf"
+              placeholder=""
+              keyboardType="numeric"
+              onChangeText={frequency => this.setState({frequency})}
+              returnKeyType="done"
+            />
+          </View>
+        </View>
+
+        <View style={[styles.textWrapper, styles.notes]}>
+          <Text style={[styles.subtitle, styles.subtitleForNotes]}> Notes </Text>
+          <TextInput
+            ref='5'
+            style={styles.textInputForNotes}
+            defaultValue={contact.notes}
+            value={this.state.notes}
+            multiline={true}
+            placeholderTextColor="#bfbfbf"
+            placeholder=""
+            onChangeText={notes => {this.setState({notes})}}
+            returnKeyType="done"
+          />
+        </View>
+
         <View style={styles.segmentedWrapper}>
-          <Text style={styles.helpText}> Color / Group </Text>
+          <Text style={styles.subtitle}> Color / Group </Text>
           <SegmentedControlIOS
               style={styles.segmentedControl}
               selectedIndex={this.findColorIndex()}
@@ -212,23 +228,23 @@ class UpdateContact extends Component {
         </View>
 
         <View style={styles.textWrapper}>
-        <View style={styles.contactHistory}>
-          <Text style={styles.helpTextForHistory}> Recent Messages </Text>
+          <View style={styles.contactHistory}>
+            <Text style={styles.subtitleForHistory}> Message History </Text>
 
-          <View style={styles.contactBorder}>
-            {contact.contactHistory.length > 0
-              ? contactHistory.map((el, idx) => {
-                  return <Text key={idx} style={styles.historyRow}> {el.date}: {el.message} </Text>;
-                })
-              : <Text style={styles.historyRow}> No contact history found </Text>
-            }
+            <View style={styles.contactBorder}>
+              {contact.contactHistory.length > 0
+                ? contactHistory.map((el, idx) => {
+                    return <Text key={idx} style={styles.historyRow}> {el.date}: {el.message} </Text>;
+                  })
+                : <Text style={styles.historyRow}> No contact history found </Text>
+              }
+            </View>
           </View>
         </View>
-        </View>
 
-        <View style={styles.bottomSpacer} />
         </ScrollView>
 
+        <View style={styles.bottomSpacer} />
         <View style={styles.flexWrap}>
 
           <TouchableOpacity
@@ -245,7 +261,9 @@ class UpdateContact extends Component {
                     nextContact: this.state.nextContact,
                     frequency: Number(this.state.frequency),
                     phoneNum: this.state.phoneNum,
-                    color: this.state.color})}
+                    color: this.state.color,
+                    notes: this.state.notes
+                  })}
           >
             <Text style={styles.actionText}> Update Contact </Text>
           </TouchableOpacity>

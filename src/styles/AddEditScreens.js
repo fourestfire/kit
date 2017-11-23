@@ -33,6 +33,13 @@ export default StyleSheet.create({
     margin: 10,
     // flex: 1,
   },
+  notes: {
+    paddingBottom: 20,
+    height: 75,
+  },
+  subtitleForNotes: {
+    marginBottom: 5,
+  },
   textWrapperHalf: {
     borderBottomWidth: 1,
     borderBottomColor: '#bfbfbf',
@@ -47,7 +54,7 @@ export default StyleSheet.create({
     // backgroundColor: 'green',
     width: maxWidth - 50,
     paddingTop: 10,
-    borderTopWidth: 1,
+    borderTopWidth: 1, // special borderTop property to separate item from group segmentedcontrol
     borderTopColor: '#bfbfbf',
   },
   textInput: {
@@ -58,6 +65,11 @@ export default StyleSheet.create({
     // borderRadius: 4,
     // borderBottomWidth: 1,
   },
+  textInputForNotes: {
+    width: maxWidth - 50,
+    height: 50,
+    fontSize: 15
+  },
   textInputHalf: {
     // backgroundColor: 'ghostwhite',
     width: maxWidth / 2 - 35,
@@ -66,13 +78,13 @@ export default StyleSheet.create({
     // borderRadius: 4,
     // borderBottomWidth: 1,
   },
-  helpText: {
+  subtitle: {
     fontSize: 14,
     fontStyle: 'italic',
     color: 'grey',
     margin: -4
   },
-  helpTextForHistory: {
+  subtitleForHistory: {
     fontSize: 14,
     fontStyle: 'italic',
     color: 'grey',
@@ -93,15 +105,12 @@ export default StyleSheet.create({
   segmentedWrapper: {
     // borderBottomWidth: 1,
     // borderBottomColor: '#bfbfbf',
-    // backgroundColor: 'lavender',
-    // flexDirection: 'column',
     height: 50,
     width: maxWidth - 50,
     // margin: 10,
     marginTop: 7,
     marginBottom: 2,
     marginHorizontal: 10,
-    // flex: 1,
   },
   segmentedControl: {
     marginTop: 12,
