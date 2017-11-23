@@ -182,7 +182,7 @@ class SectionListView extends Component {
           keyExtractor={item => item.id}
           sections={[
             {key: 'today', data: this.props.store.contacts.filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day')), title: 'Today'},
-            {key: 'tomorrow', data: this.props.store.contacts.filter(el => moment(el.nextContact).isSame(moment().add(1, 'day'), 'day')), title: 'Tomorrow'}
+            {key: 'week', data: this.props.store.contacts.filter(el => moment(el.nextContact).isBetween(moment().add(1, 'day'), moment().add(7, 'day'), 'day', '[]')), title: 'This Week'}
           ]}
           renderItem={({item, idx, section}) =>
               <Row physics={physics} contact={item}>
@@ -191,7 +191,7 @@ class SectionListView extends Component {
 
                   <View style={styles.rowContent}>
                     <Text style={styles.rowTitle}>{item.firstName} {item.lastName}</Text>
-                    <Text style={styles.rowSubtitle}>{convertFrequency(item.frequency)} (Last contact {item.lastContact ? moment(item.lastContact).format('L') : 'N/A'})</Text>
+                    <Text style={styles.rowSubtitle}>Last contact date: {item.lastContact ? moment(item.lastContact).format('L') : 'N/A'}</Text>
                     <Text style={styles.rowSubtitle}>Prev note: {item.lastMsg} </Text>
                   </View>
 
@@ -329,6 +329,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#73d4e3',
     marginRight: 15,
     zIndex: -1,
+    borderTopRightRadius: 3,
+    borderBottomRightRadius: 3,
   },
   rowTitle: {
     fontWeight: 'bold',

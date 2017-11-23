@@ -185,6 +185,8 @@ const styles = StyleSheet.create({
     // marginLeft: 5,
     marginRight: 15,
     // borderRadius: 4
+    borderTopRightRadius: 1.5,
+    borderBottomRightRadius: 1.5,
   },
   rowContent: {
     flex: 1

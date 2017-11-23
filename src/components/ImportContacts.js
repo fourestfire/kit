@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 40,
     width: maxWidth - maxWidth / 4,
-    marginLeft: maxWidth / 32,
+    marginLeft: maxWidth / 15,
     borderRadius: 5,
     borderColor: 'hsla(240, 100%, 27%, 0.9)', // dark blue base,
     borderLeftWidth: 1.2,
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1.2,
     position: 'absolute',
     left: 0,
-    top: 5,
+    top: 11,
     zIndex: 10,
     borderBottomWidth: 3,
     borderBottomColor: 'darkblue',
@@ -305,8 +305,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'transparent',
     position: 'absolute',
-    right: 0,
-    top: 0,
+    right: 3,
+    top: 5,
     zIndex: 10
   }
 
