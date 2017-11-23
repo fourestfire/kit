@@ -102,12 +102,20 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     marginTop: 40,
+    // backgroundColor: 'darkblue',
     backgroundColor: 'red',
     justifyContent: 'center',
     alignItems: 'center',
     height: 50,
-    width: maxWidth / 2,
-    borderRadius: 10
+    width: maxWidth / 1.5,
+    borderRadius: 5,
+    alignSelf: 'center',
+    borderColor: 'red', // dark blue base
+    borderLeftWidth: 1.2,
+    borderRightWidth: 1.2,
+    borderTopWidth: 1.2,
+    borderBottomWidth: 4,
+    borderBottomColor: 'darkblue',
   },
   deleteText: {
     color: 'white',

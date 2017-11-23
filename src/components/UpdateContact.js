@@ -66,10 +66,10 @@ class UpdateContact extends Component {
     this.props.navigation.goBack(null)
   }
 
-  initiateDeleteContact(contactID) {
+  initiateDeleteContact(contactID, name) {
     Alert.alert(
       'Confirm Delete',
-      "Are you sure you want to delete this contact from keep in touch app?",
+      `Are you sure you want to delete ${name} from this app?`,
       [
         {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
         {text: 'Delete', onPress: () => this.deleteContact(contactID), style: 'destructive'},
@@ -119,8 +119,42 @@ class UpdateContact extends Component {
           title='edit contact'
         />
 
-        <ScrollView>
+        <View style={styles.topSpacer} />
+        <View style={styles.topSpacer} />
 
+        <View style={styles.flexWrap}>
+          <TouchableOpacity
+            //icon="md-checkmark"
+            //iconPlacement="right"
+
+            // note that it's also necessary to update editContact method in realm.js
+            style={styles.actionButton}
+            backgroundColor='black'
+            onPress={this.updateContact.bind(this, {
+                    id: this.state.id,
+                    firstName: this.state.firstName,
+                    lastName: this.state.lastName,
+                    nextContact: this.state.nextContact,
+                    frequency: Number(this.state.frequency),
+                    phoneNum: this.state.phoneNum,
+                    color: this.state.color,
+                    notes: this.state.notes
+                  })}
+          >
+            <Text style={styles.actionText}> Update Contact </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            //icon="md-checkmark"
+            //iconPlacement="right"
+            style={[styles.actionButton, styles.delete]}
+            backgroundColor='black'
+            onPress={this.initiateDeleteContact.bind(this, this.state.id, this.state.firstName)}
+          >
+            <Text style={styles.actionText}> Delete </Text>
+          </TouchableOpacity>
+        </View>
+        <ScrollView>
         <View style={styles.topSpacer} />
 
         <View style={styles.flexWrap}>
@@ -244,39 +278,7 @@ class UpdateContact extends Component {
 
         </ScrollView>
 
-        <View style={styles.flexWrap}>
 
-          <TouchableOpacity
-            //icon="md-checkmark"
-            //iconPlacement="right"
-
-            // note that it's also necessary to update editContact method in realm.js
-            style={styles.actionButton}
-            backgroundColor='black'
-            onPress={this.updateContact.bind(this, {
-                    id: this.state.id,
-                    firstName: this.state.firstName,
-                    lastName: this.state.lastName,
-                    nextContact: this.state.nextContact,
-                    frequency: Number(this.state.frequency),
-                    phoneNum: this.state.phoneNum,
-                    color: this.state.color,
-                    notes: this.state.notes
-                  })}
-          >
-            <Text style={styles.actionText}> Update Contact </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            //icon="md-checkmark"
-            //iconPlacement="right"
-            style={[styles.actionButton, styles.delete]}
-            backgroundColor='black'
-            onPress={this.initiateDeleteContact.bind(this, this.state.id)}
-          >
-            <Text style={styles.actionText}> Delete </Text>
-          </TouchableOpacity>
-        </View>
 
       </View>
     </TouchableWithoutFeedback>

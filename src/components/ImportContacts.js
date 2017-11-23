@@ -273,7 +273,6 @@ const styles = StyleSheet.create({
     zIndex: 10,
     borderBottomWidth: 3,
     borderBottomColor: 'darkblue',
-    // alignSelf: 'flex-end',
   },
   disabled: {
     backgroundColor: '#f1f1f1',

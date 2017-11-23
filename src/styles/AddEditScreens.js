@@ -136,21 +136,41 @@ export default StyleSheet.create({
   },
 
   actionButton: {
-    backgroundColor: 'darkblue',
+    backgroundColor: 'hsla(240, 100%, 27%, 0.65)',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 50,
-    width: maxWidth * 2 / 3
-    // alignSelf: 'flex-end',
+    height: 40,
+    width: maxWidth * 2 / 3 - 30,
+    borderRadius: 5,
+    borderColor: 'hsla(240, 100%, 27%, 0.9)', // dark blue base
+    borderLeftWidth: 1.2,
+    borderRightWidth: 1.2,
+    borderTopWidth: 1.2,
+    borderBottomWidth: 3,
+    borderBottomColor: 'darkblue',
+    marginHorizontal: 6,
   },
+
+  // original version
+  // actionButton: {
+  //   backgroundColor: 'darkblue',
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   height: 50,
+  //   width: maxWidth * 2 / 3
+  //   // alignSelf: 'flex-end',
+  // },
+
   delete: {
     backgroundColor: 'red',
-    width: maxWidth * 1 / 3
+    width: maxWidth * 1 / 3 - 30,
+    borderColor: 'red',
+    borderBottomColor: 'darkblue',
   },
   actionText: {
     color: 'white',
-    fontSize: 20,
-    fontWeight: '200'
+    fontSize: 18,
+    fontWeight: '300'
   },
 
   topSpacer: {
@@ -161,7 +181,7 @@ export default StyleSheet.create({
     flex: 1,
   },
 
-  closeButton: {
+  closeButton: { // not in use on edit screen
     // alignSelf: 'flex-end',
     // marginRight: 30,
     height: maxHeight / 10,

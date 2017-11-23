@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   textInput: {
-    backgroundColor: 'azure',
+    backgroundColor: '#f1f1f1',
     padding: 5,
     margin: 20,
     // width: maxWidth - 50,
@@ -130,12 +130,19 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     marginTop: 40,
-    backgroundColor: 'darkblue',
+    backgroundColor: 'hsla(240, 100%, 27%, 0.65)',
     justifyContent: 'center',
     alignItems: 'center',
     height: 50,
     width: maxWidth / 1.5,
-    borderRadius: 10
+    borderRadius: 5,
+    alignSelf: 'center',
+    borderColor: 'hsla(240, 100%, 27%, 0.9)', // dark blue base
+    borderLeftWidth: 1.2,
+    borderRightWidth: 1.2,
+    borderTopWidth: 1.2,
+    borderBottomWidth: 4,
+    borderBottomColor: 'darkblue',
   },
   submitText: {
     color: 'white',

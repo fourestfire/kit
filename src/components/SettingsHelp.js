@@ -45,8 +45,7 @@ class SettingsHelp extends React.Component {
 
           <TouchableOpacity
             style={styles.submitButton}
-            backgroundColor='black'
-            onPress={() => Communications.textWithoutEncoding('646-531-3004', "yo dean, what's with your app, man?")}
+            onPress={() => Communications.textWithoutEncoding('646-531-3004', "hey man, what's with your app?")}
           >
             <Text style={styles.submitText}> ask dean a question </Text>
           </TouchableOpacity>
@@ -86,17 +85,24 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     marginTop: 40,
-    backgroundColor: 'darkblue',
+    // backgroundColor: 'darkblue',
+    backgroundColor: 'hsla(240, 100%, 27%, 0.65)',
     justifyContent: 'center',
     alignItems: 'center',
     height: 50,
     width: maxWidth / 1.5,
-    borderRadius: 10,
-    alignSelf: 'center'
+    borderRadius: 5,
+    alignSelf: 'center',
+    borderColor: 'hsla(240, 100%, 27%, 0.9)', // dark blue base
+    borderLeftWidth: 1.2,
+    borderRightWidth: 1.2,
+    borderTopWidth: 1.2,
+    borderBottomWidth: 4,
+    borderBottomColor: 'darkblue',
   },
   submitText: {
     color: 'white',
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '300'
   },
 });
