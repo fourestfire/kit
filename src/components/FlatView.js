@@ -39,9 +39,9 @@ class FlatView extends Component {
 
   filterContacts(contacts, query) {
     try {
-      return filteredContacts = contacts.sort((a, b) => result = a.firstName > b.firstName ? 1 : -1).filter(contact => {
+      return filteredContacts = contacts.filter(contact => {
         return contact.fullName.match(new RegExp(query, 'i'));
-      })
+      }).sort((a, b) => result = a.firstName > b.firstName ? 1 : -1)
     } catch(e) {
       console.log("received error", e);
       return [];
