@@ -90,6 +90,7 @@ class Contact {
       lastMsg: 'string',
       phoneNum: 'string',
       color: 'string',
+      notes: 'string',
       contactHistory: {type: 'list', objectType: 'ContactHistory'},
     }
   }
@@ -129,6 +130,7 @@ export const editContact = (contact) => {
           nextContact: contact.nextContact,
           phoneNum: contact.phoneNum,
           color: contact.color,
+          notes: contact.notes,
         }, true); // true updates contact instead of creating new one
       } else {
          realm.create('Contact', { // used for complete modal, which only updates the contact dates and message
@@ -158,6 +160,7 @@ export const createContact = contact => {
       nextContact: contact.nextContact || parseInt(moment().format('x'), 10),
       lastContact: contact.lastContact || 0,
       lastMsg: contact.lastMsg || 'N/A',
+      notes: contact.notes || '',
       phoneNum: contact.phoneNum || '123-123-1234',
       color: contact.color || 'Group 1',
     });

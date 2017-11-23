@@ -33,12 +33,12 @@ export default StyleSheet.create({
     margin: 10,
     // flex: 1,
   },
-  notes: {
-    paddingBottom: 20,
-    height: 75,
-  },
-  subtitleForNotes: {
-    marginBottom: 5,
+  notesWrapper: {
+    width: maxWidth - 50,
+    marginHorizontal: 10,
+    marginTop: 10,
+    paddingBottom: 10,
+    height: 100,
   },
   textWrapperHalf: {
     borderBottomWidth: 1,
@@ -61,19 +61,28 @@ export default StyleSheet.create({
     // backgroundColor: 'ghostwhite',
     width: maxWidth - 50,
     height: 50,
+    fontSize: 15,
     // borderColor: 'lightgray',
     // borderRadius: 4,
     // borderBottomWidth: 1,
   },
   textInputForNotes: {
     width: maxWidth - 50,
-    height: 50,
-    fontSize: 15
+    height: 70,
+    fontSize: 15,
+    borderColor: '#bfbfbf',
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    paddingHorizontal: 5,
+    paddingVertical: 2,
   },
   textInputHalf: {
     // backgroundColor: 'ghostwhite',
     width: maxWidth / 2 - 35,
     height: 50,
+    fontSize: 15,
     // borderColor: 'lightgray',
     // borderRadius: 4,
     // borderBottomWidth: 1,
@@ -90,6 +99,9 @@ export default StyleSheet.create({
     color: 'grey',
     marginLeft: -4,
     marginBottom: 10,
+  },
+  subtitleForNotes: {
+    marginBottom: 7,
   },
   contactBorder: {
     // borderColor: 'grey',
@@ -145,7 +157,7 @@ export default StyleSheet.create({
     height: 10,
   },
 
-  bottomSpacer: {
+  bottomSpacer: { // not in use on edit screen
     flex: 1,
   },
 

@@ -104,8 +104,8 @@ class UpdateContact extends Component {
 
     if (contact.contactHistory.length > 0) { // shaves contact history length to fit within modal confines
       contactHistory = contact.contactHistory.slice().reverse();
-      if (contactHistory.length >= 15) {
-        contactHistory = contactHistory.slice(0, 15);
+      if (contactHistory.length >= 8) {
+        contactHistory = contactHistory.slice(0, 7);
       }
     }
 
@@ -201,7 +201,7 @@ class UpdateContact extends Component {
           </View>
         </View>
 
-        <View style={[styles.textWrapper, styles.notes]}>
+        <View style={styles.notesWrapper}>
           <Text style={[styles.subtitle, styles.subtitleForNotes]}> Notes </Text>
           <TextInput
             ref='5'
@@ -244,7 +244,6 @@ class UpdateContact extends Component {
 
         </ScrollView>
 
-        <View style={styles.bottomSpacer} />
         <View style={styles.flexWrap}>
 
           <TouchableOpacity
