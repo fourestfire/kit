@@ -184,8 +184,8 @@ class SectionListView extends Component {
               </View>}
           keyExtractor={item => item.id}
           sections={[
-            {key: 'today', data: this.props.store.contacts.filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day')), title: 'Today'},
-            {key: 'week', data: this.props.store.contacts.filter(el => moment(el.nextContact).isBetween(moment().add(1, 'day'), moment().add(7, 'day'), 'day', '[]')), title: 'This Week'}
+            {key: 'today', data: this.props.store.contacts.filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day')).sort((a, b) => result = a.firstName > b.firstName ? 1 : -1), title: 'Today'},
+            {key: 'week', data: this.props.store.contacts.filter(el => moment(el.nextContact).isBetween(moment().add(1, 'day'), moment().add(7, 'day'), 'day', '[]')).sort((a, b) => result = a.firstName > b.firstName ? 1 : -1), title: 'This Week'}
           ]}
           renderItem={({item, idx, section}) =>
               <Row physics={physics} contact={item}>
@@ -309,7 +309,11 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     borderColor: 'darkgray',
-    borderBottomWidth: 1,
+    borderBottomWidth: 1.8,
+    borderTopLeftRadius: 3,
+    borderTopRightRadius: 3,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
   },
   rowHeaderText: {
     fontSize: 30,

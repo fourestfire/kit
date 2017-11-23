@@ -126,6 +126,7 @@ export const editContact = (contact) => {
           lastName: contact.lastName,
           fullName: `${contact.firstName} ${contact.lastName}`,
           frequency: contact.frequency,
+          nextContact: contact.nextContact,
           phoneNum: contact.phoneNum,
           color: contact.color,
         }, true); // true updates contact instead of creating new one

@@ -11,6 +11,7 @@ import {
   Alert,
   ScrollView,
 } from 'react-native';
+import moment from 'moment';
 import Header from './Header';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -30,6 +31,7 @@ class UpdateContact extends Component {
       lastName: '',
       id: 9000,
       phoneNum: '1-212-442-5201',
+      nextContact: 1,
       color: '#73d4e3',
       frequency: 7,
       lastMsg: 'hi',
@@ -45,6 +47,7 @@ class UpdateContact extends Component {
       lastName: contact.lastName,
       phoneNum: contact.phoneNum,
       frequency: contact.frequency,
+      nextContact: contact.nextContact,
       lastMsg: contact.lastMsg,
       color: contact.color,
       values: ['Group 1', 'Group 2', 'Group 3', 'None'],
@@ -56,7 +59,7 @@ class UpdateContact extends Component {
   }
 
   updateContact(contact) {
-    // console.log(contact, "updated contact")
+    console.log(contact, "updated contact")
     this.props.updateContact(contact);
     this.props.navigation.goBack(null)
   }
@@ -99,8 +102,8 @@ class UpdateContact extends Component {
 
     if (contact.contactHistory.length > 0) { // shaves contact history length to fit within modal confines
       contactHistory = contact.contactHistory.slice().reverse();
-      if (contactHistory.length >= 4) {
-        contactHistory = contactHistory.slice(0, 4);
+      if (contactHistory.length >= 15) {
+        contactHistory = contactHistory.slice(0, 15);
       }
     }
 
@@ -165,9 +168,26 @@ class UpdateContact extends Component {
         </View>
 
         <View style={styles.textWrapper}>
+        <Text style={styles.helpText}> Next Contact Date </Text>
+        <TextInput
+          ref='4'
+          style={styles.textInput}
+          defaultValue={String(moment(contact.nextContact).format('L'))}
+          placeholderTextColor="#bfbfbf"
+          placeholder=""
+          keyboardType="numeric"
+          onChangeText={nextContact => {this.setState({nextContact: parseInt(moment(nextContact).format('x'), 10)})
+          console.log(this.state.nextContact)
+        }
+      }
+          returnKeyType="done"
+        />
+      </View>
+
+        <View style={styles.textWrapper}>
           <Text style={styles.helpText}> Phone Number </Text>
           <TextInput
-            ref='4'
+            ref='5'
             style={[styles.textInput, styles.phoneInput]}
             defaultValue={contact.phoneNum}
             value={this.state.phoneNum}
@@ -212,12 +232,15 @@ class UpdateContact extends Component {
           <TouchableOpacity
             //icon="md-checkmark"
             //iconPlacement="right"
+
+            // note that it's also necessary to update editContact method in realm.js
             style={styles.actionButton}
             backgroundColor='black'
             onPress={this.updateContact.bind(this, {
                     id: this.state.id,
                     firstName: this.state.firstName,
                     lastName: this.state.lastName,
+                    nextContact: this.state.nextContact,
                     frequency: Number(this.state.frequency),
                     phoneNum: this.state.phoneNum,
                     color: this.state.color})}
