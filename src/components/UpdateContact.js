@@ -121,36 +121,38 @@ class UpdateContact extends Component {
 
         <View style={styles.topSpacer} />
 
-        <View style={styles.textWrapper}>
-          <Text style={styles.helpText}> First Name </Text>
-          <TextInput
-            style={styles.textInput}
-            placeholder=""
-            placeholderTextColor="#bfbfbf"
-            autoFocus={false}
-            autoCorrect={false}
-            defaultValue={contact.firstName}
-            onChangeText={firstName => this.setState({firstName})}
-            ref='1'
-            returnKeyType="next"
-            blurOnSubmit={false}
-            onSubmitEditing={() => this._focusNextField('2')}
-          />
-        </View>
+        <View style={styles.flexWrap}>
+          <View style={styles.textWrapperHalf}>
+            <Text style={styles.helpText}> First Name </Text>
+            <TextInput
+              style={styles.textInputHalf}
+              placeholder=""
+              placeholderTextColor="#bfbfbf"
+              autoFocus={false}
+              autoCorrect={false}
+              defaultValue={contact.firstName}
+              onChangeText={firstName => this.setState({firstName})}
+              ref='1'
+              returnKeyType="next"
+              blurOnSubmit={false}
+              onSubmitEditing={() => this._focusNextField('2')}
+            />
+          </View>
 
-        <View style={styles.textWrapper}>
-          <Text style={styles.helpText}> Last Name </Text>
-          <TextInput
-            ref='2'
-            style={styles.textInput}
-            placeholder={''}
-            defaultValue={contact.lastName}
-            autoCorrect={false}
-            placeholderTextColor="#bfbfbf"
-            onChangeText={lastName => this.setState({lastName})}
-            returnKeyType="next"
-            onSubmitEditing={() => this._focusNextField('3')}
-          />
+          <View style={styles.textWrapperHalf}>
+            <Text style={styles.helpText}> Last Name </Text>
+            <TextInput
+              ref='2'
+              style={styles.textInputHalf}
+              placeholder={''}
+              defaultValue={contact.lastName}
+              autoCorrect={false}
+              placeholderTextColor="#bfbfbf"
+              onChangeText={lastName => this.setState({lastName})}
+              returnKeyType="next"
+              onSubmitEditing={() => this._focusNextField('3')}
+            />
+          </View>
         </View>
 
         <View style={styles.textWrapper}>

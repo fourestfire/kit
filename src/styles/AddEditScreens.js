@@ -33,6 +33,16 @@ export default StyleSheet.create({
     margin: 10,
     // flex: 1,
   },
+  textWrapperHalf: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#bfbfbf',
+    // backgroundColor: 'lavender',
+    // flexDirection: 'column',
+    height: 50,
+    width: maxWidth / 2 - 35,
+    margin: 10,
+    // flex: 1,
+  },
   contactHistory: {
     // backgroundColor: 'green',
     width: maxWidth - 50,
@@ -43,6 +53,14 @@ export default StyleSheet.create({
   textInput: {
     // backgroundColor: 'ghostwhite',
     width: maxWidth - 50,
+    height: 50,
+    // borderColor: 'lightgray',
+    // borderRadius: 4,
+    // borderBottomWidth: 1,
+  },
+  textInputHalf: {
+    // backgroundColor: 'ghostwhite',
+    width: maxWidth / 2 - 35,
     height: 50,
     // borderColor: 'lightgray',
     // borderRadius: 4,
