@@ -13,6 +13,12 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {TextInputMask} from 'react-native-masked-text';
 
 class AddContact extends Component {
+  static navigationOptions = {
+    header: {
+      visible: false
+    }
+  }
+
   constructor(props) {
     super(props);
     this.state = {

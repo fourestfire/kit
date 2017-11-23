@@ -56,8 +56,9 @@ class FlatView extends Component {
     this.setState({ showUpdateModal: !this.state.showUpdateModal, updateModalContact: contact });
   }
 
-  toggleImportModal = (contact) => {
+  toggleImportModal = () => {
     this.setState({ showImportModal: !this.state.showImportModal });
+    // if (this.state.showImportModal && contactsWereImported) this.props.navigation.goBack(null);
   }
 
   render() {
@@ -66,9 +67,9 @@ class FlatView extends Component {
         <Header
           leftOnPress={() => this.props.navigation.goBack(null)}
           leftText='BACK'
-          title='manage contacts'
+          title='all contacts'
           rightOnPress={() => this.toggleImportModal()}
-          rightText={getSettings().deviceSize === 'small' ?  <MCIcon size={25} name='import' /> : '   IMPORT'}
+          rightText={getSettings().deviceSize === 'small' ?  <MCIcon size={25} name='import' /> : '   ADD'}
         />
 
         <Modal

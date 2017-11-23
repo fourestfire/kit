@@ -34,7 +34,10 @@ class SectionListView extends Component {
     tabBar: {
       label: 'Today',
       icon: ({ tintColor }) => <MIcon size={24} name='calendar-check' color={ tintColor }/>
-    }
+    },
+    header: {
+      visible: false
+    },
   }
 
   constructor(props) {
