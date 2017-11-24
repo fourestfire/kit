@@ -143,6 +143,7 @@ class SectionListView extends Component {
 
     return (
       <View style={styles.container}>
+
         <Modal
           visible={this.state.showAddModal}
           onRequestClose={this.toggleAddModal}
@@ -176,6 +177,7 @@ class SectionListView extends Component {
         </Modal>
 
         <SectionList
+          scrollEnabled={false} // gets rid of display bug on scroll for now
           style={styles.sectionList}
           ListHeaderComponent={this.renderHeader}
           renderSectionHeader={({section}) =>
@@ -208,13 +210,6 @@ class SectionListView extends Component {
     );
   }
 }
-
-/* icon for down arrow <Icon size={30} name='ios-arrow-down' /> */
-
-/* Removed sections from Today list
-{key: 'week', data: this.props.store.contacts.filter(el => moment(el.nextContact).isBetween(moment().add(2, 'day'), moment().add(7, 'day'), 'day', '[]')), title: 'Week'},
-{key: 'later', data: this.props.store.contacts.filter(el => moment(el.nextContact).isAfter(moment().add(7, 'day'), 'day')), title: 'Later'}
-*/
 
 /* -------------------<   CONTAINER   >-------------------- */
 
@@ -263,34 +258,6 @@ export default kit = StackNavigator({
 
   }, { headerMode: 'screen' }
 );
-
-// export default kit = TabNavigator({
-//   Main: { screen: Main },
-//   FlatView: { screen: FlatView },
-//   ImportContacts: { screen: ImportContacts }
-// }, {
-//   // swipeEnabled: true,
-//   animationEnabled: true,
-//   style: {
-//     backgroundColor: 'purple'
-//   },
-//   // tabBarPosition: 'top',
-//   // lazy: true,
-//   tabBarOptions: {
-//     activeTintColor: 'purple',
-//     style: {
-//       backgroundColor: 'transparent',
-//       height: 50,
-//       // marginTop: 70
-//     },
-//     labelStyle: {
-//       fontSize: 11,
-//     },
-//   },
-// });
-
-
-
 
 /* -------------------<   STYLES   >-------------------- */
 const Screen = Dimensions.get('window');
@@ -372,16 +339,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   }
 });
-
-/* alternative color styling
-rowColor: {
-    width: 20,
-    height: 50,
-    borderRadius: 5,
-    backgroundColor: '#73d4e3',
-    marginLeft: 10,
-    marginRight: 15,
-    zIndex: -1,
-  },
-
-  */
