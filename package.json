@@ -16,6 +16,7 @@
     "react-native-collapsible": "^0.8.0",
     "react-native-communications": "^2.2.1",
     "react-native-interactable": "0.0.8",
+    "react-native-iphone-x-helper": "^1.0.1",
     "react-native-masked-text": "^1.5.1",
     "react-native-push-notification": "^3.0.0",
     "react-native-root-toast": "^1.4.0",
