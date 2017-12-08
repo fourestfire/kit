@@ -182,12 +182,15 @@ export default connect(mapState, mapDispatch)(ImportContacts);
 
 /* -------------------<   STYLES   >-------------------- */
 import { maxHeight, maxWidth } from '../styles/global';
+import { isIphoneX } from 'react-native-iphone-x-helper';
+
+const marginTop = isIphoneX() ? 45 : 25;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    marginTop: 25,
+    marginTop: marginTop,
   },
   searchbar: {
     width: maxWidth,

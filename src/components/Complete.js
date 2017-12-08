@@ -78,11 +78,13 @@ export default connect(mapState, mapDispatch)(Complete);
 /* -------------------<   STYLING   >-------------------- */
 
 import { maxHeight, maxWidth } from '../styles/global';
+import { isIphoneX } from 'react-native-iphone-x-helper';
+const marginTop = isIphoneX() ? 50 : 30;
 
 const styles = StyleSheet.create({
   container: {
     height: 500,
-    marginTop: 30,
+    marginTop: marginTop,
     backgroundColor: 'transparent'
   },
   secondContainer: {

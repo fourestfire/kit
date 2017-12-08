@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, Animated, TouchableOpacity, Dimensions, ScrollView, Platform, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { isIphoneX } from 'react-native-iphone-x-helper';
 
 export default class Header extends React.Component {
   constructor(props) {
@@ -40,8 +41,8 @@ export default class Header extends React.Component {
   }
 }
 
-const STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? 20 : 25;
-const HEADER_HEIGHT = Platform.OS === 'ios' ? 44 + STATUS_BAR_HEIGHT : 56 + STATUS_BAR_HEIGHT; // originally 44 + STATUS_BAR_HEIGHT for iOS
+const STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? (isIphoneX() ? 45 : 20) : 25;
+const HEADER_HEIGHT = Platform.OS === 'ios' ? 44 + STATUS_BAR_HEIGHT : 56 + STATUS_BAR_HEIGHT;
 
 const styles = StyleSheet.create({
   toolbarContainer: {
