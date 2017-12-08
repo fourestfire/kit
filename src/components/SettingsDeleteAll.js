@@ -51,9 +51,10 @@ class SettingsDeleteAll extends React.Component {
                     {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
                     {text: 'Delete', onPress: () => {try {
                       this.props.navigation.goBack(null);
+                      this.props.navigation.goBack(null);
                       this.props.removeAllContacts();
                     } catch (error) {
-                      console.warning("an error occurred", error)
+                      console.warn("an error occurred", error)
                     }}, style: 'destructive'},
                   ]
                 );
