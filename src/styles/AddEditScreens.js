@@ -77,6 +77,7 @@ export default StyleSheet.create({
     borderRightWidth: 1,
     paddingHorizontal: 5,
     paddingVertical: 2,
+    backgroundColor: '#f8f8f8',
   },
   textInputHalf: {
     // backgroundColor: 'ghostwhite',

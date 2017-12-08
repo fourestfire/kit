@@ -78,8 +78,8 @@ class UpdateContact extends Component {
   }
 
   deleteContact(contactID) {
-    this.props.removeContact(contactID);
     this.props.navigation.goBack(null)
+    this.props.removeContact(contactID);
   }
 
   findColorIndex() {
