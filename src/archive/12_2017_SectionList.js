@@ -84,6 +84,7 @@ class SectionListView extends Component {
     if (!getSettings().tutorialSeen) this.toggleTutorialModal();
   }
 
+  // currently not used, manually rendering header
   renderHeader = () => {
     return <View>
       <View style={styles.logo}>
@@ -176,10 +177,27 @@ class SectionListView extends Component {
           <Complete contact={this.state.completeModalContact} screenProps={{ toggle: this.toggleCompleteModal }} />
         </Modal>
 
+        <View>
+          <View style={styles.logo}>
+            <Icon size={80} name='logo-nodejs' />
+          </View>
+
+          <Header
+            leftOnPress={() => this.props.navigation.navigate('SettingsMenu')}
+            leftText={getSettings().deviceSize === 'small' ?  <Icon size={25} name='ios-settings' /> : 'SETTINGS'}
+            title={'keep in touch'}
+            rightOnPress={() => {  // on first run, send them to import before edit
+              if (getSettings().contactsImported) this.props.navigation.navigate('AllContacts');
+              else this.toggleImportModal();
+            }}
+            rightText={getSettings().contactsImported ? '    EDIT' : getSettings().deviceSize === 'small' ?  <MIcon size={25} name='import' /> : '   IMPORT'} // if device size is small, have to make the import text into an icon
+          />
+        </View>
+
         <SectionList
-          scrollEnabled={false} // gets rid of display bug on scroll for now
+          scrollEnabled={true}
           style={styles.sectionList}
-          ListHeaderComponent={this.renderHeader}
+          ListHeaderComponent={null}
           renderSectionHeader={({section}) =>
               <View style={styles.rowHeader}>
                 <Text style={styles.rowHeaderText}> {section.title} </Text>
@@ -322,7 +340,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-
   doneHolder: {
     top: 0,
     width: 70,
