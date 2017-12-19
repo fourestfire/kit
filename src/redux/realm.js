@@ -162,7 +162,7 @@ export const createContact = contact => {
       lastMsg: contact.lastMsg || 'N/A',
       notes: contact.notes || '',
       phoneNum: contact.phoneNum || '123-123-1234',
-      color: contact.color || 'Group 1',
+      color: contact.color || 'None',
     });
   });
   // console.log('total # of contacts', getAllContacts().length);

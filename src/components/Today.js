@@ -214,7 +214,7 @@ class TodayView extends Component {
 
         {
           this.props.store.contacts
-          .filter(el => moment(el.nextContact).isBetween(moment().add(1, 'day'), moment().add(7, 'day'), 'day', '[]'))
+          .filter(el => moment(el.nextContact).isBetween(moment().add(1, 'day'), moment().add(14, 'day'), 'day', '[]'))
           .sort((a, b) => result = a.firstName > b.firstName ? 1 : -1)
           .map(contact => {
             return (
@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
   rowHeaderText: {
     fontSize: 30,
     fontWeight: '200',
-    marginLeft: 10,
+    marginLeft: 14,
   },
   wholeRow: {
     flex: 1,
@@ -332,7 +332,7 @@ const styles = StyleSheet.create({
     width: 10,
     height: 70,
     backgroundColor: '#73d4e3',
-    marginRight: 15,
+    marginRight: 12,
     zIndex: -1,
     borderTopRightRadius: 3,
     borderBottomRightRadius: 3,
