@@ -29,7 +29,7 @@ export default class Header extends React.Component {
 
 const styles = StyleSheet.create({
   rowText: {
-    fontSize: 16,
+    fontSize: 19,
     color: '#333',
     marginLeft: 15,
   },
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 1,
     borderColor: '#eeeeee',
-    height: 50,
+    height: 55,
   },
   rowHeader: {
     flex: 1,

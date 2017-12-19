@@ -8,6 +8,16 @@ export default StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white'
   },
+  helpTextView: {
+    height: 50,
+    width: maxWidth - 50,
+    margin: 10,
+  },
+  helpText: {
+    fontSize: 18,
+    color: 'black',
+    margin: -4
+  },
   headlineForAdd: {
     fontSize: 20,
     fontWeight: '700',
@@ -88,14 +98,19 @@ export default StyleSheet.create({
     // borderRadius: 4,
     // borderBottomWidth: 1,
   },
+  formLabel: {
+    fontSize: 16,
+    color: 'black',
+    margin: -4
+  },
   subtitle: {
-    fontSize: 14,
+    fontSize: 16,
     fontStyle: 'italic',
     color: 'grey',
     margin: -4
   },
   subtitleForHistory: {
-    fontSize: 14,
+    fontSize: 16,
     fontStyle: 'italic',
     color: 'grey',
     marginLeft: -4,

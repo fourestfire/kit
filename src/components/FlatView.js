@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 1,
     borderColor: '#eeeeee',
-    height: 50,
+    height: 60,
   },
   rowColor: {
     width: 8,
@@ -179,10 +179,10 @@ const styles = StyleSheet.create({
   },
   rowTitle: {
     fontWeight: 'bold',
-    fontSize: 16
+    fontSize: 19
   },
   rowSubtitle: {
-    fontSize: 14,
+    fontSize: 16,
     color: 'gray'
   },
   editIcon: {

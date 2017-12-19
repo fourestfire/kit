@@ -71,7 +71,7 @@ class ImportContacts extends Component {
     try {
       return contacts.filter(contact => {
         return contact.fullName.match(new RegExp(query, 'i'));
-      }).sort((a, b) => result = a.lastName > b.lastName ? 1 : -1);
+      }).sort((a, b) => result = a.firstName > b.firstName ? 1 : -1);
     } catch (e) {
       console.log('received error', e);
       return [];

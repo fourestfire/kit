@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   titleText: {
     color: 'black',
     fontWeight: '300',
-    fontSize: 20,
+    fontSize: 22,
   },
   leftItem: {
     flex: 1,
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   },
   itemText: {
     letterSpacing: 1,
-    fontSize: 12,
+    fontSize: 14,
     color: 'black'
   },
 });

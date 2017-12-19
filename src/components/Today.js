@@ -350,10 +350,10 @@ const styles = StyleSheet.create({
   },
   rowTitle: {
     fontWeight: 'bold',
-    fontSize: 16
+    fontSize: 19
   },
   rowSubtitle: {
-    fontSize: 14,
+    fontSize: 16,
     color: 'gray'
   },
   logo: {
