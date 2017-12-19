@@ -19,6 +19,7 @@ import AddContact from './AddContact';
 import AddOrImport from './AddOrImport';
 import UpdateContact from './UpdateContact';
 import ImportContacts from './ImportContacts';
+import ImportContactsOptions from './ImportContactsOptions';
 import Complete from './Complete';
 
 import SettingsMenu from './SettingsMenu';
@@ -274,6 +275,9 @@ export default kit = StackNavigator({
     },
     ImportContacts: {
       screen: ImportContacts
+    },
+    ImportContactsOptions: {
+      screen: ImportContactsOptions
     },
     SettingsMenu: {
       screen: SettingsMenu

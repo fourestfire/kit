@@ -6,25 +6,48 @@ import {
   SegmentedControlIOS,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  Modal
 } from 'react-native';
+import ImportContacts from './ImportContacts';
 import Header from './Header';
 
-class AddOrImport extends Component {
+class ImportContactsOptions extends Component {
   static navigationOptions = {
     header: {
       visible: false
     }
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      showImportModal: false,
+    };
+  }
+
+  toggleImportModal = () => {
+    this.setState({ showImportModal: !this.state.showImportModal });
+    this.props.navigation.navigate('Today');
+  }
+
   render() {
     return (
       <View style={styles.container}>
+
+        <Modal
+          visible={this.state.showImportModal}
+          onRequestClose={this.toggleImportModal}
+          animationType='slide'
+        >
+          <ImportContacts screenProps={{ toggle: this.toggleImportModal }} />
+        </Modal>
+
         <Header
-            leftOnPress={() => this.props.navigation.goBack(null)}
-            leftText='BACK'
-            title='choose import type'
-          />
+          leftOnPress={() => this.props.navigation.goBack(null)}
+          leftText='BACK'
+          title='choose import options'
+        />
 
         <View style={styles.topFlex} />
 
@@ -32,22 +55,9 @@ class AddOrImport extends Component {
           <TouchableOpacity
             style={[styles.actionButton, styles.large]}
             backgroundColor='black'
-            onPress={() => this.props.navigation.navigate('ImportContactsOptions')}
+            onPress={this.toggleImportModal}
           >
-            <Text style={styles.actionText}> Import From Phone </Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.tenSpacer} />
-        <View style={styles.tenSpacer} />
-
-        <View style={styles.flexWrap}>
-          <TouchableOpacity
-            style={[styles.actionButton, styles.large]}
-            backgroundColor='black'
-            onPress={() => this.props.navigation.navigate('AddContact')}
-          >
-            <Text style={styles.actionText}> Add Contact Manually </Text>
+            <Text style={styles.actionText}> Begin Import </Text>
           </TouchableOpacity>
         </View>
 
@@ -67,7 +77,7 @@ import { addContact } from '../redux/reducer';
 const mapState = ({ store }) => ({ store });
 const mapDispatch = ({ addContact });
 
-export default connect(mapState, mapDispatch)(AddOrImport);
+export default connect(mapState, mapDispatch)(ImportContactsOptions);
 
 /* -------------------<   STYLING   >-------------------- */
 
