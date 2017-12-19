@@ -16,6 +16,7 @@ import { convertColor } from '../utils/utils';
 import { StackNavigator, TabNavigator } from "react-navigation";
 import FlatView from './FlatView';
 import AddContact from './AddContact';
+import AddOrImport from './AddOrImport';
 import UpdateContact from './UpdateContact';
 import ImportContacts from './ImportContacts';
 import Complete from './Complete';
@@ -264,6 +265,9 @@ export default kit = StackNavigator({
     },
     AddContact: {
       screen: AddContact
+    },
+    AddOrImport: {
+      screen: AddOrImport
     },
     UpdateContact: {
       screen: UpdateContact

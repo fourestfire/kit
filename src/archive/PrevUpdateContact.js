@@ -99,7 +99,7 @@ class UpdateContact extends Component {
           <Icon name="ios-close" size={50} color="darkgrey" />
         </TouchableOpacity>
 
-        <View style={styles.topSpacer} />
+        <View style={styles.tenSpacer} />
 
         <Text style={styles.headlineForEdit}> Edit Contact </Text>
 

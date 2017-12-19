@@ -62,7 +62,7 @@ class FlatView extends Component {
           leftOnPress={() => this.props.navigation.goBack(null)}
           leftText='BACK'
           title='all contacts'
-          rightOnPress={() => this.props.navigation.navigate('AddContact')}
+          rightOnPress={() => this.props.navigation.navigate('AddOrImport')}
           rightText={getSettings().deviceSize === 'small' ?  <MCIcon size={25} name='import' /> : '   ADD'}
         />
 

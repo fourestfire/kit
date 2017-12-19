@@ -15,7 +15,7 @@ export default StyleSheet.create({
     marginVertical: 10,
     marginHorizontal: 20,
   },
-  headlineForEdit: { // will be unnecessary if there's no headline that says "Edit Contact"
+  headlineForEdit: { // unnecessary if there's no headline that says "Edit Contact"
     fontSize: 20,
     fontWeight: '700',
     alignSelf: 'flex-start',
@@ -152,6 +152,15 @@ export default StyleSheet.create({
     marginHorizontal: 6,
   },
 
+  large: {
+    height: 60,
+    width: maxWidth * 5 / 6 - 30,
+  },
+
+  long: {
+    width: maxWidth - 45,
+  },
+
   // original version
   // actionButton: {
   //   backgroundColor: 'darkblue',
@@ -174,8 +183,12 @@ export default StyleSheet.create({
     fontWeight: '300'
   },
 
-  topSpacer: {
+  tenSpacer: {
     height: 10,
+  },
+
+  topFlex: {
+    flex: 1,
   },
 
   bottomSpacer: { // not in use on edit screen

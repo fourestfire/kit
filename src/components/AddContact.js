@@ -58,7 +58,7 @@ class AddContact extends Component {
 
   addContact(contact) {
     this.props.addContact(contact);
-    this.props.navigation.goBack(null)
+    this.props.navigation.navigate('Today')
   }
 
   render() {
@@ -69,31 +69,31 @@ class AddContact extends Component {
       <View style={styles.container}>
 
         <Header
-            leftOnPress={() => this.props.navigation.goBack(null)}
-            leftText='BACK'
-            title='edit contact'
-          />
+          leftOnPress={() => this.props.navigation.goBack(null)}
+          leftText='BACK'
+          title='add contact'
+        />
 
-        <View style={styles.topSpacer} />
-        <View style={styles.topSpacer} />
+        <View style={styles.tenSpacer} />
+        <View style={styles.tenSpacer} />
 
         <View style={styles.flexWrap}>
           <TouchableOpacity
-            // note that it's also necessary to update editContact method in realm.js
-            style={styles.actionButton}
+            style={[styles.actionButton, styles.long]}
             backgroundColor='black'
+            onPress={this.addContact.bind(this, {
+              firstName: this.state.firstName,
+              lastName: this.state.lastName,
+              frequency: Number(this.state.frequency),
+              nextContact: date,
+              lastContact: null,
+              lastMsg: 'N/A',
+              phoneNum: this.state.phoneNum,
+              color: '#73d4e3'})}
           >
-            <Text style={styles.actionText}> Update Contact </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.actionButton, styles.delete]}
-            backgroundColor='black'
-          >
-            <Text style={styles.actionText}> Delete </Text>
+            <Text style={styles.actionText}> Save New Contact </Text>
           </TouchableOpacity>
         </View>
-
 
         <View style={styles.textWrapper}>
           <TextInput
@@ -169,24 +169,6 @@ class AddContact extends Component {
         </View>
 
         <View style={styles.bottomSpacer} />
-
-        <TouchableOpacity
-          //icon="md-checkmark"
-          //iconPlacement="right"
-          style={styles.actionButton}
-          backgroundColor="black"
-          onPress={this.addContact.bind(this, {
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            frequency: Number(this.state.frequency),
-            nextContact: date,
-            lastContact: null,
-            lastMsg: 'N/A',
-            phoneNum: this.state.phoneNum,
-            color: '#73d4e3'})}
-        >
-          <Text style={styles.actionText}> Save </Text>
-        </TouchableOpacity>
     </View>
     </TouchableWithoutFeedback>
     );

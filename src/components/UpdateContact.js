@@ -119,8 +119,8 @@ class UpdateContact extends Component {
           title='edit contact'
         />
 
-        <View style={styles.topSpacer} />
-        <View style={styles.topSpacer} />
+        <View style={styles.tenSpacer} />
+        <View style={styles.tenSpacer} />
 
         <View style={styles.flexWrap}>
           <TouchableOpacity
@@ -150,7 +150,7 @@ class UpdateContact extends Component {
           </TouchableOpacity>
         </View>
         <ScrollView>
-        <View style={styles.topSpacer} />
+        <View style={styles.tenSpacer} />
 
         <View style={styles.flexWrap}>
           <View style={styles.textWrapperHalf}>
