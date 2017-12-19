@@ -134,19 +134,19 @@ class ImportContacts extends Component {
           </TouchableOpacity>
 
           <View style={styles.searchbar}>
-          <SearchBar
-            ref='searchbar'
-            showsCancelButton={false}
-            placeholder='Search'
-            onChangeText={query => this.setState({query: query})}
-            onSearchButtonPress={() => this.refs.searchbar.unFocus()}
-            onCancelButtonPress={() => {
-              this.setState({ query: '' });
-              this.refs.searchbar.unFocus();
-            }}
-            searchBarStyle={'minimal'}
-          />
-        </View>
+            <SearchBar
+              ref='searchbar'
+              showsCancelButton={false}
+              placeholder='Search'
+              onChangeText={query => this.setState({query: query})}
+              onSearchButtonPress={() => this.refs.searchbar.unFocus()}
+              onCancelButtonPress={() => {
+                this.setState({ query: '' });
+                this.refs.searchbar.unFocus();
+              }}
+              searchBarStyle={'minimal'}
+            />
+          </View>
 
           <FlatList
             style={styles.flatlist}
@@ -164,7 +164,6 @@ class ImportContacts extends Component {
               </TouchableOpacity>)
               }
           />
-
         </View>
     );
   }
@@ -207,7 +206,8 @@ const styles = StyleSheet.create({
     // backgroundColor: 'darkgrey',
   },
   flatlist: {
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    marginLeft: 10,
   },
   rowHeader: {
     flex: 1,

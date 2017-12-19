@@ -9,6 +9,7 @@ import {
   Keyboard
 } from 'react-native';
 import moment from 'moment';
+import Header from './Header';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {TextInputMask} from 'react-native-masked-text';
 
@@ -24,10 +25,12 @@ class AddContact extends Component {
     this.state = {
       firstName: '',
       lastName: '',
+      id: 9000,
       phoneNum: '',
       color: '#73d4e3',
       frequency: 14,
-      values: ['Daily',  'Weekly', 'Monthly'],
+      lastMsg: 'hi',
+      notes: 'hello',
     };
   }
 
@@ -55,7 +58,7 @@ class AddContact extends Component {
 
   addContact(contact) {
     this.props.addContact(contact);
-    this.props.screenProps.toggle();
+    this.props.navigation.goBack(null)
   }
 
   render() {
@@ -64,106 +67,126 @@ class AddContact extends Component {
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.props.screenProps.toggle} style={styles.closeButton}>
-          <Icon name="ios-close" size={50} color="darkgrey" />
+
+        <Header
+            leftOnPress={() => this.props.navigation.goBack(null)}
+            leftText='BACK'
+            title='edit contact'
+          />
+
+        <View style={styles.topSpacer} />
+        <View style={styles.topSpacer} />
+
+        <View style={styles.flexWrap}>
+          <TouchableOpacity
+            // note that it's also necessary to update editContact method in realm.js
+            style={styles.actionButton}
+            backgroundColor='black'
+          >
+            <Text style={styles.actionText}> Update Contact </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.actionButton, styles.delete]}
+            backgroundColor='black'
+          >
+            <Text style={styles.actionText}> Delete </Text>
+          </TouchableOpacity>
+        </View>
+
+
+        <View style={styles.textWrapper}>
+          <TextInput
+            ref="1"
+            style={styles.textInput}
+            placeholder={'First Name'}
+            placeholderTextColor="#bfbfbf"
+            autoFocus={true}
+            autoCorrect={false}
+            onChangeText={firstName => this.setState({firstName})}
+            returnKeyType="next"
+            blurOnSubmit={false}
+            onSubmitEditing={() => this._focusNextField('2')}
+          />
+        </View>
+
+        <View style={styles.textWrapper}>
+          <TextInput
+            ref="2"
+            style={styles.textInput}
+            placeholder={'Last Name'}
+            placeholderTextColor="#bfbfbf"
+            autoCorrect={false}
+            onChangeText={lastName => this.setState({lastName})}
+            returnKeyType="next"
+            onSubmitEditing={this._focusPhoneField.bind(this)}
+          />
+        </View>
+
+        <View style={styles.textWrapper}>
+          <TextInputMask
+            ref="3"
+            style={[styles.textInput, styles.phoneInput]}
+            type={'custom'}
+            options={{
+              mask: '(999) 999-9999'
+            }}
+            placeholder={'Phone #'}
+            placeholderTextColor="#bfbfbf"
+            dataDetectorTypes="phoneNumber"
+            keyboardType="numeric"
+            value={this.state.phoneNum}
+            onChangeText={this._onPhoneTextChange.bind(this)}
+            returnKeyType="next"
+            onSubmitEditing={() => {
+              this._onPhoneTextSubmit();
+              this._focusNextField('4');}
+            }
+          />
+          {/*<TextInput
+            ref='3'
+            style={[styles.textInput, styles.phoneInput]}
+            placeholder={'Phone #'}
+            placeholderTextColor="#bfbfbf"
+            dataDetectorTypes="phoneNumber"
+            keyboardType="phone-pad"
+            onChangeText={phoneNum=>this.setState({phoneNum})}
+            returnKeyType="next"
+            onSubmitEditing={() => this._focusNextField('4')}
+          />*/}
+        </View>
+
+        <View style={styles.textWrapper}>
+          <TextInput
+            ref="4"
+            style={styles.textInput}
+            placeholderTextColor="#bfbfbf"
+            placeholder="Contact Frequency (in days)"
+            keyboardType="numeric"
+            onChangeText={frequency => this.setState({frequency})}
+            returnKeyType="done"
+          />
+        </View>
+
+        <View style={styles.bottomSpacer} />
+
+        <TouchableOpacity
+          //icon="md-checkmark"
+          //iconPlacement="right"
+          style={styles.actionButton}
+          backgroundColor="black"
+          onPress={this.addContact.bind(this, {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            frequency: Number(this.state.frequency),
+            nextContact: date,
+            lastContact: null,
+            lastMsg: 'N/A',
+            phoneNum: this.state.phoneNum,
+            color: '#73d4e3'})}
+        >
+          <Text style={styles.actionText}> Save </Text>
         </TouchableOpacity>
-
-      <View style={styles.topSpacer} />
-
-      <Text style={styles.headlineForAdd}> Add Contact </Text>
-
-      <View style={styles.textWrapper}>
-        <TextInput
-          ref="1"
-          style={styles.textInput}
-          placeholder={'First Name'}
-          placeholderTextColor="#bfbfbf"
-          autoFocus={true}
-          autoCorrect={false}
-          onChangeText={firstName => this.setState({firstName})}
-          returnKeyType="next"
-          blurOnSubmit={false}
-          onSubmitEditing={() => this._focusNextField('2')}
-        />
-      </View>
-
-      <View style={styles.textWrapper}>
-        <TextInput
-          ref="2"
-          style={styles.textInput}
-          placeholder={'Last Name'}
-          placeholderTextColor="#bfbfbf"
-          autoCorrect={false}
-          onChangeText={lastName => this.setState({lastName})}
-          returnKeyType="next"
-          onSubmitEditing={this._focusPhoneField.bind(this)}
-        />
-      </View>
-
-      <View style={styles.textWrapper}>
-        <TextInputMask
-          ref="3"
-          style={[styles.textInput, styles.phoneInput]}
-          type={'custom'}
-          options={{
-            mask: '(999) 999-9999'
-          }}
-          placeholder={'Phone #'}
-          placeholderTextColor="#bfbfbf"
-          dataDetectorTypes="phoneNumber"
-          keyboardType="numeric"
-          value={this.state.phoneNum}
-          onChangeText={this._onPhoneTextChange.bind(this)}
-          returnKeyType="next"
-          onSubmitEditing={() => {
-            this._onPhoneTextSubmit();
-            this._focusNextField('4');}
-          }
-        />
-        {/*<TextInput
-          ref='3'
-          style={[styles.textInput, styles.phoneInput]}
-          placeholder={'Phone #'}
-          placeholderTextColor="#bfbfbf"
-          dataDetectorTypes="phoneNumber"
-          keyboardType="phone-pad"
-          onChangeText={phoneNum=>this.setState({phoneNum})}
-          returnKeyType="next"
-          onSubmitEditing={() => this._focusNextField('4')}
-        />*/}
-      </View>
-
-      <View style={styles.textWrapper}>
-        <TextInput
-          ref="4"
-          style={styles.textInput}
-          placeholderTextColor="#bfbfbf"
-          placeholder="Contact Frequency (in days)"
-          keyboardType="numeric"
-          onChangeText={frequency => this.setState({frequency})}
-          returnKeyType="done"
-        />
-      </View>
-
-      <View style={styles.bottomSpacer} />
-
-      <TouchableOpacity
-        //icon="md-checkmark"
-        //iconPlacement="right"
-        style={styles.actionButton}
-        backgroundColor="black"
-        onPress={this.addContact.bind(this, {
-          firstName: this.state.firstName,
-          lastName: this.state.lastName,
-          frequency: Number(this.state.frequency),
-          nextContact: date,
-          lastContact: null,
-          lastMsg: 'N/A',
-          phoneNum: this.state.phoneNum,
-          color: '#73d4e3'})}
-      >
-        <Text style={styles.actionText}> Save </Text>
-      </TouchableOpacity>
     </View>
     </TouchableWithoutFeedback>
     );

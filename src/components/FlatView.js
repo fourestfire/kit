@@ -3,9 +3,9 @@ import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity, Dimensions,
 import Icon from 'react-native-vector-icons/Ionicons';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import Header from './Header';
-import AddContact from './AddContact';
 import moment from 'moment';
 import { convertFrequency, convertColor } from '../utils/utils';
+import AddContact from './AddContact';
 import UpdateContact from './UpdateContact';
 import ImportContacts from './ImportContacts';
 
@@ -32,8 +32,6 @@ class FlatView extends Component {
     this.state = {
       query: '',
       showImportModal: false,
-      showUpdateModal: false,
-      updateModalContact: {},
     };
   }
 
@@ -52,10 +50,6 @@ class FlatView extends Component {
     return this.filterContacts(this.props.store.contacts, this.state.query);
   }
 
-  toggleUpdateModal = (contact) => {
-    this.setState({ showUpdateModal: !this.state.showUpdateModal, updateModalContact: contact });
-  }
-
   toggleImportModal = () => {
     this.setState({ showImportModal: !this.state.showImportModal });
     // if (this.state.showImportModal && contactsWereImported) this.props.navigation.goBack(null);
@@ -68,17 +62,9 @@ class FlatView extends Component {
           leftOnPress={() => this.props.navigation.goBack(null)}
           leftText='BACK'
           title='all contacts'
-          rightOnPress={() => this.toggleImportModal()}
+          rightOnPress={() => this.props.navigation.navigate('AddContact')}
           rightText={getSettings().deviceSize === 'small' ?  <MCIcon size={25} name='import' /> : '   ADD'}
         />
-
-        <Modal
-          visible={this.state.showUpdateModal}
-          onRequestClose={this.toggleUpdateModal}
-          animationType='slide'
-        >
-          <UpdateContact screenProps={{ toggle: this.toggleUpdateModal }} contact={this.state.updateModalContact} />
-        </Modal>
 
         <Modal
           visible={this.state.showImportModal}
@@ -105,7 +91,7 @@ class FlatView extends Component {
           keyExtractor={item => item.id}
           data={this.filteredContacts()}
           renderItem={({item}) =>
-            <TouchableOpacity activeOpacity={0.4} onPress={() => this.props.navigation.navigate('UpdateContacts', {contact: item})} key={item.id}>
+            <TouchableOpacity activeOpacity={0.4} onPress={() => this.props.navigation.navigate('UpdateContact', {contact: item})} key={item.id}>
               <View style={styles.wholeRow}>
                 <View style={[styles.rowColor, {backgroundColor: convertColor(item.color)}]} />
                 <View style={styles.rowContent}>
@@ -116,7 +102,6 @@ class FlatView extends Component {
               </View>
             </TouchableOpacity>
         }/>
-
       </View>
     );
   }

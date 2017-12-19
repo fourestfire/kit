@@ -33,7 +33,7 @@ class UpdateContact extends Component {
       phoneNum: '1-212-442-5201',
       nextContact: 1,
       color: '#73d4e3',
-      frequency: 7,
+      frequency: 14,
       lastMsg: 'hi',
       notes: 'hello',
     }
@@ -124,9 +124,6 @@ class UpdateContact extends Component {
 
         <View style={styles.flexWrap}>
           <TouchableOpacity
-            //icon="md-checkmark"
-            //iconPlacement="right"
-
             // note that it's also necessary to update editContact method in realm.js
             style={styles.actionButton}
             backgroundColor='black'
@@ -145,8 +142,6 @@ class UpdateContact extends Component {
           </TouchableOpacity>
 
           <TouchableOpacity
-            //icon="md-checkmark"
-            //iconPlacement="right"
             style={[styles.actionButton, styles.delete]}
             backgroundColor='black'
             onPress={this.initiateDeleteContact.bind(this, this.state.id, this.state.firstName)}

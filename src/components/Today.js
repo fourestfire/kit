@@ -6,7 +6,6 @@ import moment from 'moment';
 import Interactable from 'react-native-interactable';
 import { convertFrequency } from '../utils/utils';
 import Row from './SingleContactRow';
-import AddContact from './AddContact';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FIcon from 'react-native-vector-icons/FontAwesome';
@@ -15,8 +14,9 @@ import sampleContacts from '../utils/seed';
 import { convertColor } from '../utils/utils';
 
 import { StackNavigator, TabNavigator } from "react-navigation";
-import UpdateContacts from './UpdateContact';
 import FlatView from './FlatView';
+import AddContact from './AddContact';
+import UpdateContact from './UpdateContact';
 import ImportContacts from './ImportContacts';
 import Complete from './Complete';
 
@@ -262,8 +262,11 @@ export default kit = StackNavigator({
     AllContacts: {
       screen: FlatView
     },
-    UpdateContacts: {
-      screen: UpdateContacts
+    AddContact: {
+      screen: AddContact
+    },
+    UpdateContact: {
+      screen: UpdateContact
     },
     ImportContacts: {
       screen: ImportContacts
