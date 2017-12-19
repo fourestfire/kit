@@ -134,10 +134,10 @@ const styles = StyleSheet.create({
   },
   textInput: {
     color: 'darkgrey',
-    marginLeft: 10,
+    marginLeft: 15,
     height: 45,
     backgroundColor: 'transparent',
-    fontSize: 15,
+    fontSize: 18,
     // backgroundColor: 'darkgrey',
   },
   flatlist: {
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     height: 46,
     backgroundColor: '#73d4e3',
     // marginLeft: 5,
-    marginRight: 15,
+    marginRight: 10,
     // borderRadius: 4
     borderTopRightRadius: 1.5,
     borderBottomRightRadius: 1.5,

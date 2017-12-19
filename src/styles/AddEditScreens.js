@@ -71,7 +71,7 @@ export default StyleSheet.create({
     // backgroundColor: 'ghostwhite',
     width: maxWidth - 50,
     height: 50,
-    fontSize: 15,
+    fontSize: 18,
     // borderColor: 'lightgray',
     // borderRadius: 4,
     // borderBottomWidth: 1,
@@ -79,7 +79,7 @@ export default StyleSheet.create({
   textInputForNotes: {
     width: maxWidth - 50,
     height: 70,
-    fontSize: 15,
+    fontSize: 18,
     borderColor: '#bfbfbf',
     borderTopWidth: 1,
     borderBottomWidth: 1,
@@ -93,13 +93,13 @@ export default StyleSheet.create({
     // backgroundColor: 'ghostwhite',
     width: maxWidth / 2 - 35,
     height: 50,
-    fontSize: 15,
+    fontSize: 18,
     // borderColor: 'lightgray',
     // borderRadius: 4,
     // borderBottomWidth: 1,
   },
   formLabel: {
-    fontSize: 16,
+    fontSize: 18,
     color: 'black',
     margin: -4
   },
@@ -125,6 +125,7 @@ export default StyleSheet.create({
   },
   historyRow: {
     color: '#333',
+    fontSize: 16,
     marginLeft: -4
   },
   phoneInput: {
@@ -173,6 +174,11 @@ export default StyleSheet.create({
   },
 
   long: {
+    width: maxWidth - 45,
+  },
+
+  importOptions: {
+    height: 50,
     width: maxWidth - 45,
   },
 

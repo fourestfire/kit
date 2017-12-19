@@ -61,19 +61,6 @@ class ImportContactsOptions extends Component {
         <View style={styles.tenSpacer} />
         <View style={styles.tenSpacer} />
 
-        <View style={styles.flexWrap}>
-          <TouchableOpacity
-            style={[styles.actionButton, styles.long]}
-            backgroundColor='black'
-            onPress={this.toggleImportModal}
-          >
-            <Text style={styles.actionText}> Begin Import </Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.tenSpacer} />
-        <View style={styles.tenSpacer} />
-
         <View style={styles.helpTextView}>
           <Text style={styles.helpText}>Before you import, you can choose some options to apply to all the contacts you import. </Text>
         </View>
@@ -110,6 +97,19 @@ class ImportContactsOptions extends Component {
 
         <View style={styles.tenSpacer} />
         <View style={styles.bottomSpacer} />
+
+        <View style={styles.flexWrap}>
+        <TouchableOpacity
+          style={[styles.actionButton, styles.importOptions]}
+          backgroundColor='black'
+          onPress={this.toggleImportModal}
+        >
+          <Text style={styles.actionText}> Begin Import </Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.tenSpacer} />
+      <View style={styles.tenSpacer} />
+
     </View>
     );
   }
