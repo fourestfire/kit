@@ -50,11 +50,6 @@ class FlatView extends Component {
     return this.filterContacts(this.props.store.contacts, this.state.query);
   }
 
-  toggleImportModal = () => {
-    this.setState({ showImportModal: !this.state.showImportModal });
-    // if (this.state.showImportModal && contactsWereImported) this.props.navigation.goBack(null);
-  }
-
   render() {
     return (
       <View style={styles.container}>
@@ -65,14 +60,6 @@ class FlatView extends Component {
           rightOnPress={() => this.props.navigation.navigate('AddOrImport')}
           rightText={getSettings().deviceSize === 'small' ?  <MCIcon size={25} name='import' /> : '   ADD'}
         />
-
-        <Modal
-          visible={this.state.showImportModal}
-          onRequestClose={this.toggleImportModal}
-          animationType='slide'
-        >
-          <ImportContacts screenProps={{ toggle: this.toggleImportModal }} />
-        </Modal>
 
         <View style={styles.searchbar}>
           <TextInput
@@ -166,7 +153,7 @@ const styles = StyleSheet.create({
   },
   rowColor: {
     width: 8,
-    height: 46,
+    height: 56,
     backgroundColor: '#73d4e3',
     // marginLeft: 5,
     marginRight: 10,

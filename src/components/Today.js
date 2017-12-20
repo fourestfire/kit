@@ -46,13 +46,9 @@ class TodayView extends Component {
     super(props);
     this.state = {
       query: '',
-      showAddModal: false,
-      showImportModal: false,
       showCompleteModal: false,
       completeModalContact: {},
       showTutorialModal: false,
-      isTodayCollapsed: false,
-      isTomorrowCollapsed: false,
     };
   }
 
@@ -86,14 +82,6 @@ class TodayView extends Component {
     if (!getSettings().tutorialSeen) this.toggleTutorialModal();
   }
 
-  toggleAddModal = () => {
-    this.setState({ showAddModal: !this.state.showAddModal })
-  }
-
-  toggleImportModal = (contact) => {
-    this.setState({ showImportModal: !this.state.showImportModal });
-  }
-
   toggleTutorialModal = () => {
     this.setState({ showTutorialModal: !this.state.showTutorialModal });
   }
@@ -101,22 +89,6 @@ class TodayView extends Component {
   toggleCompleteModal = (contact) => {
     this.setState({ showCompleteModal: !this.state.showCompleteModal, completeModalContact: contact});
     // console.log("completeModalBoolStatus", this.state.showCompleteModal)
-  }
-
-  toggleCollapse(type) {
-    let stateToChange = `is${type}Collapsed`;
-    let currentState = this.checkIfCollapsed(type);
-    // console.log('currentstate', stateToChange, currentState)
-    this.setState({ [stateToChange]: !currentState });
-  }
-
-  checkIfCollapsed(type) {
-    let stateToChange = `is${type}Collapsed`;
-    if (type === 'Today') { currentState = this.state.isTodayCollapsed }
-    else if (type === 'Tomorrow') { currentState = this.state.isTomorrowCollapsed }
-    // else if (type === 'Week') { currentState = this.state.isWeekCollapsed }
-    // else if (type === 'Later') { currentState = this.state.isLaterCollapsed }
-    return currentState;
   }
 
   render() {
@@ -127,23 +99,6 @@ class TodayView extends Component {
 
     return (
       <View style={styles.container}>
-
-        <Modal
-          visible={this.state.showAddModal}
-          onRequestClose={this.toggleAddModal}
-          animationType='slide'
-        >
-          <AddContact screenProps={{ toggle: this.toggleAddModal }} />
-        </Modal>
-
-        <Modal
-          visible={this.state.showImportModal}
-          onRequestClose={this.toggleImportModal}
-          animationType='slide'
-        >
-          <ImportContacts screenProps={{ toggle: this.toggleImportModal }} />
-        </Modal>
-
         <Modal
           visible={this.state.showTutorialModal}
           onRequestClose={this.toggleTutorial}
@@ -167,7 +122,7 @@ class TodayView extends Component {
             title={'keep in touch'}
             rightOnPress={() => {  // on first run, send them to import before edit
               if (getSettings().contactsImported) this.props.navigation.navigate('AllContacts');
-              else this.toggleImportModal();
+              else this.props.navigation.navigate('ImportContactsOptions');
             }}
             rightText={getSettings().contactsImported ? '    EDIT' : getSettings().deviceSize === 'small' ?  <MIcon size={25} name='import' /> : '   IMPORT'} // if device size is small, have to make the import text into an icon
           />
