@@ -55,7 +55,7 @@ class ImportContactsOptions extends Component {
           onRequestClose={this.toggleImportModal}
           animationType='slide'
         >
-          <ImportContacts screenProps={{ toggle: this.toggleImportModal }} />
+          <ImportContacts screenProps={{ toggle: this.toggleImportModal }} settings={{frequency: Number(this.state.frequency), color: this.state.color}} />
         </Modal>
 
         <View style={styles.tenSpacer} />

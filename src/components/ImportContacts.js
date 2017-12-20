@@ -104,9 +104,19 @@ class ImportContacts extends Component {
 
   importContacts() {
     // if (!this.state.isActionConfirmed) { this.setState({ isActionConfirmed: true }); } // eventual confirmation logic - press twice to import instead of just once
+    let contactsToImport = [];
     this.state.contactsToImport.forEach(arrayIdx => {
-      this.props.addContact(this.state.originalContacts[arrayIdx]);
+      contactsToImport.push(this.state.originalContacts[arrayIdx]);
     });
+
+    // apply bulk settings from ImportContactsOptions
+    contactsToImport.map(contact => {
+      contact.frequency = this.props.settings.frequency;
+      contact.color = this.props.settings.color;
+    })
+
+    // add all contacts
+    contactsToImport.forEach(contact => this.props.addContact(contact));
 
     markContactsImportedTrue();
     this.props.screenProps.toggle();
