@@ -70,7 +70,7 @@ class TodayView extends Component {
       // console.log("here are all the current contacts");
       // getAllContacts().forEach((contact, idx) => console.log(`contact ${idx + 1}: ${contact.firstName} ${contact.lastName} ${contact.phoneNum} ${contact.nextContact} ${contact.lastContact}`));
 
-    // load contacts into store
+    // load contacts from realm into redux store
     let allContacts = Array.prototype.slice.call(getAllContacts());
     this.props.getAllContactsSync(allContacts);
     // console.log("allContacts", allContacts)

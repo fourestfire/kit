@@ -16,6 +16,7 @@ import Header from './Header';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from '../styles/AddEditScreens';
+import { getAllContacts } from '../redux/realm';
 
 class UpdateContact extends Component {
   static navigationOptions = {
@@ -78,7 +79,11 @@ class UpdateContact extends Component {
   }
 
   deleteContact(contactID) {
-    this.props.navigation.goBack(null)
+    this.props.navigation.goBack(null);
+
+    let allContacts = Array.prototype.slice.call(getAllContacts());
+    this.props.getAllContactsSync(allContacts);
+
     this.props.removeContact(contactID);
   }
 
@@ -272,9 +277,6 @@ class UpdateContact extends Component {
         </View>
 
         </ScrollView>
-
-
-
       </View>
     </TouchableWithoutFeedback>
 
@@ -285,9 +287,9 @@ class UpdateContact extends Component {
 /* -------------------<   CONTAINER   >-------------------- */
 
 import { connect } from 'react-redux';
-import { updateContact, removeContact } from '../redux/reducer';
+import { getAllContactsSync, updateContact, removeContact } from '../redux/reducer';
 
 const mapState = ({ store }) => ({ store });
-const mapDispatch = ({ updateContact, removeContact });
+const mapDispatch = ({ getAllContactsSync, updateContact, removeContact });
 
 export default connect(mapState, mapDispatch)(UpdateContact);

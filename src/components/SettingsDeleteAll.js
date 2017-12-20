@@ -15,6 +15,7 @@ import {
 import Header from './Header';
 import { getSettings } from '../redux/realm';
 import Emoji from 'react-native-emoji';
+import { getAllContacts } from '../redux/realm';
 
 /* -------------------<   COMPONENT   >-------------------- */
 
@@ -37,7 +38,6 @@ class SettingsDeleteAll extends React.Component {
         />
 
         <View style={styles.flex}>
-
           <View style={styles.spacer} />
           <Text style={styles.paragraph}>Are you looking to start all over? Well, you're in luck. Don't worry, this won't delete the actual contacts on your phone ... I think.</Text>
           <TouchableOpacity
@@ -50,9 +50,15 @@ class SettingsDeleteAll extends React.Component {
                   [
                     {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
                     {text: 'Delete', onPress: () => {try {
-                      this.props.navigation.goBack(null);
-                      this.props.navigation.goBack(null);
+                      // remove all contacts
                       this.props.removeAllContacts();
+
+                      // repopulate redux store with empty contacts list
+                      let allContacts = Array.prototype.slice.call(getAllContacts());
+                      this.props.getAllContactsSync(allContacts);
+
+                      // navigate back to main page
+                      this.props.navigation.navigate('Today');
                     } catch (error) {
                       console.warn("an error occurred", error)
                     }}, style: 'destructive'},
@@ -64,10 +70,7 @@ class SettingsDeleteAll extends React.Component {
           </TouchableOpacity>
 
           <View style={styles.spacer} />
-
-
         </View>
-
       </View>
     );
   }
@@ -76,10 +79,11 @@ class SettingsDeleteAll extends React.Component {
 /* -------------------<   CONTAINER   >-------------------- */
 
 import { connect } from 'react-redux';
+import { getAllContactsSync } from '../redux/reducer';
 import { removeAllContacts } from '../redux/reducer';
 
 const mapState = ({ store }) => ({ store });
-const mapDispatch = ({ removeAllContacts });
+const mapDispatch = ({ getAllContactsSync, removeAllContacts });
 
 export default connect(mapState, mapDispatch)(SettingsDeleteAll);
 

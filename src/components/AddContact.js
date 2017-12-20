@@ -27,7 +27,7 @@ class AddContact extends Component {
       lastName: '',
       id: 9000,
       phoneNum: '',
-      color: '#73d4e3',
+      color: 'None',
       frequency: 14,
       lastMsg: 'hi',
       notes: 'hello',
@@ -89,7 +89,7 @@ class AddContact extends Component {
               lastContact: null,
               lastMsg: 'N/A',
               phoneNum: this.state.phoneNum,
-              color: '#73d4e3'})}
+              color: 'None'})}
           >
             <Text style={styles.actionText}> Save New Contact </Text>
           </TouchableOpacity>
