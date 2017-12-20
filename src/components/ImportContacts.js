@@ -41,7 +41,7 @@ class ImportContacts extends Component {
               phoneNum: contact.phoneNumbers[0].number,
               recordID: contact.recordID,
               arrayIdx: idx,
-              nextContact: randomNextContactDate(),
+              nextContact: null,
             });
           } else {
             strippedContacts.push({
@@ -51,7 +51,7 @@ class ImportContacts extends Component {
               phoneNum: 'No number found',
               recordID: contact.recordID,
               arrayIdx: idx,
-              nextContact: randomNextContactDate(),
+              nextContact: null,
             });
           }
         });
@@ -113,6 +113,7 @@ class ImportContacts extends Component {
     contactsToImport.map(contact => {
       contact.frequency = this.props.settings.frequency;
       contact.color = this.props.settings.color;
+      contact.nextContact = randomNextContactDate(contactsToImport.length);
     })
 
     // add all contacts

@@ -14,8 +14,8 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min; // The maximum is exclusive and the minimum is inclusive
 }
 
-export function randomNextContactDate() {
-  let daysToAdd = getRandomInt(0, 1);
+export function randomNextContactDate(variance) {
+  let daysToAdd = getRandomInt(0, variance); // variance of 1 to NOT have a random next date
   return parseInt(moment().add(daysToAdd, 'day').format('x'), 10);
 }
 
