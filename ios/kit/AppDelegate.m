@@ -17,6 +17,15 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  
+  self.oneSignal = [[RCTOneSignal alloc] initWithLaunchOptions:launchOptions
+                                                         appId:@"b9d4a9c3-bc9d-4bdb-b677-b6fc9953e3c2"];
+  
+  // For requiring push notification permissions manually.
+  self.oneSignal = [[RCTOneSignal alloc] initWithLaunchOptions:launchOptions
+                                                         appId:@"b9d4a9c3-bc9d-4bdb-b677-b6fc9953e3c2"
+                                                      settings:@{kOSSettingsKeyAutoPrompt: @false}];
+  
   NSURL *jsCodeLocation;
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
@@ -34,6 +43,9 @@
   [self.window makeKeyAndVisible];
   return YES;
 }
+
+// oneSignal setup
+@synthesize oneSignal = _oneSignal;
 
 // Required to register for notifications
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
