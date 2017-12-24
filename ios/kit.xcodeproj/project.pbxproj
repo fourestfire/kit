@@ -1477,7 +1477,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.fourestfire.kit;
 				PRODUCT_NAME = kit;
-				PROVISIONING_PROFILE = "8f2afeee-046e-4460-be85-edb024530628";
+				PROVISIONING_PROFILE = "16f9a93f-23f3-4e98-8c88-3a6cb865739a";
 				PROVISIONING_PROFILE_SPECIFIER = "kit ios provisioning profile";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1511,7 +1511,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.fourestfire.kit;
 				PRODUCT_NAME = kit;
-				PROVISIONING_PROFILE = "ff59ac8f-58d3-4f78-b407-90ef6740538a";
+				PROVISIONING_PROFILE = "1bc06a72-1e45-46f0-8c88-68533786bf53";
 				PROVISIONING_PROFILE_SPECIFIER = "fourestfire kit distribution";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
