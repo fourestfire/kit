@@ -218,7 +218,6 @@ const styles = StyleSheet.create({
   },
   flatlist: {
     backgroundColor: 'white',
-    marginLeft: 10,
   },
   rowHeader: {
     flex: 1,
@@ -256,13 +255,13 @@ const styles = StyleSheet.create({
   },
   rowFirst: {
     fontSize: 16,
+    fontWeight: 'bold',
   },
   rowLast: {
-    fontWeight: 'bold',
     fontSize: 16,
   },
   rowWidth: {
-    marginLeft: 10,
+    marginLeft: 20,
     width: 180,
   },
   rowInfo: {

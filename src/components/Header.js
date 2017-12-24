@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   },
   itemText: {
     letterSpacing: 1,
-    fontSize: 14,
+    fontSize: 13,
     color: 'black'
   },
 });
