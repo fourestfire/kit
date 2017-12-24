@@ -11,8 +11,7 @@ import {
   TextInput,
 } from 'react-native';
 
-import Toast from 'react-native-root-toast';
-
+import Toast from 'react-native-toast-native';
 import Header from './Header';
 import { getSettings } from '../redux/realm';
 import Emoji from 'react-native-emoji';
@@ -61,7 +60,7 @@ class SettingsPushNotifications extends React.Component {
           rightText='   '
         />
 
-        <View style={styles.topFlex} />
+        <View style={styles.flexSpacer} />
 
         <View style={styles.flexWrap}>
           <TouchableOpacity
@@ -94,27 +93,7 @@ class SettingsPushNotifications extends React.Component {
             onPress={() => {
               PushNotification.cancelAllLocalNotifications()
 
-              // let toast = Toast.show('All notifications cancelled!', {
-              //   duration: Toast.durations.LONG,
-              //   position: Toast.positions.BOTTOM,
-              //   backgroundColor: 'rose',
-              //   shadow: true,
-              //   animation: true,
-              //   hideOnPress: true,
-              //   delay: 0,
-              //   onShow: () => {
-              //       // calls on toast\`s appear animation start
-              //   },
-              //   onShown: () => {
-              //       // calls on toast\`s appear animation end.
-              //   },
-              //   onHide: () => {
-              //       // calls on toast\`s hide animation start.
-              //   },
-              //   onHidden: () => {
-              //       // calls on toast\`s hide animation end.
-              //   }
-              // });
+              Toast.show('This is a long toast.',Toast.SHORT) // Default toast message is shown.
             }}
           >
             <Text style={styles.actionText}> Cancel All Notifications </Text>
@@ -123,8 +102,7 @@ class SettingsPushNotifications extends React.Component {
 
         <View style={styles.tenSpacer} />
         <View style={styles.tenSpacer} />
-        <View style={styles.bottomSpacer} />
-
+        <View style={styles.flexSpacer} />
       </View>
     );
   }
@@ -173,6 +151,10 @@ const styles = StyleSheet.create({
     height: 10,
   },
 
+  flexSpacer: {
+    flex: 1
+  },
+
   flexWrap: {
     flexWrap: 'wrap',
     flexDirection: 'row'
@@ -183,6 +165,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '300'
   },
+
 
   actionButton: {
     backgroundColor: 'hsla(240, 100%, 27%, 0.65)',

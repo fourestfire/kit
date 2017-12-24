@@ -3,6 +3,7 @@ package com.kit;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.toast.RCTToastPackage;
 import com.geektime.rnonesignalandroid.ReactNativeOneSignalPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import io.realm.react.RealmReactPackage;
@@ -28,6 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RCTToastPackage(),
             new ReactNativeOneSignalPackage(),
             new VectorIconsPackage(),
             new RealmReactPackage(),
