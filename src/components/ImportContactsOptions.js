@@ -10,6 +10,7 @@ import {
   Modal
 } from 'react-native';
 import ImportContacts from './ImportContacts';
+import Mixpanel from 'react-native-mixpanel';
 import Header from './Header';
 
 class ImportContactsOptions extends Component {

@@ -6,6 +6,7 @@ import SearchBar from 'react-native-search-bar';
 import { randomNextContactDate } from '../utils/utils';
 import Emoji from 'react-native-emoji';
 import { markContactsImportedTrue } from '../redux/realm';
+import Mixpanel from 'react-native-mixpanel';
 
 class ImportContacts extends Component {
   constructor(props) {

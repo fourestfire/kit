@@ -2,19 +2,23 @@ import Realm from 'realm';
 import uuid from 'uuid';
 import moment from 'moment';
 import { Dimensions } from 'react-native';
+import Mixpanel from 'react-native-mixpanel';
 
 class Settings {
   static get () { return realm.objects(Settings.schema.name) }
   static schema = {
     name: 'Settings',
     properties: {
+      deviceID: {type: 'string', default: uuid.v1()},
+      created: {type: 'string', default: Date()},
+      lastLogin: {type: 'string', default: Date()},
       contactsImported: {type: 'bool', default: false},
       tutorialSeen: {type: 'bool', default: false},
       color1: {type: 'string', default: 'purple'},
       color2: {type: 'string', default: '#73d4e3'},
       color3: {type: 'string', default: 'forestgreen'},
-      textMessage: {type: 'string', default: "Hey! Haven't talked to you in a while. What's up?"},
-      deviceSize: {type: 'string', default: 'regular'}
+      textMessage: {type: 'string', default: "Hey!"},
+      deviceSize: {type: 'string', default: 'regular'},
     }
   }
 }
@@ -35,6 +39,12 @@ export const createInitialSettings = () => {
 export const initializeSettingsIfNeeded = () => {
   if (Settings.get().length === 0) {
     createInitialSettings();
+
+    Mixpanel.identify(getSettings().deviceID); // identify user in mixpanel
+    Mixpanel.set({
+      "$created": getSettings().created,
+      "$last_login": getSettings().lastLogin,
+    });
   } else {
     // console.log('current settings', getSettings());
   }
@@ -48,6 +58,16 @@ export const changeMessageInSettings = (newMessage) => {
   realm.write(() => {
     try {
       getSettings().textMessage = newMessage;
+    } catch (e) {
+      console.warn(e)
+    }
+  });
+}
+
+export const setLastLogin = () => {
+  realm.write(() => {
+    try {
+      getSettings().lastLogin = Date();
     } catch (e) {
       console.warn(e)
     }

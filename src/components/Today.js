@@ -9,7 +9,7 @@ import Row from './SingleContactRow';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FIcon from 'react-native-vector-icons/FontAwesome';
-import { createContact, getAllContacts, deleteAllContacts, initializeSettingsIfNeeded, getSettings } from '../redux/realm';
+import { createContact, getAllContacts, deleteAllContacts, initializeSettingsIfNeeded, getSettings, setLastLogin } from '../redux/realm';
 import sampleContacts from '../utils/seed';
 import { convertColor } from '../utils/utils';
 
@@ -28,6 +28,8 @@ import SettingsHelp from './SettingsHelp';
 import SettingsDeleteAll from './SettingsDeleteAll';
 import SettingsLeaveFeedback from './SettingsLeaveFeedback';
 import SettingsPushNotifications from './SettingsPushNotifications';
+
+import Mixpanel from 'react-native-mixpanel';
 
 import Intro from './Intro';
 
@@ -72,8 +74,23 @@ class TodayView extends Component {
     // initialize global settings if uninitialized
     initializeSettingsIfNeeded();
 
+    // refresh last login date and increment login count
+    setLastLogin();
+    Mixpanel.increment("Login Count", 1)
+
+    Mixpanel.set({
+      "$last_login": getSettings().lastLogin,
+    });
+
     // show tutorial on first run
     if (!getSettings().tutorialSeen) this.toggleTutorialModal();
+
+    // mixpanel
+    //Init Mixpanel SDK with your project token
+    Mixpanel.sharedInstanceWithToken('7d05fad0f2bf12130baec860512ba4c2');
+
+    //Send and event name with no properties
+    Mixpanel.track("Test Event");
   }
 
   toggleTutorialModal = () => {
