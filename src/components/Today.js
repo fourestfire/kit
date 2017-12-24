@@ -28,7 +28,6 @@ import SettingsHelp from './SettingsHelp';
 import SettingsDeleteAll from './SettingsDeleteAll';
 import SettingsLeaveFeedback from './SettingsLeaveFeedback';
 import SettingsPushNotifications from './SettingsPushNotifications';
-import OneSignal from 'react-native-onesignal'
 
 import Intro from './Intro';
 
@@ -61,12 +60,6 @@ class TodayView extends Component {
       // m.add(20, 'd');
       // console.log("newdate", m.format('x'))
 
-    // delete existing contacts, then grabs sample contacts from seed file and does initial load for testing
-      // deleteAllContacts();
-      // sampleContacts.forEach(contact => {
-      //   createContact(contact)
-      // });
-
     // see current contacts
       // console.log("here are all the current contacts");
       // getAllContacts().forEach((contact, idx) => console.log(`contact ${idx + 1}: ${contact.firstName} ${contact.lastName} ${contact.phoneNum} ${contact.nextContact} ${contact.lastContact}`));
@@ -81,41 +74,7 @@ class TodayView extends Component {
 
     // show tutorial on first run
     if (!getSettings().tutorialSeen) this.toggleTutorialModal();
-
-    // remote push notifications
-    // OneSignal.addEventListener('received', this.onReceived);
-    // OneSignal.addEventListener('opened', this.onOpened);
-    // OneSignal.addEventListener('registered', this.onRegistered);
-    // OneSignal.addEventListener('ids', this.onIds);
   }
-
-  // componentWillUnmount() {
-  //   OneSignal.removeEventListener('received', this.onReceived);
-  //   OneSignal.removeEventListener('opened', this.onOpened);
-  //   OneSignal.removeEventListener('registered', this.onRegistered);
-  //   OneSignal.removeEventListener('ids', this.onIds);
-  // }
-
-  // onReceived(notification) {
-  //   console.log("Notification received: ", notification);
-  // }
-
-  // onOpened(openResult) {
-  //   console.log('Message: ', openResult.notification.payload.body);
-  //   console.log('Data: ', openResult.notification.payload.additionalData);
-  //   console.log('isActive: ', openResult.notification.isAppInFocus);
-  //   console.log('openResult: ', openResult);
-  // }
-
-  // onRegistered(notifData) {
-  //   console.log("Device had been registered for push notifications!", notifData);
-  // }
-
-  // onIds(device) {
-  //   console.log('Device info: ', device);
-  // }
-
-  // end block of OneSignal code
 
   toggleTutorialModal = () => {
     this.setState({ showTutorialModal: !this.state.showTutorialModal });
@@ -123,7 +82,6 @@ class TodayView extends Component {
 
   toggleCompleteModal = (contact) => {
     this.setState({ showCompleteModal: !this.state.showCompleteModal, completeModalContact: contact});
-    // console.log("completeModalBoolStatus", this.state.showCompleteModal)
   }
 
   render() {

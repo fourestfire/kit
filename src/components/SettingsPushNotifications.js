@@ -12,10 +12,11 @@ import {
 } from 'react-native';
 
 import Toast from 'react-native-toast-native';
+import { toastStyle } from '../styles/global'
+
 import Header from './Header';
 import { getSettings } from '../redux/realm';
 import Emoji from 'react-native-emoji';
-
 import PushNotification from 'react-native-push-notification';
 
 /* -------------------<   COMPONENT   >-------------------- */
@@ -44,7 +45,7 @@ class SettingsPushNotifications extends React.Component {
 
         // Should the initial notification be popped automatically; default: true
         popInitialNotification: false,
-        requestPermissions: false, // if false, must call PushNotificationsHandler.requestPermissions() later
+        requestPermissions: true, // if false, must call PushNotificationsHandler.requestPermissions() later
     });
   }
 
@@ -60,6 +61,17 @@ class SettingsPushNotifications extends React.Component {
           rightText='   '
         />
 
+        <View style={styles.tenSpacer} />
+        <View style={styles.tenSpacer} />
+
+        <View style={styles.helpTextView}>
+          <Text style={styles.helpText}>Here, you can set a daily reminder.
+          {"\n"}{"\n"}You'll get a quick push notification at the same time of when you first pressed schedule. You can set more than one! </Text>
+        </View>
+
+        <View style={styles.tenSpacer} />
+        <View style={styles.tenSpacer} />
+
         <View style={styles.flexSpacer} />
 
         <View style={styles.flexWrap}>
@@ -67,16 +79,14 @@ class SettingsPushNotifications extends React.Component {
             style={[styles.actionButton, styles.large]}
             backgroundColor='black'
             onPress={() => {
-              // request permissions if not already accepted
-              PushNotification.requestPermissions();
-
               PushNotification.localNotificationSchedule({
                 message: "time to check in with your contacts :)",
-                playSound: 'false',
-                // repeatType: 'minute', // repeat every minute
+                playSound: false,
+                repeatType: 'day', // repeat every minute
                 date: new Date(Date.now() + (1000 * 5)) // in five seconds
               });
 
+              Toast.show("all set! you'll receive daily notifications", Toast.SHORT, Toast.BOTTOM, toastStyle);
             }}
           >
             <Text style={styles.actionText}> Schedule Push Notifications </Text>
@@ -91,9 +101,9 @@ class SettingsPushNotifications extends React.Component {
             style={[styles.actionButton, styles.large]}
             backgroundColor='black'
             onPress={() => {
-              PushNotification.cancelAllLocalNotifications()
+              PushNotification.cancelAllLocalNotifications();
 
-              Toast.show('This is a long toast.',Toast.SHORT) // Default toast message is shown.
+              Toast.show('all notifications removed', Toast.SHORT, Toast.BOTTOM, toastStyle);
             }}
           >
             <Text style={styles.actionText}> Cancel All Notifications </Text>
@@ -160,12 +170,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
 
+  helpTextView: {
+    height: 50,
+    width: maxWidth - 50,
+    margin: 10,
+  },
+  helpText: {
+    fontSize: 18,
+    color: 'black',
+    margin: -4
+  },
+
   actionText: {
     color: 'white',
     fontSize: 18,
     fontWeight: '300'
   },
-
 
   actionButton: {
     backgroundColor: 'hsla(240, 100%, 27%, 0.65)',
