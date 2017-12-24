@@ -11,6 +11,8 @@ import {
   TextInput,
 } from 'react-native';
 
+import Toast from 'react-native-root-toast';
+
 import Header from './Header';
 import { getSettings } from '../redux/realm';
 import Emoji from 'react-native-emoji';
@@ -42,25 +44,12 @@ class SettingsPushNotifications extends React.Component {
         permissions: { alert: true, badge: true, sound: true },
 
         // Should the initial notification be popped automatically; default: true
-        popInitialNotification: true,
-        requestPermissions: true, // if false, must call PushNotificationsHandler.requestPermissions() later
+        popInitialNotification: false,
+        requestPermissions: false, // if false, must call PushNotificationsHandler.requestPermissions() later
     });
   }
 
   render() {
-    PushNotification.localNotification({
-      /* iOS and Android properties */
-      title: "keep in touch", // only used in apple watch
-      message: "check in with your contacts!", // (required)
-      playSound: false, // (optional) default: true
-      repeatType: 'minute',
-      number: 10, // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero)
-    });
-
-    PushNotification.localNotificationSchedule({
-      message: "check in with your contacts!", //
-      date: new Date(Date.now() + (60 * 60 * 24 * 1000)) // in 24 hours
-    });
 
     return (
       <View style={styles.container}>
@@ -72,20 +61,69 @@ class SettingsPushNotifications extends React.Component {
           rightText='   '
         />
 
-        <View style={styles.flex}>
+        <View style={styles.topFlex} />
 
-          <View style={styles.spacer} />
-          <Text style={styles.paragraph}>Still working on this feature... <Emoji name=":pizza:"/></Text>
-          {/* <TouchableOpacity
-            style={styles.submitButton}
+        <View style={styles.flexWrap}>
+          <TouchableOpacity
+            style={[styles.actionButton, styles.large]}
             backgroundColor='black'
-            onPress={null}
-          >
-            <Text style={styles.submitText}> Enable Notifications </Text>
-          </TouchableOpacity> */}
+            onPress={() => {
+              // request permissions if not already accepted
+              PushNotification.requestPermissions();
 
-          <View style={styles.spacer} />
+              PushNotification.localNotificationSchedule({
+                message: "time to check in with your contacts :)",
+                playSound: 'false',
+                // repeatType: 'minute', // repeat every minute
+                date: new Date(Date.now() + (1000 * 5)) // in five seconds
+              });
+
+            }}
+          >
+            <Text style={styles.actionText}> Schedule Push Notifications </Text>
+          </TouchableOpacity>
         </View>
+
+        <View style={styles.tenSpacer} />
+        <View style={styles.tenSpacer} />
+
+        <View style={styles.flexWrap}>
+          <TouchableOpacity
+            style={[styles.actionButton, styles.large]}
+            backgroundColor='black'
+            onPress={() => {
+              PushNotification.cancelAllLocalNotifications()
+
+              // let toast = Toast.show('All notifications cancelled!', {
+              //   duration: Toast.durations.LONG,
+              //   position: Toast.positions.BOTTOM,
+              //   backgroundColor: 'rose',
+              //   shadow: true,
+              //   animation: true,
+              //   hideOnPress: true,
+              //   delay: 0,
+              //   onShow: () => {
+              //       // calls on toast\`s appear animation start
+              //   },
+              //   onShown: () => {
+              //       // calls on toast\`s appear animation end.
+              //   },
+              //   onHide: () => {
+              //       // calls on toast\`s hide animation start.
+              //   },
+              //   onHidden: () => {
+              //       // calls on toast\`s hide animation end.
+              //   }
+              // });
+            }}
+          >
+            <Text style={styles.actionText}> Cancel All Notifications </Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.tenSpacer} />
+        <View style={styles.tenSpacer} />
+        <View style={styles.bottomSpacer} />
 
       </View>
     );
@@ -108,12 +146,9 @@ import { maxHeight, maxWidth } from '../styles/global';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
-  },
-  flex: {
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
+    backgroundColor: 'white'
   },
   paragraph: {
     margin: 10,
@@ -134,8 +169,39 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '300'
   },
-  spacer: {
-    flex: 1,
-    height: 20,
+  tenSpacer: {
+    height: 10,
+  },
+
+  flexWrap: {
+    flexWrap: 'wrap',
+    flexDirection: 'row'
+  },
+
+  actionText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: '300'
+  },
+
+  actionButton: {
+    backgroundColor: 'hsla(240, 100%, 27%, 0.65)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 40,
+    width: maxWidth * 2 / 3 - 30,
+    borderRadius: 5,
+    borderColor: 'hsla(240, 100%, 27%, 0.9)', // dark blue base
+    borderLeftWidth: 1.2,
+    borderRightWidth: 1.2,
+    borderTopWidth: 1.2,
+    borderBottomWidth: 3,
+    borderBottomColor: 'darkblue',
+    marginHorizontal: 6,
+  },
+
+  large: {
+    height: 60,
+    width: maxWidth * 5 / 6 - 30,
   },
 });
