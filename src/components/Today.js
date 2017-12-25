@@ -104,14 +104,6 @@ class TodayView extends Component {
     // show tutorial on first run
     if (!getSettings().tutorialSeen) this.toggleTutorialModal();
 
-    // console.log(getSettings().deviceID);
-    console.log(DeviceInfo.getUniqueID()); // device ID
-    console.log(DeviceInfo.getModel()); // iPhone 7
-    console.log(DeviceInfo.getDeviceName()); // Dean's iPhone
-    console.log(DeviceInfo.getDeviceLocale()); // en
-    console.log(DeviceInfo.getSystemVersion()); // 11.2
-    console.log(DeviceInfo.getTimezone()); // America/New_York
-
     //Send and event name with no properties
     Mixpanel.track("Test Event");
   }

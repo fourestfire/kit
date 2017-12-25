@@ -42,11 +42,18 @@ export const createInitialSettings = () => {
 export const initializeSettingsIfNeeded = () => {
   if (Settings.get().length === 0) {
     createInitialSettings();
+
     Mixpanel.identify(getSettings().deviceID); // identify user in mixpanel
-    // Mixpanel.set({
-    //   "$created": getSettings().created,
-    //   "$last_login": getSettings().lastOpen,
-    // });
+    Mixpanel.set({
+      "$created": getSettings().created,
+      "Device Name": DeviceInfo.getDeviceName(),
+      "Device Type": DeviceInfo.getModel()
+    });
+
+    // console.log(DeviceInfo.getDeviceLocale()); // en
+    // console.log(DeviceInfo.getSystemVersion()); // 11.2
+    // console.log(DeviceInfo.getTimezone()); // America/New_York
+
   } else {
     // console.log('current settings', getSettings());
   }
@@ -85,9 +92,9 @@ export const setLastLogin = () => {
       getSettings().lastOpen = Date(); // set lastOpen to current datetime
 
       // sync login with mixPanel
-      // Mixpanel.set({
-      //   "$last_login": getSettings().lastOpen,
-      // });
+      Mixpanel.set({
+        "$last_login": getSettings().lastOpen,
+      });
 
       Mixpanel.increment("Login Count", 1)
 
@@ -196,9 +203,9 @@ export const createContact = contact => {
   realm.write(() => {
     realm.create(Contact.schema.name, {
       id: uuid.v1(),
-      firstName:  contact.firstName || 'Placeholder',
-      lastName: contact.lastName || 'Placeholder',
-      fullName: `${contact.firstName} ${contact.lastName}` || 'Full Name',
+      firstName:  contact.firstName || '',
+      lastName: contact.lastName || '',
+      fullName: `${contact.firstName} ${contact.lastName}` || '',
       frequency: contact.frequency || 14,
       nextContact: contact.nextContact || parseInt(moment().format('x'), 10),
       lastContact: contact.lastContact || 0,
