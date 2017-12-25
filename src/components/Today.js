@@ -30,6 +30,7 @@ import SettingsLeaveFeedback from './SettingsLeaveFeedback';
 import SettingsPushNotifications from './SettingsPushNotifications';
 
 import Mixpanel from 'react-native-mixpanel';
+import DeviceInfo from 'react-native-device-info';
 
 import Intro from './Intro';
 
@@ -66,6 +67,9 @@ class TodayView extends Component {
       // console.log("here are all the current contacts");
       // getAllContacts().forEach((contact, idx) => console.log(`contact ${idx + 1}: ${contact.firstName} ${contact.lastName} ${contact.phoneNum} ${contact.nextContact} ${contact.lastContact}`));
 
+    // Init Mixpanel SDK with your project token
+    Mixpanel.sharedInstanceWithToken('7d05fad0f2bf12130baec860512ba4c2');
+
     // load contacts from realm into redux store
     let allContacts = Array.prototype.slice.call(getAllContacts());
     this.props.getAllContactsSync(allContacts);
@@ -85,9 +89,14 @@ class TodayView extends Component {
     // show tutorial on first run
     if (!getSettings().tutorialSeen) this.toggleTutorialModal();
 
-    // mixpanel
-    //Init Mixpanel SDK with your project token
-    Mixpanel.sharedInstanceWithToken('7d05fad0f2bf12130baec860512ba4c2');
+    // console.log(getSettings().deviceID);
+    // console.log(DeviceInfo.getUniqueID()); // device ID
+    // console.log(DeviceInfo.getPhoneNumber()); // phone #
+    // console.log(DeviceInfo.getModel()); // iPhone 7
+    // console.log(DeviceInfo.getDeviceName()); // Dean's iPhone
+    // console.log(DeviceInfo.getDeviceLocale()); // en
+    // console.log(DeviceInfo.getSystemVersion()); // 11.2
+    // console.log(DeviceInfo.getTimezone()); // America/New_York
 
     //Send and event name with no properties
     Mixpanel.track("Test Event");

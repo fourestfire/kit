@@ -126,6 +126,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-device-info')
     compile project(':react-native-mixpanel')
     compile project(':react-native-toast-native')
     compile project(':react-native-onesignal')

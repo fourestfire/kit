@@ -39,7 +39,7 @@ export const createInitialSettings = () => {
 export const initializeSettingsIfNeeded = () => {
   if (Settings.get().length === 0) {
     createInitialSettings();
-
+    console.log(getSettings().deviceID)
     Mixpanel.identify(getSettings().deviceID); // identify user in mixpanel
     Mixpanel.set({
       "$created": getSettings().created,

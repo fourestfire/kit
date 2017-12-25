@@ -3,6 +3,7 @@ package com.kit;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.kevinejohn.RNMixpanel.RNMixpanel;
 import com.toast.RCTToastPackage;
 import com.geektime.rnonesignalandroid.ReactNativeOneSignalPackage;
@@ -30,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNDeviceInfo(),
             new RNMixpanel(),
             new RCTToastPackage(),
             new ReactNativeOneSignalPackage(),
