@@ -9,6 +9,9 @@ import {
 } from 'react-native';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { getSettings, setFinishedToday } from '../redux/realm';
+import Toast from 'react-native-toast-native';
+import { toastStyle } from '../styles/global';
 
 class Complete extends Component {
   constructor(props) {
@@ -20,6 +23,14 @@ class Complete extends Component {
 
   updateContact(contact) {
     this.props.updateContact(contact);
+
+    console.log(getSettings().finishedToday === false, this.props.store.contacts.filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day')).length === 0, this.props.store.contacts.length > 0)
+
+    if (this.props.store.contacts.filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day')).length === 0 && this.props.store.contacts.length > 0) {
+      Toast.show("you're done for today! great job :)", Toast.LONG, Toast.BOTTOM, toastStyle);
+      setFinishedToday(true);
+    }
+
     this.props.screenProps.toggle();
   }
 
@@ -45,7 +56,7 @@ class Complete extends Component {
               style={styles.textInput}
               autoFocus={true}
               returnKeyType="done"
-              maxLength = {40}
+              maxLength={200}
               onChangeText={msg => this.setState({msg})}
             />
           </View>

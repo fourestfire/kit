@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 import Toast from 'react-native-toast-native';
-import { toastStyle } from '../styles/global'
+import { toastStyle } from '../styles/global';
 
 import Header from './Header';
 import { getSettings } from '../redux/realm';

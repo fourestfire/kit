@@ -9,9 +9,11 @@ class Settings {
   static schema = {
     name: 'Settings',
     properties: {
-      deviceID: {type: 'string', default: uuid.v1()},
+      deviceID: {type: 'string', default: 'init'},
       created: {type: 'string', default: Date()},
-      lastLogin: {type: 'string', default: Date()},
+      lastOpen: {type: 'string', default: 'init'},
+      lastOpenedToday: {type: 'bool', default: false},
+      finishedToday: {type: 'bool', default: false},
       contactsImported: {type: 'bool', default: false},
       tutorialSeen: {type: 'bool', default: false},
       color1: {type: 'string', default: 'purple'},
@@ -39,11 +41,10 @@ export const createInitialSettings = () => {
 export const initializeSettingsIfNeeded = () => {
   if (Settings.get().length === 0) {
     createInitialSettings();
-    console.log(getSettings().deviceID)
     Mixpanel.identify(getSettings().deviceID); // identify user in mixpanel
     Mixpanel.set({
       "$created": getSettings().created,
-      "$last_login": getSettings().lastLogin,
+      "$last_login": getSettings().lastOpen,
     });
   } else {
     // console.log('current settings', getSettings());
@@ -64,10 +65,31 @@ export const changeMessageInSettings = (newMessage) => {
   });
 }
 
+export const setFinishedToday = (bool) => {
+  realm.write(() => {
+    try {
+      getSettings().finishedToday = !!bool;
+    } catch (e) {
+      console.warn(e)
+    }
+  });
+}
+
 export const setLastLogin = () => {
   realm.write(() => {
     try {
-      getSettings().lastLogin = Date();
+      if (getSettings().lastOpen !== 'init' && moment(getSettings().lastOpen).isSameOrBefore(moment(),'day')) {
+        getSettings().lastOpenedToday = true; // check if app was last opened today
+      }
+      getSettings().lastOpen = Date(); // set lastOpen to current datetime
+
+      // sync login with mixPanel
+      Mixpanel.set({
+        "$last_login": getSettings().lastOpen,
+      });
+
+      Mixpanel.increment("Login Count", 1)
+
     } catch (e) {
       console.warn(e)
     }

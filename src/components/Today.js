@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, ScrollView, Image, Text, TextInput, TouchableOpacity, Dimensions, SectionList, Modal, AsyncStorage } from 'react-native';
+import sampleContacts from '../utils/seed';
 import Header from './Header';
 import Collapsible from 'react-native-collapsible';
-import moment from 'moment';
 import Interactable from 'react-native-interactable';
+import moment from 'moment';
 import { convertFrequency } from '../utils/utils';
 import Row from './SingleContactRow';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FIcon from 'react-native-vector-icons/FontAwesome';
-import { createContact, getAllContacts, deleteAllContacts, initializeSettingsIfNeeded, getSettings, setLastLogin } from '../redux/realm';
-import sampleContacts from '../utils/seed';
+import { createContact, getAllContacts, deleteAllContacts, initializeSettingsIfNeeded, getSettings, setLastLogin, setFinishedToday } from '../redux/realm';
 import { convertColor } from '../utils/utils';
+
+import Toast from 'react-native-toast-native';
+import { toastStyle } from '../styles/global';
+
+import Mixpanel from 'react-native-mixpanel';
+import DeviceInfo from 'react-native-device-info';
 
 import { StackNavigator, TabNavigator } from "react-navigation";
 import FlatView from './FlatView';
@@ -28,9 +34,6 @@ import SettingsHelp from './SettingsHelp';
 import SettingsDeleteAll from './SettingsDeleteAll';
 import SettingsLeaveFeedback from './SettingsLeaveFeedback';
 import SettingsPushNotifications from './SettingsPushNotifications';
-
-import Mixpanel from 'react-native-mixpanel';
-import DeviceInfo from 'react-native-device-info';
 
 import Intro from './Intro';
 
@@ -52,6 +55,7 @@ class TodayView extends Component {
       showCompleteModal: false,
       completeModalContact: {},
       showTutorialModal: false,
+      peopleInToday: null,
     };
   }
 
@@ -78,13 +82,32 @@ class TodayView extends Component {
     // initialize global settings if uninitialized
     initializeSettingsIfNeeded();
 
-    // refresh last login date and increment login count
+    // login analytics logic: refresh last login date and increment login count
     setLastLogin();
-    Mixpanel.increment("Login Count", 1)
 
-    Mixpanel.set({
-      "$last_login": getSettings().lastLogin,
-    });
+    console.log(moment(), typeof(moment()))
+
+    console.log('finishedtoday', getSettings().finishedToday, 'lastopenedtoday', getSettings().lastOpenedToday)
+    // on first login of day,
+       // todayPeeps === 0 && peeps > 0: give toast
+       // todayPeeps > 1: nothing
+    // on subsequent logins
+       // if you hit 0 && you haven't gotten a congrats toast yet && peeps > 0, you get a toast
+    if (getSettings().lastOpenedToday === false) {
+        if (this.props.store.contacts.length > 0 && this.props.store.contacts.filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day')).length === 0) {
+          Toast.show("all clear for today - add more contacts to kit or check in tomorrow.", Toast.LONG, Toast.BOTTOM, toastStyle);
+          setFinishedToday(true);
+        } else {
+          setFinishedToday(false);
+        }
+    }
+
+    // on all logins on a day:
+       // when complete goes from >0 -> 0, give congrats toast
+
+    // if last login is within the same day (subsequent logins of the day)
+      // when complete goes from x -> 0, give congrats toast
+
 
     // show tutorial on first run
     if (!getSettings().tutorialSeen) this.toggleTutorialModal();
