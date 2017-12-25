@@ -3,13 +3,14 @@ import uuid from 'uuid';
 import moment from 'moment';
 import { Dimensions } from 'react-native';
 import Mixpanel from 'react-native-mixpanel';
+import DeviceInfo from 'react-native-device-info';
 
 class Settings {
   static get () { return realm.objects(Settings.schema.name) }
   static schema = {
     name: 'Settings',
     properties: {
-      deviceID: {type: 'string', default: 'init'},
+      deviceID: {type: 'string', default: DeviceInfo.getUniqueID()},
       created: {type: 'string', default: Date()},
       lastOpen: {type: 'string', default: 'init'},
       lastOpenedToday: {type: 'bool', default: false},
@@ -42,10 +43,10 @@ export const initializeSettingsIfNeeded = () => {
   if (Settings.get().length === 0) {
     createInitialSettings();
     Mixpanel.identify(getSettings().deviceID); // identify user in mixpanel
-    Mixpanel.set({
-      "$created": getSettings().created,
-      "$last_login": getSettings().lastOpen,
-    });
+    // Mixpanel.set({
+    //   "$created": getSettings().created,
+    //   "$last_login": getSettings().lastOpen,
+    // });
   } else {
     // console.log('current settings', getSettings());
   }
@@ -68,7 +69,7 @@ export const changeMessageInSettings = (newMessage) => {
 export const setFinishedToday = (bool) => {
   realm.write(() => {
     try {
-      getSettings().finishedToday = !!bool;
+      getSettings().finishedToday = bool;
     } catch (e) {
       console.warn(e)
     }
@@ -84,9 +85,9 @@ export const setLastLogin = () => {
       getSettings().lastOpen = Date(); // set lastOpen to current datetime
 
       // sync login with mixPanel
-      Mixpanel.set({
-        "$last_login": getSettings().lastOpen,
-      });
+      // Mixpanel.set({
+      //   "$last_login": getSettings().lastOpen,
+      // });
 
       Mixpanel.increment("Login Count", 1)
 

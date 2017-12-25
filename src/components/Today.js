@@ -85,14 +85,13 @@ class TodayView extends Component {
     // login analytics logic: refresh last login date and increment login count
     setLastLogin();
 
+    console.log(getSettings())
     console.log(moment(), typeof(moment()))
 
-    console.log('finishedtoday', getSettings().finishedToday, 'lastopenedtoday', getSettings().lastOpenedToday)
     // on first login of day,
        // todayPeeps === 0 && peeps > 0: give toast
        // todayPeeps > 1: nothing
-    // on subsequent logins
-       // if you hit 0 && you haven't gotten a congrats toast yet && peeps > 0, you get a toast
+
     if (getSettings().lastOpenedToday === false) {
         if (this.props.store.contacts.length > 0 && this.props.store.contacts.filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day')).length === 0) {
           Toast.show("all clear for today - add more contacts to kit or check in tomorrow.", Toast.LONG, Toast.BOTTOM, toastStyle);
@@ -102,24 +101,16 @@ class TodayView extends Component {
         }
     }
 
-    // on all logins on a day:
-       // when complete goes from >0 -> 0, give congrats toast
-
-    // if last login is within the same day (subsequent logins of the day)
-      // when complete goes from x -> 0, give congrats toast
-
-
     // show tutorial on first run
     if (!getSettings().tutorialSeen) this.toggleTutorialModal();
 
     // console.log(getSettings().deviceID);
-    // console.log(DeviceInfo.getUniqueID()); // device ID
-    // console.log(DeviceInfo.getPhoneNumber()); // phone #
-    // console.log(DeviceInfo.getModel()); // iPhone 7
-    // console.log(DeviceInfo.getDeviceName()); // Dean's iPhone
-    // console.log(DeviceInfo.getDeviceLocale()); // en
-    // console.log(DeviceInfo.getSystemVersion()); // 11.2
-    // console.log(DeviceInfo.getTimezone()); // America/New_York
+    console.log(DeviceInfo.getUniqueID()); // device ID
+    console.log(DeviceInfo.getModel()); // iPhone 7
+    console.log(DeviceInfo.getDeviceName()); // Dean's iPhone
+    console.log(DeviceInfo.getDeviceLocale()); // en
+    console.log(DeviceInfo.getSystemVersion()); // 11.2
+    console.log(DeviceInfo.getTimezone()); // America/New_York
 
     //Send and event name with no properties
     Mixpanel.track("Test Event");
@@ -187,7 +178,7 @@ class TodayView extends Component {
           .sort((a, b) => result = a.firstName > b.firstName ? 1 : -1)
           .map(contact => {
             return (
-              <Row physics={physics} contact={contact}>
+              <Row physics={physics} contact={contact} key={contact.id}>
                 <View style={styles.wholeRow}>
                   <View style={[styles.rowColor, {backgroundColor: convertColor(contact.color)}]} />
 
@@ -217,7 +208,7 @@ class TodayView extends Component {
           .sort((a, b) => result = a.firstName > b.firstName ? 1 : -1)
           .map(contact => {
             return (
-              <Row physics={physics} contact={contact}>
+              <Row physics={physics} contact={contact} key={contact.id}>
                 <View style={styles.wholeRow}>
                   <View style={[styles.rowColor, {backgroundColor: convertColor(contact.color)}]} />
 
