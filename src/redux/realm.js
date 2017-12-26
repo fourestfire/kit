@@ -142,6 +142,7 @@ class Contact {
       color: 'string',
       notes: 'string',
       contactHistory: {type: 'list', objectType: 'ContactHistory'},
+      birthday: 'int',
     }
   }
 }
@@ -213,6 +214,7 @@ export const createContact = contact => {
       notes: contact.notes || '',
       phoneNum: contact.phoneNum || '123-123-1234',
       color: contact.color || 'None',
+      birthday: contact.birthday || 0
     });
   });
   // console.log('total # of contacts', getAllContacts().length);

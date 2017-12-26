@@ -18,6 +18,7 @@ import Header from './Header';
 import { getSettings } from '../redux/realm';
 import Emoji from 'react-native-emoji';
 import PushNotification from 'react-native-push-notification';
+import Mixpanel from 'react-native-mixpanel';
 
 /* -------------------<   COMPONENT   >-------------------- */
 
@@ -79,6 +80,8 @@ class SettingsPushNotifications extends React.Component {
             style={[styles.actionButton, styles.large]}
             backgroundColor='black'
             onPress={() => {
+              Mixpanel.increment("Push Notifications Set", 1);
+
               PushNotification.localNotificationSchedule({
                 message: "time to check in with your contacts :)",
                 playSound: false,
@@ -101,8 +104,8 @@ class SettingsPushNotifications extends React.Component {
             style={[styles.actionButton, styles.large]}
             backgroundColor='black'
             onPress={() => {
+              Mixpanel.increment("Push Notifications Cancelled", 1);
               PushNotification.cancelAllLocalNotifications();
-
               Toast.show('all notifications removed', Toast.SHORT, Toast.BOTTOM, toastStyle);
             }}
           >

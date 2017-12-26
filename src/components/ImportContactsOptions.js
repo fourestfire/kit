@@ -90,7 +90,7 @@ class ImportContactsOptions extends Component {
             placeholderTextColor="#bfbfbf"
             placeholder="Contact Frequency (in days)"
             keyboardType="numeric"
-            defaultValue="14"
+            defaultValue="30"
             onChangeText={frequency => this.setState({frequency})}
             returnKeyType="done"
           />

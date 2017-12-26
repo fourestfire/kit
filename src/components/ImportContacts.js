@@ -120,6 +120,10 @@ class ImportContacts extends Component {
     // add all contacts
     contactsToImport.forEach(contact => this.props.addContact(contact));
 
+    // sync to Mixpanel
+    Mixpanel.increment("Contacts Imported", contactsToImport.length);
+    Mixpanel.increment("Times Import Used", contactsToImport.length);
+
     markContactsImportedTrue();
     this.props.screenProps.toggle();
   }

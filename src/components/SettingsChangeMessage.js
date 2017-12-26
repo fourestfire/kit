@@ -16,6 +16,7 @@ import {
 import Header from './Header';
 import Emoji from 'react-native-emoji';
 import { getSettings, changeMessageInSettings } from '../redux/realm';
+import Mixpanel from 'react-native-mixpanel';
 
 /* -------------------<   COMPONENT   >-------------------- */
 
@@ -38,11 +39,13 @@ class ChangeMessage extends React.Component {
   }
 
   changeMessage() {
+    Mixpanel.increment("Text Messages Changed", 1);
     changeMessageInSettings(this.state.message);
     this.props.navigation.goBack(null);
   }
 
   removeMessage() {
+    Mixpanel.increment("Text Messages Removed", 1);
     changeMessageInSettings('');
     this.props.navigation.goBack(null);
   }

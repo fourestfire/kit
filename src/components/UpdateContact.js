@@ -17,6 +17,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from '../styles/AddEditScreens';
 import { getAllContacts } from '../redux/realm';
+import Mixpanel from 'react-native-mixpanel';
 
 class UpdateContact extends Component {
   static navigationOptions = {
@@ -62,7 +63,7 @@ class UpdateContact extends Component {
   }
 
   updateContact(contact) {
-    console.log(contact, "updated contact")
+    Mixpanel.increment("Contacts Updated", 1)
     this.props.updateContact(contact);
     this.props.navigation.goBack(null)
   }
@@ -79,6 +80,7 @@ class UpdateContact extends Component {
   }
 
   deleteContact(contactID) {
+    Mixpanel.increment("Contacts Deleted", 1)
     this.props.navigation.goBack(null);
 
     let allContacts = Array.prototype.slice.call(getAllContacts());

@@ -161,7 +161,7 @@ class TodayView extends Component {
           </View>
 
           <View style={styles.rowHeader}>
-            <Text style={styles.rowHeaderText}> Today </Text>
+            <Text style={styles.rowHeaderText}> today </Text>
           </View>
 
         {
@@ -189,9 +189,9 @@ class TodayView extends Component {
           })
         }
 
-        {/* Populate Rest of Week contacts */}
+        {/* Populate next two weeks contacts */}
           <View style={styles.rowHeader}>
-            <Text style={styles.rowHeaderText}> Rest of Week </Text>
+            <Text style={styles.rowHeaderText}> upcoming </Text>
           </View>
 
         {

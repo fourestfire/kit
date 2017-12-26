@@ -16,6 +16,7 @@ import Header from './Header';
 import { getSettings } from '../redux/realm';
 import Emoji from 'react-native-emoji';
 import { getAllContacts } from '../redux/realm';
+import Mixpanel from 'react-native-mixpanel';
 
 /* -------------------<   COMPONENT   >-------------------- */
 
@@ -50,6 +51,8 @@ class SettingsDeleteAll extends React.Component {
                   [
                     {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
                     {text: 'Delete', onPress: () => {try {
+                      Mixpanel.increment("Deleted All Contacts", 1)
+
                       // remove all contacts
                       this.props.removeAllContacts();
 

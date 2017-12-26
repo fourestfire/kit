@@ -57,6 +57,7 @@ class AddContact extends Component {
 	}
 
   addContact(contact) {
+    Mixpanel.increment("Contacts Added Manually", 1)
     this.props.addContact(contact);
     this.props.navigation.navigate('Today')
   }

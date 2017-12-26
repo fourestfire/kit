@@ -17,6 +17,7 @@ import {
 import Header from './Header';
 import { getSettings } from '../redux/realm';
 import Emoji from 'react-native-emoji';
+import Mixpanel from 'react-native-mixpanel';
 
 import querystring from 'querystring';
 import axios from 'axios';

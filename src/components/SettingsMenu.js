@@ -14,6 +14,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Header from './Header';
 import SettingsRow from './SettingsRow';
 import Emoji from 'react-native-emoji';
+import Mixpanel from 'react-native-mixpanel';
 
 /* -------------------<   COMPONENT   >-------------------- */
 
@@ -36,15 +37,24 @@ class SettingsMenu extends React.Component {
         />
 
         <SettingsRow
-          navigate={() => this.props.navigation.navigate('SettingsHelp')}
+          navigate={() => {
+            this.props.navigation.navigate('SettingsHelp');
+            Mixpanel.increment("Settings - Help", 1);
+        }}
           rowText={'Need Help?'}
         />
         <SettingsRow
-          navigate={() => this.props.navigation.navigate('SettingsPushNotifications')}
+          navigate={() => {
+            this.props.navigation.navigate('SettingsPushNotifications');
+            Mixpanel.increment("Settings - PushN", 1);
+          }}
           rowText={'Enable Push Notifications'}
         />
         <SettingsRow
-          navigate={() => this.props.navigation.navigate('SettingsChangeMessage')}
+          navigate={() => {
+            this.props.navigation.navigate('SettingsChangeMessage');
+            Mixpanel.increment("Settings - ChangeMsg", 1);
+          }}
           rowText={'Change Default Text Message'}
         />
         {/* <SettingsRow
@@ -52,11 +62,17 @@ class SettingsMenu extends React.Component {
           rowText={'Export Contact History to CSV'}
         /> */}
         <SettingsRow
-          navigate={() => this.props.navigation.navigate('SettingsDeleteAll')}
+          navigate={() => {
+            this.props.navigation.navigate('SettingsDeleteAll');
+            Mixpanel.increment("Settings - DeleteAll", 1);
+          }}
           rowText={'Delete All Data'}
         />
         <SettingsRow
-          navigate={() => this.props.navigation.navigate('SettingsLeaveFeedback')}
+          navigate={() => {
+            this.props.navigation.navigate('SettingsLeaveFeedback');
+            Mixpanel.increment("Settings - Feedback", 1);
+          }}
           rowText={'Leave Feedback'}
         />
         <View style={styles.spacer} />

@@ -20,7 +20,7 @@ class Intro extends Component {
   }
   render() {
     const pageArray = [{
-      title: 'Welcome to kit!',
+      title: 'Welcome to Kit!',
       description: 'Each day, your goal is to talk to everyone in the Today section.',
       img: require('../../img/tutorial1.png'),
       imgStyle: {
@@ -32,7 +32,7 @@ class Intro extends Component {
       level: 10,
     }, {
       title: '',
-      description: 'As you talk to people, you should swipe on the main screen to mark them as complete for the day.',
+      description: 'After you talk to people, tap on their checkmarks.',
       img: require('../../img/tutorial2.png'),
       imgStyle: {
         height: 93 * 2.5,
@@ -43,7 +43,7 @@ class Intro extends Component {
       level: 10,
     }, {
       title: 'Get started!',
-      description: "First, import some contacts. You can set how often you want to talk to each person later. That's all for now!",
+      description: "First, import some contacts. You can set how often you want to keep in touch. That's all for now!",
       img: require('../../img/tutorial3.png'),
       imgStyle: {
         height: 93 * 2.5,

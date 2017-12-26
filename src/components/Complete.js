@@ -12,6 +12,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { getSettings, setFinishedToday } from '../redux/realm';
 import Toast from 'react-native-toast-native';
 import { toastStyle } from '../styles/global';
+import Mixpanel from 'react-native-mixpanel';
 
 class Complete extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class Complete extends Component {
   updateContact(contact) {
     this.props.updateContact(contact);
     this.props.screenProps.toggle();
+    Mixpanel.increment("Contacts Talked To", 1)
 
     // wait until modal disappears to show toast
     // optionally can use getSettings().finishedToday to only show this toast once a day
