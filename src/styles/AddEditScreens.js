@@ -159,7 +159,7 @@ export default StyleSheet.create({
     height: 40,
     width: maxWidth * 2 / 3 - 30,
     borderRadius: 5,
-    borderColor: 'hsla(240, 100%, 27%, 0.9)', // dark blue base
+    borderColor: 'hsla(240, 100%, 27%, 0.95)', // dark blue base
     borderLeftWidth: 1.2,
     borderRightWidth: 1.2,
     borderTopWidth: 1.2,
@@ -196,7 +196,7 @@ export default StyleSheet.create({
     backgroundColor: 'red',
     width: maxWidth * 1 / 3 - 30,
     borderColor: 'red',
-    borderBottomColor: 'darkblue',
+    borderBottomColor: '#990000',
   },
   actionText: {
     color: 'white',

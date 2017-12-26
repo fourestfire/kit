@@ -17,6 +17,8 @@ import Header from './Header';
 import Emoji from 'react-native-emoji';
 import { getSettings, changeMessageInSettings } from '../redux/realm';
 import Mixpanel from 'react-native-mixpanel';
+import Toast from 'react-native-toast-native';
+import { toastStyle } from '../styles/global';
 
 /* -------------------<   COMPONENT   >-------------------- */
 
@@ -40,14 +42,14 @@ class ChangeMessage extends React.Component {
 
   changeMessage() {
     Mixpanel.trackWithProperties('Text Message Updated', {type: 'changed'});
+    Toast.show("message updated!", Toast.SHORT, Toast.BOTTOM, toastStyle);
     changeMessageInSettings(this.state.message);
-    this.props.navigation.goBack(null);
   }
 
   removeMessage() {
     Mixpanel.trackWithProperties('Text Message Updated', {type: 'removed'});
+    Toast.show("message removed!", Toast.SHORT, Toast.BOTTOM, toastStyle);
     changeMessageInSettings('');
-    this.props.navigation.goBack(null);
   }
 
   render() {
@@ -134,7 +136,7 @@ const styles = StyleSheet.create({
     fontWeight: '300'
   },
   submitButton: {
-    marginTop: 40,
+    marginTop: 20,
     backgroundColor: 'hsla(240, 100%, 27%, 0.65)',
     justifyContent: 'center',
     alignItems: 'center',
@@ -153,9 +155,5 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 20,
     fontWeight: '300'
-  },
-  spacer: {
-    flex: 1,
-    height: 20,
   },
 });

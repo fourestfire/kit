@@ -64,14 +64,12 @@ class SettingsPushNotifications extends React.Component {
 
         <View style={styles.tenSpacer} />
         <View style={styles.tenSpacer} />
+        <View style={styles.flexSpacer} />
 
         <View style={styles.helpTextView}>
           <Text style={styles.helpText}>Here, you can set a daily reminder.
-          {"\n"}{"\n"}You'll get a quick push notification at the same time of when you first pressed schedule. You can set more than one! </Text>
+          {"\n"}{"\n"}You'll get a quick push notification at the same time each day, at the time you pressed the schedule button. You can set more than one notification! </Text>
         </View>
-
-        <View style={styles.tenSpacer} />
-        <View style={styles.tenSpacer} />
 
         <View style={styles.flexSpacer} />
 
@@ -181,7 +179,8 @@ const styles = StyleSheet.create({
   helpText: {
     fontSize: 18,
     color: 'black',
-    margin: -4
+    margin: -4,
+    fontWeight: '300'
   },
 
   actionText: {
@@ -197,12 +196,12 @@ const styles = StyleSheet.create({
     height: 40,
     width: maxWidth * 2 / 3 - 30,
     borderRadius: 5,
-    borderColor: 'hsla(240, 100%, 27%, 0.9)', // dark blue base
+    borderColor: 'hsla(240, 100%, 22%, 1.0)', // dark blue base
     borderLeftWidth: 1.2,
     borderRightWidth: 1.2,
     borderTopWidth: 1.2,
-    borderBottomWidth: 3,
-    borderBottomColor: 'darkblue',
+    borderBottomWidth: 4.3,
+    borderBottomColor: 'hsla(240, 100%, 22%, 1.0)',
     marginHorizontal: 6,
   },
 

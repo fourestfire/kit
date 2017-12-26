@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     borderRightWidth: 1.2,
     borderTopWidth: 1.2,
     borderBottomWidth: 4,
-    borderBottomColor: 'darkblue',
+    borderBottomColor: '#990000',
   },
   deleteText: {
     color: 'white',

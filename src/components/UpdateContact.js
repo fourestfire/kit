@@ -253,7 +253,7 @@ class UpdateContact extends Component {
         </View>
 
         <View style={styles.segmentedWrapper}>
-          <Text style={styles.subtitle}> Color / Group </Text>
+          <Text style={styles.subtitle}> Group </Text>
           <SegmentedControlIOS
               style={styles.segmentedControl}
               selectedIndex={this.findColorIndex()}

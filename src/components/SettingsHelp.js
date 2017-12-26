@@ -38,9 +38,9 @@ class SettingsHelp extends React.Component {
 
 
         <View style={styles.flex}>
-          <Text style={styles.paragraph}>To get started, first import some contacts. Start with just a few.</Text>
-          <Text style={styles.paragraph}>Each day, you should contact whoever is in the 'Today' column. Try swiping left and right on that screen. To move them out of the 'Today' column, mark them as complete.</Text>
-          <Text style={styles.paragraph}>If you click edit, you'll be brought to a screen where you can tap to modify each contact's color / group, and you can change how often you want to contact them at a minimum.</Text>
+          <Text style={styles.paragraph}>To get started, import some contacts. Start with just a few.</Text>
+          <Text style={styles.paragraph}>Each day, reach out to whoever is under the 'Today' column. Once you talk to them, be sure to click the grey checkmark.</Text>
+          <Text style={styles.paragraph}>You can change how often you want to contact each person in the edit section of the app. You can also set an optional group for each contact which you can filter by.</Text>
           <Text style={styles.paragraph}>That's the gist of it. If you have questions, feel free to message me. <Emoji name=":dog:"/><Emoji name=":cat:"/><Emoji name=":fire:"/><Emoji name=":snowflake:"/></Text>
 
           <TouchableOpacity
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   },
   paragraph: {
     margin: 14,
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '300'
   },
   submitButton: {

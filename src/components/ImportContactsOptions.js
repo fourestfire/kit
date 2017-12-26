@@ -71,7 +71,7 @@ class ImportContactsOptions extends Component {
         <View style={styles.tenSpacer} />
 
         <View style={styles.segmentedWrapper}>
-          <Text style={styles.formLabel}> Color / Group </Text>
+          <Text style={styles.formLabel}> Group </Text>
           <SegmentedControlIOS
               style={styles.segmentedControl}
               selectedIndex={3}
