@@ -12,6 +12,7 @@ import moment from 'moment';
 import Header from './Header';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {TextInputMask} from 'react-native-masked-text';
+import Mixpanel from 'react-native-mixpanel';
 
 class AddContact extends Component {
   static navigationOptions = {
@@ -58,6 +59,7 @@ class AddContact extends Component {
 
   addContact(contact) {
     Mixpanel.trackWithProperties('Contact Added', {method: 'manually'});
+    Mixpanel.track('Manual Add Used');
     this.props.addContact(contact);
     this.props.navigation.navigate('Today')
   }

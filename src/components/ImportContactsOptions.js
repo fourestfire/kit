@@ -30,6 +30,7 @@ class ImportContactsOptions extends Component {
   }
 
   toggleImportModal = () => {
+    Mixpanel.trackWithProperties('Headed to Import', {color: this.state.color, frequency: Number(this.state.frequency)});
     this.setState({ showImportModal: !this.state.showImportModal });
     this.props.navigation.navigate('Today');
   }

@@ -91,7 +91,6 @@ class TodayView extends Component {
     // on first login of day,
        // todayPeeps === 0 && peeps > 0: give toast
        // todayPeeps > 1: nothing
-
     if (getSettings().lastOpenedToday === false) {
         if (this.props.store.contacts.length > 0 && this.props.store.contacts.filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day')).length === 0) {
           Toast.show("all clear for today - add more contacts to kit or check in tomorrow.", Toast.LONG, Toast.BOTTOM, toastStyle);
@@ -103,7 +102,6 @@ class TodayView extends Component {
 
     // show tutorial on first run
     if (!getSettings().tutorialSeen) this.toggleTutorialModal();
-
   }
 
   toggleTutorialModal = () => {
@@ -116,8 +114,8 @@ class TodayView extends Component {
 
   render() {
     const physics = {
-      damping: 1 - 0.7,
-      tension: 300
+      damping: 1 - 0.6,
+      tension: 400
     }
 
     return (

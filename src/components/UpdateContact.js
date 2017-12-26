@@ -80,7 +80,7 @@ class UpdateContact extends Component {
   }
 
   deleteContact(contactID) {
-    Mixpanel.trackWithProperties('Deleted Contacts', {type: 'one'});
+    Mixpanel.trackWithProperties('Contact Deleted', {type: 'one'});
     this.props.navigation.goBack(null);
 
     let allContacts = Array.prototype.slice.call(getAllContacts());
