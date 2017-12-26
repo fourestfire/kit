@@ -5,7 +5,36 @@ export function convertFrequency(frequency) {
   if (frequency === 7) return 'Weekly';
   if (frequency === 14) return 'Bi-Weekly';
   if (frequency === 30 || frequency === 31) return 'Monthly';
+  if (frequency === 60 || frequency === 61) return 'Bi-Monthly';
+  if (frequency >= 90 && frequency <= 95) return 'Quarterly';
+  if (frequency >= 360 && frequency <= 366) return 'Yearly';
   else return `Every ${frequency} Days`;
+}
+
+export function convertDiff(diff) {
+  if (diff === 0) return 'Today';
+  if (diff === 1) return 'Yesterday';
+  if (diff === 2) return 'Two Days Ago';
+  if (diff >= 3 && diff <= 6) return convertDayOfWeek(diff);
+  if (diff >= 7 && diff <= 13) return `Last ${convertDayOfWeek(diff)}`;
+  if (diff >= 14 && diff <= 20) return 'Two Weeks Ago';
+  if (diff >= 21 && diff <= 29) return 'Three Weeks Ago';
+  if (diff >= 30 && diff <= 61) return 'Last Month';
+  if (diff >= 62 && diff <= 95) return 'Two Months Ago';
+  if (diff >= 95 && diff <= 250) return 'A Few Months Ago';
+  if (diff >= 365 && diff <= 730) return 'Last Year';
+  if (diff > 730) return 'More Than A Year Ago';
+}
+
+function convertDayOfWeek(diff) {
+  let num = (moment().day() - diff); // alternatively can display using .format('dddd')
+  if (num % 7 === 0) return 'Sunday';
+  if (num % 7 === 1) return 'Monday';
+  if (num % 7 === 2) return 'Tuesday';
+  if (num % 7 === 3) return 'Wednesday';
+  if (num % 7 === 4) return 'Thursday';
+  if (num % 7 === 5) return 'Friday';
+  if (num % 7 === 6) return 'Saturday';
 }
 
 function getRandomInt(min, max) {

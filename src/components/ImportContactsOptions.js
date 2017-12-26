@@ -63,10 +63,15 @@ class ImportContactsOptions extends Component {
         <View style={styles.tenSpacer} />
         <View style={styles.tenSpacer} />
 
+
         <View style={styles.helpTextView}>
-          <Text style={styles.helpText}>Before you import, you can choose some options to apply to all the contacts you import. </Text>
+          <Text style={styles.helpText}>Before you import, you can choose some options to apply to all the contacts you import. Group is an optional setting that allows you to filter your contacts. </Text>
         </View>
 
+        <View style={styles.tenSpacer} />
+        <View style={styles.tenSpacer} />
+        <View style={styles.tenSpacer} />
+        <View style={styles.tenSpacer} />
         <View style={styles.tenSpacer} />
         <View style={styles.tenSpacer} />
 

@@ -63,7 +63,7 @@ class UpdateContact extends Component {
   }
 
   updateContact(contact) {
-    Mixpanel.trackWithProperties('Contact Updated');
+    Mixpanel.track('Contact Updated');
     this.props.updateContact(contact);
     this.props.navigation.goBack(null)
   }

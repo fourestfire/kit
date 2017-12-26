@@ -5,7 +5,7 @@ import Header from './Header';
 import Collapsible from 'react-native-collapsible';
 import Interactable from 'react-native-interactable';
 import moment from 'moment';
-import { convertFrequency } from '../utils/utils';
+import { convertFrequency, convertDiff } from '../utils/utils';
 import Row from './SingleContactRow';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -172,7 +172,7 @@ class TodayView extends Component {
 
                   <View style={styles.rowContent}>
                     <Text style={styles.rowTitle}>{contact.firstName} {contact.lastName}</Text>
-                    <Text style={styles.rowSubtitle}>Last contact date: {contact.lastContact ? moment(contact.lastContact).format('L') : 'N/A'}</Text>
+                    <Text style={styles.rowSubtitle}>Last talked: {contact.lastContact ? convertDiff(moment().diff(moment(contact.lastContact), 'days')) : 'N/A'}</Text>
                     <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
                   </View>
 
@@ -202,7 +202,7 @@ class TodayView extends Component {
 
                   <View style={styles.rowContent}>
                     <Text style={styles.rowTitle}>{contact.firstName} {contact.lastName}</Text>
-                    <Text style={styles.rowSubtitle}>Last contact date: {contact.lastContact ? moment(contact.lastContact).format('L') : 'N/A'}</Text>
+                    <Text style={styles.rowSubtitle}>Last talked: {contact.lastContact ? convertDiff(moment().diff(moment(contact.lastContact), 'days')) : 'N/A'}</Text>
                     <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
                   </View>
 

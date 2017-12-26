@@ -16,7 +16,8 @@ export default StyleSheet.create({
   helpText: {
     fontSize: 18,
     color: 'black',
-    margin: -4
+    // margin: -4,
+    fontWeight: '300'
   },
   headlineForAdd: {
     fontSize: 20,
@@ -156,14 +157,14 @@ export default StyleSheet.create({
     backgroundColor: 'hsla(240, 100%, 27%, 0.65)',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 40,
+    height: 36,
     width: maxWidth * 2 / 3 - 30,
     borderRadius: 5,
     borderColor: 'hsla(240, 100%, 27%, 0.95)', // dark blue base
     borderLeftWidth: 1.2,
     borderRightWidth: 1.2,
     borderTopWidth: 1.2,
-    borderBottomWidth: 3,
+    borderBottomWidth: 4.3,
     borderBottomColor: 'darkblue',
     marginHorizontal: 6,
   },
