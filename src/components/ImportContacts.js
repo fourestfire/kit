@@ -118,11 +118,13 @@ class ImportContacts extends Component {
     })
 
     // add all contacts
-    contactsToImport.forEach(contact => this.props.addContact(contact));
+    contactsToImport.forEach(contact => {
+      this.props.addContact(contact);
+      Mixpanel.trackWithProperties('Contact Added', {method: 'imported'});
+    });
 
     // sync to Mixpanel
-    Mixpanel.increment("Contacts Imported", contactsToImport.length);
-    Mixpanel.increment("Times Import Used", contactsToImport.length);
+    Mixpanel.track("Import Function Used");
 
     markContactsImportedTrue();
     this.props.screenProps.toggle();

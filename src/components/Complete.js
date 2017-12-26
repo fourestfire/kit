@@ -25,7 +25,7 @@ class Complete extends Component {
   updateContact(contact) {
     this.props.updateContact(contact);
     this.props.screenProps.toggle();
-    Mixpanel.increment("Contacts Talked To", 1)
+    Mixpanel.trackWithProperties('Contact Talked To');
 
     // wait until modal disappears to show toast
     // optionally can use getSettings().finishedToday to only show this toast once a day

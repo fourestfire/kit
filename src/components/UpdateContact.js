@@ -63,7 +63,7 @@ class UpdateContact extends Component {
   }
 
   updateContact(contact) {
-    Mixpanel.increment("Contacts Updated", 1)
+    Mixpanel.trackWithProperties('Contact Updated');
     this.props.updateContact(contact);
     this.props.navigation.goBack(null)
   }
@@ -80,7 +80,7 @@ class UpdateContact extends Component {
   }
 
   deleteContact(contactID) {
-    Mixpanel.increment("Contacts Deleted", 1)
+    Mixpanel.trackWithProperties('Deleted Contacts', {type: 'one'});
     this.props.navigation.goBack(null);
 
     let allContacts = Array.prototype.slice.call(getAllContacts());

@@ -39,13 +39,13 @@ class ChangeMessage extends React.Component {
   }
 
   changeMessage() {
-    Mixpanel.increment("Text Messages Changed", 1);
+    Mixpanel.trackWithProperties('Text Message Updated', {type: 'changed'});
     changeMessageInSettings(this.state.message);
     this.props.navigation.goBack(null);
   }
 
   removeMessage() {
-    Mixpanel.increment("Text Messages Removed", 1);
+    Mixpanel.trackWithProperties('Text Message Updated', {type: 'removed'});
     changeMessageInSettings('');
     this.props.navigation.goBack(null);
   }

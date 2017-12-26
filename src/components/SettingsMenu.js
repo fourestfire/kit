@@ -39,21 +39,21 @@ class SettingsMenu extends React.Component {
         <SettingsRow
           navigate={() => {
             this.props.navigation.navigate('SettingsHelp');
-            Mixpanel.increment("Settings - Help", 1);
+            Mixpanel.trackWithProperties('SettingsClick', {action: 'help'});
         }}
           rowText={'Need Help?'}
         />
         <SettingsRow
           navigate={() => {
             this.props.navigation.navigate('SettingsPushNotifications');
-            Mixpanel.increment("Settings - PushN", 1);
+            Mixpanel.trackWithProperties('SettingsClick', {action: 'pushNotifications'});
           }}
           rowText={'Enable Push Notifications'}
         />
         <SettingsRow
           navigate={() => {
             this.props.navigation.navigate('SettingsChangeMessage');
-            Mixpanel.increment("Settings - ChangeMsg", 1);
+            Mixpanel.trackWithProperties('SettingsClick', {action: 'changeMessage'});
           }}
           rowText={'Change Default Text Message'}
         />
@@ -64,14 +64,14 @@ class SettingsMenu extends React.Component {
         <SettingsRow
           navigate={() => {
             this.props.navigation.navigate('SettingsDeleteAll');
-            Mixpanel.increment("Settings - DeleteAll", 1);
+            Mixpanel.trackWithProperties('SettingsClick', {action: 'deleteAll'});
           }}
           rowText={'Delete All Data'}
         />
         <SettingsRow
           navigate={() => {
             this.props.navigation.navigate('SettingsLeaveFeedback');
-            Mixpanel.increment("Settings - Feedback", 1);
+            Mixpanel.trackWithProperties('SettingsClick', {action: 'leaveFeedback'});
           }}
           rowText={'Leave Feedback'}
         />

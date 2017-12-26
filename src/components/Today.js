@@ -104,8 +104,6 @@ class TodayView extends Component {
     // show tutorial on first run
     if (!getSettings().tutorialSeen) this.toggleTutorialModal();
 
-    //Send and event name with no properties
-    Mixpanel.track("Test Event");
   }
 
   toggleTutorialModal = () => {

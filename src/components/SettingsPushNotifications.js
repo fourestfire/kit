@@ -80,7 +80,7 @@ class SettingsPushNotifications extends React.Component {
             style={[styles.actionButton, styles.large]}
             backgroundColor='black'
             onPress={() => {
-              Mixpanel.increment("Push Notifications Set", 1);
+              Mixpanel.trackWithProperties('Push Notifications', {type: 'set'});
 
               PushNotification.localNotificationSchedule({
                 message: "time to check in with your contacts :)",
@@ -104,7 +104,7 @@ class SettingsPushNotifications extends React.Component {
             style={[styles.actionButton, styles.large]}
             backgroundColor='black'
             onPress={() => {
-              Mixpanel.increment("Push Notifications Cancelled", 1);
+              Mixpanel.trackWithProperties('Push Notifications', {type: 'removed'});
               PushNotification.cancelAllLocalNotifications();
               Toast.show('all notifications removed', Toast.SHORT, Toast.BOTTOM, toastStyle);
             }}

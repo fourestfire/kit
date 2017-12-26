@@ -51,7 +51,7 @@ class SettingsDeleteAll extends React.Component {
                   [
                     {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
                     {text: 'Delete', onPress: () => {try {
-                      Mixpanel.increment("Deleted All Contacts", 1)
+                      Mixpanel.trackWithProperties('Deleted Contacts', {type: 'all'});
 
                       // remove all contacts
                       this.props.removeAllContacts();
