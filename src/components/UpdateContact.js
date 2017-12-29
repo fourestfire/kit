@@ -158,7 +158,7 @@ class UpdateContact extends Component {
             <Text style={styles.actionText}> Delete </Text>
           </TouchableOpacity>
         </View>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.tenSpacer} />
 
         <View style={styles.flexWrap}>

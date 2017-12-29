@@ -137,7 +137,7 @@ class TodayView extends Component {
           />
         </View>
 
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
         {/* Populate Today column if person's date is same as today's or before it */}
 
           <View style={styles.logo}>

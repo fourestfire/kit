@@ -77,6 +77,7 @@ class FlatView extends Component {
           style={styles.flatlist}
           keyExtractor={item => item.id}
           data={this.filteredContacts()}
+          showsVerticalScrollIndicator={false}
           renderItem={({item}) =>
             <TouchableOpacity activeOpacity={0.4} onPress={() => this.props.navigation.navigate('UpdateContact', {contact: item})} key={item.id}>
               <View style={styles.wholeRow}>
