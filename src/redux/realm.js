@@ -65,6 +65,18 @@ export const getSettings = () => {
   return Settings.get()[0];
 }
 
+export const trackCompletes = (id) => {
+  // console.log('total completes:', getSettings().totalCompletes + 1)
+  // console.log('total for this contact', getContact(id)[0].numTimesContacted)
+  realm.write(() => {
+    try {
+      getSettings().totalCompletes += 1;
+    } catch (e) {
+      console.warn(e)
+    }
+  });
+}
+
 export const changeMessageInSettings = (newMessage) => {
   realm.write(() => {
     try {
@@ -145,8 +157,8 @@ class Contact {
       notes: 'string',
       contactHistory: {type: 'list', objectType: 'ContactHistory'},
       birthday: 'int',
-      numTimesContacted: 'int',
-      currentStreak: 'int',
+      numTimesContacted: {type: 'int', default: 0},
+      currentStreak: {type: 'int', default: 0},
     }
   }
 }
@@ -193,6 +205,7 @@ export const editContact = (contact) => {
           nextContact: contact.nextContact,
           lastContact: contact.lastContact,
           lastMsg: contact.lastMsg,
+          numTimesContacted: contact.numTimesContacted + 1
         }, true);
 
         contactHistory.push({ date: date, message: contact.lastMsg }) // adds to data history array for contact

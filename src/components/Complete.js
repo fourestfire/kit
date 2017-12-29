@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { getSettings, setFinishedToday } from '../redux/realm';
+import { getSettings, setFinishedToday, trackCompletes } from '../redux/realm';
 import Toast from 'react-native-toast-native';
 import { toastStyle } from '../styles/global';
 import Mixpanel from 'react-native-mixpanel';
@@ -26,6 +26,7 @@ class Complete extends Component {
     this.props.updateContact(contact);
     this.props.screenProps.toggle();
     Mixpanel.track('Contact Talked To');
+    trackCompletes(contact.id);
 
     // wait until modal disappears to show toast
     // optionally can use getSettings().finishedToday to only show this toast once a day
