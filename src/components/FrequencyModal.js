@@ -46,9 +46,9 @@ class ImportContacts extends Component {
             <TextInput
               style={styles.textInput}
               placeholderTextColor="#bfbfbf"
-              placeholder="Enter a number"
               keyboardType="numeric"
-              defaultValue={this.state.days}
+              autoFocus={true}
+              defaultValue={21} // not showing default value right now
               onChangeText={days => this.setState({days})}
               returnKeyType="done"
             />
@@ -59,9 +59,8 @@ class ImportContacts extends Component {
             disabled={this.state.numToImport === 0}
             onPress={this.pickFrequency.bind(this)}
             >
-              <Text style={styles.actionText}> Submit </Text>
+              <Text style={styles.actionText}> Confirm </Text>
           </TouchableOpacity>
-
 
           <View style={styles.flexSpacer} />
 

@@ -10,6 +10,7 @@ import {
   SegmentedControlIOS,
   Alert,
   ScrollView,
+  Modal,
 } from 'react-native';
 import moment from 'moment';
 import Header from './Header';
@@ -19,6 +20,10 @@ import styles from '../styles/AddEditScreens';
 import { getAllContacts, getSettings } from '../redux/realm';
 import Mixpanel from 'react-native-mixpanel';
 import DatePicker from 'react-native-datepicker';
+
+import ModalDropdown from 'react-native-modal-dropdown';
+import FrequencyModal from './FrequencyModal';
+import { convertTextToFrequency, convertFrequencyToText, isDeviceSmall, convertFrequencyToIndex } from '../utils/utils';
 
 class UpdateContact extends Component {
   static navigationOptions = {
@@ -30,11 +35,12 @@ class UpdateContact extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      showFrequencyModal: false,
       firstName: '',
       lastName: '',
       id: 9000,
       phoneNum: '1-212-442-5201',
-      nextContact: 1,
+      nextContact: '10/6/2017',
       color: '#73d4e3',
       frequency: 14,
       lastMsg: 'hi',
@@ -43,7 +49,13 @@ class UpdateContact extends Component {
   }
 
   componentDidMount() {
+
     let contact = this.props.navigation.state.params.contact;
+    console.log('modaldropdown should say this', convertFrequencyToText(contact.frequency))
+
+    // this.setState({
+    //   modalDropdownText: convertFrequencyToText(contact.frequency),
+    // })
 
     this.setState({
       id: contact.id,
@@ -106,6 +118,15 @@ class UpdateContact extends Component {
     else if (color === 'None') this.setState({color: 'None'});
   }
 
+  toggleFrequencyModal = () => {
+    this.setState({ showFrequencyModal: !this.state.showFrequencyModal });
+  }
+
+  onCustomFrequencyUpdated = (frequency) => {
+    console.log('this is the selected custom freq', frequency)
+    this.setState({frequency: frequency});
+  }
+
   render() {
     const contact = this.props.navigation.state.params.contact;
     let contactHistory;
@@ -126,6 +147,14 @@ class UpdateContact extends Component {
           leftText='BACK'
           title='edit contact'
         />
+
+        <Modal
+          visible={this.state.showFrequencyModal}
+          onRequestClose={this.toggleFrequencyModal}
+          animationType='slide'
+        >
+          <FrequencyModal screenProps={{ toggle: this.toggleFrequencyModal, freqUpdated: this.onCustomFrequencyUpdated, frequency: this.state.frequency }} />
+        </Modal>
 
         <View style={styles.tenSpacer} />
         <View style={styles.tenSpacer} />
@@ -198,7 +227,7 @@ class UpdateContact extends Component {
         <View style={styles.textWrapper}>
           <Text style={styles.subtitle}> Phone Number </Text>
           <TextInput
-            ref='5'
+            ref='3'
             style={[styles.textInput, styles.phoneInput]}
             defaultValue={contact.phoneNum}
             value={this.state.phoneNum}
@@ -210,6 +239,44 @@ class UpdateContact extends Component {
         </View>
 
         <View style={styles.flexWrap}>
+          <View style={styles.textWrapperHalf}>
+            <Text style={styles.subtitle}> {getSettings().deviceSize === 'small' ? 'Frequency' : 'Contact Frequency'} </Text>
+            {/*<TextInput
+              ref='4'
+              style={styles.textInputHalf}
+              defaultValue={String(contact.frequency)}
+              placeholderTextColor="#bfbfbf"
+              placeholder=""
+              keyboardType="numeric"
+              onChangeText={frequency => this.setState({frequency})}
+              returnKeyType="done"
+            />*/}
+            <ModalDropdown
+              options={['Daily', 'Weekly', 'Bi-weekly', 'Every 3 weeks', 'Monthly', 'Quarterly', 'Bi-annually', 'Custom']}
+              style={{marginTop: 14}}
+              textStyle={{fontSize: 18, color: 'black'}}
+              dropdownStyle={{marginTop: 3, backgroundColor: 'white', borderWidth: 1, borderColor: 'grey'}}
+              dropdownTextStyle={{fontSize: 16, color: 'black'}}
+              dropdownTextHighlightStyle={{backgroundColor: 'hsla(240, 100%, 27%, 0.35)'}}
+              adjustFrame={(style) => {
+                newStyle = style;
+                newStyle.height = isDeviceSmall() ? style.height + 70 : style.height + 155;
+                return newStyle;
+              }}
+              defaultIndex={convertFrequencyToIndex(contact.frequency)}
+              defaultValue={convertFrequencyToText(contact.frequency)}
+              onSelect={(index, value) => {
+                if (value !== 'Custom') {
+                  // console.log('converting text to freq..', convertTextToFrequency(value))
+                  this.setState({frequency: convertTextToFrequency(value)})
+                  return convertTextToFrequency(value);
+                } else {
+                  this.toggleFrequencyModal();
+                }
+              }}
+            />
+          </View>
+
           <View style={styles.textWrapperHalf}>
             <Text style={styles.subtitle}> {getSettings().deviceSize === 'small' ? 'Next Contact' : 'Next Contact Date'} </Text>
             <DatePicker
@@ -243,37 +310,14 @@ class UpdateContact extends Component {
                 this.setState({nextContact: parseInt(moment(nextContact).format('x'), 10)})
               }}
             />
-           { /* <TextInput
-              ref='3'
-              style={styles.textInputHalf}
-              defaultValue={String(moment(contact.nextContact).format('L'))}
-              placeholderTextColor="#bfbfbf"
-              placeholder=""
-              keyboardType="numeric"
-              onChangeText={nextContact => this.setState({nextContact: parseInt(moment(nextContact).format('x'), 10)})}
-              returnKeyType="done"
-           /> */}
           </View>
 
-          <View style={styles.textWrapperHalf}>
-            <Text style={styles.subtitle}> {getSettings().deviceSize === 'small' ? 'Frequency' : 'Contact Frequency'} </Text>
-            <TextInput
-              ref='4'
-              style={styles.textInputHalf}
-              defaultValue={String(contact.frequency)}
-              placeholderTextColor="#bfbfbf"
-              placeholder=""
-              keyboardType="numeric"
-              onChangeText={frequency => this.setState({frequency})}
-              returnKeyType="done"
-            />
-          </View>
         </View>
 
         <View style={styles.notesWrapper}>
           <Text style={[styles.subtitle, styles.subtitleForNotes]}> Notes </Text>
           <TextInput
-            ref='5'
+            ref='4'
             style={styles.textInputForNotes}
             defaultValue={contact.notes}
             value={this.state.notes}

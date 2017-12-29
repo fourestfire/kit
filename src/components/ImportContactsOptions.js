@@ -135,13 +135,13 @@ class ImportContactsOptions extends Component {
             dropdownTextStyle={{fontSize: 16, color: 'black'}}
             dropdownTextHighlightStyle={{backgroundColor: 'hsla(240, 100%, 27%, 0.35)'}}
             adjustFrame={(style) => {
-              newStyle = style
-              newStyle.height = isDeviceSmall() ? style.height + 70 : style.height + 155
-              return newStyle
+              newStyle = style;
+              newStyle.height = isDeviceSmall() ? style.height + 70 : style.height + 155;
+              return newStyle;
             }}
             defaultIndex={3}
             defaultValue={this.state.modalDropdownText}
-            onSelect={(index, value)=>{
+            onSelect={(index, value) => {
               if (value !== 'Custom') {
                 // console.log('converting text to freq..', convertTextToFrequency(value))
                 this.setState({frequency: convertTextToFrequency(value)})

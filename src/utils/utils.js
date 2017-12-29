@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { Dimensions } from 'react-native';
+import { getSettings } from '../redux/realm';
 
 export function isDeviceSmall() {
   let { width } = Dimensions.get('window');
@@ -15,6 +16,7 @@ export function convertFrequencyToText(frequency) {
   if (frequency === 30 || frequency === 31) return 'Monthly';
   if (frequency === 60 || frequency === 61) return 'Bi-Monthly';
   if (frequency >= 90 && frequency <= 95) return 'Quarterly';
+  if (frequency >= 180 && frequency <= 182) return 'Bi-Annually';
   if (frequency >= 360 && frequency <= 366) return 'Yearly';
   else return `Every ${frequency} days`;
 }
@@ -28,6 +30,17 @@ export function convertTextToFrequency(text) {
   if (text === 'Quarterly') return 90;
   if (text === 'Bi-annually') return 180;
   else return 21;
+}
+
+export function convertFrequencyToIndex(frequency) {
+  if (frequency === 1) return 0;
+  if (frequency === 7) return 1;
+  if (frequency === 14) return 2;
+  if (frequency === 21) return 3;
+  if (frequency === 30 || frequency === 31) return 4;
+  if (frequency >= 90 && frequency <= 95) return 5;
+  if (frequency >= 180 && frequency <= 182) return 6;
+  else return 7;
 }
 
 export function convertDiff(diff) {
@@ -68,9 +81,9 @@ export function randomNextContactDate(variance) {
 }
 
 export function convertColor(str) {
-  if (str === 'Group 1') return 'purple';
-  if (str === 'Group 2') return '#73d4e3';
-  if (str === 'Group 3') return 'green';
+  if (str === 'Group 1') return getSettings().color1;
+  if (str === 'Group 2') return getSettings().color2;
+  if (str === 'Group 3') return getSettings().color3;
   if (str === 'None') return 'transparent';
   return 'grey';
 }
