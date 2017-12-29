@@ -5,7 +5,7 @@ import Header from './Header';
 import Collapsible from 'react-native-collapsible';
 import Interactable from 'react-native-interactable';
 import moment from 'moment';
-import { convertFrequency, convertDiff } from '../utils/utils';
+import { convertDiff } from '../utils/utils';
 import Row from './SingleContactRow';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -23,6 +23,7 @@ import FlatView from './FlatView';
 import AddContact from './AddContact';
 import AddOrImport from './AddOrImport';
 import UpdateContact from './UpdateContact';
+import FrequencyModal from './FrequencyModal';
 import ImportContacts from './ImportContacts';
 import ImportContactsOptions from './ImportContactsOptions';
 import Complete from './Complete';
@@ -242,6 +243,9 @@ export default kit = StackNavigator({
     },
     ImportContactsOptions: {
       screen: ImportContactsOptions
+    },
+    FrequencyModal: {
+      screen: FrequencyModal
     },
     SettingsMenu: {
       screen: SettingsMenu

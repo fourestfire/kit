@@ -101,8 +101,9 @@ export default StyleSheet.create({
   },
   formLabel: {
     fontSize: 18,
-    color: 'black',
-    margin: -4
+    color: 'grey',
+    margin: -6,
+    fontStyle: 'italic',
   },
   subtitle: {
     fontSize: 16,
@@ -180,7 +181,7 @@ export default StyleSheet.create({
 
   importOptions: {
     height: 50,
-    width: maxWidth - 45,
+    width: maxWidth - 50,
   },
 
   // original version

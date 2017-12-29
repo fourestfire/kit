@@ -7,15 +7,27 @@ export function isDeviceSmall() {
   else return false;
 }
 
-export function convertFrequency(frequency) {
+export function convertFrequencyToText(frequency) {
   if (frequency === 1) return 'Daily';
   if (frequency === 7) return 'Weekly';
   if (frequency === 14) return 'Bi-Weekly';
+  if (frequency === 21) return 'Every 3 weeks';
   if (frequency === 30 || frequency === 31) return 'Monthly';
   if (frequency === 60 || frequency === 61) return 'Bi-Monthly';
   if (frequency >= 90 && frequency <= 95) return 'Quarterly';
   if (frequency >= 360 && frequency <= 366) return 'Yearly';
-  else return `Every ${frequency} Days`;
+  else return `Every ${frequency} days`;
+}
+
+export function convertTextToFrequency(text) {
+  if (text === 'Daily') return 1;
+  if (text === 'Weekly') return 7;
+  if (text === 'Bi-weekly') return 14;
+  if (text === 'Every 3 weeks') return 21;
+  if (text === 'Monthly') return 31;
+  if (text === 'Quarterly') return 90;
+  if (text === 'Bi-annually') return 180;
+  else return 21;
 }
 
 export function convertDiff(diff) {

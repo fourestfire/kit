@@ -10,9 +10,11 @@ import {
   Modal
 } from 'react-native';
 import ImportContacts from './ImportContacts';
+import FrequencyModal from './FrequencyModal';
 import Mixpanel from 'react-native-mixpanel';
 import Header from './Header';
 import ModalDropdown from 'react-native-modal-dropdown';
+import { convertTextToFrequency, isDeviceSmall } from '../utils/utils';
 
 class ImportContactsOptions extends Component {
   static navigationOptions = {
@@ -25,15 +27,27 @@ class ImportContactsOptions extends Component {
     super(props);
     this.state = {
       showImportModal: false,
-      frequency: 14,
+      showFrequencyModal: false,
+      frequency: 21,
+      modalDropdownText: 'Every 3 weeks',
       color: 'None',
     };
   }
 
   toggleImportModal = () => {
+    console.log('frequency of import', Number(this.state.frequency));
     Mixpanel.trackWithProperties('Headed to Import', {color: this.state.color, frequency: Number(this.state.frequency)});
     this.setState({ showImportModal: !this.state.showImportModal });
     this.props.navigation.navigate('Today');
+  }
+
+  toggleFrequencyModal = () => {
+    this.setState({ showFrequencyModal: !this.state.showFrequencyModal });
+  }
+
+  onCustomFrequencyUpdated = (frequency) => {
+    console.log('this is the selected custom freq', frequency)
+    this.setState({frequency: frequency});
   }
 
   setColor(color) {
@@ -59,6 +73,14 @@ class ImportContactsOptions extends Component {
           animationType='slide'
         >
           <ImportContacts screenProps={{ toggle: this.toggleImportModal }} settings={{frequency: Number(this.state.frequency), color: this.state.color}} />
+        </Modal>
+
+        <Modal
+          visible={this.state.showFrequencyModal}
+          onRequestClose={this.toggleFrequencyModal}
+          animationType='slide'
+        >
+          <FrequencyModal screenProps={{ toggle: this.toggleFrequencyModal, freqUpdated: this.onCustomFrequencyUpdated }} />
         </Modal>
 
         <View style={styles.tenSpacer} />
@@ -89,7 +111,7 @@ class ImportContactsOptions extends Component {
 
         <View style={styles.tenSpacer} />
 
-        <View style={styles.textWrapper}>
+        {/*<View style={styles.textWrapper}>
           <Text style={styles.formLabel}> Contact Frequency </Text>
           <TextInput
             ref="1"
@@ -101,20 +123,32 @@ class ImportContactsOptions extends Component {
             onChangeText={frequency => this.setState({frequency})}
             returnKeyType="done"
           />
-        </View>
+        </View> */}
 
         <View style={styles.textWrapper}>
           <Text style={styles.formLabel}> Contact Frequency </Text>
           <ModalDropdown
-            options={['daily', 'weekly', 'bi-weekly', 'monthly', 'quarterly', 'yearly', 'custom']}
-            style={{backgroundColor: 'pink'}}
-            textStyle={{fontSize: 18}}
-            dropdownTextStyle={{fontSize: 18}}
-            dropdownTextHighlightStyle={{backgroundColor: 'grey'}}
-            defaultIndex={2}
-            defaultValue={'please select...'}
-            onSelect={()=>{
-              // if custom is selected...
+            options={['Daily', 'Weekly', 'Bi-weekly', 'Every 3 weeks', 'Monthly', 'Quarterly', 'Bi-annually', 'Custom']}
+            style={{marginTop: 14}}
+            textStyle={{fontSize: 18, color: 'black'}}
+            dropdownStyle={{marginTop: 4, backgroundColor: 'white', borderWidth: 1, borderColor: 'grey'}}
+            dropdownTextStyle={{fontSize: 16, color: 'black'}}
+            dropdownTextHighlightStyle={{backgroundColor: 'hsla(240, 100%, 27%, 0.35)'}}
+            adjustFrame={(style) => {
+              newStyle = style
+              newStyle.height = isDeviceSmall() ? style.height + 70 : style.height + 155
+              return newStyle
+            }}
+            defaultIndex={3}
+            defaultValue={this.state.modalDropdownText}
+            onSelect={(index, value)=>{
+              if (value !== 'Custom') {
+                // console.log('converting text to freq..', convertTextToFrequency(value))
+                this.setState({frequency: convertTextToFrequency(value)})
+                return convertTextToFrequency(value);
+              } else {
+                this.toggleFrequencyModal();
+              }
             }}
           />
         </View>
@@ -152,3 +186,4 @@ export default connect(mapState, mapDispatch)(ImportContactsOptions);
 /* -------------------<   STYLING   >-------------------- */
 
 import styles from '../styles/AddEditScreens';
+

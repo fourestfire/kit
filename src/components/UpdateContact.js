@@ -16,10 +16,9 @@ import Header from './Header';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from '../styles/AddEditScreens';
-import { getAllContacts } from '../redux/realm';
+import { getAllContacts, getSettings } from '../redux/realm';
 import Mixpanel from 'react-native-mixpanel';
 import DatePicker from 'react-native-datepicker';
-import { getSettings } from '../redux/realm';
 
 class UpdateContact extends Component {
   static navigationOptions = {

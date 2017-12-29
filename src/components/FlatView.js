@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import Header from './Header';
 import moment from 'moment';
-import { convertFrequency, convertColor, convertDiff } from '../utils/utils';
+import { convertFrequencyToText, convertColor, convertDiff } from '../utils/utils';
 import AddContact from './AddContact';
 import UpdateContact from './UpdateContact';
 import ImportContacts from './ImportContacts';
@@ -84,7 +84,7 @@ class FlatView extends Component {
                 <View style={[styles.rowColor, {backgroundColor: convertColor(item.color)}]} />
                 <View style={styles.rowContent}>
                   <Text style={styles.rowTitle}>{item.firstName} {item.lastName}</Text>
-                  <Text style={styles.rowSubtitle}>{convertFrequency(item.frequency)} (Last: {item.lastContact ? convertDiff(moment().diff(moment(item.lastContact), 'days')) : 'N/A'})</Text>
+                  <Text style={styles.rowSubtitle}>{convertFrequencyToText(item.frequency)} (Last: {item.lastContact ? convertDiff(moment().diff(moment(item.lastContact), 'days')) : 'N/A'})</Text>
                 </View>
                 <MIcon name="edit" style={styles.editIcon} size={25} color="#bdbdbd" />
               </View>
