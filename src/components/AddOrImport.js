@@ -9,6 +9,7 @@ import {
   Keyboard
 } from 'react-native';
 import Header from './Header';
+import { getSettings } from '../redux/realm';
 
 class AddOrImport extends Component {
   static navigationOptions = {
@@ -23,7 +24,7 @@ class AddOrImport extends Component {
         <Header
             leftOnPress={() => this.props.navigation.goBack(null)}
             leftText='BACK'
-            title='choose import type'
+            title={getSettings().deviceSize === 'small' ? 'import type' : 'choose import type'}
           />
 
         <View style={styles.topFlex} />

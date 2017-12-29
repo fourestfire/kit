@@ -22,6 +22,8 @@ class Settings {
       color3: {type: 'string', default: 'forestgreen'},
       textMessage: {type: 'string', default: "Hey!"},
       deviceSize: {type: 'string', default: 'regular'},
+      totalCompletes: {type: 'int', default: 0},
+      overallStreak: {type: 'int', default: 0},
     }
   }
 }
@@ -143,6 +145,8 @@ class Contact {
       notes: 'string',
       contactHistory: {type: 'list', objectType: 'ContactHistory'},
       birthday: 'int',
+      numTimesContacted: 'int',
+      currentStreak: 'int',
     }
   }
 }
@@ -214,7 +218,9 @@ export const createContact = contact => {
       notes: contact.notes || '',
       phoneNum: contact.phoneNum || '123-123-1234',
       color: contact.color || 'None',
-      birthday: contact.birthday || 0
+      birthday: contact.birthday || 0,
+      numTimesContacted: 0,
+      currentStreak: 0
     });
   });
   // console.log('total # of contacts', getAllContacts().length);

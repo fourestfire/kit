@@ -68,6 +68,7 @@ export default connect(mapState, mapDispatch)(SettingsHelp);
 
 /* -------------------<   STYLING   >-------------------- */
 import { maxHeight, maxWidth } from '../styles/global';
+const FONT_SIZE = getSettings().deviceSize === 'small' ? 16 : 18;
 
 const styles = StyleSheet.create({
   container: {
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
   },
   paragraph: {
     margin: 14,
-    fontSize: 18,
+    fontSize: FONT_SIZE,
     fontWeight: '300'
   },
   submitButton: {
@@ -102,7 +103,7 @@ const styles = StyleSheet.create({
   },
   submitText: {
     color: 'white',
-    fontSize: 18,
+    fontSize: FONT_SIZE,
     fontWeight: '300'
   },
 });

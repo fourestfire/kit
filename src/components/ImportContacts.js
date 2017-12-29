@@ -7,6 +7,7 @@ import { randomNextContactDate } from '../utils/utils';
 import Emoji from 'react-native-emoji';
 import { markContactsImportedTrue } from '../redux/realm';
 import Mixpanel from 'react-native-mixpanel';
+import { getSettings } from '../redux/realm';
 
 class ImportContacts extends Component {
   constructor(props) {
@@ -200,6 +201,8 @@ export default connect(mapState, mapDispatch)(ImportContacts);
 /* -------------------<   STYLES   >-------------------- */
 import { maxHeight, maxWidth } from '../styles/global';
 import { isIphoneX } from 'react-native-iphone-x-helper';
+const FONT_SIZE = getSettings().deviceSize === 'small' ? 15 : 16;
+const ROW_WIDTH = getSettings().deviceSize === 'small' ? 150 : 180;
 
 const marginTop = isIphoneX() ? 45 : 25;
 
@@ -261,18 +264,18 @@ const styles = StyleSheet.create({
     borderBottomColor: '#eeeeee',
   },
   rowFirst: {
-    fontSize: 16,
+    fontSize: FONT_SIZE,
     fontWeight: 'bold',
   },
   rowLast: {
-    fontSize: 16,
+    fontSize: FONT_SIZE,
   },
   rowWidth: {
     marginLeft: 20,
-    width: 180,
+    width: ROW_WIDTH,
   },
   rowInfo: {
-    fontSize: 16,
+    fontSize: FONT_SIZE,
     color: 'gray',
   },
   actionButton: {

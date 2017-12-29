@@ -93,7 +93,7 @@ class SettingsPushNotifications extends React.Component {
         <View style={styles.flexSpacer} />
 
         <View style={[styles.flexWrap, styles.horizontalMargin]}>
-          <Text style={styles.timeText}>Select a daily time:   </Text>
+          <Text style={styles.timeText}>Select a daily time: </Text>
           <View style={styles.flexSpacer} />
           <DatePicker
             style={{width: 95}}
@@ -191,6 +191,8 @@ export default connect(mapState, mapDispatch)(SettingsPushNotifications);
 
 /* -------------------<   STYLING   >-------------------- */
 import { maxHeight, maxWidth } from '../styles/global';
+const FONT_SIZE = getSettings().deviceSize === 'small' ? 16 : 18;
+const HORIZ_MARGIN = getSettings().deviceSize === 'small' ? 40 : 47;
 
 const styles = StyleSheet.create({
   container: {
@@ -201,7 +203,7 @@ const styles = StyleSheet.create({
   },
   paragraph: {
     margin: 10,
-    fontSize: 18,
+    fontSize: FONT_SIZE,
     fontWeight: '300'
   },
   deleteButton: {
@@ -233,7 +235,7 @@ const styles = StyleSheet.create({
   },
 
   horizontalMargin: {
-    marginHorizontal: 47,
+    marginHorizontal: HORIZ_MARGIN,
   },
 
 
@@ -243,21 +245,21 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   helpText: {
-    fontSize: 18,
+    fontSize: FONT_SIZE,
     color: 'black',
     margin: -4,
     fontWeight: '300'
   },
 
   timeText: {
-    fontSize: 18,
+    fontSize: FONT_SIZE,
     color: 'black',
     fontWeight: '300'
   },
 
   actionText: {
     color: 'white',
-    fontSize: 18,
+    fontSize: FONT_SIZE,
     fontWeight: '300'
   },
 

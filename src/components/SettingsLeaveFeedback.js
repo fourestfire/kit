@@ -53,7 +53,7 @@ class SettingsLeaveFeedback extends React.Component {
 
           <View style={styles.flex}>
             <Text style={styles.paragraph}>Hi! Thanks for helping me test this app. If you encounter any issues or just have any suggestions or comments, please submit the form below with details.</Text>
-            <Text style={styles.paragraph}>It's anonymous, so if you want a response, you should include some sort of identifying information.</Text>
+            <Text style={styles.paragraph}>It's anonymous, but I would love to chat with you, so include your email if you can! </Text>
             <TextInput
                 style={styles.textInput}
                 autoFocus={false}
