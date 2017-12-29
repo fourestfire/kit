@@ -18,8 +18,6 @@ class kit extends React.Component {
 
      // login analytics logic: refresh last login date and increment login count
      setLastLogin();
-
-     Mixpanel.track("test event")
    }
 
   render () {
