@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { isIphoneX } from 'react-native-iphone-x-helper';
-// import { getSettings } from '../redux/realm';
+import { isDeviceSmall } from '../utils/utils';
 
 export default class Header extends React.Component {
   constructor(props) {
@@ -44,7 +44,7 @@ export default class Header extends React.Component {
 
 const STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? (isIphoneX() ? 45 : 20) : 25;
 const HEADER_HEIGHT = Platform.OS === 'ios' ? 44 + STATUS_BAR_HEIGHT : 56 + STATUS_BAR_HEIGHT;
-// const TITLE_SIZE = getSettings().deviceSize === 'small' ? 19 : 22;
+const TITLE_SIZE = isDeviceSmall() ? 19 : 22;
 
 const styles = StyleSheet.create({
   toolbarContainer: {

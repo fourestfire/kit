@@ -1,4 +1,11 @@
 import moment from 'moment';
+import { Dimensions } from 'react-native';
+
+export function isDeviceSmall() {
+  let { width } = Dimensions.get('window');
+  if (width <= 320) return true;
+  else return false;
+}
 
 export function convertFrequency(frequency) {
   if (frequency === 1) return 'Daily';

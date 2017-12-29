@@ -3,7 +3,7 @@ import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity, TouchableWi
 import Icon from 'react-native-vector-icons/Ionicons';
 import Contacts from 'react-native-contacts';
 import SearchBar from 'react-native-search-bar';
-import { randomNextContactDate } from '../utils/utils';
+import { randomNextContactDate, isDeviceSmall } from '../utils/utils';
 import Emoji from 'react-native-emoji';
 import { markContactsImportedTrue, getSettings } from '../redux/realm';
 import Mixpanel from 'react-native-mixpanel';
@@ -200,10 +200,8 @@ export default connect(mapState, mapDispatch)(ImportContacts);
 /* -------------------<   STYLES   >-------------------- */
 import { maxHeight, maxWidth } from '../styles/global';
 import { isIphoneX } from 'react-native-iphone-x-helper';
-const FONT_SIZE = false ? 15 : 16;
-const ROW_WIDTH = false ? 150 : 180;
-
-// getSettings().deviceSize === 'small'
+const FONT_SIZE = isDeviceSmall() ? 15 : 16;
+const ROW_WIDTH = isDeviceSmall() ? 150 : 180;
 
 const marginTop = isIphoneX() ? 45 : 25;
 

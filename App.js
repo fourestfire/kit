@@ -10,13 +10,14 @@ import Today from './src/components/Today';
 
 class kit extends React.Component {
   componentWillMount() {
-     // init Mixpanel SDK with project token
-     Mixpanel.sharedInstanceWithToken('7d05fad0f2bf12130baec860512ba4c2');
+    // init Mixpanel SDK with project token
+    Mixpanel.sharedInstanceWithToken('7d05fad0f2bf12130baec860512ba4c2');
 
-     console.log('creating initial')
+    // initialize global settings if uninitialized
+    initializeSettingsIfNeeded();
 
-     // login analytics logic: refresh last login date and increment login count
-     setLastLogin();
+    // login analytics logic: refresh last login date and increment login count
+    setLastLogin();
    }
 
   render () {

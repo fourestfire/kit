@@ -191,8 +191,9 @@ export default connect(mapState, mapDispatch)(SettingsPushNotifications);
 
 /* -------------------<   STYLING   >-------------------- */
 import { maxHeight, maxWidth } from '../styles/global';
-const FONT_SIZE = getSettings().deviceSize === 'small' ? 16 : 18;
-const HORIZ_MARGIN = getSettings().deviceSize === 'small' ? 40 : 47;
+import { isDeviceSmall } from '../utils/utils';
+const FONT_SIZE = isDeviceSmall() ? 16 : 18;
+const HORIZ_MARGIN = isDeviceSmall() ? 40 : 47;
 
 const styles = StyleSheet.create({
   container: {
