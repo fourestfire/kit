@@ -18,6 +18,7 @@ import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from '../styles/AddEditScreens';
 import { getAllContacts } from '../redux/realm';
 import Mixpanel from 'react-native-mixpanel';
+import DatePicker from 'react-native-datepicker';
 
 class UpdateContact extends Component {
   static navigationOptions = {
@@ -65,7 +66,7 @@ class UpdateContact extends Component {
   updateContact(contact) {
     Mixpanel.track('Contact Updated');
     this.props.updateContact(contact);
-    this.props.navigation.goBack(null)
+    this.props.navigation.goBack(null);
   }
 
   initiateDeleteContact(contactID, name) {
@@ -211,7 +212,38 @@ class UpdateContact extends Component {
         <View style={styles.flexWrap}>
           <View style={styles.textWrapperHalf}>
             <Text style={styles.subtitle}> Next Contact Date </Text>
-            <TextInput
+            <DatePicker
+              style={{width: 95}}
+              date={moment(this.state.nextContact)}
+              mode="date"
+              placeholder="select date"
+              format="MM/DD/YYYY"
+              minDate={moment().format('MM/DD/YYYY')}
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              showIcon={false}
+              customStyles={{
+                dateIcon: {
+                  position: 'absolute',
+                  left: 0,
+                  top: 4,
+                  marginLeft: 0,
+                },
+                dateInput: {
+                  marginLeft: 0,
+                  borderWidth: 0,
+                },
+                dateText: {
+                  fontSize: 18,
+                  marginTop: 8,
+                  marginLeft: -4
+                }
+              }}
+              onDateChange={(nextContact) => {
+                this.setState({nextContact: parseInt(moment(nextContact).format('x'), 10)})
+              }}
+            />
+           { /* <TextInput
               ref='3'
               style={styles.textInputHalf}
               defaultValue={String(moment(contact.nextContact).format('L'))}
@@ -220,7 +252,7 @@ class UpdateContact extends Component {
               keyboardType="numeric"
               onChangeText={nextContact => this.setState({nextContact: parseInt(moment(nextContact).format('x'), 10)})}
               returnKeyType="done"
-            />
+           /> */}
           </View>
 
           <View style={styles.textWrapperHalf}>

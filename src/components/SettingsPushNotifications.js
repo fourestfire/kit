@@ -20,12 +20,22 @@ import Emoji from 'react-native-emoji';
 import PushNotification from 'react-native-push-notification';
 import Mixpanel from 'react-native-mixpanel';
 
+import DatePicker from 'react-native-datepicker';
+import moment from 'moment';
+
 /* -------------------<   COMPONENT   >-------------------- */
 
 class SettingsPushNotifications extends React.Component {
   static navigationOptions = {
     header: {
       visible: false,
+    }
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      time: '09:00'
     }
   }
 
@@ -68,10 +78,52 @@ class SettingsPushNotifications extends React.Component {
 
         <View style={styles.helpTextView}>
           <Text style={styles.helpText}>Here, you can set a daily reminder.
-          {"\n"}{"\n"}You'll get a quick push notification at the same time each day, at the time you pressed the schedule button. You can set more than one notification! </Text>
+          {"\n"}{"\n"}You'll get a push notification at the time you select. Feel free to set more than one recurring notification. </Text>
         </View>
 
         <View style={styles.flexSpacer} />
+
+        <View style={[styles.flexWrap, styles.horizontalMargin]}>
+          <Text style={styles.timeText}>Select a daily time:   </Text>
+          <View style={styles.flexSpacer} />
+          <DatePicker
+            style={{width: 95}}
+            date={this.state.time}
+            mode="time"
+            placeholder="select time"
+            format="h:mm a"
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            showIcon={false}
+            customStyles={{
+              dateIcon: {
+                position: 'absolute',
+                left: 0,
+                top: 4,
+                marginLeft: 0,
+              },
+              dateInput: {
+                marginLeft: 0,
+                // borderWidth: 0,
+              },
+              dateText: {
+                fontSize: 18,
+                fontWeight: '300'
+                // marginTop: 8,
+                // marginLeft: -4
+              }
+              // ... You can check the source to find the other keys.
+            }}
+            onDateChange={(time) => {
+              this.setState({time: time});
+              console.log('pushNtime', this.state.time)
+            }}
+          />
+        </View>
+
+        <View style={styles.tenSpacer} />
+        <View style={styles.tenSpacer} />
+        <View style={styles.tenSpacer} />
 
         <View style={styles.flexWrap}>
           <TouchableOpacity
@@ -83,7 +135,7 @@ class SettingsPushNotifications extends React.Component {
               PushNotification.localNotificationSchedule({
                 message: "time to check in with your contacts :)",
                 playSound: false,
-                repeatType: 'day', // repeat every minute
+                repeatType: 'day', // repeat every day
                 date: new Date(Date.now() + (1000 * 5)) // in five seconds
               });
 
@@ -93,6 +145,7 @@ class SettingsPushNotifications extends React.Component {
             <Text style={styles.actionText}> Schedule Push Notifications </Text>
           </TouchableOpacity>
         </View>
+
 
         <View style={styles.tenSpacer} />
         <View style={styles.tenSpacer} />
@@ -168,8 +221,14 @@ const styles = StyleSheet.create({
 
   flexWrap: {
     flexWrap: 'wrap',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'center'
   },
+
+  horizontalMargin: {
+    marginHorizontal: 47,
+  },
+
 
   helpTextView: {
     height: 50,
@@ -180,6 +239,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'black',
     margin: -4,
+    fontWeight: '300'
+  },
+
+  timeText: {
+    fontSize: 18,
+    color: 'black',
     fontWeight: '300'
   },
 

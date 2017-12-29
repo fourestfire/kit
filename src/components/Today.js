@@ -171,14 +171,14 @@ class TodayView extends Component {
           })
         }
 
-        {/* Populate next two weeks contacts */}
+        {/* Populate next three weeks contacts */}
           <View style={styles.rowHeader}>
             <Text style={styles.rowHeaderText}> upcoming </Text>
           </View>
 
         {
           this.props.store.contacts
-          .filter(el => moment(el.nextContact).isBetween(moment().add(1, 'day'), moment().add(14, 'day'), 'day', '[]'))
+          .filter(el => moment(el.nextContact).isBetween(moment().add(1, 'day'), moment().add(21, 'day'), 'day', '[]'))
           .sort((a, b) => result = a.firstName > b.firstName ? 1 : -1)
           .map(contact => {
             return (
