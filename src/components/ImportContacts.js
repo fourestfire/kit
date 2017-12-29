@@ -5,9 +5,8 @@ import Contacts from 'react-native-contacts';
 import SearchBar from 'react-native-search-bar';
 import { randomNextContactDate } from '../utils/utils';
 import Emoji from 'react-native-emoji';
-import { markContactsImportedTrue } from '../redux/realm';
+import { markContactsImportedTrue, getSettings } from '../redux/realm';
 import Mixpanel from 'react-native-mixpanel';
-import { getSettings } from '../redux/realm';
 
 class ImportContacts extends Component {
   constructor(props) {
@@ -201,8 +200,10 @@ export default connect(mapState, mapDispatch)(ImportContacts);
 /* -------------------<   STYLES   >-------------------- */
 import { maxHeight, maxWidth } from '../styles/global';
 import { isIphoneX } from 'react-native-iphone-x-helper';
-const FONT_SIZE = getSettings().deviceSize === 'small' ? 15 : 16;
-const ROW_WIDTH = getSettings().deviceSize === 'small' ? 150 : 180;
+const FONT_SIZE = false ? 15 : 16;
+const ROW_WIDTH = false ? 150 : 180;
+
+// getSettings().deviceSize === 'small'
 
 const marginTop = isIphoneX() ? 45 : 25;
 

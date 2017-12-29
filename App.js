@@ -13,8 +13,7 @@ class kit extends React.Component {
      // init Mixpanel SDK with project token
      Mixpanel.sharedInstanceWithToken('7d05fad0f2bf12130baec860512ba4c2');
 
-     // initialize global settings if uninitialized
-     initializeSettingsIfNeeded();
+     console.log('creating initial')
 
      // login analytics logic: refresh last login date and increment login count
      setLastLogin();

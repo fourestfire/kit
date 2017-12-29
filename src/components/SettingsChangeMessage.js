@@ -59,7 +59,7 @@ class ChangeMessage extends React.Component {
         <Header
           leftOnPress={() => this.props.navigation.goBack(null)}
           leftText='BACK'
-          title={getSettings().deviceSize === 'small' ? 'update msg' : 'update text msg'}
+          title={'update text msg'}
           rightOnPress={null}
           rightText='   '
         />

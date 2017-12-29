@@ -212,7 +212,7 @@ class UpdateContact extends Component {
 
         <View style={styles.flexWrap}>
           <View style={styles.textWrapperHalf}>
-            <Text style={styles.subtitle}> {getSettings().deviceSize === 'small' ? 'Next Contact' : 'Next Contact Date'} </Text>
+            <Text style={styles.subtitle}> {'Next Contact Date'} </Text>
             <DatePicker
               style={{width: 95}}
               date={moment(this.state.nextContact)}
@@ -257,7 +257,7 @@ class UpdateContact extends Component {
           </View>
 
           <View style={styles.textWrapperHalf}>
-            <Text style={styles.subtitle}> {getSettings().deviceSize === 'small' ? 'Frequency' : 'Contact Frequency'} </Text>
+            <Text style={styles.subtitle}> {'Contact Frequency'} </Text>
             <TextInput
               ref='4'
               style={styles.textInputHalf}

@@ -68,6 +68,9 @@ class TodayView extends Component {
       // console.log("here are all the current contacts");
       // getAllContacts().forEach((contact, idx) => console.log(`contact ${idx + 1}: ${contact.firstName} ${contact.lastName} ${contact.phoneNum} ${contact.nextContact} ${contact.lastContact}`));
 
+    // initialize global settings if uninitialized
+    initializeSettingsIfNeeded();
+
     // load contacts from realm into redux store
     let allContacts = Array.prototype.slice.call(getAllContacts());
     this.props.getAllContactsSync(allContacts);
@@ -87,6 +90,8 @@ class TodayView extends Component {
 
     // show tutorial on first run
     if (!getSettings().tutorialSeen) this.toggleTutorialModal();
+
+    console.log('settings', getSettings())
   }
 
   toggleTutorialModal = () => {
@@ -125,13 +130,13 @@ class TodayView extends Component {
         <View>
           <Header
             leftOnPress={() => this.props.navigation.navigate('SettingsMenu')}
-            leftText={getSettings().deviceSize === 'small' ?  <Icon size={25} name='ios-settings' /> : 'SETTINGS'}
+            leftText={'SETTINGS'}
             title={'keep in touch'}
             rightOnPress={() => {  // on first run, send them to import before edit
               if (getSettings().contactsImported) this.props.navigation.navigate('AllContacts');
               else this.props.navigation.navigate('ImportContactsOptions');
             }}
-            rightText={getSettings().contactsImported ? '    EDIT' : getSettings().deviceSize === 'small' ?  <MIcon size={25} name='import' /> : '   IMPORT'} // if device size is small, have to make the import text into an icon
+            rightText={'   IMPORT'} // if device size is small, have to make the import text into an icon
           />
         </View>
 

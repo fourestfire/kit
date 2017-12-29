@@ -29,6 +29,7 @@ class Settings {
 }
 
 export const createInitialSettings = () => {
+  console.log('creating initial')
   let {width} = Dimensions.get('window');
   let deviceSize;
   if (width <= 320) deviceSize = 'small';

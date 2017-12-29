@@ -68,7 +68,7 @@ export default connect(mapState, mapDispatch)(SettingsHelp);
 
 /* -------------------<   STYLING   >-------------------- */
 import { maxHeight, maxWidth } from '../styles/global';
-const FONT_SIZE = getSettings().deviceSize === 'small' ? 16 : 18;
+const FONT_SIZE = false ? 16 : 18;
 
 const styles = StyleSheet.create({
   container: {
