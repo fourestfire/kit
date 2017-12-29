@@ -51,7 +51,7 @@ class UpdateContact extends Component {
   componentDidMount() {
 
     let contact = this.props.navigation.state.params.contact;
-    console.log('modaldropdown should say this', convertFrequencyToText(contact.frequency))
+    // console.log('modaldropdown should say this', convertFrequencyToText(contact.frequency))
 
     // this.setState({
     //   modalDropdownText: convertFrequencyToText(contact.frequency),

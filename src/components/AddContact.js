@@ -6,13 +6,17 @@ import {
   SegmentedControlIOS,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  Modal,
 } from 'react-native';
 import moment from 'moment';
 import Header from './Header';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {TextInputMask} from 'react-native-masked-text';
 import Mixpanel from 'react-native-mixpanel';
+import ModalDropdown from 'react-native-modal-dropdown';
+import FrequencyModal from './FrequencyModal';
+import { convertTextToFrequency, convertFrequencyToText, isDeviceSmall, convertFrequencyToIndex } from '../utils/utils';
 
 class AddContact extends Component {
   static navigationOptions = {
@@ -24,6 +28,7 @@ class AddContact extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      showFrequencyModal: false,
       firstName: '',
       lastName: '',
       id: 9000,
@@ -55,13 +60,29 @@ class AddContact extends Component {
 
   _focusPhoneField() {
 		this.refs['3'].getElement().focus();
-	}
+  }
+
+  setColor(color) {
+    if (color === 'Purple') this.setState({color: 'Group 1'});
+    else if (color === 'Teal') this.setState({color: 'Group 2'});
+    else if (color === 'Green') this.setState({color: 'Group 3'});
+    else if (color === 'None') this.setState({color: 'None'});
+  }
 
   addContact(contact) {
     Mixpanel.trackWithProperties('Contact Added', {method: 'manually'});
     Mixpanel.track('Manual Add Used');
     this.props.addContact(contact);
     this.props.navigation.navigate('Today')
+  }
+
+  toggleFrequencyModal = () => {
+    this.setState({ showFrequencyModal: !this.state.showFrequencyModal });
+  }
+
+  onCustomFrequencyUpdated = (frequency) => {
+    console.log('this is the selected custom freq', frequency)
+    this.setState({frequency: frequency});
   }
 
   render() {
@@ -76,6 +97,14 @@ class AddContact extends Component {
           leftText='BACK'
           title='add contact'
         />
+
+        <Modal
+          visible={this.state.showFrequencyModal}
+          onRequestClose={this.toggleFrequencyModal}
+          animationType='slide'
+        >
+          <FrequencyModal screenProps={{ toggle: this.toggleFrequencyModal, freqUpdated: this.onCustomFrequencyUpdated }} />
+        </Modal>
 
         <View style={styles.tenSpacer} />
         <View style={styles.tenSpacer} />
@@ -98,35 +127,48 @@ class AddContact extends Component {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.textWrapper}>
-          <TextInput
-            ref="1"
-            style={styles.textInput}
-            placeholder={'First Name'}
-            placeholderTextColor="#bfbfbf"
-            autoFocus={true}
-            autoCorrect={false}
-            onChangeText={firstName => this.setState({firstName})}
-            returnKeyType="next"
-            blurOnSubmit={false}
-            onSubmitEditing={() => this._focusNextField('2')}
-          />
+        <View style={styles.tenSpacer} />
+        <View style={styles.tenSpacer} />
+        <View style={styles.tenSpacer} />
+        <View style={styles.tenSpacer} />
+
+        <View style={styles.flexWrap}>
+          <View style={styles.textWrapperHalf}>
+            <Text style={styles.subtitle}> First Name </Text>
+            <TextInput
+              style={styles.textInputHalf}
+              placeholder=""
+              placeholderTextColor="#bfbfbf"
+              autoFocus={true}
+              autoCorrect={false}
+              defaultValue={''}
+              onChangeText={firstName => this.setState({firstName})}
+              ref='1'
+              returnKeyType="next"
+              blurOnSubmit={false}
+              onFocus={() => Mixpanel.track("Editing Contact Name")}
+              onSubmitEditing={() => this._focusNextField('2')}
+            />
+          </View>
+
+          <View style={styles.textWrapperHalf}>
+            <Text style={styles.subtitle}> Last Name </Text>
+            <TextInput
+              ref='2'
+              style={styles.textInputHalf}
+              placeholder={''}
+              defaultValue={''}
+              autoCorrect={false}
+              placeholderTextColor="#bfbfbf"
+              onChangeText={lastName => this.setState({lastName})}
+              returnKeyType="next"
+              onSubmitEditing={() => this._focusNextField('3')}
+            />
+          </View>
         </View>
 
         <View style={styles.textWrapper}>
-          <TextInput
-            ref="2"
-            style={styles.textInput}
-            placeholder={'Last Name'}
-            placeholderTextColor="#bfbfbf"
-            autoCorrect={false}
-            onChangeText={lastName => this.setState({lastName})}
-            returnKeyType="next"
-            onSubmitEditing={this._focusPhoneField.bind(this)}
-          />
-        </View>
-
-        <View style={styles.textWrapper}>
+          <Text style={styles.subtitle}> Phone Number </Text>
           <TextInputMask
             ref="3"
             style={[styles.textInput, styles.phoneInput]}
@@ -134,7 +176,7 @@ class AddContact extends Component {
             options={{
               mask: '(999) 999-9999'
             }}
-            placeholder={'Phone #'}
+            placeholder={''}
             placeholderTextColor="#bfbfbf"
             dataDetectorTypes="phoneNumber"
             keyboardType="numeric"
@@ -146,28 +188,44 @@ class AddContact extends Component {
               this._focusNextField('4');}
             }
           />
-          {/*<TextInput
-            ref='3'
-            style={[styles.textInput, styles.phoneInput]}
-            placeholder={'Phone #'}
-            placeholderTextColor="#bfbfbf"
-            dataDetectorTypes="phoneNumber"
-            keyboardType="phone-pad"
-            onChangeText={phoneNum=>this.setState({phoneNum})}
-            returnKeyType="next"
-            onSubmitEditing={() => this._focusNextField('4')}
-          />*/}
         </View>
 
         <View style={styles.textWrapper}>
-          <TextInput
-            ref="4"
-            style={styles.textInput}
-            placeholderTextColor="#bfbfbf"
-            placeholder="Contact Frequency (in days)"
-            keyboardType="numeric"
-            onChangeText={frequency => this.setState({frequency})}
-            returnKeyType="done"
+          <Text style={styles.subtitle}> Contact Frequency </Text>
+          <ModalDropdown
+            options={['Daily', 'Weekly', 'Bi-weekly', 'Every 3 weeks', 'Monthly', 'Quarterly', 'Bi-annually', 'Custom']}
+            style={{marginTop: 14}}
+            textStyle={{fontSize: 18, color: 'black'}}
+            dropdownStyle={{marginTop: 3, backgroundColor: 'white', borderWidth: 1, borderColor: 'grey'}}
+            dropdownTextStyle={{fontSize: 16, color: 'black'}}
+            dropdownTextHighlightStyle={{backgroundColor: 'hsla(240, 100%, 27%, 0.35)'}}
+            adjustFrame={(style) => {
+              newStyle = style;
+              newStyle.height = isDeviceSmall() ? style.height + 70 : style.height + 155;
+              return newStyle;
+            }}
+            defaultIndex={3}
+            defaultValue={this.state.modalDropdownText}
+            onSelect={(index, value) => {
+              if (value !== 'Custom') {
+                // console.log('converting text to freq..', convertTextToFrequency(value))
+                this.setState({frequency: convertTextToFrequency(value)})
+                return convertTextToFrequency(value);
+              } else {
+                this.toggleFrequencyModal();
+              }
+            }}
+          />
+        </View>
+
+        <View style={styles.segmentedWrapper}>
+          <Text style={styles.subtitle}> Group </Text>
+          <SegmentedControlIOS
+              style={styles.segmentedControl}
+              selectedIndex={3}
+              values={['Purple', 'Teal', 'Green', 'None']}
+              tintColor='#333'
+              onValueChange={color => this.setColor(color)}
           />
         </View>
 
