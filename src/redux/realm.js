@@ -11,7 +11,7 @@ class Settings {
     name: 'Settings',
     properties: {
       deviceID: {type: 'string', default: DeviceInfo.getUniqueID()},
-      created: {type: 'string', default: Date()},
+      created: {type: 'string', default: moment().format()},
       lastOpen: {type: 'string', default: 'init'},
       lastOpenedToday: {type: 'bool', default: false},
       finishedToday: {type: 'bool', default: false},
@@ -89,7 +89,7 @@ export const setLastLogin = () => {
       if (getSettings().lastOpen !== 'init' && moment(getSettings().lastOpen).isSameOrBefore(moment(),'day')) {
         getSettings().lastOpenedToday = true; // check if app was last opened today
       }
-      getSettings().lastOpen = Date(); // set lastOpen to current datetime
+      getSettings().lastOpen = moment().format(); // set lastOpen to current datetime
 
       // sync login with mixPanel
       Mixpanel.set({

@@ -2,10 +2,26 @@
 import React from 'react';
 import { AppRegistry } from 'react-native';
 import { Provider } from 'react-redux';
-import Today from './src/components/Today';
 import store from './src/redux/store';
+import { initializeSettingsIfNeeded, setLastLogin } from './src/redux/realm';
+import Mixpanel from 'react-native-mixpanel';
+import Intro from './src/components/Intro';
+import Today from './src/components/Today';
 
 class kit extends React.Component {
+  componentWillMount() {
+     // init Mixpanel SDK with project token
+     Mixpanel.sharedInstanceWithToken('7d05fad0f2bf12130baec860512ba4c2');
+
+     // initialize global settings if uninitialized
+     initializeSettingsIfNeeded();
+
+     // login analytics logic: refresh last login date and increment login count
+     setLastLogin();
+
+     Mixpanel.track("test event")
+   }
+
   render () {
     return (
     <Provider store={store}>

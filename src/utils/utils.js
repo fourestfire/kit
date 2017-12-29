@@ -23,7 +23,7 @@ export function convertDiff(diff) {
   if (diff >= 62 && diff <= 95) return 'Two Months Ago';
   if (diff >= 95 && diff <= 250) return 'A Few Months Ago';
   if (diff >= 365 && diff <= 730) return 'Last Year';
-  if (diff > 730) return 'More Than A Year Ago';
+  if (diff > 730) return 'More Than A Year';
 }
 
 function convertDayOfWeek(diff) {

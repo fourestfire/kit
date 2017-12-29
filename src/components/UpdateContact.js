@@ -173,6 +173,7 @@ class UpdateContact extends Component {
               ref='1'
               returnKeyType="next"
               blurOnSubmit={false}
+              onFocus={() => Mixpanel.track("Editing Contact Name")}
               onSubmitEditing={() => this._focusNextField('2')}
             />
           </View>

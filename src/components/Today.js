@@ -15,9 +15,8 @@ import { convertColor } from '../utils/utils';
 
 import Toast from 'react-native-toast-native';
 import { toastStyle } from '../styles/global';
-
 import Mixpanel from 'react-native-mixpanel';
-import DeviceInfo from 'react-native-device-info';
+import Intro from './Intro';
 
 import { StackNavigator, TabNavigator } from "react-navigation";
 import FlatView from './FlatView';
@@ -35,8 +34,6 @@ import SettingsDeleteAll from './SettingsDeleteAll';
 import SettingsLeaveFeedback from './SettingsLeaveFeedback';
 import SettingsPushNotifications from './SettingsPushNotifications';
 
-import Intro from './Intro';
-
 class TodayView extends Component {
   static navigationOptions = {
     tabBar: {
@@ -53,8 +50,8 @@ class TodayView extends Component {
     this.state = {
       query: '',
       showCompleteModal: false,
-      completeModalContact: {},
       showTutorialModal: false,
+      completeModalContact: {},
       peopleInToday: null,
     };
   }
@@ -71,33 +68,21 @@ class TodayView extends Component {
       // console.log("here are all the current contacts");
       // getAllContacts().forEach((contact, idx) => console.log(`contact ${idx + 1}: ${contact.firstName} ${contact.lastName} ${contact.phoneNum} ${contact.nextContact} ${contact.lastContact}`));
 
-    // Init Mixpanel SDK with your project token
-    Mixpanel.sharedInstanceWithToken('7d05fad0f2bf12130baec860512ba4c2');
-
     // load contacts from realm into redux store
     let allContacts = Array.prototype.slice.call(getAllContacts());
     this.props.getAllContactsSync(allContacts);
     // console.log("allContacts", allContacts)
 
-    // initialize global settings if uninitialized
-    initializeSettingsIfNeeded();
-
-    // login analytics logic: refresh last login date and increment login count
-    setLastLogin();
-
-    console.log(getSettings())
-    console.log(moment(), typeof(moment()))
-
     // on first login of day,
-       // todayPeeps === 0 && peeps > 0: give toast
-       // todayPeeps > 1: nothing
+    // todayPeeps === 0 && peeps > 0: give toast
+    // todayPeeps > 1: nothing
     if (getSettings().lastOpenedToday === false) {
-        if (this.props.store.contacts.length > 0 && this.props.store.contacts.filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day')).length === 0) {
-          Toast.show("all clear for today - add more contacts to kit or check in tomorrow.", Toast.LONG, Toast.BOTTOM, toastStyle);
-          setFinishedToday(true);
-        } else {
-          setFinishedToday(false);
-        }
+      if (this.props.store.contacts.length > 0 && this.props.store.contacts.filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day')).length === 0) {
+        Toast.show("all clear for today - add more contacts to kit or check in tomorrow.", Toast.LONG, Toast.BOTTOM, toastStyle);
+        setFinishedToday(true);
+      } else {
+        setFinishedToday(false);
+      }
     }
 
     // show tutorial on first run
@@ -107,6 +92,7 @@ class TodayView extends Component {
   toggleTutorialModal = () => {
     this.setState({ showTutorialModal: !this.state.showTutorialModal });
   }
+
 
   toggleCompleteModal = (contact) => {
     this.setState({ showCompleteModal: !this.state.showCompleteModal, completeModalContact: contact});

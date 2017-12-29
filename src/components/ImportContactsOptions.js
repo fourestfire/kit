@@ -12,6 +12,7 @@ import {
 import ImportContacts from './ImportContacts';
 import Mixpanel from 'react-native-mixpanel';
 import Header from './Header';
+import ModalDropdown from 'react-native-modal-dropdown';
 
 class ImportContactsOptions extends Component {
   static navigationOptions = {
@@ -89,7 +90,7 @@ class ImportContactsOptions extends Component {
         <View style={styles.tenSpacer} />
 
         <View style={styles.textWrapper}>
-          <Text style={styles.formLabel}> Contact Frequency (in days) </Text>
+          <Text style={styles.formLabel}> Contact Frequency </Text>
           <TextInput
             ref="1"
             style={styles.textInput}
@@ -99,6 +100,22 @@ class ImportContactsOptions extends Component {
             defaultValue="30"
             onChangeText={frequency => this.setState({frequency})}
             returnKeyType="done"
+          />
+        </View>
+
+        <View style={styles.textWrapper}>
+          <Text style={styles.formLabel}> Contact Frequency </Text>
+          <ModalDropdown
+            options={['daily', 'weekly', 'bi-weekly', 'monthly', 'quarterly', 'yearly', 'custom']}
+            style={{backgroundColor: 'pink'}}
+            textStyle={{fontSize: 18}}
+            dropdownTextStyle={{fontSize: 18}}
+            dropdownTextHighlightStyle={{backgroundColor: 'grey'}}
+            defaultIndex={2}
+            defaultValue={'please select...'}
+            onSelect={()=>{
+              // if custom is selected...
+            }}
           />
         </View>
 
