@@ -60,8 +60,17 @@ class SettingsPushNotifications extends React.Component {
     });
   }
 
-  render() {
+  findTimeToAdd(time) {
+    let selectedTime = moment(time, 'h:mm a');
 
+    if (selectedTime.isBefore(moment())) {
+      console.log('move it to the next day', new Date(Date.now() + selectedTime.add(1, 'day').diff(moment())))
+      return selectedTime.add(1, 'day').diff(moment()); // how many milliseconds are between that time and now?
+    }
+    return selectedTime.diff(moment());
+  }
+
+  render() {
     return (
       <View style={styles.container}>
         <Header
@@ -112,11 +121,9 @@ class SettingsPushNotifications extends React.Component {
                 // marginTop: 8,
                 // marginLeft: -4
               }
-              // ... You can check the source to find the other keys.
             }}
             onDateChange={(time) => {
               this.setState({time: time});
-              console.log('pushNtime', this.state.time)
             }}
           />
         </View>
@@ -136,7 +143,7 @@ class SettingsPushNotifications extends React.Component {
                 message: "time to check in with your contacts :)",
                 playSound: false,
                 repeatType: 'day', // repeat every day
-                date: new Date(Date.now() + (1000 * 5)) // in five seconds
+                date: new Date(Date.now() + this.findTimeToAdd(this.state.time)) // in five seconds
               });
 
               Toast.show("all set! you'll receive daily notifications", Toast.SHORT, Toast.BOTTOM, toastStyle);
