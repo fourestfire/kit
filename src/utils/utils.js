@@ -24,20 +24,21 @@ export function convertFrequencyToText(frequency) {
 export function convertTextToFrequency(text) {
   if (text === 'Daily') return 1;
   if (text === 'Weekly') return 7;
-  if (text === 'Bi-weekly') return 14;
+  if (text === 'Bi-Weekly') return 14;
   if (text === 'Every 3 weeks') return 21;
   if (text === 'Monthly') return 31;
+  if (text === 'Bi-Monthly') return 60;
   if (text === 'Quarterly') return 90;
-  if (text === 'Bi-annually') return 180;
+  if (text === 'Bi-Annually') return 180;
   else return 21;
 }
 
 export function convertFrequencyToIndex(frequency) {
-  if (frequency === 1) return 0;
-  if (frequency === 7) return 1;
-  if (frequency === 14) return 2;
-  if (frequency === 21) return 3;
-  if (frequency === 30 || frequency === 31) return 4;
+  if (frequency === 7) return 0;
+  if (frequency === 14) return 1;
+  if (frequency === 21) return 2;
+  if (frequency === 30 || frequency === 31) return 3;
+  if (frequency === 60 || frequency === 61) return 4;
   if (frequency >= 90 && frequency <= 95) return 5;
   if (frequency >= 180 && frequency <= 182) return 6;
   else return 7;

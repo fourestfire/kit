@@ -128,7 +128,7 @@ class ImportContactsOptions extends Component {
         <View style={styles.textWrapper}>
           <Text style={styles.formLabel}> Contact Frequency </Text>
           <ModalDropdown
-            options={['Daily', 'Weekly', 'Bi-weekly', 'Every 3 weeks', 'Monthly', 'Quarterly', 'Bi-annually', 'Custom']}
+            options={['Weekly', 'Bi-Weekly', 'Every 3 weeks', 'Monthly', 'Bi-Monthly', 'Quarterly', 'Bi-Annually', 'Custom']}
             style={{marginTop: 14}}
             textStyle={{fontSize: 18, color: 'black'}}
             dropdownStyle={{marginTop: 4, backgroundColor: 'white', borderWidth: 1, borderColor: 'grey'}}
@@ -136,10 +136,10 @@ class ImportContactsOptions extends Component {
             dropdownTextHighlightStyle={{backgroundColor: 'hsla(240, 100%, 27%, 0.35)'}}
             adjustFrame={(style) => {
               newStyle = style;
-              newStyle.height = isDeviceSmall() ? style.height + 70 : style.height + 155;
+              newStyle.height = isDeviceSmall() ? style.height + 70 : style.height + 152;
               return newStyle;
             }}
-            defaultIndex={3}
+            defaultIndex={2}
             defaultValue={this.state.modalDropdownText}
             onSelect={(index, value) => {
               if (value !== 'Custom') {

@@ -240,7 +240,7 @@ class UpdateContact extends Component {
               returnKeyType="done"
             />*/}
             <ModalDropdown
-              options={['Daily', 'Weekly', 'Bi-weekly', 'Every 3 weeks', 'Monthly', 'Quarterly', 'Bi-annually', 'Custom']}
+              options={['Weekly', 'Bi-Weekly', 'Every 3 weeks', 'Monthly', 'Bi-Monthly', 'Quarterly', 'Bi-Annually', 'Custom']}
               style={{marginTop: 14}}
               textStyle={{fontSize: 18, color: 'black'}}
               dropdownStyle={{marginTop: 3, backgroundColor: 'white', borderWidth: 1, borderColor: 'grey'}}
@@ -248,7 +248,7 @@ class UpdateContact extends Component {
               dropdownTextHighlightStyle={{backgroundColor: 'hsla(240, 100%, 27%, 0.35)'}}
               adjustFrame={(style) => {
                 newStyle = style;
-                newStyle.height = isDeviceSmall() ? style.height + 70 : style.height + 155;
+                newStyle.height = isDeviceSmall() ? style.height + 70 : style.height + 152;
                 return newStyle;
               }}
               defaultIndex={convertFrequencyToIndex(contact.frequency)}
