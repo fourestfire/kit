@@ -29,8 +29,7 @@ class AddContact extends Component {
     super(props);
     this.state = {
       showFrequencyModal: false,
-      firstName: '',
-      lastName: '',
+      fullName: '',
       id: 9000,
       phoneNum: '',
       color: 'None',
@@ -41,8 +40,8 @@ class AddContact extends Component {
   }
 
   _onPhoneTextSubmit() {
-    let phoneNum = this.refs['3'].getRawValue();
-    console.log('phonenum', phoneNum, typeof(phoneNum));
+    let phoneNum = this.refs['2'].getRawValue();
+    // console.log('phonenum', phoneNum, typeof(phoneNum));
     this.setState({
       phoneNum: phoneNum,
     });
@@ -59,7 +58,7 @@ class AddContact extends Component {
   }
 
   _focusPhoneField() {
-		this.refs['3'].getElement().focus();
+		this.refs['2'].getElement().focus();
   }
 
   setColor(color) {
@@ -114,8 +113,7 @@ class AddContact extends Component {
             style={[styles.actionButton, styles.long]}
             backgroundColor='black'
             onPress={this.addContact.bind(this, {
-              firstName: this.state.firstName,
-              lastName: this.state.lastName,
+              fullName: this.state.fullName,
               frequency: Number(this.state.frequency),
               nextContact: date,
               lastContact: null,
@@ -133,36 +131,20 @@ class AddContact extends Component {
         <View style={styles.tenSpacer} />
 
         <View style={styles.flexWrap}>
-          <View style={styles.textWrapperHalf}>
-            <Text style={styles.subtitle}> First Name </Text>
+          <View style={styles.textWrapper}>
+            <Text style={styles.subtitle}> Full Name </Text>
             <TextInput
-              style={styles.textInputHalf}
+              style={styles.textInput}
               placeholder=""
               placeholderTextColor="#bfbfbf"
               autoFocus={true}
               autoCorrect={false}
               defaultValue={''}
-              onChangeText={firstName => this.setState({firstName})}
+              onChangeText={fullName => this.setState({fullName})}
               ref='1'
               returnKeyType="next"
               blurOnSubmit={false}
-              onFocus={() => Mixpanel.track("Editing Contact Name")}
-              onSubmitEditing={() => this._focusNextField('2')}
-            />
-          </View>
-
-          <View style={styles.textWrapperHalf}>
-            <Text style={styles.subtitle}> Last Name </Text>
-            <TextInput
-              ref='2'
-              style={styles.textInputHalf}
-              placeholder={''}
-              defaultValue={''}
-              autoCorrect={false}
-              placeholderTextColor="#bfbfbf"
-              onChangeText={lastName => this.setState({lastName})}
-              returnKeyType="next"
-              onSubmitEditing={() => this._focusNextField('3')}
+              onSubmitEditing={() => this._focusPhoneField()}
             />
           </View>
         </View>
@@ -170,7 +152,7 @@ class AddContact extends Component {
         <View style={styles.textWrapper}>
           <Text style={styles.subtitle}> Phone Number </Text>
           <TextInputMask
-            ref="3"
+            ref="2"
             style={[styles.textInput, styles.phoneInput]}
             type={'custom'}
             options={{
@@ -185,7 +167,8 @@ class AddContact extends Component {
             returnKeyType="next"
             onSubmitEditing={() => {
               this._onPhoneTextSubmit();
-              this._focusNextField('4');}
+              // this._focusNextField('3');
+              }
             }
           />
         </View>

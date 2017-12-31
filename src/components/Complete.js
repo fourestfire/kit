@@ -52,7 +52,7 @@ class Complete extends Component {
 
         <View style={styles.secondContainer}>
           <Text style={styles.text}>
-            Briefly, what did you talk about with {this.props.contact.firstName} today?
+            Briefly, what did you talk about with {this.props.contact.fullName.split(' ')[0]} today?
           </Text>
 
           <View style={styles.textWrapper}>

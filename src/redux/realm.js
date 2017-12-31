@@ -226,7 +226,7 @@ export const createContact = contact => {
       id: uuid.v1(),
       firstName:  contact.firstName || '',
       lastName: contact.lastName || '',
-      fullName: `${contact.firstName} ${contact.lastName}` || '',
+      fullName: contact.fullName || '',
       frequency: contact.frequency || 14,
       nextContact: contact.nextContact || parseInt(moment().format('x'), 10),
       lastContact: contact.lastContact || 0,
@@ -234,7 +234,7 @@ export const createContact = contact => {
       notes: contact.notes || '',
       phoneNum: contact.phoneNum || '123-123-1234',
       color: contact.color || 'None',
-      birthday: contact.birthday || 0,
+      birthday: contact.birthday || 0, // int to store as a moment 'x' date
       numTimesContacted: 0,
       currentStreak: 0
     });

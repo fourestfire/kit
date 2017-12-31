@@ -38,6 +38,7 @@ class UpdateContact extends Component {
       showFrequencyModal: false,
       firstName: '',
       lastName: '',
+      fullName: '',
       id: 9000,
       phoneNum: '1-212-442-5201',
       nextContact: '10/6/2017',
@@ -59,8 +60,9 @@ class UpdateContact extends Component {
 
     this.setState({
       id: contact.id,
-      firstName: contact.firstName,
-      lastName: contact.lastName,
+      // firstName: contact.firstName,
+      // lastName: contact.lastName,
+      fullName: contact.fullName,
       phoneNum: contact.phoneNum,
       frequency: contact.frequency,
       nextContact: contact.nextContact,
@@ -166,8 +168,9 @@ class UpdateContact extends Component {
             backgroundColor='black'
             onPress={this.updateContact.bind(this, {
                     id: this.state.id,
-                    firstName: this.state.firstName,
-                    lastName: this.state.lastName,
+                    // firstName: this.state.firstName,
+                    // lastName: this.state.lastName,
+                    fullName: this.state.fullName,
                     nextContact: this.state.nextContact,
                     frequency: Number(this.state.frequency),
                     phoneNum: this.state.phoneNum,
@@ -190,16 +193,16 @@ class UpdateContact extends Component {
         <View style={styles.tenSpacer} />
 
         <View style={styles.flexWrap}>
-          <View style={styles.textWrapperHalf}>
-            <Text style={styles.subtitle}> First Name </Text>
+          <View style={styles.textWrapper}>
+            <Text style={styles.subtitle}> Name </Text>
             <TextInput
-              style={styles.textInputHalf}
+              style={styles.textInput}
               placeholder=""
               placeholderTextColor="#bfbfbf"
               autoFocus={false}
               autoCorrect={false}
-              defaultValue={contact.firstName}
-              onChangeText={firstName => this.setState({firstName})}
+              defaultValue={contact.fullName}
+              onChangeText={fullName => this.setState({fullName})}
               ref='1'
               returnKeyType="next"
               blurOnSubmit={false}
@@ -207,27 +210,12 @@ class UpdateContact extends Component {
               onSubmitEditing={() => this._focusNextField('2')}
             />
           </View>
-
-          <View style={styles.textWrapperHalf}>
-            <Text style={styles.subtitle}> Last Name </Text>
-            <TextInput
-              ref='2'
-              style={styles.textInputHalf}
-              placeholder={''}
-              defaultValue={contact.lastName}
-              autoCorrect={false}
-              placeholderTextColor="#bfbfbf"
-              onChangeText={lastName => this.setState({lastName})}
-              returnKeyType="next"
-              onSubmitEditing={() => this._focusNextField('3')}
-            />
-          </View>
         </View>
 
         <View style={styles.textWrapper}>
           <Text style={styles.subtitle}> Phone Number </Text>
           <TextInput
-            ref='3'
+            ref='2'
             style={[styles.textInput, styles.phoneInput]}
             defaultValue={contact.phoneNum}
             value={this.state.phoneNum}
@@ -317,7 +305,7 @@ class UpdateContact extends Component {
         <View style={styles.notesWrapper}>
           <Text style={[styles.subtitle, styles.subtitleForNotes]}> Notes </Text>
           <TextInput
-            ref='4'
+            ref='3'
             style={styles.textInputForNotes}
             defaultValue={contact.notes}
             value={this.state.notes}

@@ -152,7 +152,7 @@ class TodayView extends Component {
         {
           this.props.store.contacts
           .filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day'))
-          .sort((a, b) => result = a.firstName > b.firstName ? 1 : -1)
+          .sort((a, b) => result = a.fullName > b.fullName ? 1 : -1)
           .map(contact => {
             return (
               <Row physics={physics} contact={contact} key={contact.id}>
@@ -160,7 +160,7 @@ class TodayView extends Component {
                   <View style={[styles.rowColor, {backgroundColor: convertColor(contact.color)}]} />
 
                   <View style={styles.rowContent}>
-                    <Text style={styles.rowTitle}>{contact.firstName} {contact.lastName}</Text>
+                    <Text style={styles.rowTitle}>{contact.fullName}</Text>
                     <Text style={styles.rowSubtitle}>Last talked: {contact.lastContact ? convertDiff(moment().diff(moment(contact.lastContact), 'days')) : 'N/A'}</Text>
                     <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
                   </View>
@@ -182,7 +182,7 @@ class TodayView extends Component {
         {
           this.props.store.contacts
           .filter(el => moment(el.nextContact).isBetween(moment().add(1, 'day'), moment().add(21, 'day'), 'day', '[]'))
-          .sort((a, b) => result = a.firstName > b.firstName ? 1 : -1)
+          .sort((a, b) => result = a.fullName > b.fullName ? 1 : -1)
           .map(contact => {
             return (
               <Row physics={physics} contact={contact} key={contact.id}>
@@ -190,7 +190,7 @@ class TodayView extends Component {
                   <View style={[styles.rowColor, {backgroundColor: convertColor(contact.color)}]} />
 
                   <View style={styles.rowContent}>
-                    <Text style={styles.rowTitle}>{contact.firstName} {contact.lastName}</Text>
+                    <Text style={styles.rowTitle}>{contact.fullName}</Text>
                     <Text style={styles.rowSubtitle}>Last talked: {contact.lastContact ? convertDiff(moment().diff(moment(contact.lastContact), 'days')) : 'N/A'}</Text>
                     <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
                   </View>
