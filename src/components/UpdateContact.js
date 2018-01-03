@@ -50,18 +50,12 @@ class UpdateContact extends Component {
   }
 
   componentDidMount() {
-
     let contact = this.props.navigation.state.params.contact;
-    // console.log('modaldropdown should say this', convertFrequencyToText(contact.frequency))
-
-    // this.setState({
-    //   modalDropdownText: convertFrequencyToText(contact.frequency),
-    // })
 
     this.setState({
       id: contact.id,
-      // firstName: contact.firstName,
-      // lastName: contact.lastName,
+      firstName: contact.firstName,
+      lastName: contact.lastName,
       fullName: contact.fullName,
       phoneNum: contact.phoneNum,
       frequency: contact.frequency,
@@ -168,8 +162,8 @@ class UpdateContact extends Component {
             backgroundColor='black'
             onPress={this.updateContact.bind(this, {
                     id: this.state.id,
-                    // firstName: this.state.firstName,
-                    // lastName: this.state.lastName,
+                    firstName: this.state.firstName,
+                    lastName: this.state.lastName,
                     fullName: this.state.fullName,
                     nextContact: this.state.nextContact,
                     frequency: Number(this.state.frequency),

@@ -185,8 +185,8 @@ export const getAllContacts = () => {
 };
 
 export const editContact = (contact) => {
-  let contactHistory = getContact(contact.id)[0].contactHistory
-  let date = moment(contact.lastContact).format('L')
+  let contactHistory = getContact(contact.id)[0].contactHistory;
+  let dateForHistory = moment(contact.lastContact).format('L');
 
   realm.write(() => {
     try {
@@ -195,7 +195,7 @@ export const editContact = (contact) => {
           id: contact.id,
           firstName: contact.firstName,
           lastName: contact.lastName,
-          fullName: `${contact.firstName} ${contact.lastName}`,
+          fullName: contact.fullName,
           frequency: contact.frequency,
           nextContact: contact.nextContact,
           phoneNum: contact.phoneNum,
@@ -211,7 +211,7 @@ export const editContact = (contact) => {
           numTimesContacted: contact.numTimesContacted + 1
         }, true);
 
-        contactHistory.push({ date: date, message: contact.lastMsg }) // adds to data history array for contact
+        contactHistory.push({ date: dateForHistory, message: contact.lastMsg }) // adds to data history array for contact
       }
     } catch (e) {
       console.warn(e)
