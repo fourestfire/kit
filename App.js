@@ -7,6 +7,7 @@ import { initializeSettingsIfNeeded, setLastLogin } from './src/redux/realm';
 import Mixpanel from 'react-native-mixpanel';
 import Intro from './src/components/Intro';
 import Today from './src/components/Today';
+import TabNav from './src/components/TabNav';
 
 class kit extends React.Component {
   componentWillMount() {
@@ -23,7 +24,7 @@ class kit extends React.Component {
   render () {
     return (
     <Provider store={store}>
-      <Today />
+      <TabNav />
     </Provider>
     );
   }

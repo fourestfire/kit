@@ -19,9 +19,11 @@ import Mixpanel from 'react-native-mixpanel';
 import Intro from './Intro';
 
 import { StackNavigator, TabNavigator } from "react-navigation";
+import Today from './Today';
 import FlatView from './FlatView';
 import AddContact from './AddContact';
 import AddOrImport from './AddOrImport';
+import UpdateContact from './UpdateContact';
 import FrequencyModal from './FrequencyModal';
 import ImportContacts from './ImportContacts';
 import ImportContactsOptions from './ImportContactsOptions';
@@ -34,11 +36,11 @@ import SettingsDeleteAll from './SettingsDeleteAll';
 import SettingsLeaveFeedback from './SettingsLeaveFeedback';
 import SettingsPushNotifications from './SettingsPushNotifications';
 
-class TodayView extends Component {
+class TabNav extends Component {
   static navigationOptions = {
     tabBar: {
       label: 'Today',
-      icon: ({ tintColor }) => <MIcon size={28} name='calendar-check' color={ tintColor }/>
+      icon: ({ tintColor }) => <MIcon size={30} name='calendar-check' color={ tintColor }/>
     },
     header: {
       visible: false
@@ -130,10 +132,10 @@ class TodayView extends Component {
             leftText={getSettings().deviceSize === 'small' ?  <Icon size={25} name='ios-settings' /> : 'SETTINGS'}
             title={'keep in touch'}
             rightOnPress={() => {  // on first run, send them to import before edit
-              if (getSettings().contactsImported) this.props.navigation.navigate('AddOrImport');
+              if (getSettings().contactsImported) this.props.navigation.navigate('AllContacts');
               else this.props.navigation.navigate('ImportContactsOptions');
             }}
-            rightText={getSettings().contactsImported ? '    ADD' : getSettings().deviceSize === 'small' ? <MIcon size={25} name='import' /> : '   IMPORT'} // if device size is small, have to make the import text into an icon
+            rightText={getSettings().contactsImported ? '    EDIT' : getSettings().deviceSize === 'small' ?  <MIcon size={25} name='import' /> : '   IMPORT'} // if device size is small, have to make the import text into an icon
           />
         </View>
 
@@ -216,80 +218,44 @@ import { getAllContactsSync } from '../redux/reducer';
 const mapState = ({ store }) => ({ store });
 const mapDispatch = ({ getAllContactsSync });
 
-const Today = connect(mapState, mapDispatch)(TodayView);
+const TabNavi = connect(mapState, mapDispatch)(TabNav);
 
-export default kit = StackNavigator({
+export default kit = TabNavigator({
     Today: {
       screen: Today,
       navigationOptions: {
         header: { visible: false },
       },
     },
-    AddContact: {
-      screen: AddContact,
+    AllContacts: {
+      screen: FlatView,
       navigationOptions: {
-        tabBar: { visible: false },
-      },
-    },
-    AddOrImport: {
-      screen: AddOrImport,
-      navigationOptions: {
-        tabBar: { visible: false },
-      },
-    },
-    ImportContacts: {
-      screen: ImportContacts,
-      navigationOptions: {
-        tabBar: { visible: false },
-      },
-    },
-    ImportContactsOptions: {
-      screen: ImportContactsOptions,
-      navigationOptions: {
-        tabBar: { visible: false },
-      },
-    },
-    FrequencyModal: {
-      screen: FrequencyModal
-    },
-    SettingsMenu: {
-      screen: SettingsMenu,
-      navigationOptions: {
-        tabBar: { visible: false },
-      },
-    },
-    SettingsChangeMessage: {
-      screen: SettingsChangeMessage,
-      navigationOptions: {
-        tabBar: { visible: false },
-      },
-    },
-    SettingsHelp: {
-      screen: SettingsHelp,
-      navigationOptions: {
-        tabBar: { visible: false },
-      },
-    },
-    SettingsDeleteAll: {
-      screen: SettingsDeleteAll,
-      navigationOptions: {
-        tabBar: { visible: false },
-      },
-    },
-    SettingsLeaveFeedback: {
-      screen: SettingsLeaveFeedback,
-      navigationOptions: {
-        tabBar: { visible: false },
-      },
-    },
-    SettingsPushNotifications: {
-      screen: SettingsPushNotifications,
-      navigationOptions: {
-        tabBar: { visible: false },
+        header: { visible: false },
       },
     },
 
-  }, { headerMode: 'screen' }
+  }, {
+    headerMode: 'screen',  // ??
+    // swipeEnabled: true,
+    // animationEnabled: true,
+    style: {
+      backgroundColor: 'purple'
+    },
+    // tabBarPosition: 'top',
+    // lazy: true,
+    tabBarOptions: {
+      activeTintColor: 'purple',
+      style: {
+        backgroundColor: 'transparent',
+        height: 60,
+        // marginTop: 70
+      },
+      labelStyle: {
+        fontSize: 14,
+        fontWeight: '300',
+      },
+    }
+  }
 );
 
 /* -------------------<   STYLES   >-------------------- */
@@ -300,74 +266,4 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white'
   },
-  sectionList: {
-    backgroundColor: 'white'
-  },
-  rowHeader: {
-    flex: 1,
-    backgroundColor: 'lightgrey',
-    height: 50,
-    justifyContent: 'center',
-    borderColor: 'darkgray',
-    borderBottomWidth: 1.8,
-    borderTopLeftRadius: 3,
-    borderTopRightRadius: 3,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-  },
-  rowHeaderText: {
-    fontSize: 30,
-    fontWeight: '200',
-    marginLeft: 14,
-  },
-  wholeRow: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderColor: '#eeeeee'
-  },
-  rowContent: {
-    flex: 1
-  },
-  rowColor: {
-    width: 10,
-    height: 70,
-    backgroundColor: '#73d4e3',
-    marginRight: 12,
-    zIndex: -1,
-    borderTopRightRadius: 3,
-    borderBottomRightRadius: 3,
-  },
-  rowTitle: {
-    fontWeight: 'bold',
-    fontSize: 19
-  },
-  rowSubtitle: {
-    fontSize: 16,
-    color: 'gray'
-  },
-  logo: {
-    marginTop: -350,
-    width: Screen.width,
-    height: 350,
-    backgroundColor: 'pink',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  doneHolder: {
-    top: 0,
-    width: 70,
-    height: 70,
-    paddingRight: 0,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  doneButton: {
-    width: 25,
-    height: 25,
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
 });

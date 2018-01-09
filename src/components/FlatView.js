@@ -12,15 +12,26 @@ import ImportContacts from './ImportContacts';
 import Row from './SingleContactRow';
 import Interactable from 'react-native-interactable';
 
-import { NavigationActions } from 'react-navigation';
+import { NavigationActions, StackNavigator, TabNavigator } from 'react-navigation';
 import { getSettings } from '../redux/realm';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+import AddOrImport from './AddOrImport';
+import FrequencyModal from './FrequencyModal';
+import ImportContactsOptions from './ImportContactsOptions';
+import Complete from './Complete';
+import SettingsMenu from './SettingsMenu';
+import SettingsChangeMessage from './SettingsChangeMessage';
+import SettingsHelp from './SettingsHelp';
+import SettingsDeleteAll from './SettingsDeleteAll';
+import SettingsLeaveFeedback from './SettingsLeaveFeedback';
+import SettingsPushNotifications from './SettingsPushNotifications';
 
 class FlatView extends Component {
   static navigationOptions = {
     tabBar: {
       label: 'Manage Contacts',
-      icon: ({ tintColor }) => <Icon size={24} name='md-contacts' color={ tintColor }/>
+      icon: ({ tintColor }) => <Icon size={28} name='md-contacts' color={ tintColor }/>
     },
     header: {
       visible: false
@@ -53,12 +64,15 @@ class FlatView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Header
-          leftOnPress={() => this.props.navigation.goBack(null)}
-          leftText='BACK'
-          title='all contacts'
-          rightOnPress={() => this.props.navigation.navigate('AddOrImport')}
-          rightText={'   ADD'}
+          <Header
+          leftOnPress={() => this.props.navigation.navigate('SettingsMenu')}
+          leftText={getSettings().deviceSize === 'small' ?  <Icon size={25} name='ios-settings' /> : 'SETTINGS'}
+          title={'all contacts'}
+          rightOnPress={() => {  // on first run, send them to import before edit
+            if (getSettings().contactsImported) this.props.navigation.navigate('AddOrImport');
+            else this.props.navigation.navigate('ImportContactsOptions');
+          }}
+          rightText={getSettings().contactsImported ? '    ADD' : getSettings().deviceSize === 'small' ?  <MIcon size={25} name='import' /> : '   IMPORT'} // if device size is small, have to make the import text into an icon
         />
 
         <View style={styles.searchbar}>
@@ -103,7 +117,84 @@ import { } from '../redux/reducer';
 const mapState = ({ store }) => ({ store });
 const mapDispatch = null;
 
-export default connect(mapState, mapDispatch)(FlatView);
+const FlatViewC = connect(mapState, mapDispatch)(FlatView);
+
+export default kit = StackNavigator({
+  AllContacts: {
+    screen: FlatViewC,
+    navigationOptions: {
+      header: { visible: false },
+    },
+  },
+  AddContact: {
+    screen: AddContact
+  },
+  AddOrImport: {
+    screen: AddOrImport,
+    navigationOptions: {
+      tabBar: { visible: false },
+    },
+  },
+  UpdateContact: {
+    screen: UpdateContact,
+    navigationOptions: {
+      tabBar: { visible: false },
+    },
+  },
+  ImportContacts: {
+    screen: ImportContacts,
+    navigationOptions: {
+      tabBar: { visible: false },
+    },
+  },
+  ImportContactsOptions: {
+    screen: ImportContactsOptions,
+    navigationOptions: {
+      tabBar: { visible: false },
+    },
+  },
+  FrequencyModal: {
+    screen: FrequencyModal
+  },
+  SettingsMenu: {
+    screen: SettingsMenu,
+    navigationOptions: {
+      tabBar: { visible: false },
+    },
+  },
+  SettingsChangeMessage: {
+    screen: SettingsChangeMessage,
+    navigationOptions: {
+      tabBar: { visible: false },
+    },
+  },
+  SettingsHelp: {
+    screen: SettingsHelp,
+    navigationOptions: {
+      tabBar: { visible: false },
+    },
+  },
+  SettingsDeleteAll: {
+    screen: SettingsDeleteAll,
+    navigationOptions: {
+      tabBar: { visible: false },
+    },
+  },
+  SettingsLeaveFeedback: {
+    screen: SettingsLeaveFeedback,
+    navigationOptions: {
+      tabBar: { visible: false },
+    },
+  },
+  SettingsPushNotifications: {
+    screen: SettingsPushNotifications,
+    navigationOptions: {
+      tabBar: { visible: false },
+    },
+  },
+
+}, { headerMode: 'screen' }
+);
 
 /* -------------------<   STYLES   >-------------------- */
 const styles = StyleSheet.create({
