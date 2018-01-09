@@ -30,7 +30,7 @@ import SettingsPushNotifications from './SettingsPushNotifications';
 class FlatView extends Component {
   static navigationOptions = {
     tabBar: {
-      label: 'Manage Contacts',
+      label: 'Edit Contacts',
       icon: ({ tintColor }) => <Icon size={28} name='md-contacts' color={ tintColor }/>
     },
     header: {
@@ -67,7 +67,7 @@ class FlatView extends Component {
           <Header
           leftOnPress={() => this.props.navigation.navigate('SettingsMenu')}
           leftText={getSettings().deviceSize === 'small' ?  <Icon size={25} name='ios-settings' /> : 'SETTINGS'}
-          title={'all contacts'}
+          title={'edit contacts'}
           rightOnPress={() => {  // on first run, send them to import before edit
             if (getSettings().contactsImported) this.props.navigation.navigate('AddOrImport');
             else this.props.navigation.navigate('ImportContactsOptions');

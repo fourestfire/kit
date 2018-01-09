@@ -77,7 +77,7 @@ function getRandomInt(min, max) {
 }
 
 export function randomNextContactDate(variance) {
-  let daysToAdd = getRandomInt(0, variance); // variance of 1 to NOT have a random next date
+  let daysToAdd = getRandomInt(0, 1); // variance of 1 to NOT have a random next date
   return parseInt(moment().add(daysToAdd, 'day').format('x'), 10);
 }
 
