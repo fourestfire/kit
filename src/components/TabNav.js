@@ -5,6 +5,9 @@ import FlatView from './FlatView';
 // This "component" exists purely to add tab navigation. Two tabs are visible at the start.
 // The Today and AllContacts components each use a separate stack navigator.
 
+import { isIphoneX } from 'react-native-iphone-x-helper';
+const marginBottom = isIphoneX() ? 24 : 0;
+
 export default kit = TabNavigator({
     Today: {
       screen: Today,
@@ -28,7 +31,7 @@ export default kit = TabNavigator({
       style: {
         backgroundColor: 'transparent',
         height: 60,
-        // marginTop: 70
+        marginBottom: marginBottom
       },
       labelStyle: {
         fontSize: 14,

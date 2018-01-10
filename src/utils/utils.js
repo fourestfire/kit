@@ -8,28 +8,33 @@ export function isDeviceSmall() {
   else return false;
 }
 
-export function convertFrequencyToText(frequency) {
-  if (frequency === 1) return 'Daily';
-  if (frequency === 7) return 'Weekly';
-  if (frequency === 14) return 'Bi-Weekly';
-  if (frequency === 21) return 'Every 3 weeks';
-  if (frequency === 30 || frequency === 31) return 'Monthly';
-  if (frequency === 60 || frequency === 61) return 'Bi-Monthly';
-  if (frequency >= 90 && frequency <= 95) return 'Quarterly';
-  if (frequency >= 180 && frequency <= 182) return 'Bi-Annually';
-  if (frequency >= 360 && frequency <= 366) return 'Yearly';
-  else return `Every ${frequency} days`;
+export function convertFrequencyToText(frequency, type) {
+  let text;
+  if (frequency === 1) text = 'Daily';
+  else if (frequency === 7) text = 'Weekly';
+  else if (frequency === 14) text = 'Bi-Weekly';
+  else if (frequency === 21) text = 'Every 3 weeks';
+  else if (frequency === 30 || frequency === 31) text = 'Monthly';
+  else if (frequency === 60 || frequency === 61) text = 'Bi-Monthly';
+  else if (frequency >= 90 && frequency <= 95) text = 'Quarterly';
+  else if (frequency >= 180 && frequency <= 182) text = 'Bi-Annually';
+  else if (frequency >= 360 && frequency <= 366) text = 'Yearly';
+  else text = `Every ${frequency} days`;
+
+  if (type === 'camel') return text;
+  else return text.toLowerCase();
 }
 
 export function convertTextToFrequency(text) {
-  if (text === 'Daily') return 1;
-  if (text === 'Weekly') return 7;
-  if (text === 'Bi-Weekly') return 14;
-  if (text === 'Every 3 weeks') return 21;
-  if (text === 'Monthly') return 31;
-  if (text === 'Bi-Monthly') return 60;
-  if (text === 'Quarterly') return 90;
-  if (text === 'Bi-Annually') return 180;
+  text = text.toLowerCase();
+  if (text === 'daily') return 1;
+  if (text === 'weekly') return 7;
+  if (text === 'bi-weekly') return 14;
+  if (text === 'every 3 weeks') return 21;
+  if (text === 'monthly') return 31;
+  if (text === 'bi-monthly') return 60;
+  if (text === 'quarterly') return 90;
+  if (text === 'bi-annually') return 180;
   else return 21;
 }
 
@@ -45,29 +50,37 @@ export function convertFrequencyToIndex(frequency) {
 }
 
 export function convertDiff(diff) {
-  if (diff === 0) return 'Today';
-  if (diff === 1) return 'Yesterday';
-  if (diff === 2) return 'Two Days Ago';
-  if (diff >= 3 && diff <= 6) return convertDayOfWeek(diff);
-  if (diff >= 7 && diff <= 13) return `Last ${convertDayOfWeek(diff)}`;
-  if (diff >= 14 && diff <= 20) return 'Two Weeks Ago';
-  if (diff >= 21 && diff <= 29) return 'Three Weeks Ago';
-  if (diff >= 30 && diff <= 61) return 'Last Month';
-  if (diff >= 62 && diff <= 95) return 'Two Months Ago';
-  if (diff >= 95 && diff <= 250) return 'A Few Months Ago';
-  if (diff >= 365 && diff <= 730) return 'Last Year';
-  if (diff > 730) return 'More Than A Year';
+  let text;
+  if (diff === 0) text = 'Today';
+  else if (diff === 1) text = 'Yesterday';
+  else if (diff === 2) text = 'Two Days Ago';
+  else if (diff >= 3 && diff <= 6) text = convertDayOfWeek(diff);
+  else if (diff >= 7 && diff <= 13) text = `Last ${convertDayOfWeek(diff)}`;
+  else if (diff >= 14 && diff <= 20) text = 'Two Weeks Ago';
+  else if (diff >= 21 && diff <= 29) text = 'Three Weeks Ago';
+  else if (diff >= 30 && diff <= 61) text = 'Last Month';
+  else if (diff >= 62 && diff <= 95) text = 'Two Months Ago';
+  else if (diff >= 95 && diff <= 250) text = 'A Few Months Ago';
+  else if (diff >= 365 && diff <= 730) text = 'Last Year';
+  else if (diff > 730) text = 'More Than A Year';
+  else text = "Sometime";
+  return text;
 }
 
 function convertDayOfWeek(diff) {
   let num = (moment().day() - diff); // alternatively can display using .format('dddd')
-  if (num % 7 === 0) return 'Sunday';
-  if (num % 7 === 1) return 'Monday';
-  if (num % 7 === 2) return 'Tuesday';
-  if (num % 7 === 3) return 'Wednesday';
-  if (num % 7 === 4) return 'Thursday';
-  if (num % 7 === 5) return 'Friday';
-  if (num % 7 === 6) return 'Saturday';
+  if (num < 7) num += 7;
+
+  let text;
+  if (num % 7 === 0) text = 'Sunday';
+  else if (num % 7 === 1) text = 'Monday';
+  else if (num % 7 === 2) text = 'Tuesday';
+  else if (num % 7 === 3) text = 'Wednesday';
+  else if (num % 7 === 4) text = 'Thursday';
+  else if (num % 7 === 5) text = 'Friday';
+  else if (num % 7 === 6) text = 'Saturday';
+  else text = 'Someday';
+  return text;
 }
 
 function getRandomInt(min, max) {

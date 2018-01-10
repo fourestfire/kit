@@ -246,7 +246,7 @@ class UpdateContact extends Component {
                 return newStyle;
               }}
               defaultIndex={convertFrequencyToIndex(contact.frequency)}
-              defaultValue={convertFrequencyToText(contact.frequency)}
+              defaultValue={convertFrequencyToText(contact.frequency, 'camel')}
               onSelect={(index, value) => {
                 if (value !== 'Custom') {
                   // console.log('converting text to freq..', convertTextToFrequency(value))

@@ -160,8 +160,8 @@ class TodayView extends Component {
 
                   <View style={styles.rowContent}>
                     <Text style={styles.rowTitle}>{contact.fullName}</Text>
-                    <Text style={styles.rowSubtitle}>Last talked: {contact.lastContact ? convertDiff(moment().diff(moment(contact.lastContact), 'days')) : 'N/A'}</Text>
-                    <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
+                    <Text style={styles.rowSubtitle}>last talked: {contact.lastContact ? convertDiff(moment().diff(moment(contact.lastContact), 'days')) : 'N/A'}</Text>
+                    <Text style={styles.rowSubtitle}>prev note: {contact.lastMsg} </Text>
                   </View>
 
                   <TouchableOpacity onPress={this.toggleCompleteModal.bind(this, contact)} style={[styles.doneHolder]}>
@@ -190,8 +190,8 @@ class TodayView extends Component {
 
                   <View style={styles.rowContent}>
                     <Text style={styles.rowTitle}>{contact.fullName}</Text>
-                    <Text style={styles.rowSubtitle}>Last talked: {contact.lastContact ? convertDiff(moment().diff(moment(contact.lastContact), 'days')) : 'N/A'}</Text>
-                    <Text style={styles.rowSubtitle}>Prev note: {contact.lastMsg} </Text>
+                    <Text style={styles.rowSubtitle}>last talked: {contact.lastContact ? convertDiff(moment().diff(moment(contact.lastContact), 'days')) : 'N/A'}</Text>
+                    <Text style={styles.rowSubtitle}>prev note: {contact.lastMsg} </Text>
                   </View>
 
                   <TouchableOpacity onPress={this.toggleCompleteModal.bind(this, contact)} style={[styles.doneHolder]}>

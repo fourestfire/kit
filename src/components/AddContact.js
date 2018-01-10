@@ -135,7 +135,7 @@ class AddContact extends Component {
             <Text style={styles.subtitle}> Full Name </Text>
             <TextInput
               style={styles.textInput}
-              placeholder=""
+              placeholder="John Appleseed"
               placeholderTextColor="#bfbfbf"
               autoFocus={true}
               autoCorrect={false}
@@ -158,7 +158,7 @@ class AddContact extends Component {
             options={{
               mask: '(999) 999-9999'
             }}
-            placeholder={''}
+            placeholder={'(123) 456-7890'}
             placeholderTextColor="#bfbfbf"
             dataDetectorTypes="phoneNumber"
             keyboardType="numeric"
@@ -187,7 +187,7 @@ class AddContact extends Component {
               newStyle.height = isDeviceSmall() ? style.height + 70 : style.height + 152;
               return newStyle;
             }}
-            defaultIndex={2}
+            defaultIndex={3}
             defaultValue={this.state.modalDropdownText}
             onSelect={(index, value) => {
               if (value !== 'Custom') {

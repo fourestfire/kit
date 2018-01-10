@@ -98,7 +98,7 @@ class FlatView extends Component {
                 <View style={[styles.rowColor, {backgroundColor: convertColor(item.color)}]} />
                 <View style={styles.rowContent}>
                   <Text style={styles.rowTitle}>{item.fullName}</Text>
-                  <Text style={styles.rowSubtitle}>{convertFrequencyToText(item.frequency)} (Last: {item.lastContact ? convertDiff(moment().diff(moment(item.lastContact), 'days')) : 'N/A'})</Text>
+                  <Text style={styles.rowSubtitle}>{convertFrequencyToText(item.frequency, 'camel')} (last: {item.lastContact ? convertDiff(moment().diff(moment(item.lastContact), 'days')) : 'N/A'})</Text>
                 </View>
                 <MIcon name="edit" style={styles.editIcon} size={25} color="#bdbdbd" />
               </View>
@@ -127,7 +127,10 @@ export default kit = StackNavigator({
     },
   },
   AddContact: {
-    screen: AddContact
+    screen: AddContact,
+    navigationOptions: {
+      tabBar: { visible: false },
+    },
   },
   AddOrImport: {
     screen: AddOrImport,

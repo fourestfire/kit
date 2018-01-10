@@ -139,7 +139,7 @@ class ImportContactsOptions extends Component {
               newStyle.height = isDeviceSmall() ? style.height + 70 : style.height + 152;
               return newStyle;
             }}
-            defaultIndex={2}
+            defaultIndex={3}
             defaultValue={this.state.modalDropdownText}
             onSelect={(index, value) => {
               if (value !== 'Custom') {
@@ -167,7 +167,8 @@ class ImportContactsOptions extends Component {
       </View>
       <View style={styles.tenSpacer} />
       <View style={styles.tenSpacer} />
-
+      <View style={styles.tenSpacer} />
+      <View style={styles.tenSpacer} />
     </View>
     );
   }
