@@ -34,7 +34,7 @@ class ImportContacts extends Component {
         let strippedContacts = [];
         contacts.forEach((contact, idx) => {
           if (contact.phoneNumbers[0]) { // only if a phone number exists for contact, otherwise it will error. also,future goal: use (contact.givenName || contact.familyName) to make sure both name fields aren't blank
-            console.log("contact", contact, idx);
+            // console.log("contact", contact, idx);
             strippedContacts.push({
               firstName: contact.givenName,
               lastName: contact.familyName,
@@ -85,7 +85,7 @@ class ImportContacts extends Component {
 
   markContactForImport(arrayIdx) {
     // console.log('marking this idx for import', arrayIdx);
-    console.log('this is the person marked for import', this.state.originalContacts[arrayIdx])
+    // console.log('this is the person marked for import', this.state.originalContacts[arrayIdx])
     let contacts = this.state.contactsToImport; // .slice(0); to clone array taken out for performance reasons
 
     if (this.isMarkedForImport(arrayIdx)) {

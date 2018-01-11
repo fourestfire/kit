@@ -35,11 +35,10 @@ class ImportContactsOptions extends Component {
   }
 
   componentDidMount() {
-    console.log('routename', this.props, this.props.navigation);
+    console.log('routeState', this.props.navigation.state.params);
   }
 
   toggleImportModal = () => {
-    console.log('frequency of import', Number(this.state.frequency));
     Mixpanel.trackWithProperties('Headed to Import', {color: this.state.color, frequency: Number(this.state.frequency)});
     this.setState({ showImportModal: !this.state.showImportModal });
     if (this.props.navigation.state.params.parentRoute === 'Today') this.props.navigation.navigate('Today');
