@@ -63,7 +63,7 @@ export function convertDiff(diff) {
   else if (diff >= 95 && diff <= 250) text = 'A Few Months Ago';
   else if (diff >= 365 && diff <= 730) text = 'Last Year';
   else if (diff > 730) text = 'More Than A Year';
-  else text = "Sometime";
+  else text = 'sometime';
   return text;
 }
 
@@ -72,15 +72,14 @@ function convertDayOfWeek(diff) {
   if (num < 7) num += 7;
 
   let text;
-  if (num % 7 === 0) text = 'Sunday';
-  else if (num % 7 === 1) text = 'Monday';
-  else if (num % 7 === 2) text = 'Tuesday';
-  else if (num % 7 === 3) text = 'Wednesday';
-  else if (num % 7 === 4) text = 'Thursday';
-  else if (num % 7 === 5) text = 'Friday';
-  else if (num % 7 === 6) text = 'Saturday';
-  else text = 'Someday';
-  return text;
+  if (num % 7 === 0) return 'Sunday';
+  if (num % 7 === 1) return 'Monday';
+  if (num % 7 === 2) return 'Tuesday';
+  if (num % 7 === 3) return 'Wednesday';
+  if (num % 7 === 4) return 'Thursday';
+  if (num % 7 === 5) return 'Friday';
+  if (num % 7 === 6) return 'Saturday';
+  return 'Someday';
 }
 
 function getRandomInt(min, max) {

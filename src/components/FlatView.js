@@ -65,12 +65,12 @@ class FlatView extends Component {
     return (
       <View style={styles.container}>
           <Header
-          leftOnPress={() => this.props.navigation.navigate('SettingsMenu')}
+          leftOnPress={() => this.props.navigation.navigate('SettingsMenu', {parentRoute: this.props.navigation.state.routeName})}
           leftText={getSettings().deviceSize === 'small' ?  <Icon size={25} name='ios-settings' /> : 'SETTINGS'}
           title={'edit contacts'}
           rightOnPress={() => {  // on first run, send them to import before edit
-            if (getSettings().contactsImported) this.props.navigation.navigate('AddOrImport');
-            else this.props.navigation.navigate('ImportContactsOptions');
+            if (getSettings().contactsImported) this.props.navigation.navigate('AddOrImport', {parentRoute: this.props.navigation.state.routeName});
+            else this.props.navigation.navigate('ImportContactsOptions', {parentRoute: this.props.navigation.state.routeName});
           }}
           rightText={getSettings().contactsImported ? '    ADD' : getSettings().deviceSize === 'small' ?  <MIcon size={25} name='import' /> : '   IMPORT'} // if device size is small, have to make the import text into an icon
         />

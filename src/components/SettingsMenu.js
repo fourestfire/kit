@@ -63,7 +63,7 @@ class SettingsMenu extends React.Component {
         /> */}
         <SettingsRow
           navigate={() => {
-            this.props.navigation.navigate('SettingsDeleteAll');
+            this.props.navigation.navigate('SettingsDeleteAll', {parentRoute: this.props.navigation.state.params.parentRoute});
             Mixpanel.trackWithProperties('SettingsClick', {action: 'deleteAll'});
           }}
           rowText={'Delete All Data'}

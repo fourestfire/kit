@@ -68,6 +68,9 @@ class TodayView extends Component {
       // console.log("here are all the current contacts");
       // getAllContacts().forEach((contact, idx) => console.log(`contact ${idx + 1}: ${contact.firstName} ${contact.lastName} ${contact.phoneNum} ${contact.nextContact} ${contact.lastContact}`));
 
+
+console.log('routename', this.props.navigation);
+
     // load contacts from realm into redux store
     let allContacts = Array.prototype.slice.call(getAllContacts());
     this.props.getAllContactsSync(allContacts);
@@ -126,12 +129,12 @@ class TodayView extends Component {
 
         <View>
           <Header
-            leftOnPress={() => this.props.navigation.navigate('SettingsMenu')}
+            leftOnPress={() => this.props.navigation.navigate('SettingsMenu', {parentRoute: this.props.navigation.state.routeName})}
             leftText={getSettings().deviceSize === 'small' ?  <Icon size={25} name='ios-settings' /> : 'SETTINGS'}
             title={'keep in touch'}
             rightOnPress={() => {  // on first run, send them to import before edit
-              if (getSettings().contactsImported) this.props.navigation.navigate('AddOrImport');
-              else this.props.navigation.navigate('ImportContactsOptions');
+              if (getSettings().contactsImported) this.props.navigation.navigate('AddOrImport', {parentRoute: this.props.navigation.state.routeName});
+              else this.props.navigation.navigate('ImportContactsOptions', {routeName: this.props.navigation.state.routeName});
             }}
             rightText={getSettings().contactsImported ? '    ADD' : getSettings().deviceSize === 'small' ? <MIcon size={25} name='import' /> : '   IMPORT'} // if device size is small, have to make the import text into an icon
           />

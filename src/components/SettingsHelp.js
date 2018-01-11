@@ -47,7 +47,7 @@ class SettingsHelp extends React.Component {
             style={styles.submitButton}
             onPress={() => Communications.textWithoutEncoding('646-531-3004', "hey man, what's with your app?")}
           >
-            <Text style={styles.submitText}> ask dean a question </Text>
+            <Text style={styles.submitText}> text me a question </Text>
           </TouchableOpacity>
 
         </View>

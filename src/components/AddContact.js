@@ -36,7 +36,12 @@ class AddContact extends Component {
       frequency: 14,
       lastMsg: 'hi',
       notes: 'hello',
+      modalDropdownText: 'Monthly',
     };
+  }
+
+  componentDidMount() {
+    console.log('routeState', this.props.navigation.state, this.props.navigation.state.params);
   }
 
   _onPhoneTextSubmit() {
@@ -72,7 +77,8 @@ class AddContact extends Component {
     Mixpanel.trackWithProperties('Contact Added', {method: 'manually'});
     Mixpanel.track('Manual Add Used');
     this.props.addContact(contact);
-    this.props.navigation.navigate('Today')
+    if (this.props.navigation.state.params.parentRoute === 'Today') this.props.navigation.navigate('Today');
+    else this.props.navigation.navigate('AllContacts');
   }
 
   toggleFrequencyModal = () => {

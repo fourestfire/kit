@@ -60,8 +60,10 @@ class SettingsDeleteAll extends React.Component {
                       let allContacts = Array.prototype.slice.call(getAllContacts());
                       this.props.getAllContactsSync(allContacts);
 
-                      // navigate back to main page
-                      this.props.navigation.navigate('Today');
+                      // navigate back to main page depending on which stack it was
+                      if (this.props.navigation.state.params.parentRoute === 'Today') this.props.navigation.navigate('Today');
+                      else this.props.navigation.navigate('AllContacts');
+
                     } catch (error) {
                       console.warn("an error occurred", error)
                     }}, style: 'destructive'},

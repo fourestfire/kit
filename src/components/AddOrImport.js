@@ -18,6 +18,10 @@ class AddOrImport extends Component {
     }
   }
 
+  componentDidMount() {
+    console.log('routeState', this.props.navigation.state, 'params', this.props.navigation.state.params.parentRoute);
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -33,7 +37,7 @@ class AddOrImport extends Component {
           <TouchableOpacity
             style={[styles.actionButton, styles.large]}
             backgroundColor='black'
-            onPress={() => this.props.navigation.navigate('ImportContactsOptions')}
+            onPress={() => this.props.navigation.navigate('ImportContactsOptions', {parentRoute: this.props.navigation.state.params.parentRoute})}
           >
             <Text style={styles.actionText}> Import From Phone </Text>
           </TouchableOpacity>
@@ -46,7 +50,7 @@ class AddOrImport extends Component {
           <TouchableOpacity
             style={[styles.actionButton, styles.large]}
             backgroundColor='black'
-            onPress={() => this.props.navigation.navigate('AddContact')}
+            onPress={() => this.props.navigation.navigate('AddContact', {parentRoute: this.props.navigation.state.params.parentRoute})}
           >
             <Text style={styles.actionText}> Add Contact Manually </Text>
           </TouchableOpacity>

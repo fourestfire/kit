@@ -29,16 +29,21 @@ class ImportContactsOptions extends Component {
       showImportModal: false,
       showFrequencyModal: false,
       frequency: 21,
-      modalDropdownText: 'Every 3 weeks',
+      modalDropdownText: 'Monthly',
       color: 'None',
     };
+  }
+
+  componentDidMount() {
+    console.log('routename', this.props, this.props.navigation);
   }
 
   toggleImportModal = () => {
     console.log('frequency of import', Number(this.state.frequency));
     Mixpanel.trackWithProperties('Headed to Import', {color: this.state.color, frequency: Number(this.state.frequency)});
     this.setState({ showImportModal: !this.state.showImportModal });
-    this.props.navigation.navigate('Today');
+    if (this.props.navigation.state.params.parentRoute === 'Today') this.props.navigation.navigate('Today');
+    else this.props.navigation.navigate('AllContacts');
   }
 
   toggleFrequencyModal = () => {
