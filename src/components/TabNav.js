@@ -7,7 +7,7 @@ import FlatView from './FlatView';
 // These stack navigators pass a 'ParentRoute' param downstream to allow these subsequent screens to know where to jump back to.
 
 import { isIphoneX } from 'react-native-iphone-x-helper';
-const marginBottom = isIphoneX() ? 24 : 0;
+const marginBottom = isIphoneX() ? 24 : 5;
 
 export default kit = TabNavigator({
     Today: {

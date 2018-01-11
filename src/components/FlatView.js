@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity, Dimensions, FlatList, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
+import FIcon from 'react-native-vector-icons/FontAwesome';
+import OIcon from 'react-native-vector-icons/Octicons';
 import Header from './Header';
 import moment from 'moment';
 import { convertFrequencyToText, convertColor, convertDiff } from '../utils/utils';
@@ -14,7 +17,6 @@ import Interactable from 'react-native-interactable';
 
 import { NavigationActions, StackNavigator, TabNavigator } from 'react-navigation';
 import { getSettings } from '../redux/realm';
-import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import AddOrImport from './AddOrImport';
 import FrequencyModal from './FrequencyModal';
@@ -31,7 +33,7 @@ class FlatView extends Component {
   static navigationOptions = {
     tabBar: {
       label: 'Edit Contacts',
-      icon: ({ tintColor }) => <Icon size={28} name='md-contacts' color={ tintColor }/>
+      icon: ({ tintColor }) => <Icon size={35} name='md-people' color={ tintColor }/>
     },
     header: {
       visible: false
@@ -66,13 +68,13 @@ class FlatView extends Component {
       <View style={styles.container}>
           <Header
           leftOnPress={() => this.props.navigation.navigate('SettingsMenu', {parentRoute: this.props.navigation.state.routeName})}
-          leftText={getSettings().deviceSize === 'small' ?  <Icon size={25} name='ios-settings' /> : 'SETTINGS'}
+          leftText={getSettings().deviceSize === 'small' ?  <OIcon size={25} name='settings' /> : 'SETTINGS'}
           title={'edit contacts'}
           rightOnPress={() => {  // on first run, send them to import before edit
             if (getSettings().contactsImported) this.props.navigation.navigate('AddOrImport', {parentRoute: this.props.navigation.state.routeName});
             else this.props.navigation.navigate('ImportContactsOptions', {parentRoute: this.props.navigation.state.routeName});
           }}
-          rightText={getSettings().contactsImported ? '    ADD' : getSettings().deviceSize === 'small' ?  <MIcon size={25} name='import' /> : '   IMPORT'} // if device size is small, have to make the import text into an icon
+          rightText={getSettings().contactsImported ? getSettings().deviceSize === 'small' ? <MIcon size={25} name='person-add' /> : '    ADD' : getSettings().deviceSize === 'small' ? <MCIcon size={25} name='import' /> : '   IMPORT'} // if device size is small, make both the add and import text into an icon
         />
 
         <View style={styles.searchbar}>

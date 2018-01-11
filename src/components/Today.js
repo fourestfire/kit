@@ -8,8 +8,10 @@ import moment from 'moment';
 import { convertDiff } from '../utils/utils';
 import Row from './SingleContactRow';
 import Icon from 'react-native-vector-icons/Ionicons';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MIcon from 'react-native-vector-icons/MaterialIcons';
 import FIcon from 'react-native-vector-icons/FontAwesome';
+import OIcon from 'react-native-vector-icons/Octicons';
 import { createContact, getAllContacts, deleteAllContacts, initializeSettingsIfNeeded, getSettings, setLastLogin, setFinishedToday } from '../redux/realm';
 import { convertColor } from '../utils/utils';
 
@@ -38,7 +40,7 @@ class TodayView extends Component {
   static navigationOptions = {
     tabBar: {
       label: 'Today',
-      icon: ({ tintColor }) => <MIcon size={28} name='calendar-check' color={ tintColor }/>
+      icon: ({ tintColor }) => <MCIcon size={28} name='calendar-check' color={ tintColor }/>
     },
     header: {
       visible: false
@@ -130,13 +132,13 @@ console.log('routename', this.props.navigation);
         <View>
           <Header
             leftOnPress={() => this.props.navigation.navigate('SettingsMenu', {parentRoute: this.props.navigation.state.routeName})}
-            leftText={getSettings().deviceSize === 'small' ?  <Icon size={25} name='ios-settings' /> : 'SETTINGS'}
+            leftText={getSettings().deviceSize === 'small' ? <OIcon size={25} name='settings' /> : 'SETTINGS'}
             title={'keep in touch'}
             rightOnPress={() => {  // on first run, send them to import before edit
               if (getSettings().contactsImported) this.props.navigation.navigate('AddOrImport', {parentRoute: this.props.navigation.state.routeName});
               else this.props.navigation.navigate('ImportContactsOptions', {routeName: this.props.navigation.state.routeName});
             }}
-            rightText={getSettings().contactsImported ? '    ADD' : getSettings().deviceSize === 'small' ? <MIcon size={25} name='import' /> : '   IMPORT'} // if device size is small, have to make the import text into an icon
+            rightText={getSettings().contactsImported ? getSettings().deviceSize === 'small' ? <MIcon size={25} name='person-add' /> : '    ADD' : getSettings().deviceSize === 'small' ? <MCIcon size={25} name='import' /> : '   IMPORT'} // if device size is small, make both the add and import text into an icon
           />
         </View>
 
