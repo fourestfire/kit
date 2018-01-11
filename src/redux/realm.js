@@ -27,6 +27,8 @@ class Settings {
       deviceSize: {type: 'string', default: 'regular'},
       totalCompletes: {type: 'int', default: 0},
       overallStreak: {type: 'int', default: 0},
+      // name: {type: 'string', default: ''},
+      // email: {type: 'string', default: ''},
     }
   }
 }
