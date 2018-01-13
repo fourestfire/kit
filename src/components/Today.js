@@ -70,9 +70,6 @@ class TodayView extends Component {
       // console.log("here are all the current contacts");
       // getAllContacts().forEach((contact, idx) => console.log(`contact ${idx + 1}: ${contact.firstName} ${contact.lastName} ${contact.phoneNum} ${contact.nextContact} ${contact.lastContact}`));
 
-
-console.log('routename', this.props.navigation);
-
     // load contacts from realm into redux store
     let allContacts = Array.prototype.slice.call(getAllContacts());
     this.props.getAllContactsSync(allContacts);
@@ -93,13 +90,12 @@ console.log('routename', this.props.navigation);
     // show tutorial on first run
     if (!getSettings().tutorialSeen) this.toggleTutorialModal();
 
-    console.log('settings', getSettings())
+    console.log('settings', getSettings());
   }
 
   toggleTutorialModal = () => {
     this.setState({ showTutorialModal: !this.state.showTutorialModal });
   }
-
 
   toggleCompleteModal = (contact) => {
     this.setState({ showCompleteModal: !this.state.showCompleteModal, completeModalContact: contact});

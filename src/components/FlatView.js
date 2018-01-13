@@ -16,7 +16,7 @@ import Row from './SingleContactRow';
 import Interactable from 'react-native-interactable';
 
 import { NavigationActions, StackNavigator, TabNavigator } from 'react-navigation';
-import { getSettings } from '../redux/realm';
+import { getSettings, getAllContacts } from '../redux/realm';
 
 import AddOrImport from './AddOrImport';
 import FrequencyModal from './FrequencyModal';
@@ -50,6 +50,10 @@ class FlatView extends Component {
 
   filterContacts(contacts, query) {
     try {
+      console.log('filtered contacts', contacts.filter(contact => {
+        return contact.fullName.match(new RegExp(query, 'i'));
+      }).sort((a, b) => result = a.fullName > b.fullName ? 1 : -1))
+
       return filteredContacts = contacts.filter(contact => {
         return contact.fullName.match(new RegExp(query, 'i'));
       }).sort((a, b) => result = a.fullName > b.fullName ? 1 : -1)
@@ -114,10 +118,10 @@ class FlatView extends Component {
 /* -------------------<   CONTAINER   >-------------------- */
 
 import { connect } from 'react-redux';
-import { } from '../redux/reducer';
+import { getAllContactsSync } from '../redux/reducer';
 
 const mapState = ({ store }) => ({ store });
-const mapDispatch = null;
+const mapDispatch = ({ getAllContactsSync });
 
 const FlatViewC = connect(mapState, mapDispatch)(FlatView);
 
