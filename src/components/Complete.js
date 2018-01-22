@@ -32,7 +32,7 @@ class Complete extends Component {
     // optionally can use getSettings().finishedToday to only show this toast once a day
     setTimeout(() => {
       if (this.props.store.contacts.filter(el => moment(el.nextContact).isSameOrBefore(moment(), 'day')).length === 0 && this.props.store.contacts.length > 0) {
-        Toast.show("you're done for today! great job :)", Toast.LONG, Toast.BOTTOM, toastStyle);
+        Toast.show("you're done for today! great job.", Toast.LONG, Toast.BOTTOM, toastStyle);
         setFinishedToday(true);
       }
     }, 1700);
