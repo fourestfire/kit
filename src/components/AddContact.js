@@ -33,15 +33,20 @@ class AddContact extends Component {
       id: 9000,
       phoneNum: '',
       color: 'None',
-      frequency: 14,
+      frequency: 1000,
       lastMsg: 'hi',
       notes: 'hello',
-      modalDropdownText: 'Bi-Weekly',
+      modalDropdownText: 'Sometime',
     };
   }
 
   componentDidMount() {
     console.log('routeState', this.props.navigation.state, this.props.navigation.state.params);
+
+    this.setState({
+      frequency: this.props.navigation.state.params.frequency,
+      color: this.props.navigation.state.params.color,
+    });
   }
 
   _onPhoneTextSubmit() {
@@ -88,6 +93,15 @@ class AddContact extends Component {
   onCustomFrequencyUpdated = (frequency) => {
     console.log('this is the selected custom freq', frequency)
     this.setState({frequency: frequency});
+  }
+
+  findColorIndex() {
+    let color = this.props.navigation.state.params.color;
+
+    if (color === 'Group 1') return 0;
+    else if (color === 'Group 2') return 1;
+    else if (color === 'Group 3') return 2;
+    else if (color === 'None') return 3;
   }
 
   render() {
@@ -193,8 +207,8 @@ class AddContact extends Component {
               newStyle.height = isDeviceSmall() ? style.height + 70 : style.height + 152;
               return newStyle;
             }}
-            defaultIndex={3}
-            defaultValue={this.state.modalDropdownText}
+            defaultIndex={convertFrequencyToIndex(this.props.navigation.state.params.frequency)} // inherit options from importContactOptions
+            defaultValue={convertFrequencyToText(this.props.navigation.state.params.frequency, 'camel')}
             onSelect={(index, value) => {
               if (value !== 'Custom') {
                 // console.log('converting text to freq..', convertTextToFrequency(value))
@@ -211,7 +225,7 @@ class AddContact extends Component {
           <Text style={styles.subtitle}> Group </Text>
           <SegmentedControlIOS
               style={styles.segmentedControl}
-              selectedIndex={3}
+              selectedIndex={this.findColorIndex()}
               values={['Purple', 'Teal', 'Green', 'None']}
               tintColor='#333'
               onValueChange={color => this.setColor(color)}

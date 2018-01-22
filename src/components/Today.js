@@ -23,7 +23,6 @@ import Intro from './Intro';
 import { StackNavigator, TabNavigator } from "react-navigation";
 import FlatView from './FlatView';
 import AddContact from './AddContact';
-import AddOrImport from './AddOrImport';
 import FrequencyModal from './FrequencyModal';
 import ImportContacts from './ImportContacts';
 import ImportContactsOptions from './ImportContactsOptions';
@@ -228,12 +227,6 @@ export default kit = StackNavigator({
     },
     AddContact: {
       screen: AddContact,
-      navigationOptions: {
-        tabBar: { visible: false },
-      },
-    },
-    AddOrImport: {
-      screen: AddOrImport,
       navigationOptions: {
         tabBar: { visible: false },
       },

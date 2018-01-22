@@ -18,7 +18,6 @@ import Interactable from 'react-native-interactable';
 import { NavigationActions, StackNavigator, TabNavigator } from 'react-navigation';
 import { getSettings, getAllContacts } from '../redux/realm';
 
-import AddOrImport from './AddOrImport';
 import FrequencyModal from './FrequencyModal';
 import ImportContactsOptions from './ImportContactsOptions';
 import Complete from './Complete';
@@ -134,12 +133,6 @@ export default kit = StackNavigator({
   },
   AddContact: {
     screen: AddContact,
-    navigationOptions: {
-      tabBar: { visible: false },
-    },
-  },
-  AddOrImport: {
-    screen: AddOrImport,
     navigationOptions: {
       tabBar: { visible: false },
     },

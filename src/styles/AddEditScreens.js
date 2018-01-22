@@ -184,6 +184,12 @@ export default StyleSheet.create({
     width: maxWidth - 50,
   },
 
+  subdued: {
+    backgroundColor: 'grey',
+    borderColor: '#303030',
+    borderBottomColor: '#303030',
+  },
+
   // original version
   // actionButton: {
   //   backgroundColor: 'darkblue',

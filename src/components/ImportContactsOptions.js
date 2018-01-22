@@ -64,7 +64,6 @@ class ImportContactsOptions extends Component {
   render() {
     return (
       <View style={styles.container}>
-
         <Header
           leftOnPress={() => this.props.navigation.goBack(null)}
           leftText='BACK'
@@ -90,15 +89,10 @@ class ImportContactsOptions extends Component {
         <View style={styles.tenSpacer} />
         <View style={styles.tenSpacer} />
 
-
         <View style={styles.helpTextView}>
-          <Text style={styles.helpText}>Before you import, you can choose some options to apply to all the contacts you import. Group is an optional setting that allows you to filter your contacts. </Text>
+          <Text style={styles.helpText}>Before you import, you can choose options to apply to all the contacts you import.</Text>
         </View>
 
-        <View style={styles.tenSpacer} />
-        <View style={styles.tenSpacer} />
-        <View style={styles.tenSpacer} />
-        <View style={styles.tenSpacer} />
         <View style={styles.tenSpacer} />
         <View style={styles.tenSpacer} />
 
@@ -143,7 +137,7 @@ class ImportContactsOptions extends Component {
               newStyle.height = isDeviceSmall() ? style.height + 70 : style.height + 152;
               return newStyle;
             }}
-            defaultIndex={3}
+            defaultIndex={1}
             defaultValue={this.state.modalDropdownText}
             onSelect={(index, value) => {
               if (value !== 'Custom') {
@@ -161,12 +155,24 @@ class ImportContactsOptions extends Component {
         <View style={styles.bottomSpacer} />
 
         <View style={styles.flexWrap}>
+          <TouchableOpacity
+            style={[styles.actionButton, styles.importOptions, styles.subdued]}
+            backgroundColor='black'
+            onPress={() => this.props.navigation.navigate('AddContact', {parentRoute: this.props.navigation.state.params.parentRoute, frequency: Number(this.state.frequency), color: this.state.color})}
+          >
+            <Text style={styles.actionText}> Add Contact Manually </Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.tenSpacer} />
+
+        <View style={styles.flexWrap}>
         <TouchableOpacity
           style={[styles.actionButton, styles.importOptions]}
           backgroundColor='black'
           onPress={this.toggleImportModal}
         >
-          <Text style={styles.actionText}> Begin Import </Text>
+          <Text style={styles.actionText}>Import from Phone</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.tenSpacer} />
