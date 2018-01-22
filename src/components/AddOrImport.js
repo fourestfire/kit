@@ -26,10 +26,10 @@ class AddOrImport extends Component {
     return (
       <View style={styles.container}>
         <Header
-            leftOnPress={() => this.props.navigation.goBack(null)}
-            leftText='BACK'
-            title={getSettings().deviceSize === 'small' ? 'import type' : 'choose import type'}
-          />
+          leftOnPress={() => this.props.navigation.goBack(null)}
+          leftText='BACK'
+          title={getSettings().deviceSize === 'small' ? 'import type' : 'choose import type'}
+        />
 
         <View style={styles.topFlex} />
 

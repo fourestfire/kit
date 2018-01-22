@@ -28,8 +28,8 @@ class ImportContactsOptions extends Component {
     this.state = {
       showImportModal: false,
       showFrequencyModal: false,
-      frequency: 21,
-      modalDropdownText: 'Monthly',
+      frequency: 14,
+      modalDropdownText: 'Bi-Weekly',
       color: 'None',
     };
   }

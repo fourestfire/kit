@@ -131,7 +131,7 @@ class TodayView extends Component {
             leftText={getSettings().deviceSize === 'small' ? <OIcon size={25} name='settings' /> : 'SETTINGS'}
             title={'keep in touch'}
             rightOnPress={() => {  // on first run, send them to import before edit
-              if (getSettings().contactsImported) this.props.navigation.navigate('AddOrImport', {parentRoute: this.props.navigation.state.routeName});
+              if (getSettings().contactsImported) this.props.navigation.navigate('ImportContactsOptions', {parentRoute: this.props.navigation.state.routeName});
               else this.props.navigation.navigate('ImportContactsOptions', {parentRoute: this.props.navigation.state.routeName});
             }}
             rightText={getSettings().contactsImported ? getSettings().deviceSize === 'small' ? <MIcon size={25} name='person-add' /> : '    ADD' : getSettings().deviceSize === 'small' ? <MCIcon size={25} name='import' /> : '   IMPORT'} // if device size is small, make both the add and import text into an icon

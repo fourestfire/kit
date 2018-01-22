@@ -36,7 +36,7 @@ class AddContact extends Component {
       frequency: 14,
       lastMsg: 'hi',
       notes: 'hello',
-      modalDropdownText: 'Monthly',
+      modalDropdownText: 'Bi-Weekly',
     };
   }
 
